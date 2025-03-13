@@ -1,0 +1,304 @@
+.bt-form-rating {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  &__label {
+    margin: 0 !important;
+  }
+  &__field {
+    padding: 0;
+  }
+  &__list {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 4px;
+    input {
+      display: none;
+    }
+    label {
+      font-size: 0 !important;
+      line-height: 0 !important;
+      margin: 0 !important;
+      cursor: pointer;
+      svg {
+        width: 16px;
+        height: auto;
+        fill: #cdcdcd;
+      }
+    }
+    input:checked ~ label svg,
+    input + label:hover ~ label svg,
+    input + label:hover svg {
+      fill: #efcf0a;
+    }
+  }
+}
+
+.bt-comment-stars {
+  display: flex;
+  gap: 4px;
+  font-size: 0;
+  line-height: 0;
+  span {
+    &.bt-filled svg {
+      fill: #efcf0a;
+    }
+    svg {
+      fill: #cdcdcd;
+      width: 16px;
+      height: auto;
+    }
+  }
+}
+
+.bt-comment-wrapper {
+  margin-top: 40px;
+  .bt-heading-comment {
+    color: $color-primary;
+    font-family: $secondary-font;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 40px;
+    margin-bottom: 24px;
+  }
+  .bt-comment-item {
+    &.depth-5 {
+      .bt-comment {
+        padding: 15px;
+      }
+    }
+    .bt-comment-item {
+      margin-left: 80px;
+    }
+  }
+  .trackback,
+  .pingback {
+    .bt-comment {
+      padding: 30px;
+      .bt-avatar {
+        display: none;
+      }
+    }
+    .bt-content {
+      width: 100%;
+    }
+  }
+  .bt-comment {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+    margin-top: 20px;
+    .bt-avatar {
+      width: 60px;
+      line-height: 0;
+      img {
+        width: 100%;
+        border-radius: 50%;
+      }
+    }
+  }
+  .bt-content {
+    display: flex;
+    align-items: flex-start;
+    width: calc(100% - 80px);
+    flex-direction: column;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e4e4e4;
+    .bt-name {
+      margin: 0;
+      color: $color-primary;
+      font-family: $secondary-font;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 28px;
+      text-transform: capitalize;
+      display: block;
+    }
+    .bt-date {
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 22px;
+      color: $color-text;
+      display: block;
+    }
+    .bt-text {
+      width: 100%;
+      margin-top: 8px;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 26px;
+      color: $color-primary;
+      > *:first-child {
+        margin-top: 0;
+      }
+      > *:last-child {
+        margin-bottom: 0;
+      }
+    }
+    .comment-reply-link {
+      font-family: $primary-font;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 26px;
+      text-transform: capitalize;
+      margin-top: 8px;
+      color: $color-accent;
+    }
+  }
+  .comment-respond {
+    margin-top: 40px;
+    .comment-reply-title {
+      position: relative;
+      color: $color-primary;
+      font-family: $secondary-font;
+      font-size: 32px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 40px;
+      margin: 0 0 24px 0;
+      padding-right: 120px;
+      a {
+        text-decoration: underline;
+        text-underline-offset: 6px;
+      }
+      small {
+        position: absolute;
+        top: 7px;
+        right: 0;
+        font-size: 18px;
+      }
+    }
+    .comment-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px 16px;
+      @media (max-width: $break-sm) {
+        gap: 10px;
+      }
+      .bt-logged-in-as {
+        width: 100%;
+        a {
+          text-decoration: underline;
+          &:hover{
+            color: $color-accent;
+          }
+        }
+      }
+      .bt-form-author,
+      .bt-form-email {
+        width: calc(50% - 8px);
+        @media (max-width: $break-sm) {
+          width: 100%;
+        }
+      }
+      .bt-form-message,
+      .form-submit {
+        width: 100%;
+      }
+      .form-submit {
+        margin: 0;
+      }
+      label {
+        display: none;
+      }
+      input[type="text"] {
+        width: 100%;
+        min-height: unset;
+        box-sizing: border-box;
+        border-width: 2px;
+        font-family: $primary-font;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 26px;
+        &::placeholder {
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 26px;
+          font-family: $primary-font;
+        }
+      }
+      textarea {
+        width: 100%;
+        min-height: unset;
+        box-sizing: border-box;
+        border-width: 2px;
+        font-family: $primary-font;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 26px;
+        &::placeholder {
+          letter-spacing: 0;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 26px;
+          font-family: $primary-font;
+        }
+      }
+      div.error {
+        color: #ff0000;
+        font-size: 14px;
+        font-weight: 400;
+        margin-top: 5px;
+      }
+      input[type="submit"] {
+        font-family: $primary-font;
+        border-radius: 30px;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 26px;
+        text-transform: capitalize;
+        padding: 11px 32px;
+        &:hover{
+          background: $color-accent;
+          color: #fff;
+        }
+      }
+    }
+  }
+  @media (max-width: $break-xs) {
+    .bt-heading-comment {
+      font-size: 24px;
+    }
+    .trackback,
+    .pingback {
+      .bt-comment {
+        padding: 15px;
+      }
+    }
+    .bt-comment {
+      gap: 10px;
+      .bt-avatar {
+        width: 45px;
+      }
+      .bt-content {
+        width: calc(100% - 55px);
+        .bt-text {
+          font-size: 15px;
+        }
+      }
+    }
+    .bt-comment-item .bt-comment-item {
+      margin-left: 50px;
+    }
+    .comment-respond .comment-reply-title {
+      font-size: 24px;
+      padding-right: 100px;
+      small {
+        top: 2px;
+        font-size: 14px;
+      }
+    }
+  }
+} 

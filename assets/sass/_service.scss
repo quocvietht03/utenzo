@@ -1,0 +1,533 @@
+.__bt-service-style-default {
+  .bt-post {
+    &--inner {
+      border-radius: 20px;
+      overflow: hidden;
+      background-color: #fff;
+    }
+    &--image {
+      position: relative;
+      min-height: 249px;
+      padding: 32px 32px 0;
+      @media (max-width: $break-lg) and (min-width: $break-tl) {
+        padding: 32px 15px 0;
+      }
+      @media (max-width: $break-xs) {
+        padding: 32px 20px 0;
+      }
+      svg {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+      img {
+        position: relative;
+      }
+    }
+    &--infor {
+      padding: 0 32px 32px;
+      @media (max-width: $break-lg) and (min-width: $break-tl) {
+        padding: 0 15px 30px;
+      }
+      @media (max-width: $break-xs) {
+        padding: 0 20px 30px;
+      }
+    }
+    &--title {
+      font-size: 32px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 40px;
+      text-align: left;
+      margin: 24px 0;
+      @media (max-width: $break-lg) and (min-width: $break-tl) {
+        margin: 12px 0;
+        font-size: 27px;
+      }
+      @media (max-width: $break-xs) {
+        margin: 12px 0;
+        font-size: 27px;
+      }
+    }
+    .bt-service-types {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      li {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 30px;
+        &:not(:last-child) {
+          margin-bottom: 8px;
+        }
+        @media (max-width: $break-lg) and (min-width: $break-tl) {
+          font-size: 16px;
+        }
+        @media (max-width: $break-xs) {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}
+.__bt-service-style-1 {
+  .bt-post {
+    border-radius: 20px 0 20px 20px;
+    border: 1px solid #e4e4e4;
+    background: #fff;
+    padding: 52px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    @media (max-width: $break-lg) and (min-width:$break-tl) {
+      padding: 20px;
+    }
+    @media (max-width: 850px) and (min-width:$break-sm) {
+      padding: 25px;
+    }
+    @media(max-width:$break-xs){
+      padding: 30px 20px;
+    }
+    .bt-image-overlay {
+      position: absolute;
+      top: -1px;
+      right: -1px;
+      z-index: -1;
+      @media (max-width: $break-sm) {
+        width: 140px;
+        height: 98px;
+      }
+    }
+    &--infor {
+      display: flex;
+      @media (max-width: $break-tl) {
+        flex-direction: column;
+      }
+    }
+    &--left {
+      width: 180px;
+      @media (max-width: $break-tl) {
+        width: 100%;
+      }
+    }
+    &--right {
+      width: calc(100% - 180px);
+      padding-left: 30px;
+      @media (max-width: $break-lg) and (min-width:$break-tl) {
+        padding-left: 25px;
+      }
+      @media (max-width: $break-tl) {
+        width: 100%;
+        padding-left: 0;
+        margin-top: 16px;
+      }
+    }
+    &--content {
+      .bt-post--icon {
+        width: auto;
+        vertical-align: middle;
+      }
+      .bt-post--title {
+        color: $color-primary;
+        font-family: $text-font;
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 125%;
+        margin-top: 24px;
+        @media (max-width: $break-tl) {
+          font-size: 24px;
+        }
+        &:hover {
+          color: $color-accent;
+        }
+      }
+    }
+    &--services-type {
+      .bt-post--service-item {
+        padding-left: 32px;
+        position: relative;
+        color: $color-primary;
+        font-family: $text-font;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 166.667%;
+        &:not(:last-child) {
+          margin-bottom: 8px;
+        }
+        .bt-icon-service {
+          width: 24px;
+          height: 24px;
+          position: absolute;
+          left: 0;
+          top: 2px;
+        }
+      }
+    }
+  }
+}
+.bt-elwg-service-list {
+  font-family: $primary-font;
+  .bt-service-list {
+    overflow: hidden;
+    padding: 50px 0 0;
+    .bt-service-list-item {
+      display: flex;
+      justify-content: flex-end;
+      background-color: $color-background;
+      border-radius: 40px;
+      padding: 60px;
+      @media only screen and (max-width: $break-lg) {
+        padding: 40px;
+      }
+      &:not(:last-child) {
+        margin-bottom: 100px;
+      }
+      &:nth-child(even) {
+        justify-content: flex-start;
+        .bt-post--img {
+          left: auto;
+          right: 0;
+          justify-content: flex-end;
+          img {
+            object-position: right;
+          }
+        }
+      }
+
+      .bt-post--img {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: flex-end;
+        img {
+          max-height: calc(100% + 54px);
+          height: auto;
+          display: block;
+          margin-top: -54px;
+          z-index: 2;
+          width: 100%;
+          position: relative;
+          max-width: calc(100% - 620px);
+          object-fit: contain;
+          object-position: left;
+          @media (max-width: $break-md) {
+            max-width: calc(100% - 450px);
+          }
+        }
+      }
+      .bt-post-infor {
+        padding-left: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+      }
+      .bt-post--content {
+        width: 100%;
+        max-width: 546px;
+        padding: 40px;
+        height: fit-content;
+        border-radius: 20px;
+        background-color: #fff;
+        z-index: 2;
+        position: relative;
+        @media (max-width: $break-md) {
+          max-width: 390px;
+        }
+      }
+      .bt-post--title {
+        margin-bottom: 28px;
+        width: fit-content;
+        &:hover {
+          color: $color-accent;
+        }
+      }
+      .bt-service-types {
+        margin-bottom: 36px;
+        padding-left: 0;
+        .bt-type-item {
+          position: relative;
+          margin-bottom: 8px;
+          list-style: none;
+          font-size: 18px;
+          font-weight: 400;
+          line-height: 166%;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+      .bt-service--button {
+        .bt-button-icon {
+          display: flex;
+        }
+      }
+    }
+  }
+  @media only screen and (max-width: 1024px) {
+    .bt-service-list {
+      .bt-service-list-item {
+        &:not(:last-child) {
+          margin-bottom: 60px;
+        }
+        .bt-post--content {
+          .bt-post--title {
+            margin-bottom: 20px;
+            font-size: 26px;
+          }
+        }
+        .bt-service-types {
+          margin-bottom: 20px;
+          .bt-type-item {
+            font-size: 16px;
+            &:before {
+              bottom: 3px;
+            }
+          }
+        }
+      }
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    .bt-service-list {
+      .bt-service-list-item {
+        flex-wrap: wrap;
+        padding-top: 0;
+        .bt-post--img {
+          position: relative;
+          justify-content: center !important;
+          img {
+            margin-top: -30px;
+            width: 320px;
+            max-width: 100%;
+            max-height: 100%;
+          }
+        }
+        .bt-post--content {
+          margin-top: 0;
+          max-width: 100%;
+        }
+      }
+    }
+  }
+  @media only screen and (max-width: 480px) {
+    .bt-service-list {
+      .bt-service-list-item {
+        padding: 0 15px 24px;
+        .bt-post--img img {
+          width: 220px;
+        }
+        .bt-post--content {
+          padding: 24px 15px;
+          .bt-post--title {
+            font-size: 22px;
+          }
+        }
+        .bt-service-types {
+          .bt-type-item {
+            margin-bottom: 4px;
+          }
+        }
+      }
+    }
+  }
+}
+.post-type-archive-service{
+  .bt-pagination{
+    margin-top: 60px;
+  }
+}
+.single-service {
+  .bt-main-content-ss {
+    .bt-main-post-row {
+      @media (min-width: $break-md) {
+        gap: 60px;
+        .bt-sidebar-col {
+          width: calc(33.33% - 30px);
+        }
+        .bt-main-post-col {
+          width: calc(66.66% - 30px);
+        }
+      }
+      @media (max-width: $break-lg) and (min-width: $break-md) {
+        gap: 30px;
+        .bt-sidebar-col {
+          width: calc(33.33% - 15px);
+        }
+        .bt-main-post-col {
+          width: calc(66.66% - 15px);
+        }
+      }
+    }
+    .bt-post {
+      &--title {
+        color: $color-primary;
+        margin: 0 0 16px 0;
+        font-size: 44px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 52px;
+        a {
+          color: $color-primary;
+        }
+        @media (max-width: $break-xs) {
+          font-size: 33px;
+        }
+      }
+      &--content {
+        @extend .__bt-format-post-content; 
+        &:after {
+          content: "";
+          display: block;
+          clear: both;
+        }
+        a {
+          text-decoration: underline;
+        }
+        .page-links {
+          margin-top: 40px;
+        }
+        h2 {
+          font-size: 36px;
+        }
+        h3 {
+          font-size: 26px;
+        }
+        .wp-block-image {
+          img {
+            border-radius: 20px;
+          }
+        }
+        .bt-button{
+          text-decoration: none;
+        }
+      }
+      &--button-booknow{
+        margin-top: 30px;
+      }
+    }
+    .bt-sidebar-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+      @media(max-width:$break-xs){
+        gap: 35px;
+      }
+      .bt-sidebar-block {
+        .bt-service-list {
+          padding: 0;
+          margin: 0;
+          list-style: none;
+          display: flex;
+          flex-direction: column;
+          gap: 28px;
+         
+          @media (max-width: $break-md) {
+            flex-direction: row;
+            gap: 28px 60px;
+            flex-wrap: wrap;
+          }
+          @media(max-width:$break-xs){
+            gap: 15px;
+          }
+          &--item {
+            &:hover,
+            &.active {
+              .bt-post--title {
+                text-decoration-line: underline;
+                text-decoration-style: solid;
+                text-decoration-skip-ink: none;
+                text-decoration-thickness: 2px;
+                text-underline-offset: 4px;
+                color: $color-accent;
+                a {
+                  color: $color-accent;
+                }
+              }
+            }
+          }
+          .bt-post--title {
+            margin: 0;
+            color: $color-text;
+            font-family: $primary-font;
+            font-size: 32px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 40px;
+            @media (max-width: $break-lg) and (min-width: $break-md) {
+              font-size: 30px;
+            }
+            @media(max-width:$break-xs){
+              font-size: 26px;
+              line-height: 30px;
+            }
+          }
+        }
+        &.bt-why-choose-us-block {
+          .bt-why-choose-us {
+            &--head {
+              margin: 0;
+              padding: 40px 52px;
+              font-size: 24px;
+              font-style: normal;
+              font-weight: 700;
+              line-height: 32px;
+              color: #fff;
+              background: $color-accent;
+              text-align: center;
+              border-radius: 20px 20px 0 0;
+              @media (max-width: $break-lg) and (min-width: $break-md) {
+                padding: 40px 15px;
+              }
+              @media(max-width:$break-xs){
+                padding: 30px 15px;
+              }
+            }
+            &--list {
+              background: $color-background;
+              list-style: none;
+              display: flex;
+              flex-direction: column;
+              gap: 40px;
+              align-items: center;
+              text-align: center;
+              padding: 40px 15px;
+              border-radius: 0 0 20px 20px;
+              margin-bottom: 0;
+              @media (max-width: $break-md) and (min-width:$break-xs) {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+              }
+            }
+            &--inner {
+              display: flex;
+              flex-direction: column;
+              gap: 28px;
+              align-items: center;
+              img {
+                height: 80px;
+                object-fit: contain;
+              }
+              .bt-title {
+                font-size: 20px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 28px;
+                color: $color-primary;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

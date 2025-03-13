@@ -1,0 +1,40 @@
+.bt-sc-quote {
+  display: flex;
+  gap: 20px;
+  background: #F5F5F5;
+  margin: 30px 0;
+  padding: 40px;
+  border-radius: 15px;
+  &--icon {
+    width: 50px;
+    svg {
+      width: 100%;
+      height: auto;
+      fill: $color-accent;
+      margin-top: -4px;
+    }
+  }
+  &--infor {
+    width: calc(100% - 70px);
+  }
+  &--content {
+    font-family: $primary-font;
+    font-size: 115%;
+    font-style: italic;
+    color: $color-primary;
+    margin-bottom: 12px;
+  }
+  &--author {
+    font-family: $primary-font;
+    font-size: 16px;
+    font-weight: 700;
+    color: $color-accent;
+  }
+
+  @media(max-width: $break-xs) {
+    padding: 30px 15px;
+    &--author {
+      font-size: 14px;
+    }
+  }
+}

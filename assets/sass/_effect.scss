@@ -1,0 +1,921 @@
+@keyframes effectSpin {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes effectScaleAnimation {
+	0% {
+		transform: translate(-50%, -50%) scale(1);
+		opacity: 0;
+	}
+
+	50% {
+		transform: translate(-50%, -50%) scale(1.04);
+		opacity: 1;
+	}
+
+	100% {
+		transform: translate(-50%, -50%) scale(1.08);
+		opacity: 0;
+	}
+}
+
+@keyframes effectRotateAnimation {
+	0% {
+		transform: translateX(-50%) rotate(0deg);
+	}
+
+	100% {
+		transform: translateX(-50%) rotate(360deg);
+	}
+}
+
+@keyframes effectBgScroll {
+	from {
+		background-position: center center;
+	}
+
+	25% {
+		background-position: center 75%;
+	}
+
+	75% {
+		background-position: center 25%;
+	}
+
+	to {
+		background-position: center center;
+	}
+}
+
+@keyframes effectBgScrollHorizontal {
+	from {
+		background-position: center center;
+	}
+
+	25% {
+		background-position: 75% center;
+	}
+
+	75% {
+		background-position: 25% center;
+	}
+
+	to {
+		background-position: center center;
+	}
+}
+
+.bt-bg-scroll-enable {
+	.bt-bg-scroll-effect {
+		animation: effectBgScroll 70s infinite;
+	}
+
+	.bt-bg-scroll-horizontal-effect {
+		@media (min-width: 1025px) {
+			animation: effectBgScrollHorizontal 50s infinite;
+		}
+	}
+}
+
+@keyframes effectImageZoom {
+	from {
+		transform: sscale(1);
+	}
+
+	50% {
+		transform: scale(1.2);
+	}
+
+	to {
+		transform: scale(1);
+	}
+}
+
+.bt-img-zoom-enable {
+	.bt-image-zoom-effect {
+		> .elementor-widget-container {
+			overflow: hidden;
+		}
+		img {
+			@media (min-width: $break-lg) {
+				animation: effectImageZoom 50s infinite;
+				transition: all 3s cubic-bezier(0.11, 0.52, 0.53, 0.79) 0s;
+			}
+		}
+	}
+}
+
+.bt-img-zoom-enable {
+	.bt-image-effect {
+		.bt-post {
+			.bt-cover-image img {
+				transform: scale(1);
+				transition: all 3s cubic-bezier(0.11, 0.52, 0.53, 0.79) 0s;
+			}
+
+			&:hover {
+				.bt-cover-image img {
+					transform: scale(1.1);
+				}
+			}
+		}
+	}
+
+	.bt-pricing-item {
+		.bt-cover-image img {
+			transform: scale(1);
+			transition: all 3s cubic-bezier(0.11, 0.52, 0.53, 0.79) 0s;
+		}
+
+		&:hover {
+			.bt-cover-image img {
+				transform: scale(1.1);
+			}
+		}
+	}
+}
+
+.bt-effect-overflow {
+	overflow-x: clip !important;
+}
+
+@keyframes effectMoveHorizontal {
+	0% {
+		-webkit-transform: translateZ(0);
+		transform: translateZ(0);
+	}
+
+	50% {
+		-webkit-transform: translate3d(-10px, 0, 0);
+		transform: translate3d(-10px, 0, 0);
+	}
+
+	100% {
+		-webkit-transform: translateZ(0);
+		transform: translateZ(0);
+	}
+}
+
+@keyframes effectMoveHorizontalCenter {
+	0% {
+		-webkit-transform: translateX(-50%) translateZ(0);
+		transform: translateX(-50%) translateZ(0);
+	}
+
+	50% {
+		-webkit-transform: translateX(-50%) translate3d(-10px, 0, 0);
+		transform: translateX(-50%) translate3d(-10px, 0, 0);
+	}
+
+	100% {
+		-webkit-transform: translateX(-50%) translateZ(0);
+		transform: translateX(-50%) translateZ(0);
+	}
+}
+
+.bt-effect-move-horizontal {
+	animation: effectMoveHorizontal 2s linear infinite;
+}
+
+.bt-effect-move-horizontal-center {
+	animation: effectMoveHorizontalCenter 2s linear infinite;
+}
+
+@keyframes effectVibrateImages {
+	0% {
+		transform: translateY(8px);
+	}
+
+	50% {
+		transform: translateY(4px);
+	}
+
+	100% {
+		transform: translateY(8px);
+	}
+}
+
+@keyframes effectVibrateImagesSink {
+	100% {
+		transform: translateY(8px);
+	}
+}
+
+.bt-images-vibrate-effect {
+	img {
+		animation-name: effectVibrateImagesSink, effectVibrateImages;
+		animation-duration: 0.3s, 1.5s;
+		animation-delay: 0s, 0.3s;
+		animation-timing-function: ease-out, ease-in-out;
+		animation-iteration-count: 1, infinite;
+		animation-fill-mode: forwards;
+	}
+}
+
+@-webkit-keyframes effectPlayButton {
+	0% {
+		-webkit-box-shadow: 0 0 0 0 #fff;
+	}
+
+	70% {
+		-webkit-box-shadow: 0 0 0 30px transparent;
+	}
+
+	100% {
+		-webkit-box-shadow: 0 0 0 0 transparent;
+	}
+}
+
+@keyframes effectPlayButton {
+	0% {
+		box-shadow: 0 0 0 0 #fff;
+	}
+
+	70% {
+		box-shadow: 0 0 0 30px transparent;
+	}
+
+	100% {
+		box-shadow: 0 0 0 0 transparent;
+	}
+}
+
+@-webkit-keyframes effectPlayButton2 {
+	0% {
+		-webkit-box-shadow: 0 0 0 0 $color-accent;
+	}
+
+	70% {
+		-webkit-box-shadow: 0 0 0 30px transparent;
+	}
+
+	100% {
+		-webkit-box-shadow: 0 0 0 0 transparent;
+	}
+}
+
+@keyframes effectPlayButton2 {
+	0% {
+		box-shadow: 0 0 0 0 $color-accent;
+	}
+
+	70% {
+		box-shadow: 0 0 0 30px transparent;
+	}
+
+	100% {
+		box-shadow: 0 0 0 0 transparent;
+	}
+}
+
+.bt-play-btn-effect {
+	.elementor-icon-box-icon {
+		-webkit-animation: effectPlayButton 2s infinite;
+		animation: effectPlayButton 2s infinite;
+		border-radius: 50%;
+
+		> a {
+			display: block;
+		}
+	}
+	&.elementor-widget-icon {
+		.elementor-icon {
+			-webkit-animation: effectPlayButton2 2s infinite;
+			animation: effectPlayButton2 2s infinite;
+			border-radius: 50%;
+		}
+	}
+}
+
+.bt-play-btn-effect2 {
+	.elementor-icon-box-icon {
+		-webkit-animation: effectPlayButton2 2s infinite;
+		animation: effectPlayButton2 2s infinite;
+		border-radius: 50%;
+
+		> a {
+			display: block;
+		}
+	}
+	&.elementor-widget-icon {
+		.elementor-icon {
+			-webkit-animation: effectPlayButton2 2s infinite;
+			animation: effectPlayButton2 2s infinite;
+			border-radius: 50%;
+		}
+	}
+}
+
+@keyframes effectMoveX {
+	from {
+		transform: translateX(-2px);
+	}
+
+	to {
+		transform: translateX(2px);
+	}
+}
+
+@keyframes effectmoveY {
+	from {
+		transform: translateY(-2px);
+	}
+
+	to {
+		transform: translateY(2px);
+	}
+}
+
+@keyframes effectDeformY {
+	0% {
+		transform: none;
+	}
+
+	25% {
+		transform: scaleY(1.05) skewY(2deg);
+	}
+
+	50% {
+		transform: none;
+	}
+
+	75% {
+		transform: scaleY(1.05) skewY(-2deg);
+	}
+
+	100% {
+		transform: none;
+	}
+}
+
+/* Animation for bubbles rising */
+@keyframes effectBubbleRise {
+	0% {
+		transform: translateY(0);
+		opacity: 1;
+	}
+	70% {
+		opacity: 0.8;
+	}
+	100% {
+		transform: translateY(-640px);
+		opacity: 0;
+	}
+}
+
+@keyframes effectBubbleSideWays {
+	0% {
+		margin-left: 0px;
+	}
+	100% {
+		margin-left: 100px;
+	}
+}
+.bt-animation-bubble-number {
+	.elementor-widget-container {
+		position: relative;
+		animation-name: effectMoveX;
+		animation-duration: 5s;
+		animation-timing-function: ease-in-out;
+		animation-direction: alternate;
+		animation-iteration-count: infinite;
+
+		&:before {
+			content: "";
+			width: 160px;
+			height: 146px;
+			background-image: url("../images/img-bubble-num.svg");
+			background-size: contain;
+			background-repeat: no-repeat;
+			position: absolute;
+			left: calc(50% - 80px);
+			transform: translateX(-50%);
+			top: 0;
+			animation-name: effectDeformY;
+			animation-duration: 3s;
+			animation-timing-function: ease-in-out;
+			animation-direction: alternate;
+			animation-iteration-count: infinite;
+		}
+	}
+}
+.bt-animation-bubble-number-style2 {
+	.elementor-widget-container {
+		position: relative;
+		animation-name: effectMoveX;
+		animation-duration: 5s;
+		animation-timing-function: ease-in-out;
+		animation-direction: alternate;
+		animation-iteration-count: infinite;
+
+		&:before {
+			content: "";
+			width: 160px;
+			height: 146px;
+			background-image: url("../images/img-bubble-num-02.png");
+			background-size: contain;
+			background-repeat: no-repeat;
+			position: absolute;
+			left: calc(50% - 80px);
+			transform: translateX(-50%);
+			top: 0;
+			animation-name: effectDeformY;
+			animation-duration: 3s;
+			animation-timing-function: ease-in-out;
+			animation-direction: alternate;
+			animation-iteration-count: infinite;
+		}
+	}
+}
+.bt-animation-bubble-images {
+	animation-name: effectDeformY;
+	animation-duration: 3s;
+	animation-timing-function: ease-in-out;
+	animation-direction: alternate;
+	animation-iteration-count: infinite;
+}
+.bt-animation-bubble-background {
+	z-index: 1 !important;
+	&:after {
+		content: "";
+		width: calc(100% + 151px);
+		height: calc(100% + 170px);
+		background-image: url(../images/img-bubble-bg.png);
+		background-size: contain;
+		background-repeat: no-repeat;
+		position: absolute;
+		left: -116px;
+		top: -40px;
+		animation-name: effectDeformY;
+		animation-duration: 3s;
+		animation-timing-function: ease-in-out;
+		animation-direction: alternate;
+		animation-iteration-count: infinite;
+		z-index: -1;
+		@media (max-width: $break-sm) {
+			left: -70px;
+			top: -50px;
+		}
+	}
+}
+@keyframes bubble {
+	from {
+		transform: rotate(0) scale(1);
+	}
+	50% {
+		transform: rotate(-20deg) scale(1.05);
+	}
+	to {
+		transform: rotate(40deg) scale(0.95);
+	}
+}
+.bt-animation-bubble-images-style1 {
+	transform: rotate(0) scale(1);
+	animation: bubble 6s ease-in-out 3s infinite alternate;
+}
+
+@keyframes effectBubbleRiseButton {
+	0% {
+		transform: translateY(0);
+		opacity: 1;
+	}
+	70% {
+		opacity: 0.8;
+	}
+	100% {
+		transform: translateY(-100px);
+		opacity: 0;
+	}
+}
+
+@keyframes effectBubbleSideWaysButton {
+	0% {
+		margin-left: 0px;
+	}
+	100% {
+		margin-left: 30px;
+	}
+}
+.bubble-container {
+	position: relative;
+	.bubble {
+		position: absolute;
+		bottom: -200px;
+		width: 200px;
+		animation:
+			effectBubbleRise 10s linear infinite,
+			effectBubbleSideWays 3s ease-in-out infinite alternate;
+		&.small {
+			width: 100px;
+		}
+		&.medium {
+			width: 150px;
+		}
+		&.large {
+			width: 200px;
+		}
+		/* Randomization: animate bubbles at different speeds and from different positions */
+		&:nth-of-type(1) {
+			left: 0%;
+			animation-duration: 13s;
+		}
+		&:nth-of-type(2) {
+			left: 10%;
+			animation-duration: 8s;
+		}
+		&:nth-of-type(3) {
+			left: 20%;
+			animation-duration: 10s;
+		}
+		&:nth-of-type(4) {
+			left: 30%;
+			animation-duration: 14s;
+		}
+		&:nth-of-type(5) {
+			left: 40%;
+			animation-duration: 6s;
+		}
+		&:nth-of-type(6) {
+			left: 50%;
+			animation-duration: 12s;
+		}
+		&:nth-of-type(7) {
+			left: 60%;
+			animation-duration: 15s;
+		}
+		&:nth-of-type(8) {
+			left: 70%;
+			animation-duration: 9s;
+		}
+		&:nth-of-type(9) {
+			left: 80%;
+			animation-duration: 11s;
+		}
+		&:nth-of-type(10) {
+			left: 90%;
+			animation-duration: 7s;
+		}
+	}
+}
+@keyframes effectcCleaningSwipe {
+	0% {
+		left: -50px;
+		opacity: 1;
+		transform: rotate(-30deg);
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		left: 130%;
+		opacity: 0;
+		transform: rotate(30deg);
+	}
+}
+.bt-button-hover-enable {
+	.bt-button-hover {
+		.elementor-button,
+		.bt-button {
+			position: relative;
+			overflow: hidden;
+			display: inline-flex;
+			color: $color-primary;
+			&::before {
+				position: absolute;
+				bottom: -30px;
+				width: 30px;
+				content: "";
+				height: 30px;
+				background-image: url("../images/img-bubble-white.png");
+				background-size: contain;
+				background-repeat: no-repeat;
+				left: 10%;
+			}
+			&::after {
+				position: absolute;
+				bottom: -30px;
+				width: 15px;
+				content: "";
+				height: 15px;
+				background-image: url("../images/img-bubble-white.png");
+				background-size: contain;
+				background-repeat: no-repeat;
+
+				left: 40%;
+			}
+			.elementor-button-content-wrapper,
+			.bt-heading {
+				&::before {
+					position: absolute;
+					bottom: -30px;
+					width: 30px;
+					content: "";
+					height: 30px;
+					background-image: url("../images/img-bubble-white.png");
+					background-size: contain;
+					background-repeat: no-repeat;
+					left: 50%;
+				}
+				&::after {
+					@media (min-width: $break-sm) {
+						content: "";
+						position: absolute;
+						width: 55px;
+						height: 55px;
+						background: url("../images/icon-clean.png") no-repeat center / contain;
+						bottom: -10px;
+						left: -50px;
+						transform: translateY(0) rotate(-30deg);
+						z-index: 1;
+						opacity: 0;
+					}
+				}
+			}
+			&:hover {
+				box-shadow: 0px 4px 50px 0 rgba(0, 0, 0, 0.1);
+				&::before,
+				&::after {
+					animation:
+						effectBubbleRiseButton 5s linear infinite,
+						effectBubbleSideWaysButton 2s ease-in-out infinite alternate;
+				}
+				&::before {
+					animation-duration: 6s;
+				}
+				&::after {
+					animation-duration: 3s;
+				}
+				.elementor-button-content-wrapper,
+				.bt-heading {
+					&::before {
+						animation:
+							effectBubbleRiseButton 5s linear infinite,
+							effectBubbleSideWaysButton 2s ease-in-out infinite alternate;
+					}
+					&::before {
+						animation-duration: 4s;
+					}
+					&::after {
+						animation: effectcCleaningSwipe 2.7s cubic-bezier(0.11, 0.52, 0.53, 0.79) forwards;
+					}
+				}
+			}
+		}
+	}
+	.bt-button-hover-secondary {
+		.elementor-button,
+		.bt-button {
+			position: relative;
+			overflow: hidden;
+			display: inline-flex;
+			color: $color-primary;
+			&::before {
+				position: absolute;
+				bottom: -30px;
+				width: 30px;
+				content: "";
+				height: 30px;
+				background-image: url("../images/img-bubble-blue.png");
+				background-size: contain;
+				background-repeat: no-repeat;
+				left: 10%;
+			}
+			&::after {
+				position: absolute;
+				bottom: -30px;
+				width: 15px;
+				content: "";
+				height: 15px;
+				background-image: url("../images/img-bubble-blue.png");
+				background-size: contain;
+				background-repeat: no-repeat;
+
+				left: 40%;
+			}
+			.elementor-button-content-wrapper,
+			.bt-heading {
+				&::before {
+					position: absolute;
+					bottom: -30px;
+					width: 30px;
+					content: "";
+					height: 30px;
+					background-image: url("../images/img-bubble-blue.png");
+					background-size: contain;
+					background-repeat: no-repeat;
+					left: 50%;
+				}
+				&::after {
+					@media (min-width: $break-sm) {
+						content: "";
+						position: absolute;
+						width: 55px;
+						height: 55px;
+						background: url("../images/icon-clean.png") no-repeat center / contain;
+						bottom: -10px;
+						left: -50px;
+						transform: translateY(0) rotate(-30deg);
+						z-index: 1;
+						opacity: 0;
+					}
+				}
+			}
+			&:hover {
+				box-shadow: 0px 4px 50px 0 rgba(0, 0, 0, 0.1);
+				&::before,
+				&::after {
+					animation:
+						effectBubbleRiseButton 5s linear infinite,
+						effectBubbleSideWaysButton 2s ease-in-out infinite alternate;
+				}
+				&::before {
+					animation-duration: 6s;
+				}
+				&::after {
+					animation-duration: 3s;
+				}
+				.elementor-button-content-wrapper,
+				.bt-heading {
+					&::before {
+						animation:
+							effectBubbleRiseButton 5s linear infinite,
+							effectBubbleSideWaysButton 2s ease-in-out infinite alternate;
+					}
+					&::before {
+						animation-duration: 4s;
+					}
+					&::after {
+						animation: effectcCleaningSwipe 2.7s cubic-bezier(0.11, 0.52, 0.53, 0.79) forwards;
+					}
+				}
+			}
+		}
+	}
+	.bt-button-slider {
+		a {
+			position: relative;
+			overflow: hidden;
+			display: inline-flex;
+			color: $color-primary;
+			&::before {
+				position: absolute;
+				bottom: -30px;
+				width: 30px;
+				content: "";
+				height: 30px;
+				background-image: url("../images/img-bubble-white.png");
+				background-size: contain;
+				background-repeat: no-repeat;
+				left: 10%;
+				display: block !important;
+			}
+			&::after {
+				position: absolute;
+				bottom: -30px;
+				width: 15px;
+				content: "";
+				height: 15px;
+				background-image: url("../images/img-bubble-white.png");
+				background-size: contain;
+				background-repeat: no-repeat;
+				display: block !important;
+				left: 40%;
+			}
+			> div {
+				&::before {
+					position: absolute;
+					bottom: -30px;
+					width: 30px;
+					content: "";
+					height: 30px;
+					background-image: url("../images/img-bubble-white.png");
+					background-size: contain;
+					background-repeat: no-repeat;
+					left: 50%;
+				}
+				&::after {
+					@media (min-width: $break-sm) {
+						content: "";
+						position: absolute;
+						width: 55px;
+						height: 55px;
+						background: url("../images/icon-clean.png") no-repeat center / contain;
+						bottom: -10px;
+						left: -50px;
+						transform: translateY(0) rotate(-30deg);
+						z-index: 1;
+						opacity: 0;
+					}
+				}
+			}
+			&:hover {
+				box-shadow: 0px 4px 50px 0 rgba(0, 0, 0, 0.1);
+				&::before,
+				&::after {
+					animation:
+						effectBubbleRiseButton 5s linear infinite,
+						effectBubbleSideWaysButton 2s ease-in-out infinite alternate;
+				}
+				&::before {
+					animation-duration: 6s;
+				}
+				&::after {
+					animation-duration: 3s;
+				}
+				> div {
+					&::before {
+						animation:
+							effectBubbleRiseButton 5s linear infinite,
+							effectBubbleSideWaysButton 2s ease-in-out infinite alternate;
+					}
+					&::before {
+						animation-duration: 4s;
+					}
+					&::after {
+						animation: effectcCleaningSwipe 2.7s cubic-bezier(0.11, 0.52, 0.53, 0.79) forwards;
+					}
+				}
+			}
+		}
+	}
+}
+
+@keyframes fadeInRight {
+	from {
+		opacity: 0;
+		transform: translateX(50px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+@keyframes fadeInLeft {
+	from {
+		opacity: 0;
+		transform: translateX(-50px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes fadeInUp {
+	from {
+		opacity: 0;
+		transform: translateY(50px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes fadeInDown {
+	from {
+		opacity: 0;
+		transform: translateY(-50px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+.elementor-widget-heading {
+	&.bt-fade-animation {
+		animation-name: none !important;
+		animation-duration: inherit !important;
+	}
+}
+.bt-word {
+	display: inline-block;
+}
+
+.bt-letter {
+	display: inline-block;
+	opacity: 0;
+	transform: translateX(50px);
+	animation: fadeInRight 0.5s ease forwards;
+}
+.bt-animation-left {
+	.bt-letter {
+		animation: fadeInLeft 0.5s ease forwards;
+	}
+}
+.bt-animation-up {
+	.bt-letter {
+		animation: fadeInUp 0.5s ease forwards;
+	}
+}
+.bt-animation-down {
+	.bt-letter {
+		animation: fadeInDown 0.5s ease forwards;
+	}
+}
