@@ -71,7 +71,9 @@ class ElementorWidgets
 			'opening-times',
 			'mini-cart',
 			'brand-slider',
-			'list-faq'
+			'list-faq',
+			'account-login',
+			'search-product'
 		);
 
 		return $this->widgets;
@@ -193,6 +195,8 @@ class ElementorWidgets
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\MiniCart\Widget_MiniCart());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\BrandSlider\Widget_BrandSlider());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ListFaq\Widget_ListFaq());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\AccountLogin\Widget_AccountLogin());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\SearchProduct\Widget_SearchProduct());
 	}
 
 	/**

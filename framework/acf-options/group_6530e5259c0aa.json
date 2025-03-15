@@ -199,13 +199,14 @@
                                 "facebook": "Facebook",
                                 "twitter": "Twitter",
                                 "instagram": "Instagram",
-                                "skype": "Skype",
-                                "telegram": "Telegram"
+                                "pinterest": "Pinterest",
+                                "youtube": "Youtube"
                             },
                             "default_value": false,
                             "return_format": "value",
                             "multiple": 0,
                             "allow_null": 0,
+                            "allow_in_bindings": 1,
                             "ui": 0,
                             "ajax": 0,
                             "placeholder": "",
@@ -1421,5 +1422,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1737595412
+    "modified": 1741852725
 }

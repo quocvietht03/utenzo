@@ -43,8 +43,8 @@ if (!function_exists('utenzo_fonts_url')) {
 	function utenzo_fonts_url()
 	{
 		global $utenzo_options;
-		$base_font = 'Mulish';
-		$head_font = 'Mulish';
+		$base_font = 'Urbanist';
+		$head_font = 'Urbanist';
 
 		$font_url = '';
 		if ('off' !== _x('on', 'Google font: on or off', 'utenzo')) {

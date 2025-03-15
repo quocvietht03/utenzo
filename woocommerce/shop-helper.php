@@ -771,8 +771,8 @@ function utenzo_products_query_args($params = array(), $limit = 9)
 
 function utenzo_products_filter()
 {
-  $rows = intval(get_option('woocommerce_catalog_rows', 2)); 
-  $columns = intval(get_option('woocommerce_catalog_columns', 4)); 
+  $rows = intval(get_option('woocommerce_catalog_rows', 2));
+  $columns = intval(get_option('woocommerce_catalog_columns', 4));
   $rows = $rows > 0 ? $rows : 1;
   $columns = $columns > 0 ? $columns : 1;
   $limit = $rows * $columns;
@@ -1108,9 +1108,9 @@ function utenzo_get_free_shipping()
   $free_shipping_threshold = utenzo_get_free_shipping_minimum_amount();
   $cart_total = WC()->cart->get_cart_contents_total();
   $currency_symbol = get_woocommerce_currency_symbol();
-  if(utenzo_is_appointment_in_cart()){
+  if (utenzo_is_appointment_in_cart()) {
     $output['is_appointment'] = true;
-  }else{
+  } else {
     $output['is_appointment'] = false;
   }
   if ($cart_total < $free_shipping_threshold) {
@@ -1249,7 +1249,7 @@ if (!function_exists('utenzo_product_share_render')) {
 </svg>' . esc_html__('Share', 'utenzo') . '</div><ul>' . implode(' ', $social_item) . '</ul>';
         } ?>
       </div>
-<?php }
+    <?php }
 
     return ob_get_clean();
   }
@@ -1323,3 +1323,68 @@ function utenzo_remove_section()
     unset($_SESSION['coupon']);
   }
 }
+
+function utenzo_search_live()
+{
+  $search_term = isset($_POST['search_term']) ? sanitize_text_field($_POST['search_term']) : '';
+  $category_slug = isset($_POST['category_slug']) ? sanitize_text_field($_POST['category_slug']) : '';
+
+  $args = array(
+    'post_type' => 'product',
+    'posts_per_page' => -1,
+    's' => $search_term,
+    'tax_query' => array()
+  );
+
+  if (!empty($category_slug)) {
+    $args['tax_query'][] = array(
+      'taxonomy' => 'product_cat',
+      'field' => 'slug',
+      'terms' => $category_slug
+    );
+  }
+
+  $query = new WP_Query($args);
+  ob_start();
+  if ($query->have_posts()) {
+    while ($query->have_posts()) {
+      $query->the_post();
+      $product = wc_get_product(get_the_ID());
+      $product_price = $product->get_price_html();
+    ?>
+      <div class="bt-product-item">
+        <div class="bt-product-thumb">
+          <a href="<?php echo esc_url(get_permalink()); ?>" class="bt-thumb">
+            <?php echo wp_kses_post($product->get_image('medium')); ?>
+          </a>
+          <div class="bt-product-title">
+            <h3 class="bt-title">
+              <a href="<?php echo esc_url(get_permalink()); ?>">
+                <?php echo esc_html($product->get_name()); ?>
+              </a>
+            </h3>
+            <?php
+            if ($product_price) {
+              echo '<span>' . $product_price . '</span>';
+            }
+            ?>
+          </div>
+        </div>
+        <div class="bt-product-add-to-cart">
+          <a href="?add-to-cart=<?php echo esc_attr(get_the_ID()); ?>" aria-describedby="woocommerce_loop_add_to_cart_link_describedby_<?php echo esc_attr(get_the_ID()); ?>" data-quantity="1" class="button product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="<?php echo esc_attr(get_the_ID()); ?>" data-product_sku="" rel="nofollow"><?php echo esc_html__('Add to cart', 'utenzo') ?></a>
+        </div>
+      </div>
+<?php
+    }
+    wp_reset_postdata();
+    $output['items'] = ob_get_clean();
+  } else {
+    $output['items'] = '<div class="bt-no-results">' . __('No products found! ', 'utenzo') . '</div>';
+  }
+
+  wp_send_json_success($output);
+
+  die();
+}
+add_action('wp_ajax_utenzo_search_live', 'utenzo_search_live');
+add_action('wp_ajax_nopriv_utenzo_search_live', 'utenzo_search_live');
