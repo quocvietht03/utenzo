@@ -2391,3 +2391,68 @@
     }
   }
 }
+.bt-elwg-product-category {
+  .bt-product-category {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    &--thumb {
+      .bt-cover-image {
+        border-radius: 7px;
+      }
+    }
+    &--inner {
+      position: relative;
+    }
+    &--name {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      left: 12px;
+      background: #fff;
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      color: $color-primary;
+      font-family: $accent-font;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 28px;
+
+      span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: calc(100% - 36px);
+      }
+      svg {
+        width: 24px;
+      }
+      &:hover {
+        background: $color-accent;
+        color: #fff;
+      }
+    }
+    @media(max-width:$break-xs){
+      &--name {
+        bottom: 6px;
+        right: 6px;
+        left: 6px;
+        padding: 6px;
+        font-size: 15px;
+        line-height: 1.4;
+        gap: 10px;
+        span {
+          width: calc(100% - 30px);
+        }
+        svg{
+          width: 20px;
+        }
+      }
+    }
+  }
+}

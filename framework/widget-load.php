@@ -73,7 +73,9 @@ class ElementorWidgets
 			'brand-slider',
 			'list-faq',
 			'account-login',
-			'search-product'
+			'search-product',
+			'product-category',
+			'heading-animation'
 		);
 
 		return $this->widgets;
@@ -197,6 +199,8 @@ class ElementorWidgets
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ListFaq\Widget_ListFaq());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\AccountLogin\Widget_AccountLogin());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\SearchProduct\Widget_SearchProduct());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ProductCategory\Widget_ProductCategory());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\HeadingAnimation\Widget_HeadingAnimation());
 	}
 
 	/**

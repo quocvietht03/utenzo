@@ -199,12 +199,67 @@
 			});
 		}
 	};
+	function UtenzoAnimateText(selector, delayFactor = 50) {
+		const $text = $(selector);
+		const textContent = $text.text();
+		$text.empty();
+
+		let letterIndex = 0;
+
+		textContent.split(" ").forEach((word) => {
+			const $wordSpan = $("<span>").addClass("bt-word");
+
+			word.split("").forEach((char) => {
+				const $charSpan = $("<span>").addClass("bt-letter").text(char);
+				$charSpan.css("animation-delay", `${letterIndex * delayFactor}ms`);
+				$wordSpan.append($charSpan);
+				letterIndex++;
+			});
+
+			$text.append($wordSpan).append(" ");
+		});
+	}
+	function headingAnimationHandler($scope) {
+		var headingAnimationContainer = $scope.find('.bt-elwg-heading-animation');
+		var animationElement = headingAnimationContainer.find('.bt-heading-animation-js');
+		var animationClass = headingAnimationContainer.data('animation');
+		var animationDelay = headingAnimationContainer.data('delay');
+
+		if (animationClass === 'none') {
+			return;
+		}
+		function checkIfElementInView() {
+			const windowHeight = $(window).height();
+			const elementOffsetTop = animationElement.offset().top;
+			const elementOffsetBottom = elementOffsetTop + animationElement.outerHeight();
+
+			const isElementInView =
+				elementOffsetTop < $(window).scrollTop() + windowHeight &&
+				elementOffsetBottom > $(window).scrollTop();
+
+			if (isElementInView) {
+				if (!animationElement.hasClass('bt-animated')) {
+					animationElement
+						.addClass('bt-animated')
+						.addClass(animationClass);
+					UtenzoAnimateText(animationElement, animationDelay);
+				}
+			}
+		}
+		jQuery(window).on('scroll', function () {
+			checkIfElementInView();
+		});
+		jQuery(document).ready(function () {
+			checkIfElementInView();
+		});
+	}
 	// Make sure you run this code under Elementor.
 	$(window).on('elementor/frontend/init', function () {
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-location-list.default', LocationListHandler);
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-brand-slider.default', BrandSliderHandler);
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-list-faq.default', FaqHandler);
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-search-product.default', SearchProductHandler);
+		elementorFrontend.hooks.addAction('frontend/element_ready/bt-heading-animation.default', headingAnimationHandler);
 	});
 
 })(jQuery);

@@ -98,79 +98,6 @@
 		}
 
 	}
-	/* animation Text */
-	function UtenzoAnimateText(selector, delayFactor = 0.05) {
-		const $text = $(selector);
-		const textContent = $text.text();
-		$text.empty();
-
-		let letterIndex = 0;
-
-		textContent.split(" ").forEach((word) => {
-			const $wordSpan = $("<span>").addClass("bt-word");
-
-			word.split("").forEach((char) => {
-				const $charSpan = $("<span>").addClass("bt-letter").text(char);
-				$charSpan.css("animation-delay", `${letterIndex * delayFactor}s`);
-				$wordSpan.append($charSpan);
-				letterIndex++;
-			});
-
-			$text.append($wordSpan).append(" ");
-		});
-	}
-	function UtenzoCheckVisibilityText() {
-		if ($('.bt-effect-heading-enable').length > 0) {
-			$('.elementor-widget-heading .elementor-heading-title').each(function () {
-				const $this = $(this);
-				if (!$this.is('h1, h2, h3, h4, h5, h6')) {
-					return;
-				}
-				$this.parent().parent().addClass('bt-fade-animation');
-				const windowHeight = $(window).height();
-				const elementTop = $this.offset().top;
-				const elementBottom = elementTop + $this.outerHeight();
-
-				if (elementTop < $(window).scrollTop() + windowHeight && elementBottom > $(window).scrollTop()) {
-					if (!$this.hasClass('bt-animated')) {
-						let delayFactor = 0.05;
-						const settings = $this.parent().parent().data('settings');
-
-						if (settings && settings._animation_delay) {
-							delayFactor = parseFloat(settings._animation_delay) || delayFactor;
-						}
-						if (settings && settings._animation == 'fadeInRight') {
-							$this.addClass('bt-animated bt-animation-right');
-							UtenzoAnimateText(this, delayFactor);
-						} else if (settings && settings._animation == 'fadeInLeft') {
-							$this.addClass('bt-animated bt-animation-left');
-							UtenzoAnimateText(this, delayFactor);
-						} else if (settings && settings._animation == 'fadeInUp') {
-							$this.addClass('bt-animated bt-animation-up');
-							UtenzoAnimateText(this, delayFactor);
-						} else if (settings && settings._animation == 'fadeInDown') {
-							$this.addClass('bt-animated bt-animation-down');
-							UtenzoAnimateText(this, delayFactor);
-						}
-					}
-				}
-			});
-			$('.bt-text-animation').each(function () {
-				const $this = $(this);
-				const windowHeight = $(window).height();
-				const elementTop = $this.offset().top;
-				const elementBottom = elementTop + $this.outerHeight();
-
-				if (elementTop < $(window).scrollTop() + windowHeight && elementBottom > $(window).scrollTop()) {
-					if (!$this.hasClass('bt-animated')) {
-						let delayFactor = 0.05;
-						$this.addClass('bt-animated bt-animation-right');
-						UtenzoAnimateText(this, delayFactor);
-					}
-				}
-			});
-		}
-	}
 	/* Validation form comment */
 	function UtenzoCommentValidation() {
 		if ($('#bt_comment_form').length) {
@@ -1079,7 +1006,6 @@
 		UtenzoToggleMenuMobile();
 		UtenzoToggleSubMenuMobile();
 		UtenzoShop();
-		UtenzoCheckVisibilityText();
 		UtenzoCommentValidation();
 		UtenzoProductCompare();
 		UtenzoProductCompareLoad();
