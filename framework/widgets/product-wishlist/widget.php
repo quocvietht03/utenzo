@@ -118,7 +118,14 @@ class Widget_ProductWishlist extends Widget_Base
 	{
 		$settings = $this->get_settings_for_display();
 		$productwishlist = '';
-		$product_ids = array();
+		if (isset($_GET['datashare']) && !empty($_GET['datashare'])) {
+			$wishlist = sanitize_text_field($_GET['datashare']);
+			$product_ids = explode(',', $wishlist);
+			$product_ids = array_map('intval', $product_ids);
+			$product_ids = array_filter($product_ids);
+		}else{
+			$product_ids = array();
+		}
 	?>
 		<div class="bt-elwg-products-wishlist--default">
 			<form class="bt-products-wishlist-form" action="" method="post">
@@ -147,7 +154,7 @@ class Widget_ProductWishlist extends Widget_Base
 						</div>
 					</div>
 
-					<div class="bt-table--body woocommerce loading">
+					<div class="bt-table--body woocommerce">
 						<span class="bt-loading-wave"></span>
 
 						<?php if (!empty($product_ids)) { ?>
@@ -160,14 +167,7 @@ class Widget_ProductWishlist extends Widget_Base
 								?>
 										<div class="bt-table--row bt-product-item">
 											<div class="bt-table--col bt-product-remove">
-												<a href="#" data-id="<?php echo esc_attr($product_id); ?>" class="bt-product-remove-wishlist">
-													<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-														<path d="M9.64052 9.10965C9.67536 9.14449 9.703 9.18586 9.72186 9.23138C9.74071 9.2769 9.75042 9.32569 9.75042 9.37496C9.75042 9.42424 9.74071 9.47303 9.72186 9.51855C9.703 9.56407 9.67536 9.60544 9.64052 9.64028C9.60568 9.67512 9.56432 9.70276 9.51879 9.72161C9.47327 9.74047 9.42448 9.75017 9.37521 9.75017C9.32594 9.75017 9.27714 9.74047 9.23162 9.72161C9.1861 9.70276 9.14474 9.67512 9.1099 9.64028L6.00021 6.53012L2.89052 9.64028C2.82016 9.71064 2.72472 9.75017 2.62521 9.75017C2.5257 9.75017 2.43026 9.71064 2.3599 9.64028C2.28953 9.56991 2.25 9.47448 2.25 9.37496C2.25 9.27545 2.28953 9.18002 2.3599 9.10965L5.47005 5.99996L2.3599 2.89028C2.28953 2.81991 2.25 2.72448 2.25 2.62496C2.25 2.52545 2.28953 2.43002 2.3599 2.35965C2.43026 2.28929 2.5257 2.24976 2.62521 2.24976C2.72472 2.24976 2.82016 2.28929 2.89052 2.35965L6.00021 5.46981L9.1099 2.35965C9.18026 2.28929 9.2757 2.24976 9.37521 2.24976C9.47472 2.24976 9.57016 2.28929 9.64052 2.35965C9.71089 2.43002 9.75042 2.52545 9.75042 2.62496C9.75042 2.72448 9.71089 2.81991 9.64052 2.89028L6.53036 5.99996L9.64052 9.10965Z" fill="#C72929" />
-													</svg>
-													<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" fill="#C72929">
-														<path d="M493.815 70.629c-11.001-1.003-20.73 7.102-21.733 18.102l-2.65 29.069C424.473 47.194 346.429 0 256 0 158.719 0 72.988 55.522 30.43 138.854c-5.024 9.837-1.122 21.884 8.715 26.908 9.839 5.024 21.884 1.123 26.908-8.715C102.07 86.523 174.397 40 256 40c74.377 0 141.499 38.731 179.953 99.408l-28.517-20.367c-8.989-6.419-21.48-4.337-27.899 4.651-6.419 8.989-4.337 21.479 4.651 27.899l86.475 61.761c12.674 9.035 30.155.764 31.541-14.459l9.711-106.53c1.004-11.001-7.1-20.731-18.1-21.734zM472.855 346.238c-9.838-5.023-21.884-1.122-26.908 8.715C409.93 425.477 337.603 472 256 472c-74.377 0-141.499-38.731-179.953-99.408l28.517 20.367c8.989 6.419 21.479 4.337 27.899-4.651 6.419-8.989 4.337-21.479-4.651-27.899l-86.475-61.761c-12.519-8.944-30.141-.921-31.541 14.459L.085 419.637c-1.003 11 7.102 20.73 18.101 21.733 11.014 1.001 20.731-7.112 21.733-18.102l2.65-29.069C87.527 464.806 165.571 512 256 512c97.281 0 183.012-55.522 225.57-138.854 5.024-9.837 1.122-21.884-8.715-26.908z"></path>
-													</svg>
-												</a>
+									
 											</div>
 											<div class="bt-table--col bt-product-thumb">
 												<a href="<?php echo esc_url(get_permalink($product_id)); ?>" class="bt-thumb">

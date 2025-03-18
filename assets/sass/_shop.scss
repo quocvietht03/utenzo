@@ -368,7 +368,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 999;
+  z-index: -1;
+  visibility: hidden;
+  opacity: 0;
+  &.active{
+    z-index: 999;
+    visibility: visible;
+    opacity: 1;
+  }
   .bt-compare-close {
     padding: 4px;
     background: transparent;
@@ -400,7 +407,7 @@
     position: relative;
     transform-origin: center center;
     max-height: 95%;
-    max-width: 95%;
+    max-width: 1270px;
     z-index: 1001;
     display: flex;
     margin-top: 30px;
@@ -438,7 +445,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(12,44,72, 0.8);
     z-index: 1000;
     &:hover {
     }
@@ -705,38 +712,39 @@
         @extend .bt-cover-image;
         padding-bottom: 100%;
         background: $color-background;
+        border-radius: 8px;
         @media (max-width: $break-xs) {
           padding-bottom: 100%;
         }
       }
       .onsale {
-        top: 16px;
-        left: 16px;
-        font-size: 16px;
+        top: 12px;
+        left: 12px;
+        font-size: 14px;
         font-style: normal;
-        font-weight: 700;
-        line-height: 24px;
-        height: 24px;
+        font-weight: 600;
+        line-height: 22px;
+        height: 22px;
         text-transform: capitalize;
         display: inline-block;
         padding: 0 4px;
-        border-radius: 2px;
+        border-radius: 30px;
         color: #fff;
         position: absolute;
         text-align: center;
         min-height: auto;
-        min-width: 50px;
+        min-width: 48px;
         width: auto;
-        background: #c72929;
+        background: #f03e3e;
         box-sizing: border-box;
       }
       .bt-product-icon-btn {
         display: flex;
         flex-direction: column;
         position: absolute;
-        top: 16px;
-        right: 16px;
-        gap: 10px;
+        top: 12px;
+        right: 12px;
+        gap: 8px;
         .tooltip {
           position: absolute;
           top: 50%;
@@ -768,13 +776,13 @@
           background: #fff;
           display: flex;
           align-items: center;
-          width: 32px;
-          height: 32px;
+          width: 40px;
+          height: 40px;
           justify-content: center;
-          border-radius: 50%;
-          border: 1px solid #e4e4e4;
-          opacity: 0;
-          transform: translateX(100px);
+          border-radius: 2px;
+          border: 1px solid #e9e9e9;
+          // opacity: 0;
+          // transform: translateX(100px);
           transition:
             opacity 0.5s ease,
             transform 0.5s ease;
@@ -818,8 +826,8 @@
             }
           }
           svg {
-            width: 16px;
-            height: 16px;
+            width: 24px;
+            height: 24px;
           }
           &.bt-product-wishlist-btn {
             transition-delay: 0.1s;
@@ -842,8 +850,8 @@
           justify-content: center;
           border-radius: 50%;
           border: 1px solid #e4e4e4;
-          opacity: 0;
-          transform: translateX(100px);
+          // opacity: 0;
+          // transform: translateX(100px);
           transition:
             opacity 0.5s ease,
             transform 0.5s ease;
@@ -916,39 +924,65 @@
           vertical-align: top;
           font-weight: 400;
           position: absolute;
-          top: 0.9em;
+          top: 7px;
           right: 1em;
           animation: spin 2s linear infinite;
+        }
+      }
+      .bt-add-to-cart {
+        a {
+          background: $color-accent;
+          color: #fff;
+          text-align: center;
+          font-family: $accent-font;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: 26px;
+          text-transform: uppercase;
+          position: absolute;
+          bottom: 12px;
+          left: 12px;
+          right: 12px;
+          width: auto;
+          max-width: 100%;
+          padding: 7px 28px;
+          border-radius: 4px;
         }
       }
     }
 
     &__infor {
-      padding: 20px 15px 10px;
+      padding: 20px 0 0 0;
       width: 100%;
       z-index: 9;
       position: relative;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
+      gap: 4px;
     }
     .bt-product-rating {
       display: flex;
-      gap: 8px;
+      gap: 6px;
+      align-items: center;
       .star-rating {
         margin: 0;
         font-size: 16px;
         height: 18px;
         width: 99px;
-        color: #ffb600;
+        color: $color-accent;
       }
       &--count {
+        color: $color-text;
         font-size: 14px;
         font-style: normal;
         font-weight: 400;
-        line-height: 18px;
-        color: $color-text;
+        line-height: 22px;
+        font-family: $accent-font;
+        position: relative;
+        top: 1px;
       }
     }
     &__title {
@@ -956,10 +990,10 @@
       color: $color-primary;
       font-size: 16px;
       font-style: normal;
-      font-weight: 700;
+      font-weight: 500;
       line-height: 24px;
       text-transform: capitalize;
-      margin: 8px 0;
+      margin: 0;
       display: block;
       text-align: center;
     }
@@ -970,25 +1004,25 @@
         justify-content: flex-end;
         gap: 8px;
         align-items: baseline;
-        font-size: 20px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 28px;
-        ins {
-          text-decoration: none;
+        .woocommerce-Price-amount {
           font-size: 20px;
           font-style: normal;
-          font-weight: 500 !important;
+          font-weight: 600;
           line-height: 28px;
           color: $color-primary;
+        }
+        ins {
+          text-decoration: none;
           margin-right: 0 !important;
         }
         del {
-          font-size: 16px;
-          font-style: normal;
-          font-weight: 400;
-          line-height: 26px;
-          color: $color-text;
+          .woocommerce-Price-amount {
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 26px;
+            color: #a0a0a0;
+          }
         }
       }
     }
@@ -1187,10 +1221,10 @@
       text-transform: uppercase;
       @media (max-width: $break-xs) {
         top: 90px;
-        right: -36px; 
+        right: -36px;
         font-size: 14px;
       }
-      @media(max-width:390px){
+      @media (max-width: 390px) {
         top: 81px;
         right: -40px;
         font-size: 12px;
@@ -1692,8 +1726,8 @@
       }
     }
   }
-  .bt-product-pagination-wrap{
-    .bt-pagination{
+  .bt-product-pagination-wrap {
+    .bt-pagination {
       margin-top: 30px;
     }
   }
@@ -2292,7 +2326,7 @@
 
         #tab-description {
           margin: 40px 0;
-          @extend .__bt-format-post-content; 
+          @extend .__bt-format-post-content;
           &:after {
             content: "";
             display: block;
@@ -4145,7 +4179,7 @@
   .woocommerce-ResetPassword {
     .form-row {
       width: 100%;
-      input{
+      input {
         border-radius: 15px;
         min-height: 52px;
       }

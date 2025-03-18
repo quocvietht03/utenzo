@@ -16,14 +16,16 @@ if (!function_exists('utenzo_register_sidebar')) {
 }
 
 /* Add Support Upload Image Type SVG */
-function utenzo_mime_types($mimes) {
+function utenzo_mime_types($mimes)
+{
 	$mimes['svg'] = 'image/svg+xml';
 	return $mimes;
 }
 add_filter('upload_mimes', 'utenzo_mime_types');
 
 /* Get icon SVG HTML */
-function utenzo_get_icon_svg_html($icon_file_name) {
+function utenzo_get_icon_svg_html($icon_file_name)
+{
 
 	if (!empty($icon_file_name)) {
 		$file_path = CLEANIRA_IMG_DIR . $icon_file_name . '.svg';
@@ -100,9 +102,20 @@ if (!function_exists('utenzo_enqueue_scripts')) {
 				wp_add_inline_script('utenzo-main', $custom_script);
 			}
 		}
+		$wishlist = get_field('wishlist', 'options');
+		$wishlist_url = home_url('/products-wishlist/');
+		if ($wishlist && isset($wishlist['page_wishlist']) && $wishlist['page_wishlist'] != '') {
+			$wishlist_url = get_permalink($wishlist['page_wishlist']);
+		}
+		$shop_url = home_url('/shop/');
+		if (function_exists('wc_get_page_id') && wc_get_page_id('shop') > 0) {
+			$shop_url = get_permalink(wc_get_page_id('shop'));
+		}
 		/* Options to script */
 		$js_options = array(
 			'ajax_url' => admin_url('admin-ajax.php'),
+			'page_wishlist' => $wishlist_url,
+			'shop' => 	$shop_url,
 			'user_info' => wp_get_current_user(),
 		);
 		wp_localize_script('utenzo-main', 'AJ_Options', $js_options);
@@ -182,11 +195,12 @@ function bt_custom_posts_per_page($query)
 	}
 };
 /* Custom search posts */
-function bt_custom_search_filter( $query ) {
-    if ( $query->is_search() && !is_admin() ) {
-        if ( !is_post_type_archive( 'product' ) && !is_tax( 'product_cat' ) && !is_singular( 'product' ) ) {
-            $query->set( 'post_type', 'post' );
-        }
-    }
+function bt_custom_search_filter($query)
+{
+	if ($query->is_search() && !is_admin()) {
+		if (!is_post_type_archive('product') && !is_tax('product_cat') && !is_singular('product')) {
+			$query->set('post_type', 'post');
+		}
+	}
 }
-add_action( 'pre_get_posts', 'bt_custom_search_filter' );
+add_action('pre_get_posts', 'bt_custom_search_filter');

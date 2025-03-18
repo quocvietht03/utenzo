@@ -778,6 +778,43 @@
     }
   }
 }
+
+.bt-elwg-mini-wishlist {
+  &--default {
+    .bt-mini-wishlist {
+      a {
+        position: relative;
+        display: flex;
+        svg {
+          display: flex;
+          width: 24px;
+          height: 24px;
+          align-items: center;
+          justify-content: center;
+        }
+        span {
+          color: #fff;
+          text-align: center;
+          font-family: $accent-font;
+          font-size: 11px;
+          font-style: normal;
+          font-weight: 800;
+          line-height: 16px;
+          letter-spacing: 0.88px;
+          text-transform: uppercase;
+          width: 16px;
+          height: 16px;
+          border-radius: 100%;
+          display: block;
+          position: absolute;
+          right: -7px;
+          top: -5.75px;
+          background: $color-primary;
+        }
+      }
+    }
+  }
+}
 .bt-elwg-location-list {
   &--default {
     .bt-location-icon {
@@ -1916,9 +1953,9 @@
             padding: 13px 40px;
             font-size: 16px;
             line-height: 1.5;
-            color: $color-primary;
+            color: #fff;
             border-radius: 100px;
-            background-color: $color-secondary;
+            background-color: $color-accent;
             font-weight: 700;
             white-space: nowrap;
             display: inline-block;

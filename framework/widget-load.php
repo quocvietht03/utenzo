@@ -75,7 +75,8 @@ class ElementorWidgets
 			'account-login',
 			'search-product',
 			'product-category',
-			'heading-animation'
+			'heading-animation',
+			'mini-wishlist'
 		);
 
 		return $this->widgets;
@@ -201,6 +202,7 @@ class ElementorWidgets
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\SearchProduct\Widget_SearchProduct());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ProductCategory\Widget_ProductCategory());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\HeadingAnimation\Widget_HeadingAnimation());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\MiniWishlist\Widget_MiniWishlist());
 	}
 
 	/**

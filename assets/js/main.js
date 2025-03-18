@@ -134,6 +134,8 @@
 				if (!wishlist_local) {
 					window.localStorage.setItem('productwishlistlocal', post_id);
 					wishlist_local = window.localStorage.getItem('productwishlistlocal');
+					var wishlist_count = wishlist_local ? wishlist_local.split(',').length : 0;
+					$('.bt-mini-wishlist .wishlist_total').html(wishlist_count);
 					$(this).addClass('loading');
 					$(this).removeClass('no-added');
 					setTimeout(function () {
@@ -141,15 +143,16 @@
 						$('.bt-product-wishlist-btn[data-id="' + post_id + '"]').removeClass('loading');
 						$('.bt-product-wishlist-btn[data-id="' + post_id + '"] .tooltip').text("View Wishlist");
 					}, 500);
-					$('.bt-productwishlistlocal').val(post_id);
 				} else {
 					var wishlist_arr = wishlist_local.split(',');
 
 					if (wishlist_arr.includes(post_id)) {
-						window.location.href = '/products-wishlist/';
+						window.location.href = AJ_Options.page_wishlist;
 					} else {
 						window.localStorage.setItem('productwishlistlocal', wishlist_local + ',' + post_id);
 						wishlist_local = window.localStorage.getItem('productwishlistlocal');
+						var wishlist_count = wishlist_local ? wishlist_local.split(',').length : 0;
+						$('.bt-mini-wishlist .wishlist_total').html(wishlist_count);
 						$(this).addClass('loading');
 						$(this).removeClass('no-added');
 						setTimeout(function () {
@@ -157,7 +160,6 @@
 							$('.bt-product-wishlist-btn[data-id="' + post_id + '"]').removeClass('loading');
 							$('.bt-product-wishlist-btn[data-id="' + post_id + '"] .tooltip').text("View Wishlist");
 						}, 500);
-						$('.bt-productwishlistlocal').val(wishlist_local + ',' + post_id);
 					}
 				}
 			});
@@ -179,11 +181,13 @@
 				wishlist_str = wishlist_arr.toString();
 				$('.bt-productwishlistlocal').val(wishlist_str);
 				window.localStorage.setItem('productwishlistlocal', wishlist_str);
+				UtenzoShareLocalStorage(wishlist_str);
 				$('.bt-products-wishlist-form').submit();
 			});
 
 			// Ajax wishlist
 			$('.bt-products-wishlist-form').submit(function () {
+
 				var param_ajax = {
 					action: 'utenzo_products_wishlist',
 					productwishlist_data: $('.bt-productwishlistlocal').val()
@@ -200,11 +204,9 @@
 					},
 					success: function (response) {
 						if (response.success) {
-							setTimeout(function () {
-								$('.bt-product-list').html(response.data['items']).fadeIn('slow');
-								$('.bt-table--body').removeClass('loading');
-							}, 500);
-
+							$('.bt-product-list').html(response.data['items']).fadeIn('slow');
+							$('.bt-mini-wishlist .wishlist_total').html(response.data['count']);
+							$('.bt-table--body').removeClass('loading');
 						} else {
 							console.log('error');
 						}
@@ -221,10 +223,12 @@
 	/* Product Wishlist Load */
 	function UtenzoProductWishlistLoad() {
 		var wishlist_local = window.localStorage.getItem('productwishlistlocal');
-
+		if (!wishlist_local) {
+			return;
+		}
 		if ($('.elementor-widget-bt-product-wishlist').length > 0) {
+			UtenzoShareLocalStorage(wishlist_local);
 			$('.bt-productwishlistlocal').val(wishlist_local);
-
 			var param_ajax = {
 				action: 'utenzo_products_wishlist',
 				productwishlist_data: wishlist_local
@@ -241,11 +245,9 @@
 				},
 				success: function (response) {
 					if (response.success) {
-						setTimeout(function () {
-							$('.bt-product-list').html(response.data['items']).fadeIn('slow');
-							$('.bt-table--body').removeClass('loading');
-						}, 1000);
-
+						$('.bt-product-list').html(response.data['items']).fadeIn('slow');
+						$('.bt-mini-wishlist .wishlist_total').html(response.data['count']);
+						$('.bt-table--body').removeClass('loading');
 					} else {
 						console.log('error');
 					}
@@ -259,6 +261,17 @@
 	/* Product compare */
 	function UtenzoProductCompare() {
 		if ($('.bt-product-compare-btn').length > 0) {
+			$('body').append('<div class="bt-popup-compare"><div class="bt-compare-overlay"></div><div class="bt-compare-body"><div class="bt-loading-wave"></div><div class="bt-compare-close"></div><div class="bt-compare-load"></div></div></div>').fadeIn('slow');
+			function showComparePopup() {
+				$('.bt-popup-compare').addClass('active');
+				$('.bt-compare-body').addClass('show');
+			}
+			function removeComparePopup() {
+				$('.bt-compare-body').removeClass('show');
+				setTimeout(function () {
+					$('.bt-popup-compare').removeClass('active');
+				}, 300);
+			}
 			$(document).on('click', '.bt-product-compare-btn', function (e) {
 				e.preventDefault();
 				$(this).find('.tooltip').remove();
@@ -302,9 +315,7 @@
 					success: function (response) {
 						if (response.success) {
 							setTimeout(function () {
-
-								$('body').append('<div class="bt-popup-compare"><div class="bt-compare-overlay"></div><div class="bt-compare-body"><div class="bt-loading-wave"></div><div class="bt-compare-close"></div><div class="bt-compare-load"></div></div></div>').fadeIn('slow');
-								$('.bt-compare-body').addClass('show');
+								showComparePopup();
 								$('.bt-popup-compare .bt-compare-load').html(response.data['product']).fadeIn('slow');
 							}, 100);
 						} else {
@@ -317,21 +328,21 @@
 				});
 			});
 			$(document).on('click', '.bt-popup-compare .bt-compare-overlay', function () {
-				$('.bt-popup-compare').remove();
+				removeComparePopup();
 			});
 			$(document).on('click', '.bt-popup-compare .bt-compare-close', function () {
 				if (!$('.bt-popup-compare').hasClass('bt-compare-elwwg')) {
-					$('.bt-popup-compare').remove();
+					removeComparePopup();
 				}
 			});
 		}
 		$(document).on('click', '.bt-product-add-compare .bt-cover-image', function () {
 			$('.bt-compare-body').removeClass('show');
 			setTimeout(function () {
-				if ($('body').hasClass('archive')) {
-					$('.bt-popup-compare').remove();
+				if (!$('body').hasClass('single-product')) {
+					$('.bt-popup-compare').removeClass('active');
 				} else {
-					window.location.href = '/shop/';
+					window.location.href = AJ_Options.shop;
 				}
 			}, 300);
 		});
@@ -373,7 +384,7 @@
 
 						} else {
 							if (!$('.bt-popup-compare').hasClass('bt-compare-elwwg')) {
-								$('.bt-popup-compare').remove();
+								$('.bt-popup-compare').removeClass('active');
 							} else {
 								setTimeout(function () {
 									$('.bt-popup-compare .bt-compare-load').html(response.data['product']).fadeIn('slow');
@@ -394,7 +405,9 @@
 	/* Product Compare Load */
 	function UtenzoProductCompareLoad() {
 		var compare_local = window.localStorage.getItem('productcomparelocal');
-
+		if(!compare_local){
+			return;
+		}
 		if ($('.elementor-widget-bt-product-compare').length > 0) {
 			var param_ajax = {
 				action: 'utenzo_products_compare',
@@ -974,7 +987,8 @@
 		var productCompareArray = productCompare ? productCompare.split(',') : [];
 		var productWishlist = localStorage.getItem('productwishlistlocal');
 		var productWishlistArray = productWishlist ? productWishlist.split(',') : [];
-
+		var wishlist_count = productWishlist ? productWishlist.split(',').length : 0;
+		$('.bt-mini-wishlist .wishlist_total').html(wishlist_count);
 		$('.bt-product-compare-btn').each(function () {
 			var productId = $(this).data('id');
 			if (productCompareArray.includes(productId.toString())) {
@@ -999,6 +1013,30 @@
 
 		$('.bt-elwg-site-copyright').each(function () {
 			this.innerHTML = this.innerHTML.replace(searchTerm, replaceWith);
+		});
+	}
+	/* share button wishlist page and compare page */
+	function UtenzoShareLocalStorage(datashare = []) {
+		if (!datashare) {
+			const url = new URL(window.location.href);
+			url.searchParams.delete('datashare');
+			window.history.pushState(null, '', url.toString());
+			return;
+		}
+		const url = new URL(window.location.href);
+		url.searchParams.set('datashare', datashare);
+		window.history.pushState(null, '', url.toString());
+		$('.bt-post-share a').each(function () {
+			var currentHref = $(this).attr('href');
+			// Handle both Facebook and Pinterest share links
+			if (currentHref.includes('facebook.com/sharer')) {
+				var newHref = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href);
+			} else if (currentHref.includes('pinterest.com/pin')) {
+				var newHref = 'https://pinterest.com/pin/create/button/?url=' + encodeURIComponent(window.location.href);
+			} else {
+				var newHref = currentHref.replace(/url=[^&]+/, 'url=' + encodeURIComponent(window.location.href));
+			}
+			$(this).attr('href', newHref);
 		});
 	}
 	jQuery(document).ready(function ($) {
@@ -1035,6 +1073,5 @@
 		UtenzoFreeShippingMessage();
 	});
 	jQuery(window).on('scroll', function () {
-		UtenzoCheckVisibilityText();
 	});
 })(jQuery);

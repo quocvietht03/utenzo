@@ -152,7 +152,7 @@ function utenzo_woocommerce_percentage_sale($html, $post, $product)
     $regular_price = (float) $product->get_regular_price();
     $sale_price = (float) $product->get_sale_price();
 
-    $percentage = round(100 - ($sale_price / $regular_price * 100)) . '%';
+    $percentage = '-' . round(100 - ($sale_price / $regular_price * 100)) . '%';
   }
 
   return '<span class="onsale">' . $percentage . '</span>';
@@ -834,18 +834,57 @@ function utenzo_products_compare()
   $ex_items = count($product_ids) < 3 ? 3 - count($product_ids) : 0;
   ob_start();
   if (!empty($product_ids)) {
+    $compare_settings = get_field('compare', 'options');
+    if (!empty($compare_settings['fields_to_show_compare'])) {
+      $fields_show_compare = $compare_settings['fields_to_show_compare'];
+    } else {
+      $fields_show_compare = array('price', 'rating', 'stock_status', 'weight', 'dimensions', 'color', 'size');
+    }
   ?>
     <div class="bt-table-title">
       <h2><?php esc_html_e('Compare products', 'utenzo') ?></h2>
     </div>
     <div class="bt-table-compare">
       <div class="bt-table--head">
-        <div class="bt-table--col"><?php esc_html_e('Thumbnail', 'utenzo') ?></div>
-        <div class="bt-table--col"><?php esc_html_e('Product Name', 'utenzo') ?></div>
-        <div class="bt-table--col"><?php esc_html_e('Price', 'utenzo') ?></div>
-        <div class="bt-table--col"><?php esc_html_e('Stock status', 'utenzo') ?></div>
-        <div class="bt-table--col"><?php esc_html_e('Rating', 'utenzo') ?></div>
-        <div class="bt-table--col"><?php esc_html_e('Brand', 'utenzo') ?></div>
+        <?php
+        if (!empty($fields_show_compare)) {
+          echo '<div class="bt-table--col">' . esc_html__('Thumbnail', 'utenzo') . '</div>';
+          echo '<div class="bt-table--col">' . esc_html__('Product Name', 'utenzo') . '</div>';
+          if (in_array('short_desc', $fields_show_compare)) {
+            echo '<div class="bt-table--col">' . esc_html__('Short Description', 'utenzo') . '</div>';
+          }
+          if (in_array('price', $fields_show_compare)) {
+            echo '<div class="bt-table--col">' . esc_html__('Price', 'utenzo') . '</div>';
+          }
+          if (in_array('rating', $fields_show_compare)) {
+            echo '<div class="bt-table--col">' . esc_html__('Rating', 'utenzo') . '</div>';
+          }
+          if (in_array('brand', $fields_show_compare)) {
+            echo '<div class="bt-table--col">' . esc_html__('Brand', 'utenzo') . '</div>';
+          }
+          if (in_array('stock_status', $fields_show_compare)) {
+            echo '<div class="bt-table--col">' . esc_html__('Stock status', 'utenzo') . '</div>';
+          }
+          if (in_array('sku', $fields_show_compare)) {
+            echo '<div class="bt-table--col">' . esc_html__('SKU', 'utenzo') . '</div>';
+          }
+          if (in_array('availability', $fields_show_compare)) {
+            echo '<div class="bt-table--col">' . esc_html__('Availability', 'utenzo') . '</div>';
+          }
+          if (in_array('weight', $fields_show_compare)) {
+            echo '<div class="bt-table--col">' . esc_html__('Weight', 'utenzo') . '</div>';
+          }
+          if (in_array('dimensions', $fields_show_compare)) {
+            echo '<div class="bt-table--col">' . esc_html__('Dimensions', 'utenzo') . '</div>';
+          }
+          if (in_array('color', $fields_show_compare)) {
+            echo '<div class="bt-table--col">' . esc_html__('color', 'utenzo') . '</div>';
+          }
+          if (in_array('size', $fields_show_compare)) {
+            echo '<div class="bt-table--col">' . esc_html__('Size', 'utenzo') . '</div>';
+          }
+        }
+        ?>
         <div class="bt-table--col"></div>
       </div>
       <div class="bt-table--body">
@@ -885,31 +924,81 @@ function utenzo_products_compare()
                 </div>
                 <a href="<?php echo esc_url($product_url); ?>">
                   <img src="<?php echo esc_url($product_image_url); ?>" alt="<?php echo esc_attr($product_name); ?>">
-
                 </a>
               </div>
               <div class="bt-table--col bt-name">
                 <h3><a href="<?php echo esc_url($product_url); ?>"><?php echo esc_html($product_name); ?></a></h3>
               </div>
-              <div class="bt-table--col bt-price">
-                <?php echo '<p>' . $product_price . '</p>'; ?>
-              </div>
-              <div class="bt-table--col bt-stock">
-                <?php echo '<p>' . $stock_status . '</p>'; ?>
-              </div>
-              <div class="bt-table--col bt-rating woocommerce">
-                <div class="bt-product-rating">
-                  <?php echo wc_get_rating_html($product->get_average_rating());  ?>
-                  <?php if ($product->get_rating_count()): ?>
-                    <div class="bt-product-rating--count">
-                      (<?php echo esc_html($product->get_rating_count()); ?>)
+              <?php if (!empty($fields_show_compare)) {
+                if (in_array('short_desc', $fields_show_compare)) { ?>
+                  <div class="bt-table--col bt-description">
+                    <?php echo '<p>' . wp_trim_words($product->get_short_description(), 10) . '</p>'; ?>
+                  </div>
+                <?php } ?>
+                <?php if (in_array('price', $fields_show_compare)) { ?>
+                  <div class="bt-table--col bt-price">
+                    <?php echo '<p>' . $product_price . '</p>'; ?>
+                  </div>
+                <?php } ?>
+                <?php if (in_array('rating', $fields_show_compare)) { ?>
+                  <div class="bt-table--col bt-rating woocommerce">
+                    <div class="bt-product-rating">
+                      <?php echo wc_get_rating_html($product->get_average_rating()); ?>
+                      <?php if ($product->get_rating_count()): ?>
+                        <div class="bt-product-rating--count">
+                          (<?php echo esc_html($product->get_rating_count()); ?>)
+                        </div>
+                      <?php endif; ?>
                     </div>
-                  <?php endif; ?>
-                </div>
-              </div>
-              <div class="bt-table--col bt-brand">
-                <?php echo '<p>' . $brand_list . '</p>'; ?>
-              </div>
+                  </div>
+                <?php } ?>
+                <?php if (in_array('stock_status', $fields_show_compare)) { ?>
+                  <div class="bt-table--col bt-brand">
+                    <?php echo '<p>' . $brand_list . '</p>'; ?>
+                  </div>
+                <?php } ?>
+                <?php if (in_array('stock', $fields_show_compare)) { ?>
+                  <div class="bt-table--col bt-stock">
+                    <?php echo '<p>' . $stock_status . '</p>'; ?>
+                  </div>
+                <?php } ?>
+                <?php if (in_array('sku', $fields_show_compare)) { ?>
+                  <div class="bt-table--col bt-sku">
+                    <?php echo '<p>' . $product->get_sku() . '</p>'; ?>
+                  </div>
+                <?php } ?>
+                <?php if (in_array('availability', $fields_show_compare)) { ?>
+                  <div class="bt-table--col bt-availability">
+                    <?php echo '<p>' . ($product->get_stock_quantity() ? $product->get_stock_quantity() : 'N/A') . '</p>'; ?>
+                  </div>
+                <?php } ?>
+                <?php if (in_array('weight', $fields_show_compare)) { ?>
+                  <div class="bt-table--col bt-weight">
+                    <?php echo '<p>' . $product->get_weight() . ' ' . get_option('woocommerce_weight_unit') . '</p>'; ?>
+                  </div>
+                <?php } ?>
+                <?php if (in_array('dimensions', $fields_show_compare)) { ?>
+                  <div class="bt-table--col bt-dimensions">
+                    <?php echo '<p>' . wc_format_dimensions($product->get_dimensions(false)) . '</p>'; ?>
+                  </div>
+                <?php } ?>
+                <?php if (in_array('color', $fields_show_compare)) { ?>
+                  <div class="bt-table--col bt-color">
+                    <?php
+                    $colors = wp_get_post_terms($id, 'pa_color', ['fields' => 'names']);
+                    echo '<p>' . (!empty($colors) ? implode(', ', $colors) : 'N/A') . '</p>';
+                    ?>
+                  </div>
+                <?php } ?>
+                <?php if (in_array('size', $fields_show_compare)) { ?>
+                  <div class="bt-table--col bt-size">
+                    <?php
+                    $sizes = wp_get_post_terms($id, 'pa_size', ['fields' => 'names']);
+                    echo '<p>' . (!empty($sizes) ? implode(', ', $sizes) : 'N/A') . '</p>';
+                    ?>
+                  </div>
+                <?php } ?>
+              <?php } ?>
               <div class="bt-table--col bt-add-to-cart">
                 <a href="?add-to-cart=<?php echo esc_attr($id); ?>" aria-describedby="woocommerce_loop_add_to_cart_link_describedby_<?php echo esc_attr($id); ?>" data-quantity="1" class="button product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="<?php echo esc_attr($id); ?>" data-product_sku="" rel="nofollow"><?php echo esc_html__('Add to cart', 'utenzo') ?></a>
               </div>
@@ -932,21 +1021,43 @@ function utenzo_products_compare()
                   <span> <?php echo __('Add Product To Compare', 'utenzo'); ?></span>
                 </div>
               </div>
-              <div class="bt-table--col bt-name">
-
-              </div>
-              <div class="bt-table--col bt-price">
-
-              </div>
-              <div class="bt-table--col bt-stock">
-              </div>
-              <div class="bt-table--col bt-rating">
-              </div>
-              <div class="bt-table--col bt-brand">
-              </div>
-              <div class="bt-table--col bt-add-to-cart">
-
-              </div>
+              <div class="bt-table--col bt-name"></div>
+              <?php if (!empty($fields_show_compare)) {
+                if (in_array('short_desc', $fields_show_compare)) { ?>
+                  <div class="bt-table--col bt-description"></div>
+                <?php } ?>
+                <?php if (in_array('price', $fields_show_compare)) { ?>
+                  <div class="bt-table--col bt-price"></div>
+                <?php } ?>
+                <?php if (in_array('rating', $fields_show_compare)) { ?>
+                  <div class="bt-table--col bt-rating woocommerce"></div>
+                <?php } ?>
+                <?php if (in_array('stock_status', $fields_show_compare)) { ?>
+                  <div class="bt-table--col bt-brand"></div>
+                <?php } ?>
+                <?php if (in_array('stock', $fields_show_compare)) { ?>
+                  <div class="bt-table--col bt-stock"></div>
+                <?php } ?>
+                <?php if (in_array('sku', $fields_show_compare)) { ?>
+                  <div class="bt-table--col bt-sku"></div>
+                <?php } ?>
+                <?php if (in_array('availability', $fields_show_compare)) { ?>
+                  <div class="bt-table--col bt-availability"></div>
+                <?php } ?>
+                <?php if (in_array('weight', $fields_show_compare)) { ?>
+                  <div class="bt-table--col bt-weight"></div>
+                <?php } ?>
+                <?php if (in_array('dimensions', $fields_show_compare)) { ?>
+                  <div class="bt-table--col bt-dimensions"></div>
+                <?php } ?>
+                <?php if (in_array('color', $fields_show_compare)) { ?>
+                  <div class="bt-table--col bt-color"></div>
+                <?php } ?>
+                <?php if (in_array('size', $fields_show_compare)) { ?>
+                  <div class="bt-table--col bt-size"></div>
+                <?php } ?>
+              <?php } ?>
+              <div class="bt-table--col"></div>
             </div>
         <?php
           }
@@ -1075,6 +1186,7 @@ function utenzo_products_wishlist()
     }
     $output['items'] = ob_get_clean();
   } else {
+    $output['count'] = 0;
     $output['items'] = '<div class="bt-no-results">' . __('No products found! ', 'utenzo') . '<a href="/shop/">' . __('Back to Shop', 'utenzo') . '</a></div>';
   }
 
