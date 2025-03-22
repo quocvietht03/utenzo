@@ -253,6 +253,55 @@
 			checkIfElementInView();
 		});
 	}
+	var TiktokShopSliderHandler = function ($scope, $) {
+		const $tiktokSlider = $scope.find('.bt-elwg-tiktok-shop-slider--default');
+		if ($tiktokSlider.length > 0) {
+			const $item = parseInt($tiktokSlider.data('item')) || 1;
+			const $itemTablet = parseInt($tiktokSlider.data('item-tablet')) || 1;
+			const $itemMobile = parseInt($tiktokSlider.data('item-mobile')) || 1;
+			const $speed = parseInt($tiktokSlider.data('speed')) || 1000;
+			const $spaceBetween = parseInt($tiktokSlider.data('spacebetween')) || 0;
+			const $spaceBetweenTablet = parseInt($tiktokSlider.data('spacebetween-tablet')) || 0;
+			const $spaceBetweenMobile = parseInt($tiktokSlider.data('spacebetween-mobile')) || 0;
+			const $autoplay = $tiktokSlider.data('autoplay') === 'true';
+
+			const $swiper = new Swiper($tiktokSlider[0], {
+				slidesPerView: $itemMobile,
+				loop: true,
+				spaceBetween: $spaceBetweenMobile,
+				speed: $speed,
+				freeMode: true,
+				allowTouchMove: true,
+				autoplay: $autoplay ? {
+					delay: 3000,
+					disableOnInteraction: false
+				} : false,
+				navigation: {
+					nextEl: $tiktokSlider.find('.bt-button-next')[0],
+					prevEl: $tiktokSlider.find('.bt-button-prev')[0],
+				},
+				breakpoints: {
+					1024: {
+						slidesPerView: $item,
+						spaceBetween: $spaceBetween
+					},
+					768: {
+						slidesPerView: $itemTablet,
+						spaceBetween: $spaceBetweenTablet
+					},
+				},
+			});
+
+			if ($autoplay) {
+				$tiktokSlider[0].addEventListener('mouseenter', () => {
+					$swiper.autoplay.stop();
+				});
+				$tiktokSlider[0].addEventListener('mouseleave', () => {
+					$swiper.autoplay.start();
+				});
+			}
+		}
+	};
 	// Make sure you run this code under Elementor.
 	$(window).on('elementor/frontend/init', function () {
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-location-list.default', LocationListHandler);
@@ -260,6 +309,7 @@
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-list-faq.default', FaqHandler);
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-search-product.default', SearchProductHandler);
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-heading-animation.default', headingAnimationHandler);
+		elementorFrontend.hooks.addAction('frontend/element_ready/bt-tiktok-shop-slider.default', TiktokShopSliderHandler);
 	});
 
 })(jQuery);

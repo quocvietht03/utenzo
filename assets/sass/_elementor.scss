@@ -2072,6 +2072,8 @@
     .bt-popup-compare {
       position: relative;
       z-index: 1;
+      visibility: visible;
+      opacity: 1;
       .bt-compare-body {
         z-index: 1;
         transform: none;
@@ -2081,14 +2083,18 @@
         width: 100%;
         display: flex;
         flex-direction: column;
+        box-shadow: none;
         .bt-compare-share {
           margin-top: 30px;
         }
         .bt-compare-load {
           width: 100%;
-          border: 1px solid $color-primary;
+          background: #f6f6f6;
           .bt-table-title {
             display: none;
+          }
+          .bt-wrap-compare {
+            max-height: 100%;
           }
           .bt-table-compare {
             padding: 0;
@@ -2097,6 +2103,7 @@
               .bt-table--col {
                 font-size: 17px;
                 padding: 15px;
+                background: #e9e9e9;
               }
             }
             .bt-table--row {
@@ -2474,7 +2481,7 @@
         color: #fff;
       }
     }
-    @media(max-width:$break-xs){
+    @media (max-width: $break-xs) {
       &--name {
         bottom: 6px;
         right: 6px;
@@ -2486,8 +2493,103 @@
         span {
           width: calc(100% - 30px);
         }
-        svg{
+        svg {
           width: 20px;
+        }
+      }
+    }
+  }
+}
+.bt-elwg-tiktok-shop-slider {
+  &--default {
+    position: initial !important;
+    .bt-tiktok-shop-slider {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      .bt-tiktok-shop {
+        &--wrap {
+          border-radius: 8px;
+          overflow: hidden;
+          display: block;
+          .bt-cover-image {
+            background: transparent;
+          }
+        }
+        &--product {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          background: rgba(0, 0, 0, 0.12);
+          backdrop-filter: blur(4px);
+          padding: 12px;
+          gap: 12px;
+          border-radius: 8px 8px 0 0;
+          overflow: hidden;
+          .bt-product-thumb {
+            width: 48px;
+            height: 48px;
+            img {
+              display: block;
+              border-radius: 4px;
+            }
+          }
+          .bt-product-info {
+            width: calc(100% - 60px);
+            .bt-product-name {
+              color: #fff;
+              font-size: 14px;
+              font-style: normal;
+              font-weight: 600;
+              line-height: 18px;
+              display: block;
+            }
+            .bt-product-price {
+              color: #fff;
+              font-size: 16px;
+              font-style: normal;
+              font-weight: 500;
+              line-height: 24px;
+            }
+          }
+        }
+      }
+    }
+    .bt-swiper-navigation {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: absolute;
+      right: 0;
+      top: -60px;
+      z-index: 1;
+      .bt-nav {
+        padding: 12px;
+        background-color: #ffffff;
+        border-radius: 50% 50% 50% 50%;
+        cursor: pointer;
+        svg {
+          width: 24px;
+          height: 24px;
+          display: flex;
+        }
+      }
+      @media (max-width: $break-sm) {
+        bottom: -60px;
+        top: auto;
+        justify-content: center;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        .bt-nav {
+          padding: 10px;
+          svg {
+            width: 20px !important;
+            height: 20px !important;
+          }
         }
       }
     }

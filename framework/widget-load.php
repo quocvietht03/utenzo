@@ -76,7 +76,8 @@ class ElementorWidgets
 			'search-product',
 			'product-category',
 			'heading-animation',
-			'mini-wishlist'
+			'mini-wishlist',
+			'tiktok-shop-slider'
 		);
 
 		return $this->widgets;
@@ -203,6 +204,7 @@ class ElementorWidgets
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ProductCategory\Widget_ProductCategory());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\HeadingAnimation\Widget_HeadingAnimation());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\MiniWishlist\Widget_MiniWishlist());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\TikTokShopSlider\Widget_TikTokShopSlider());
 	}
 
 	/**

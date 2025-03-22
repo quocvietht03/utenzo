@@ -22,41 +22,30 @@ if (! defined('ABSPATH')) {
 
 get_header('shop');
 
-if (function_exists('get_field')) {
-	$template_section = get_field('template_section_appointment', 'options');
-}
 $product_id = get_the_ID();
 $product = wc_get_product($product_id);
 $product_type = $product->get_type();
-if ($product_type == 'redq_rental') {
-	get_template_part('framework/templates/site', 'titlebar');
-} else {
 ?>
-	<div class="bt-product-breadcrumb">
-		<div class="bt-container">
-			<?php
-			$home_text = 'Homepage';
-			$delimiter = '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" viewBox="0 0 13 12" fill="none">
+<div class="bt-product-breadcrumb">
+	<div class="bt-container">
+		<?php
+		$home_text = 'Homepage';
+		$delimiter = '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" viewBox="0 0 13 12" fill="none">
 							<path opacity="0.5" d="M4.12922 10.3724C3.97259 10.2178 3.95835 9.97591 4.0865 9.80543L4.12922 9.75658L7.93471 6L4.12922 2.24342C3.97259 2.08881 3.95835 1.84688 4.0865 1.67639L4.12922 1.62755C4.28584 1.47294 4.53094 1.45889 4.70365 1.58539L4.75314 1.62755L8.87078 5.69207C9.02741 5.84667 9.04165 6.08861 8.9135 6.25909L8.87078 6.30793L4.75314 10.3724C4.58085 10.5425 4.30151 10.5425 4.12922 10.3724Z" fill="#212121"/>
 						</svg>';
-			echo utenzo_page_breadcrumb($home_text, $delimiter);
-			?>
-		</div>
+		echo utenzo_page_breadcrumb($home_text, $delimiter);
+		?>
 	</div>
-<?php } ?>
-<main id="bt_main" class="bt-site-main <?php echo esc_attr(($product_type == 'redq_rental') ? 'bt-site-appointment' : ''); ?>">
+</div>
+
+<main id="bt_main" class="bt-site-main">
 	<div class="bt-main-content">
 		<div class="bt-main-product-ss">
 			<div class="bt-container">
 
 				<?php while (have_posts()) : ?>
 					<?php the_post();
-
-					if ($product_type == 'redq_rental') {
-						wc_get_template_part('content', 'single-appointment');
-					} else {
-						wc_get_template_part('content', 'single-product');
-					}
+					wc_get_template_part('content', 'single-product');
 					?>
 
 				<?php endwhile; // end of the loop. 
@@ -66,16 +55,6 @@ if ($product_type == 'redq_rental') {
 		</div>
 	</div>
 </main>
-<?php
-if ($product_type == 'redq_rental') {
-	if (!empty($template_section['template_section_bottom_appointment'])) {
-		foreach ($template_section['template_section_bottom_appointment'] as $key => $item) {
-			$id_template = $item->ID;
-			echo do_shortcode('[elementor-template id="' . esc_attr($id_template) . '"]');
-		}
-	}
-}
-?>
 <?php
 get_footer('shop');
 

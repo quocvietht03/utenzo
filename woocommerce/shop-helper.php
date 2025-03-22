@@ -22,7 +22,6 @@ add_action('utenzo_woocommerce_template_single_sharing', 'woocommerce_template_s
 add_action('utenzo_checkout_review', 'woocommerce_order_review', 10);
 add_action('utenzo_checkout_order', 'woocommerce_checkout_payment', 20);
 add_action('utenzo_woocommerce_template_cross_sell', 'woocommerce_cross_sell_display', 50);
-add_action('utenzo_woocommerce_shop_loop_item_subtitle', 'utenzo_woocommerce_template_loop_subtitle', 10, 2);
 add_filter('woocommerce_product_description_heading', '__return_null');
 
 add_action('utenzo_woocommerce_template_single_meta', 'utenzo_woocommerce_single_product_meta', 40);
@@ -92,28 +91,6 @@ function utenzo_exclude_hidden_category($terms, $taxonomies, $args)
   return $terms;
 }
 
-function utenzo_woocommerce_template_loop_subtitle()
-{
-  $subtitle = get_post_meta(get_the_ID(), '_subtitle', true);
-
-  if (!empty($subtitle)) {
-    echo '<span class="woocommerce-loop-product__subtitle">' . $subtitle . '</span>';
-  }
-
-  return;
-}
-
-add_action('woocommerce_single_product_summary', 'utenzo_woocommerce_template_single_subtitle', 3);
-function utenzo_woocommerce_template_single_subtitle()
-{
-  $subtitle = get_post_meta(get_the_ID(), '_subtitle', true);
-
-  if (!empty($subtitle)) {
-    echo '<span class="woocommerce-product-subtitle">' . $subtitle . '</span>';
-  }
-
-  return;
-}
 
 // WooCommerce percentage flash
 add_filter('woocommerce_sale_flash', 'utenzo_woocommerce_percentage_sale', 10, 3);
@@ -152,10 +129,14 @@ function utenzo_woocommerce_percentage_sale($html, $post, $product)
     $regular_price = (float) $product->get_regular_price();
     $sale_price = (float) $product->get_sale_price();
 
-    $percentage = '-' . round(100 - ($sale_price / $regular_price * 100)) . '%';
+    $percentage = round(100 - ($sale_price / $regular_price * 100)) . '%';
   }
 
-  return '<span class="onsale">' . $percentage . '</span>';
+  if (is_product() && is_single()) {
+    return '<span class="onsale">-' . $percentage . ' ' . esc_html__('off', 'utenzo') . '</span>';
+  } else {
+    return '<span class="onsale">-' . $percentage . '</span>';
+  }
 }
 
 add_filter('woocommerce_pagination_args', 'utenzo_woocommerce_pagination_args');
@@ -207,16 +188,6 @@ if (function_exists('get_field')) {
   }
 }
 
-add_action('woocommerce_process_product_meta', 'utenzo_woocommerce_custom_field_save');
-function utenzo_woocommerce_custom_field_save($post_id)
-{
-  $subtitle = $_POST['_subtitle'];
-  if (!empty($subtitle)) {
-    update_post_meta($post_id, '_subtitle', esc_attr($subtitle));
-  } else {
-    update_post_meta($post_id, '_subtitle', '');
-  }
-}
 /* Sold Product */
 function utenzo_woocommerce_item_sold($product_id)
 {
@@ -844,225 +815,227 @@ function utenzo_products_compare()
     <div class="bt-table-title">
       <h2><?php esc_html_e('Compare products', 'utenzo') ?></h2>
     </div>
-    <div class="bt-table-compare">
-      <div class="bt-table--head">
-        <?php
-        if (!empty($fields_show_compare)) {
-          echo '<div class="bt-table--col">' . esc_html__('Thumbnail', 'utenzo') . '</div>';
-          echo '<div class="bt-table--col">' . esc_html__('Product Name', 'utenzo') . '</div>';
-          if (in_array('short_desc', $fields_show_compare)) {
-            echo '<div class="bt-table--col">' . esc_html__('Short Description', 'utenzo') . '</div>';
-          }
-          if (in_array('price', $fields_show_compare)) {
-            echo '<div class="bt-table--col">' . esc_html__('Price', 'utenzo') . '</div>';
-          }
-          if (in_array('rating', $fields_show_compare)) {
-            echo '<div class="bt-table--col">' . esc_html__('Rating', 'utenzo') . '</div>';
-          }
-          if (in_array('brand', $fields_show_compare)) {
-            echo '<div class="bt-table--col">' . esc_html__('Brand', 'utenzo') . '</div>';
-          }
-          if (in_array('stock_status', $fields_show_compare)) {
-            echo '<div class="bt-table--col">' . esc_html__('Stock status', 'utenzo') . '</div>';
-          }
-          if (in_array('sku', $fields_show_compare)) {
-            echo '<div class="bt-table--col">' . esc_html__('SKU', 'utenzo') . '</div>';
-          }
-          if (in_array('availability', $fields_show_compare)) {
-            echo '<div class="bt-table--col">' . esc_html__('Availability', 'utenzo') . '</div>';
-          }
-          if (in_array('weight', $fields_show_compare)) {
-            echo '<div class="bt-table--col">' . esc_html__('Weight', 'utenzo') . '</div>';
-          }
-          if (in_array('dimensions', $fields_show_compare)) {
-            echo '<div class="bt-table--col">' . esc_html__('Dimensions', 'utenzo') . '</div>';
-          }
-          if (in_array('color', $fields_show_compare)) {
-            echo '<div class="bt-table--col">' . esc_html__('color', 'utenzo') . '</div>';
-          }
-          if (in_array('size', $fields_show_compare)) {
-            echo '<div class="bt-table--col">' . esc_html__('Size', 'utenzo') . '</div>';
-          }
-        }
-        ?>
-        <div class="bt-table--col"></div>
-      </div>
-      <div class="bt-table--body">
-        <?php
-        foreach ($product_ids as $key => $id) {
-          $product = wc_get_product($id);
-          if ($product) {
-            $product_url = get_permalink($id);
-            $product_name = $product->get_name();
-            $product_image = wp_get_attachment_image_src($product->get_image_id(), 'medium');
-            if (!$product_image) {
-              $product_image_url = wc_placeholder_img_src();
-            } else {
-              $product_image_url = $product_image[0];
+    <div class="bt-wrap-compare">
+      <div class="bt-table-compare">
+        <div class="bt-table--head">
+          <?php
+          if (!empty($fields_show_compare)) {
+            echo '<div class="bt-table--col">' . esc_html__('Thumbnail', 'utenzo') . '</div>';
+            echo '<div class="bt-table--col">' . esc_html__('Product Name', 'utenzo') . '</div>';
+            if (in_array('short_desc', $fields_show_compare)) {
+              echo '<div class="bt-table--col">' . esc_html__('Short Description', 'utenzo') . '</div>';
             }
-            $product_price = $product->get_price_html();
-            $stock_status = $product->is_in_stock() ? __('In Stock', 'utenzo') : __('Out of Stock', 'utenzo');
-            $brand = wp_get_post_terms($id, 'product_brand', ['fields' => 'names']);
-            $brand_list = !empty($brand) ? implode(', ', $brand) : '';
-
-            $brands = wp_get_post_terms($id, 'product_brand', ['fields' => 'all']);
-            $brand_links = [];
-            foreach ($brands as $brand) {
-              $brand_links[] = '<a href="' . get_term_link($brand) . '">' . esc_html($brand->name) . '</a>';
+            if (in_array('price', $fields_show_compare)) {
+              echo '<div class="bt-table--col">' . esc_html__('Price', 'utenzo') . '</div>';
             }
-            $brand_list = !empty($brand_links) ? implode(', ', $brand_links) : '';
+            if (in_array('rating', $fields_show_compare)) {
+              echo '<div class="bt-table--col">' . esc_html__('Rating', 'utenzo') . '</div>';
+            }
+            if (in_array('brand', $fields_show_compare)) {
+              echo '<div class="bt-table--col">' . esc_html__('Brand', 'utenzo') . '</div>';
+            }
+            if (in_array('stock_status', $fields_show_compare)) {
+              echo '<div class="bt-table--col">' . esc_html__('Stock status', 'utenzo') . '</div>';
+            }
+            if (in_array('sku', $fields_show_compare)) {
+              echo '<div class="bt-table--col">' . esc_html__('SKU', 'utenzo') . '</div>';
+            }
+            if (in_array('availability', $fields_show_compare)) {
+              echo '<div class="bt-table--col">' . esc_html__('Availability', 'utenzo') . '</div>';
+            }
+            if (in_array('weight', $fields_show_compare)) {
+              echo '<div class="bt-table--col">' . esc_html__('Weight', 'utenzo') . '</div>';
+            }
+            if (in_array('dimensions', $fields_show_compare)) {
+              echo '<div class="bt-table--col">' . esc_html__('Dimensions', 'utenzo') . '</div>';
+            }
+            if (in_array('color', $fields_show_compare)) {
+              echo '<div class="bt-table--col">' . esc_html__('color', 'utenzo') . '</div>';
+            }
+            if (in_array('size', $fields_show_compare)) {
+              echo '<div class="bt-table--col">' . esc_html__('Size', 'utenzo') . '</div>';
+            }
+          }
+          ?>
+          <div class="bt-table--col"></div>
+        </div>
+        <div class="bt-table--body">
+          <?php
+          foreach ($product_ids as $key => $id) {
+            $product = wc_get_product($id);
+            if ($product) {
+              $product_url = get_permalink($id);
+              $product_name = $product->get_name();
+              $product_image = wp_get_attachment_image_src($product->get_image_id(), 'medium');
+              if (!$product_image) {
+                $product_image_url = wc_placeholder_img_src();
+              } else {
+                $product_image_url = $product_image[0];
+              }
+              $product_price = $product->get_price_html();
+              $stock_status = $product->is_in_stock() ? __('In Stock', 'utenzo') : __('Out of Stock', 'utenzo');
+              $brand = wp_get_post_terms($id, 'product_brand', ['fields' => 'names']);
+              $brand_list = !empty($brand) ? implode(', ', $brand) : '';
 
-        ?>
-            <div class="bt-table--row">
-              <div class="bt-table--col bt-thumb">
-                <div class="bt-remove-item" data-id="<?php echo esc_attr($id) ?>">
-                  <div class="bt-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                      <path d="M9.64052 9.10965C9.67536 9.14449 9.703 9.18586 9.72186 9.23138C9.74071 9.2769 9.75042 9.32569 9.75042 9.37496C9.75042 9.42424 9.74071 9.47303 9.72186 9.51855C9.703 9.56407 9.67536 9.60544 9.64052 9.64028C9.60568 9.67512 9.56432 9.70276 9.51879 9.72161C9.47327 9.74047 9.42448 9.75017 9.37521 9.75017C9.32594 9.75017 9.27714 9.74047 9.23162 9.72161C9.1861 9.70276 9.14474 9.67512 9.1099 9.64028L6.00021 6.53012L2.89052 9.64028C2.82016 9.71064 2.72472 9.75017 2.62521 9.75017C2.5257 9.75017 2.43026 9.71064 2.3599 9.64028C2.28953 9.56991 2.25 9.47448 2.25 9.37496C2.25 9.27545 2.28953 9.18002 2.3599 9.10965L5.47005 5.99996L2.3599 2.89028C2.28953 2.81991 2.25 2.72448 2.25 2.62496C2.25 2.52545 2.28953 2.43002 2.3599 2.35965C2.43026 2.28929 2.5257 2.24976 2.62521 2.24976C2.72472 2.24976 2.82016 2.28929 2.89052 2.35965L6.00021 5.46981L9.1099 2.35965C9.18026 2.28929 9.2757 2.24976 9.37521 2.24976C9.47472 2.24976 9.57016 2.28929 9.64052 2.35965C9.71089 2.43002 9.75042 2.52545 9.75042 2.62496C9.75042 2.72448 9.71089 2.81991 9.64052 2.89028L6.53036 5.99996L9.64052 9.10965Z" fill="#212121" />
-                    </svg>
-                  </div>
-                </div>
-                <a href="<?php echo esc_url($product_url); ?>">
-                  <img src="<?php echo esc_url($product_image_url); ?>" alt="<?php echo esc_attr($product_name); ?>">
-                </a>
-              </div>
-              <div class="bt-table--col bt-name">
-                <h3><a href="<?php echo esc_url($product_url); ?>"><?php echo esc_html($product_name); ?></a></h3>
-              </div>
-              <?php if (!empty($fields_show_compare)) {
-                if (in_array('short_desc', $fields_show_compare)) { ?>
-                  <div class="bt-table--col bt-description">
-                    <?php echo '<p>' . wp_trim_words($product->get_short_description(), 10) . '</p>'; ?>
-                  </div>
-                <?php } ?>
-                <?php if (in_array('price', $fields_show_compare)) { ?>
-                  <div class="bt-table--col bt-price">
-                    <?php echo '<p>' . $product_price . '</p>'; ?>
-                  </div>
-                <?php } ?>
-                <?php if (in_array('rating', $fields_show_compare)) { ?>
-                  <div class="bt-table--col bt-rating woocommerce">
-                    <div class="bt-product-rating">
-                      <?php echo wc_get_rating_html($product->get_average_rating()); ?>
-                      <?php if ($product->get_rating_count()): ?>
-                        <div class="bt-product-rating--count">
-                          (<?php echo esc_html($product->get_rating_count()); ?>)
-                        </div>
-                      <?php endif; ?>
+              $brands = wp_get_post_terms($id, 'product_brand', ['fields' => 'all']);
+              $brand_links = [];
+              foreach ($brands as $brand) {
+                $brand_links[] = '<a href="' . get_term_link($brand) . '">' . esc_html($brand->name) . '</a>';
+              }
+              $brand_list = !empty($brand_links) ? implode(', ', $brand_links) : '';
+
+          ?>
+              <div class="bt-table--row">
+                <div class="bt-table--col bt-thumb">
+                  <div class="bt-remove-item" data-id="<?php echo esc_attr($id) ?>">
+                    <div class="bt-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M9.41183 8L15.6952 1.71665C15.7905 1.62455 15.8666 1.51437 15.9189 1.39255C15.9713 1.27074 15.9988 1.13972 16 1.00714C16.0011 0.874567 15.9759 0.743089 15.9256 0.620381C15.8754 0.497673 15.8013 0.386193 15.7076 0.292444C15.6138 0.198695 15.5023 0.124556 15.3796 0.0743523C15.2569 0.0241486 15.1254 -0.00111435 14.9929 3.76988e-05C14.8603 0.00118975 14.7293 0.0287337 14.6074 0.0810623C14.4856 0.133391 14.3755 0.209456 14.2833 0.30482L8 6.58817L1.71665 0.30482C1.52834 0.122941 1.27612 0.0223015 1.01433 0.0245764C0.752534 0.0268514 0.502106 0.131859 0.316983 0.316983C0.131859 0.502107 0.0268514 0.752534 0.0245764 1.01433C0.0223015 1.27612 0.122941 1.52834 0.30482 1.71665L6.58817 8L0.30482 14.2833C0.209456 14.3755 0.133391 14.4856 0.0810623 14.6074C0.0287337 14.7293 0.00118975 14.8603 3.76988e-05 14.9929C-0.00111435 15.1254 0.0241486 15.2569 0.0743523 15.3796C0.124556 15.5023 0.198695 15.6138 0.292444 15.7076C0.386193 15.8013 0.497673 15.8754 0.620381 15.9256C0.743089 15.9759 0.874567 16.0011 1.00714 16C1.13972 15.9988 1.27074 15.9713 1.39255 15.9189C1.51437 15.8666 1.62455 15.7905 1.71665 15.6952L8 9.41183L14.2833 15.6952C14.4226 15.8358 14.6006 15.9317 14.7945 15.9708C14.9885 16.0098 15.1898 15.9902 15.3726 15.9145C15.5554 15.8388 15.7115 15.7104 15.8211 15.5456C15.9306 15.3808 15.9886 15.1871 15.9877 14.9893C15.9878 14.8581 15.9619 14.7283 15.9117 14.6072C15.8615 14.4861 15.7879 14.376 15.6952 14.2833L9.41183 8Z" fill="#0C2C48" />
+                      </svg>
                     </div>
                   </div>
+                  <a href="<?php echo esc_url($product_url); ?>">
+                    <img src="<?php echo esc_url($product_image_url); ?>" alt="<?php echo esc_attr($product_name); ?>">
+                  </a>
+                </div>
+                <div class="bt-table--col bt-name">
+                  <h3><a href="<?php echo esc_url($product_url); ?>"><?php echo esc_html($product_name); ?></a></h3>
+                </div>
+                <?php if (!empty($fields_show_compare)) {
+                  if (in_array('short_desc', $fields_show_compare)) { ?>
+                    <div class="bt-table--col bt-description">
+                      <?php echo '<p>' . wp_trim_words($product->get_short_description(), 10) . '</p>'; ?>
+                    </div>
+                  <?php } ?>
+                  <?php if (in_array('price', $fields_show_compare)) { ?>
+                    <div class="bt-table--col bt-price">
+                      <?php echo '<p>' . $product_price . '</p>'; ?>
+                    </div>
+                  <?php } ?>
+                  <?php if (in_array('rating', $fields_show_compare)) { ?>
+                    <div class="bt-table--col bt-rating woocommerce">
+                      <div class="bt-product-rating">
+                        <?php echo wc_get_rating_html($product->get_average_rating()); ?>
+                        <?php if ($product->get_rating_count()): ?>
+                          <div class="bt-product-rating--count">
+                            (<?php echo esc_html($product->get_rating_count()); ?>)
+                          </div>
+                        <?php endif; ?>
+                      </div>
+                    </div>
+                  <?php } ?>
+                  <?php if (in_array('stock_status', $fields_show_compare)) { ?>
+                    <div class="bt-table--col bt-brand">
+                      <?php echo '<p>' . $brand_list . '</p>'; ?>
+                    </div>
+                  <?php } ?>
+                  <?php if (in_array('stock', $fields_show_compare)) { ?>
+                    <div class="bt-table--col bt-stock">
+                      <?php echo '<p>' . $stock_status . '</p>'; ?>
+                    </div>
+                  <?php } ?>
+                  <?php if (in_array('sku', $fields_show_compare)) { ?>
+                    <div class="bt-table--col bt-sku">
+                      <?php echo '<p>' . $product->get_sku() . '</p>'; ?>
+                    </div>
+                  <?php } ?>
+                  <?php if (in_array('availability', $fields_show_compare)) { ?>
+                    <div class="bt-table--col bt-availability">
+                      <?php echo '<p>' . ($product->get_stock_quantity() ? $product->get_stock_quantity() : 'N/A') . '</p>'; ?>
+                    </div>
+                  <?php } ?>
+                  <?php if (in_array('weight', $fields_show_compare)) { ?>
+                    <div class="bt-table--col bt-weight">
+                      <?php echo '<p>' . $product->get_weight() . ' ' . get_option('woocommerce_weight_unit') . '</p>'; ?>
+                    </div>
+                  <?php } ?>
+                  <?php if (in_array('dimensions', $fields_show_compare)) { ?>
+                    <div class="bt-table--col bt-dimensions">
+                      <?php echo '<p>' . wc_format_dimensions($product->get_dimensions(false)) . '</p>'; ?>
+                    </div>
+                  <?php } ?>
+                  <?php if (in_array('color', $fields_show_compare)) { ?>
+                    <div class="bt-table--col bt-color">
+                      <?php
+                      $colors = wp_get_post_terms($id, 'pa_color', ['fields' => 'names']);
+                      echo '<p>' . (!empty($colors) ? implode(', ', $colors) : 'N/A') . '</p>';
+                      ?>
+                    </div>
+                  <?php } ?>
+                  <?php if (in_array('size', $fields_show_compare)) { ?>
+                    <div class="bt-table--col bt-size">
+                      <?php
+                      $sizes = wp_get_post_terms($id, 'pa_size', ['fields' => 'names']);
+                      echo '<p>' . (!empty($sizes) ? implode(', ', $sizes) : 'N/A') . '</p>';
+                      ?>
+                    </div>
+                  <?php } ?>
                 <?php } ?>
-                <?php if (in_array('stock_status', $fields_show_compare)) { ?>
-                  <div class="bt-table--col bt-brand">
-                    <?php echo '<p>' . $brand_list . '</p>'; ?>
-                  </div>
-                <?php } ?>
-                <?php if (in_array('stock', $fields_show_compare)) { ?>
-                  <div class="bt-table--col bt-stock">
-                    <?php echo '<p>' . $stock_status . '</p>'; ?>
-                  </div>
-                <?php } ?>
-                <?php if (in_array('sku', $fields_show_compare)) { ?>
-                  <div class="bt-table--col bt-sku">
-                    <?php echo '<p>' . $product->get_sku() . '</p>'; ?>
-                  </div>
-                <?php } ?>
-                <?php if (in_array('availability', $fields_show_compare)) { ?>
-                  <div class="bt-table--col bt-availability">
-                    <?php echo '<p>' . ($product->get_stock_quantity() ? $product->get_stock_quantity() : 'N/A') . '</p>'; ?>
-                  </div>
-                <?php } ?>
-                <?php if (in_array('weight', $fields_show_compare)) { ?>
-                  <div class="bt-table--col bt-weight">
-                    <?php echo '<p>' . $product->get_weight() . ' ' . get_option('woocommerce_weight_unit') . '</p>'; ?>
-                  </div>
-                <?php } ?>
-                <?php if (in_array('dimensions', $fields_show_compare)) { ?>
-                  <div class="bt-table--col bt-dimensions">
-                    <?php echo '<p>' . wc_format_dimensions($product->get_dimensions(false)) . '</p>'; ?>
-                  </div>
-                <?php } ?>
-                <?php if (in_array('color', $fields_show_compare)) { ?>
-                  <div class="bt-table--col bt-color">
-                    <?php
-                    $colors = wp_get_post_terms($id, 'pa_color', ['fields' => 'names']);
-                    echo '<p>' . (!empty($colors) ? implode(', ', $colors) : 'N/A') . '</p>';
-                    ?>
-                  </div>
-                <?php } ?>
-                <?php if (in_array('size', $fields_show_compare)) { ?>
-                  <div class="bt-table--col bt-size">
-                    <?php
-                    $sizes = wp_get_post_terms($id, 'pa_size', ['fields' => 'names']);
-                    echo '<p>' . (!empty($sizes) ? implode(', ', $sizes) : 'N/A') . '</p>';
-                    ?>
-                  </div>
-                <?php } ?>
-              <?php } ?>
-              <div class="bt-table--col bt-add-to-cart">
-                <a href="?add-to-cart=<?php echo esc_attr($id); ?>" aria-describedby="woocommerce_loop_add_to_cart_link_describedby_<?php echo esc_attr($id); ?>" data-quantity="1" class="button product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="<?php echo esc_attr($id); ?>" data-product_sku="" rel="nofollow"><?php echo esc_html__('Add to cart', 'utenzo') ?></a>
-              </div>
-            </div>
-        <?php
-          }
-        }
-        ?>
-        <?php
-        if ($ex_items > 0) {
-          for ($i = 0; $i < $ex_items; $i++) {
-        ?>
-            <div class="bt-table--row bt-product-add-compare">
-              <div class="bt-table--col bt-thumb">
-                <div class="bt-cover-image">
-                  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" fill="currentColor">
-                    <path d="M256 512a25 25 0 0 1-25-25V25a25 25 0 0 1 50 0v462a25 25 0 0 1-25 25z"></path>
-                    <path d="M487 281H25a25 25 0 0 1 0-50h462a25 25 0 0 1 0 50z"></path>
-                  </svg>
-                  <span> <?php echo __('Add Product To Compare', 'utenzo'); ?></span>
+                <div class="bt-table--col bt-add-to-cart">
+                  <a href="?add-to-cart=<?php echo esc_attr($id); ?>" aria-describedby="woocommerce_loop_add_to_cart_link_describedby_<?php echo esc_attr($id); ?>" data-quantity="1" class="button product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="<?php echo esc_attr($id); ?>" data-product_sku="" rel="nofollow"><?php echo esc_html__('Add to cart', 'utenzo') ?></a>
                 </div>
               </div>
-              <div class="bt-table--col bt-name"></div>
-              <?php if (!empty($fields_show_compare)) {
-                if (in_array('short_desc', $fields_show_compare)) { ?>
-                  <div class="bt-table--col bt-description"></div>
-                <?php } ?>
-                <?php if (in_array('price', $fields_show_compare)) { ?>
-                  <div class="bt-table--col bt-price"></div>
-                <?php } ?>
-                <?php if (in_array('rating', $fields_show_compare)) { ?>
-                  <div class="bt-table--col bt-rating woocommerce"></div>
-                <?php } ?>
-                <?php if (in_array('stock_status', $fields_show_compare)) { ?>
-                  <div class="bt-table--col bt-brand"></div>
-                <?php } ?>
-                <?php if (in_array('stock', $fields_show_compare)) { ?>
-                  <div class="bt-table--col bt-stock"></div>
-                <?php } ?>
-                <?php if (in_array('sku', $fields_show_compare)) { ?>
-                  <div class="bt-table--col bt-sku"></div>
-                <?php } ?>
-                <?php if (in_array('availability', $fields_show_compare)) { ?>
-                  <div class="bt-table--col bt-availability"></div>
-                <?php } ?>
-                <?php if (in_array('weight', $fields_show_compare)) { ?>
-                  <div class="bt-table--col bt-weight"></div>
-                <?php } ?>
-                <?php if (in_array('dimensions', $fields_show_compare)) { ?>
-                  <div class="bt-table--col bt-dimensions"></div>
-                <?php } ?>
-                <?php if (in_array('color', $fields_show_compare)) { ?>
-                  <div class="bt-table--col bt-color"></div>
-                <?php } ?>
-                <?php if (in_array('size', $fields_show_compare)) { ?>
-                  <div class="bt-table--col bt-size"></div>
-                <?php } ?>
-              <?php } ?>
-              <div class="bt-table--col"></div>
-            </div>
-        <?php
+          <?php
+            }
           }
-        }
-        ?>
+          ?>
+          <?php
+          if ($ex_items > 0) {
+            for ($i = 0; $i < $ex_items; $i++) {
+          ?>
+              <div class="bt-table--row bt-product-add-compare">
+                <div class="bt-table--col bt-thumb">
+                  <div class="bt-cover-image">
+                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" fill="currentColor">
+                      <path d="M256 512a25 25 0 0 1-25-25V25a25 25 0 0 1 50 0v462a25 25 0 0 1-25 25z"></path>
+                      <path d="M487 281H25a25 25 0 0 1 0-50h462a25 25 0 0 1 0 50z"></path>
+                    </svg>
+                    <span> <?php echo __('Add Product To Compare', 'utenzo'); ?></span>
+                  </div>
+                </div>
+                <div class="bt-table--col bt-name"></div>
+                <?php if (!empty($fields_show_compare)) {
+                  if (in_array('short_desc', $fields_show_compare)) { ?>
+                    <div class="bt-table--col bt-description"></div>
+                  <?php } ?>
+                  <?php if (in_array('price', $fields_show_compare)) { ?>
+                    <div class="bt-table--col bt-price"></div>
+                  <?php } ?>
+                  <?php if (in_array('rating', $fields_show_compare)) { ?>
+                    <div class="bt-table--col bt-rating woocommerce"></div>
+                  <?php } ?>
+                  <?php if (in_array('stock_status', $fields_show_compare)) { ?>
+                    <div class="bt-table--col bt-brand"></div>
+                  <?php } ?>
+                  <?php if (in_array('stock', $fields_show_compare)) { ?>
+                    <div class="bt-table--col bt-stock"></div>
+                  <?php } ?>
+                  <?php if (in_array('sku', $fields_show_compare)) { ?>
+                    <div class="bt-table--col bt-sku"></div>
+                  <?php } ?>
+                  <?php if (in_array('availability', $fields_show_compare)) { ?>
+                    <div class="bt-table--col bt-availability"></div>
+                  <?php } ?>
+                  <?php if (in_array('weight', $fields_show_compare)) { ?>
+                    <div class="bt-table--col bt-weight"></div>
+                  <?php } ?>
+                  <?php if (in_array('dimensions', $fields_show_compare)) { ?>
+                    <div class="bt-table--col bt-dimensions"></div>
+                  <?php } ?>
+                  <?php if (in_array('color', $fields_show_compare)) { ?>
+                    <div class="bt-table--col bt-color"></div>
+                  <?php } ?>
+                  <?php if (in_array('size', $fields_show_compare)) { ?>
+                    <div class="bt-table--col bt-size"></div>
+                  <?php } ?>
+                <?php } ?>
+                <div class="bt-table--col"></div>
+              </div>
+          <?php
+            }
+          }
+          ?>
+        </div>
       </div>
     </div>
   <?php
@@ -1197,6 +1170,53 @@ function utenzo_products_wishlist()
 add_action('wp_ajax_utenzo_products_wishlist', 'utenzo_products_wishlist');
 add_action('wp_ajax_nopriv_utenzo_products_wishlist', 'utenzo_products_wishlist');
 
+function utenzo_products_quick_view()
+{
+  if (!isset($_POST['productid'])) {
+    wp_send_json_error('Product ID is required');
+    die();
+  }
+
+  $product_id = intval($_POST['productid']);
+  $product = wc_get_product($product_id);
+
+  if (!$product) {
+    wp_send_json_error('Product not found');
+    die();
+  }
+
+  ob_start();
+  ?>
+  <div class="bt-quickview-title">
+    <h2><?php esc_html_e('Compare products', 'utenzo') ?></h2>
+  </div>
+  <div class="bt-quickview-wrap woocommerce">
+    <?php
+    if ($product_id) {
+      $args = array(
+        'p' => $product_id,
+        'post_type' => 'product'
+      );
+      $query = new WP_Query($args);
+      if ($query->have_posts()) {
+        while ($query->have_posts()) {
+          $query->the_post();
+          wc_get_template_part('content', 'quick-view-product');
+        }
+        wp_reset_postdata();
+      }
+    }
+    ?>
+  </div>
+<?php
+  $output['product'] = ob_get_clean();
+
+  wp_send_json_success($output);
+}
+add_action('wp_ajax_utenzo_products_quick_view', 'utenzo_products_quick_view');
+add_action('wp_ajax_nopriv_utenzo_products_quick_view', 'utenzo_products_quick_view');
+
+
 /* get price freeship */
 function utenzo_get_free_shipping_minimum_amount()
 {
@@ -1237,7 +1257,7 @@ function utenzo_get_free_shipping()
     $output['message'] = __('<p class="bt-congratulation">Congratulations! You have free shipping!</p>', 'utenzo');
     $output['percentage'] = 100;
   }
-  ?>
+?>
 <?php
   wp_send_json_success($output);
 }
@@ -1269,16 +1289,15 @@ function utenzo_display_button_wishlist_compare()
 ?>
   <div class="bt-product-icon-btn">
     <a class="bt-icon-btn bt-product-compare-btn" href="#" data-id="<?php echo esc_attr($product->get_id()); ?>">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" viewBox="0 0 20 18" fill="none">
-        <path d="M8.50001 11.2504C8.3011 11.2504 8.11033 11.3295 7.96968 11.4701C7.82903 11.6108 7.75001 11.8015 7.75001 12.0004V14.6901L5.09876 12.0379C4.7493 11.6907 4.47224 11.2776 4.28364 10.8224C4.09503 10.3673 3.99862 9.87933 4.00001 9.38669V5.90669C4.707 5.72415 5.32315 5.29002 5.73296 4.68568C6.14277 4.08135 6.3181 3.3483 6.2261 2.62394C6.13409 1.89958 5.78106 1.23364 5.23318 0.750949C4.6853 0.268258 3.98019 0.00195312 3.25001 0.00195312C2.51983 0.00195312 1.81471 0.268258 1.26683 0.750949C0.718953 1.23364 0.365924 1.89958 0.273918 2.62394C0.181912 3.3483 0.357247 4.08135 0.767056 4.68568C1.17687 5.29002 1.79301 5.72415 2.50001 5.90669V9.38763C2.49826 10.0773 2.63324 10.7606 2.89715 11.3978C3.16105 12.035 3.54864 12.6136 4.03751 13.1001L6.6897 15.7504H4.00001C3.8011 15.7504 3.61033 15.8295 3.46968 15.9701C3.32903 16.1108 3.25001 16.3015 3.25001 16.5004C3.25001 16.6994 3.32903 16.8901 3.46968 17.0308C3.61033 17.1714 3.8011 17.2504 4.00001 17.2504H8.50001C8.69892 17.2504 8.88969 17.1714 9.03034 17.0308C9.17099 16.8901 9.25001 16.6994 9.25001 16.5004V12.0004C9.25001 11.8015 9.17099 11.6108 9.03034 11.4701C8.88969 11.3295 8.69892 11.2504 8.50001 11.2504ZM1.75001 3.00044C1.75001 2.70377 1.83798 2.41376 2.0028 2.16709C2.16763 1.92041 2.40189 1.72815 2.67598 1.61462C2.95007 1.50109 3.25167 1.47138 3.54264 1.52926C3.83361 1.58714 4.10089 1.73 4.31067 1.93978C4.52045 2.14956 4.66331 2.41683 4.72119 2.70781C4.77906 2.99878 4.74936 3.30038 4.63583 3.57447C4.5223 3.84855 4.33004 4.08282 4.08336 4.24764C3.83669 4.41247 3.54668 4.50044 3.25001 4.50044C2.85218 4.50044 2.47065 4.3424 2.18935 4.0611C1.90804 3.7798 1.75001 3.39827 1.75001 3.00044ZM17.5 12.0942V8.61419C17.5018 7.92448 17.3668 7.24127 17.1029 6.60404C16.839 5.96681 16.4514 5.38822 15.9625 4.90169L13.3103 2.25044H16C16.1989 2.25044 16.3897 2.17142 16.5303 2.03077C16.671 1.89012 16.75 1.69935 16.75 1.50044C16.75 1.30153 16.671 1.11076 16.5303 0.970111C16.3897 0.829458 16.1989 0.750441 16 0.750441H11.5C11.3011 0.750441 11.1103 0.829458 10.9697 0.970111C10.829 1.11076 10.75 1.30153 10.75 1.50044V6.00044C10.75 6.19935 10.829 6.39012 10.9697 6.53077C11.1103 6.67142 11.3011 6.75044 11.5 6.75044C11.6989 6.75044 11.8897 6.67142 12.0303 6.53077C12.171 6.39012 12.25 6.19935 12.25 6.00044V3.31075L14.9013 5.96294C15.2507 6.31018 15.5278 6.72333 15.7164 7.17843C15.905 7.63354 16.0014 8.12155 16 8.61419V12.0942C15.293 12.2767 14.6769 12.7109 14.2671 13.3152C13.8572 13.9195 13.6819 14.6526 13.7739 15.3769C13.8659 16.1013 14.219 16.7672 14.7668 17.2499C15.3147 17.7326 16.0198 17.9989 16.75 17.9989C17.4802 17.9989 18.1853 17.7326 18.7332 17.2499C19.2811 16.7672 19.6341 16.1013 19.7261 15.3769C19.8181 14.6526 19.6428 13.9195 19.233 13.3152C18.8232 12.7109 18.207 12.2767 17.5 12.0942ZM16.75 16.5004C16.4533 16.5004 16.1633 16.4125 15.9167 16.2476C15.67 16.0828 15.4777 15.8486 15.3642 15.5745C15.2507 15.3004 15.221 14.9988 15.2788 14.7078C15.3367 14.4168 15.4796 14.1496 15.6893 13.9398C15.8991 13.73 16.1664 13.5871 16.4574 13.5293C16.7483 13.4714 17.0499 13.5011 17.324 13.6146C17.5981 13.7282 17.8324 13.9204 17.9972 14.1671C18.162 14.4138 18.25 14.7038 18.25 15.0004C18.25 15.3983 18.092 15.7798 17.8107 16.0611C17.5294 16.3424 17.1478 16.5004 16.75 16.5004Z" fill="#212121" />
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M10.5 14.2504C10.3011 14.2504 10.1103 14.3295 9.96968 14.4701C9.82903 14.6108 9.75001 14.8015 9.75001 15.0004V17.6901L7.09876 15.0379C6.7493 14.6907 6.47224 14.2776 6.28364 13.8224C6.09503 13.3673 5.99862 12.8793 6.00001 12.3867V8.90669C6.707 8.72415 7.32315 8.29002 7.73296 7.68568C8.14277 7.08135 8.3181 6.3483 8.2261 5.62394C8.13409 4.89958 7.78106 4.23364 7.23318 3.75095C6.6853 3.26826 5.98019 3.00195 5.25001 3.00195C4.51983 3.00195 3.81471 3.26826 3.26683 3.75095C2.71895 4.23364 2.36592 4.89958 2.27392 5.62394C2.18191 6.3483 2.35725 7.08135 2.76706 7.68568C3.17687 8.29002 3.79301 8.72415 4.50001 8.90669V12.3876C4.49826 13.0773 4.63324 13.7606 4.89715 14.3978C5.16105 15.035 5.54864 15.6136 6.03751 16.1001L8.6897 18.7504H6.00001C5.8011 18.7504 5.61033 18.8295 5.46968 18.9701C5.32903 19.1108 5.25001 19.3015 5.25001 19.5004C5.25001 19.6994 5.32903 19.8901 5.46968 20.0308C5.61033 20.1714 5.8011 20.2504 6.00001 20.2504H10.5C10.6989 20.2504 10.8897 20.1714 11.0303 20.0308C11.171 19.8901 11.25 19.6994 11.25 19.5004V15.0004C11.25 14.8015 11.171 14.6108 11.0303 14.4701C10.8897 14.3295 10.6989 14.2504 10.5 14.2504ZM3.75001 6.00044C3.75001 5.70377 3.83798 5.41376 4.0028 5.16709C4.16763 4.92041 4.40189 4.72815 4.67598 4.61462C4.95007 4.50109 5.25167 4.47138 5.54264 4.52926C5.83361 4.58714 6.10089 4.73 6.31067 4.93978C6.52045 5.14956 6.66331 5.41683 6.72119 5.70781C6.77906 5.99878 6.74936 6.30038 6.63583 6.57447C6.5223 6.84855 6.33004 7.08282 6.08336 7.24764C5.83669 7.41247 5.54668 7.50044 5.25001 7.50044C4.85218 7.50044 4.47065 7.3424 4.18935 7.0611C3.90804 6.7798 3.75001 6.39827 3.75001 6.00044ZM19.5 15.0942V11.6142C19.5018 10.9245 19.3668 10.2413 19.1029 9.60404C18.839 8.96681 18.4514 8.38822 17.9625 7.90169L15.3103 5.25044H18C18.1989 5.25044 18.3897 5.17142 18.5303 5.03077C18.671 4.89012 18.75 4.69935 18.75 4.50044C18.75 4.30153 18.671 4.11076 18.5303 3.97011C18.3897 3.82946 18.1989 3.75044 18 3.75044H13.5C13.3011 3.75044 13.1103 3.82946 12.9697 3.97011C12.829 4.11076 12.75 4.30153 12.75 4.50044V9.00044C12.75 9.19935 12.829 9.39012 12.9697 9.53077C13.1103 9.67142 13.3011 9.75044 13.5 9.75044C13.6989 9.75044 13.8897 9.67142 14.0303 9.53077C14.171 9.39012 14.25 9.19935 14.25 9.00044V6.31075L16.9013 8.96294C17.2507 9.31018 17.5278 9.72333 17.7164 10.1784C17.905 10.6335 18.0014 11.1216 18 11.6142V15.0942C17.293 15.2767 16.6769 15.7109 16.2671 16.3152C15.8572 16.9195 15.6819 17.6526 15.7739 18.3769C15.8659 19.1013 16.219 19.7672 16.7668 20.2499C17.3147 20.7326 18.0198 20.9989 18.75 20.9989C19.4802 20.9989 20.1853 20.7326 20.7332 20.2499C21.2811 19.7672 21.6341 19.1013 21.7261 18.3769C21.8181 17.6526 21.6428 16.9195 21.233 16.3152C20.8232 15.7109 20.207 15.2767 19.5 15.0942ZM18.75 19.5004C18.4533 19.5004 18.1633 19.4125 17.9167 19.2476C17.67 19.0828 17.4777 18.8486 17.3642 18.5745C17.2507 18.3004 17.221 17.9988 17.2788 17.7078C17.3367 17.4168 17.4796 17.1496 17.6893 16.9398C17.8991 16.73 18.1664 16.5871 18.4574 16.5293C18.7483 16.4714 19.0499 16.5011 19.324 16.6146C19.5981 16.7282 19.8324 16.9204 19.9972 17.1671C20.162 17.4138 20.25 17.7038 20.25 18.0004C20.25 18.3983 20.092 18.7798 19.8107 19.0611C19.5294 19.3424 19.1478 19.5004 18.75 19.5004Z" />
       </svg>
     </a>
     <a class="bt-icon-btn bt-product-wishlist-btn" href="#" data-id="<?php echo esc_attr($product->get_id()); ?>">
-      <svg width="25" height="25" viewBox="0 0 25 25" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M14.9916 18.8679C14.3066 19.4224 13.4266 19.7282 12.5129 19.7282C11.6004 19.7282 10.7179 19.4236 10.0054 18.8512C5.51289 15.2466 2.65289 13.3342 2.50414 9.41186C2.34789 5.26103 7.12289 3.74375 10.0504 7.15438C10.6429 7.84341 11.5329 8.2385 12.4929 8.2385C13.4616 8.2385 14.3579 7.83864 14.9516 7.14128C17.8154 3.78539 22.7179 5.21462 22.4941 9.53324C22.2941 13.3747 19.3241 15.3585 14.9916 18.8679ZM12.9841 5.72634C12.8616 5.87033 12.6766 5.94292 12.4929 5.94292C12.3129 5.94292 12.1341 5.87271 12.0141 5.73348C7.58539 0.574693 -0.234601 3.14396 0.0053982 9.49159C0.196648 14.5433 3.95664 17.0471 8.38414 20.5994C9.56788 21.549 11.0404 22.0238 12.5129 22.0238C13.9891 22.0238 15.4641 21.5466 16.6454 20.5898C21.0241 17.0424 24.7366 14.5552 24.9904 9.64154C25.3279 3.1523 17.4016 0.546134 12.9841 5.72634Z" />
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M16.6875 3C14.7516 3 13.0566 3.8325 12 5.23969C10.9434 3.8325 9.24844 3 7.3125 3C5.77146 3.00174 4.29404 3.61468 3.20436 4.70436C2.11468 5.79404 1.50174 7.27146 1.5 8.8125C1.5 15.375 11.2303 20.6869 11.6447 20.9062C11.7539 20.965 11.876 20.9958 12 20.9958C12.124 20.9958 12.2461 20.965 12.3553 20.9062C12.7697 20.6869 22.5 15.375 22.5 8.8125C22.4983 7.27146 21.8853 5.79404 20.7956 4.70436C19.706 3.61468 18.2285 3.00174 16.6875 3ZM12 19.3875C10.2881 18.39 3 13.8459 3 8.8125C3.00149 7.66921 3.45632 6.57317 4.26475 5.76475C5.07317 4.95632 6.16921 4.50149 7.3125 4.5C9.13594 4.5 10.6669 5.47125 11.3062 7.03125C11.3628 7.16881 11.4589 7.28646 11.5824 7.36926C11.7059 7.45207 11.8513 7.49627 12 7.49627C12.1487 7.49627 12.2941 7.45207 12.4176 7.36926C12.5411 7.28646 12.6372 7.16881 12.6937 7.03125C13.3331 5.46844 14.8641 4.5 16.6875 4.5C17.8308 4.50149 18.9268 4.95632 19.7353 5.76475C20.5437 6.57317 20.9985 7.66921 21 8.8125C21 13.8384 13.71 18.3891 12 19.3875Z" />
       </svg>
     </a>
-
   </div>
   <?php
 }
@@ -1295,22 +1314,94 @@ function utenzo_custom_add_to_cart_text($text, $product)
   }
   return $text;
 }
+// WooCommerce custom field
+add_action('woocommerce_product_options_advanced', 'utenzo_woocommerce_custom_field');
+
+function utenzo_woocommerce_custom_field()
+{
+  global $post;
+  $options = [
+    '' => __('Select Label', 'utenzo'),
+    'Best Seller' => __('Best Seller', 'utenzo'),
+    'Featured' => __('Featured', 'utenzo'),
+    'New Arrival' => __('New Arrival', 'utenzo'),
+    'On Sale' => __('On Sale', 'utenzo'),
+    'Trending' => __('Trending', 'utenzo'),
+    'Hot Deal' => __('Hot Deal', 'utenzo'),
+    'Pre-Order' => __('Pre-Order', 'utenzo'),
+    'Exclusive' => __('Exclusive', 'utenzo'),
+    'Top Rated' => __('Top Rated', 'utenzo')
+  ];
+
+  $value = get_post_meta($post->ID, '_label', true);
+  if (empty($value)) $value = '';
+  woocommerce_wp_select(
+    array(
+      'id'          => '_label',
+      'label'       => __('Product Label', 'utenzo'),
+      'description' => '',
+      'options'     => $options,
+      'value'       => $value,
+    )
+  );
+}
+
+add_action('woocommerce_process_product_meta', 'utenzo_woocommerce_custom_field_save');
+function utenzo_woocommerce_custom_field_save($post_id)
+{
+  if (isset($_POST['_label'])) {
+    $label = sanitize_text_field($_POST['_label']);
+    update_post_meta($post_id, '_label', $label);
+  }
+}
+function utenzo_convert_title_to_slug($title)
+{
+  $slug = strtolower($title);
+  $slug = str_replace(' ', '-', $slug);
+  $slug = preg_replace('/[^a-z0-9\-]/', '', $slug);
+  $slug = preg_replace('/-+/', '-', $slug);
+  $slug = trim($slug, '-');
+
+  return $slug;
+}
+add_action('utenzo_woocommerce_shop_loop_item_label', 'utenzo_woocommerce_product_label', 10);
+function utenzo_woocommerce_product_label()
+{
+  global $product;
+  $label = get_post_meta($product->get_id(), '_label', true);
+
+  if (!empty($label)) {
+    echo '<div class="woocommerce-product-label ' . esc_attr(utenzo_convert_title_to_slug($label)) . '">' . esc_html($label) . '</div>';
+  }
+}
+
 add_action('wp_ajax_utenzo_products_buy_now', 'utenzo_products_buy_now');
 add_action('wp_ajax_nopriv_utenzo_products_buy_now', 'utenzo_products_buy_now');
 
 function utenzo_products_buy_now()
 {
-
   if (isset($_POST['product_id']) && !empty($_POST['product_id'])) {
     $product_id = intval($_POST['product_id']);
+    $variation_id = isset($_POST['variation_id']) ? intval($_POST['variation_id']) : 0;
+    $quantity = isset($_POST['quantity']) ? intval($_POST['quantity']) : 1;
+    $variation = $variation_id > 0 ? array() : null;
 
     $product = wc_get_product($product_id);
 
     if ($product) {
-      WC()->cart->add_to_cart($product_id);
+      if ($variation_id > 0 && $product->is_type('variable')) {
+        $variation_product = wc_get_product($variation_id);
+        if ($variation_product) {
+          $attributes = $variation_product->get_attributes();
+          foreach ($attributes as $attribute_name => $attribute_value) {
+            $variation[$attribute_name] = $attribute_value;
+          }
+        }
+      }
+
+      WC()->cart->add_to_cart($product_id, $quantity, $variation_id, $variation);
 
       $redirect_url = wc_get_checkout_url();
-
       wp_send_json_success(array('redirect_url' => $redirect_url));
       wp_die();
     }
@@ -1500,3 +1591,16 @@ function utenzo_search_live()
 }
 add_action('wp_ajax_utenzo_search_live', 'utenzo_search_live');
 add_action('wp_ajax_nopriv_utenzo_search_live', 'utenzo_search_live');
+
+/* query id elementor popular */
+function bt_custom_popular_products_query($query)
+{
+	if (isset($query)) {
+		$query->set('post_type', 'product');
+		$query->set('meta_key', 'total_sales');
+		$query->set('orderby', 'meta_value_num');
+		$query->set('order', 'desc');
+		$query->set('posts_per_page', 5);
+	}
+}
+add_action('elementor/query/bt_popular_products', 'bt_custom_popular_products_query');

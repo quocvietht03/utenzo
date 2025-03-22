@@ -48,15 +48,15 @@ if (function_exists('get_field')) {
 		?>
 
 		<div class="summary entry-summary">
-			<?php
-			do_action('utenzo_woocommerce_shop_loop_item_subtitle');
-			do_action('utenzo_woocommerce_template_single_title');
-			?>
 			<div class="woocommerce-product-rating-sold">
 				<?php
+				do_action('utenzo_woocommerce_shop_loop_item_label');
 				do_action('utenzo_woocommerce_template_single_rating');
 				?>
 			</div>
+			<?php
+			do_action('utenzo_woocommerce_template_single_title');
+			?>
 			<div class="woocommerce-product-price-wrap">
 				<?php
 				do_action('utenzo_woocommerce_template_single_price');
@@ -70,7 +70,7 @@ if (function_exists('get_field')) {
 				do_action('utenzo_woocommerce_template_single_add_to_cart');
 				?>
 				<div class="bt-button-buy-now">
-					<a class="button" data-id="<?php echo get_the_ID(); ?>"><?php echo esc_html__('Buy it now ', 'utenzo') ?></a>
+					<a class="button <?php echo $product->is_type('variable') ? 'disabled' : ''; ?>" data-id="<?php echo get_the_ID(); ?>"><?php echo esc_html__('Buy it now ', 'utenzo') ?></a>
 				</div>
 				<?php if ($more_information && $more_information['enable_more_information']) {
 					$delivery_return = $more_information['delivery_return'];
@@ -144,7 +144,7 @@ if (function_exists('get_field')) {
 									echo '<a href="' . esc_url($item['link_text']) . '">';
 								}
 								if (!empty($icon_svg)) {
-									echo '<div class="bt-icon">'. $icon_svg. '</div>';
+									echo '<div class="bt-icon">' . $icon_svg . '</div>';
 								}
 								if (!empty($item['text'])) {
 									echo '<p>' . $item['text'] . '</p>';

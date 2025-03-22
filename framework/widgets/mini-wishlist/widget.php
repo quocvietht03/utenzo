@@ -166,11 +166,15 @@ class Widget_MiniWishlist extends Widget_Base
 	{
 		$settings = $this->get_settings_for_display();
 		$icon_wishlist = $settings['wishlist_mini_icon']['url'];
-
+		$wishlist = get_field('wishlist', 'options');
+		$wishlist_url = home_url('/products-wishlist/');
+		if ($wishlist && isset($wishlist['page_wishlist']) && $wishlist['page_wishlist'] != '') {
+			$wishlist_url = get_permalink($wishlist['page_wishlist']);
+		}
 ?>
 		<div class="bt-elwg-mini-wishlist--default">
 			<div class="bt-mini-wishlist">
-				<a class="bt-toggle-btn" href="">
+				<a class="bt-toggle-btn" href="<?php echo esc_url($wishlist_url); ?>">
 					<?php if (!empty($icon_wishlist) && 'svg' === pathinfo($icon_wishlist, PATHINFO_EXTENSION)) {
 						echo file_get_contents($icon_wishlist);
 					} else { ?>
