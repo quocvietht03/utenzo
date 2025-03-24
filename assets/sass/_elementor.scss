@@ -2447,6 +2447,7 @@
     }
     &--inner {
       position: relative;
+      display: block;
     }
     &--name {
       position: absolute;
@@ -2512,8 +2513,26 @@
           border-radius: 8px;
           overflow: hidden;
           display: block;
+          perspective: 1000px;
           .bt-cover-image {
             background: transparent;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+            img {
+              backface-visibility: hidden;
+              transition: transform 0.5s ease;
+            }
+          }
+          @media (min-width: $break-sm) {
+            &:hover {
+              .bt-cover-image {
+                transform: rotateY(15deg) rotateX(10deg) scale(1.1) translateX(8px);
+                img {
+                  transform: scale(1.05);
+                }
+              }
+            }
           }
         }
         &--product {

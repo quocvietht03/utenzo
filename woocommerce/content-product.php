@@ -33,7 +33,7 @@ if (empty($product) || ! $product->is_visible()) {
 			do_action('utenzo_woocommerce_template_loop_product_thumbnail');
 			do_action('utenzo_woocommerce_template_loop_product_link_close');
 			?>
-
+			
 		</div>
 		<?php
 		do_action('utenzo_woocommerce_show_product_loop_sale_flash');

@@ -479,7 +479,7 @@ class Widget_TikTokShopSlider extends Widget_Base
                 $product_name = esc_html($product->get_name());
                 $product_price = $product->get_price_html();
                 
-                echo '<div class="bt-tiktok-shop--product">';
+                echo '<a class="bt-tiktok-shop--product" href="' . esc_url($product->get_permalink()) . '">';
                 if ($product_image) {
                     echo '<div class="bt-product-thumb">' . $product_image . '</div>';
                 }
@@ -487,7 +487,7 @@ class Widget_TikTokShopSlider extends Widget_Base
                     . '<span class="bt-product-name">' . $product_name . '</span>'
                     . '<span class="bt-product-price">' . $product_price . '</span>'
                     . '</div>'
-                    . '</div>';
+                    . '</a>';
             }
             echo '</a></li>';
         }

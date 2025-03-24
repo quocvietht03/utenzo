@@ -64,8 +64,10 @@ do_action('woocommerce_before_add_to_cart_form'); ?>
 		</table>
 		<div class="bt-attributes-wrap">
 			<?php
-			foreach ($attributes as $attribute_name => $options) : ?>
-				<div class="bt-attributes--item" data-attribute-name="<?php echo esc_attr($attribute_name); ?>">
+			foreach ($attributes as $attribute_name => $options) : 
+					$data_attribute = strtolower($attribute_name);
+					?>
+				<div class="bt-attributes--item" data-attribute-name="<?php echo esc_attr($data_attribute); ?>">
 					<div class="bt-attributes--name">
 						<div class="bt-name"><?php echo wc_attribute_label($attribute_name) . ':'; ?></div>
 						<div class="bt-result"></div>
@@ -88,7 +90,11 @@ do_action('woocommerce_before_add_to_cart_form'); ?>
 					<?php } else { ?>
 						<div class="bt-attributes--value">
 							<?php foreach ($options as $option) : ?>
-								<span class="bt-js-item bt-item-value" data-value="<?php echo esc_attr($option); ?>"><?php echo esc_html(get_term_by('slug', $option, $attribute_name)->name); ?></span>
+								<?php 
+									$term = get_term_by('slug', $option, $attribute_name);
+									$display_name = $term ? $term->name : $option;
+								?>
+								<span class="bt-js-item bt-item-value" data-value="<?php echo esc_attr($option); ?>"><?php echo esc_html($display_name); ?></span>
 							<?php endforeach; ?>
 						</div>
 					<?php } ?>

@@ -3,7 +3,7 @@
 add_action('utenzo_woocommerce_template_loop_product_link_open', 'woocommerce_template_loop_product_link_open', 10);
 add_action('utenzo_woocommerce_template_loop_product_link_close', 'woocommerce_template_loop_product_link_close', 5);
 add_action('utenzo_woocommerce_show_product_loop_sale_flash', 'woocommerce_show_product_loop_sale_flash', 10);
-add_action('utenzo_woocommerce_template_loop_product_thumbnail', 'woocommerce_template_loop_product_thumbnail', 10);
+
 add_action('utenzo_woocommerce_template_loop_product_title', 'woocommerce_template_loop_product_title', 10);
 add_action('utenzo_woocommerce_template_loop_rating', 'woocommerce_template_loop_rating', 5);
 add_action('utenzo_woocommerce_template_loop_price', 'woocommerce_template_loop_price', 10);
@@ -55,6 +55,38 @@ function utenzo_woocommerce_single_product_meta()
 }
 
 remove_action('woocommerce_cart_collaterals', 'woocommerce_cross_sell_display');
+// custom product loop image
+add_action('utenzo_woocommerce_template_loop_product_thumbnail', 'bt_woocommerce_template_loop_product_thumbnail', 10);
+function bt_woocommerce_template_loop_product_thumbnail() {
+    global $product;
+    $image_size = apply_filters('single_product_archive_thumbnail_size', 'woocommerce_thumbnail');
+    $image_id = $product->get_image_id();
+    $image_url = wp_get_attachment_image_url($image_id, $image_size);
+    
+    // Get gallery images
+    $gallery_image_ids = $product->get_gallery_image_ids();
+    
+    if ($image_url) {
+        echo '<div class="product-images-wrapper">'; 
+        
+        // Always show main image
+        echo '<img src="' . esc_url($image_url) . '" alt="' . esc_attr($product->get_name()) . '" class="woocommerce-loop-product__image main-image" />';
+        
+        // If there are gallery images, show the first one
+        if (!empty($gallery_image_ids)) {
+            $second_image_url = wp_get_attachment_image_url($gallery_image_ids[0], $image_size);
+            echo '<img src="' . esc_url($second_image_url) . '" alt="' . esc_attr($product->get_name()) . '" class="woocommerce-loop-product__image secondary-image" />';
+        } else {
+            // If no gallery images, show main image again
+            echo '<img src="' . esc_url($image_url) . '" alt="' . esc_attr($product->get_name()) . '" class="woocommerce-loop-product__image secondary-image" />';
+        }
+        
+        echo '</div>';
+    } else {
+        echo '<img src="' . esc_url(wc_placeholder_img_src()) . '" alt="' . esc_attr__('Placeholder', 'woocommerce') . '" class="woocommerce-loop-product__image" />';
+    }
+}
+
 
 add_action('woocommerce_add_to_cart', 'utenzo_redirect_form_appointment', 20, 0);
 function utenzo_redirect_form_appointment()
