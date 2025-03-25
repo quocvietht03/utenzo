@@ -476,6 +476,11 @@
 			}
 			$('.bt-product-compare-btn[data-id="' + product_id + '"]').addClass('no-added');
 			$('.bt-product-compare-btn[data-id="' + product_id + '"]').removeClass('added');
+			if (!compare_local || compare_local === '') {
+				removeComparePopup();
+				$('.bt-compare-body').removeClass('loading');
+				return;
+			}
 			var param_ajax = {
 				action: 'utenzo_products_compare',
 				compare_data: compare_local,

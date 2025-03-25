@@ -956,12 +956,12 @@ function utenzo_products_compare()
                       </div>
                     </div>
                   <?php } ?>
-                  <?php if (in_array('stock_status', $fields_show_compare)) { ?>
+                  <?php if (in_array('brand', $fields_show_compare)) { ?>
                     <div class="bt-table--col bt-brand">
                       <?php echo '<p>' . $brand_list . '</p>'; ?>
                     </div>
                   <?php } ?>
-                  <?php if (in_array('stock', $fields_show_compare)) { ?>
+                  <?php if (in_array('stock_status', $fields_show_compare)) { ?>
                     <div class="bt-table--col bt-stock">
                       <?php echo '<p>' . $stock_status . '</p>'; ?>
                     </div>
@@ -1036,10 +1036,10 @@ function utenzo_products_compare()
                   <?php if (in_array('rating', $fields_show_compare)) { ?>
                     <div class="bt-table--col bt-rating woocommerce"></div>
                   <?php } ?>
-                  <?php if (in_array('stock_status', $fields_show_compare)) { ?>
+                  <?php if (in_array('brand', $fields_show_compare)) { ?>
                     <div class="bt-table--col bt-brand"></div>
                   <?php } ?>
-                  <?php if (in_array('stock', $fields_show_compare)) { ?>
+                  <?php if (in_array('stock_status', $fields_show_compare)) { ?>
                     <div class="bt-table--col bt-stock"></div>
                   <?php } ?>
                   <?php if (in_array('sku', $fields_show_compare)) { ?>
@@ -1624,7 +1624,7 @@ function utenzo_search_live()
 add_action('wp_ajax_utenzo_search_live', 'utenzo_search_live');
 add_action('wp_ajax_nopriv_utenzo_search_live', 'utenzo_search_live');
 
-/* query id elementor popular */
+/* query id elementor Popular Products*/
 function bt_custom_popular_products_query($query)
 {
 	if (isset($query)) {
@@ -1632,7 +1632,21 @@ function bt_custom_popular_products_query($query)
 		$query->set('meta_key', 'total_sales');
 		$query->set('orderby', 'meta_value_num');
 		$query->set('order', 'desc');
-		$query->set('posts_per_page', 5);
 	}
 }
 add_action('elementor/query/bt_popular_products', 'bt_custom_popular_products_query');
+/* query id elementor Featured Products*/
+function bt_custom_featured_products_query($query)
+{
+	if (isset($query)) {
+		$query->set('post_type', 'product');
+		$query->set('tax_query', array(
+			array(
+				'taxonomy' => 'product_visibility',
+				'field'    => 'name',
+				'terms'    => 'featured',
+			),
+		));
+	}
+}
+add_action('elementor/query/bt_featured_products', 'bt_custom_featured_products_query');

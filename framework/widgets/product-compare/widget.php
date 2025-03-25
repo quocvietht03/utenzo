@@ -244,12 +244,12 @@ class Widget_ProductCompare extends Widget_Base
 														</div>
 													</div>
 												<?php } ?>
-												<?php if (in_array('stock_status', $fields_show_compare)) { ?>
+												<?php if (in_array('brand', $fields_show_compare)) { ?>
 													<div class="bt-table--col bt-brand">
 														<?php echo '<p>' . $brand_list . '</p>'; ?>
 													</div>
 												<?php } ?>
-												<?php if (in_array('stock', $fields_show_compare)) { ?>
+												<?php if (in_array('stock_status', $fields_show_compare)) { ?>
 													<div class="bt-table--col bt-stock">
 														<?php echo '<p>' . $stock_status . '</p>'; ?>
 													</div>
@@ -316,10 +316,10 @@ class Widget_ProductCompare extends Widget_Base
 												<?php if (in_array('rating', $fields_show_compare)) { ?>
 													<div class="bt-table--col bt-rating woocommerce"></div>
 												<?php } ?>
-												<?php if (in_array('stock_status', $fields_show_compare)) { ?>
+												<?php if (in_array('brand', $fields_show_compare)) { ?>
 													<div class="bt-table--col bt-brand"></div>
 												<?php } ?>
-												<?php if (in_array('stock', $fields_show_compare)) { ?>
+												<?php if (in_array('stock_status', $fields_show_compare)) { ?>
 													<div class="bt-table--col bt-stock"></div>
 												<?php } ?>
 												<?php if (in_array('sku', $fields_show_compare)) { ?>

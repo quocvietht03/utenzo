@@ -169,11 +169,11 @@
 					$liveSearchResults.removeClass('active');
 				}
 			});
-			$liveSearch.on('click', function() {
+			$liveSearch.on('click', function () {
 				const searchTerm = $(this).val().trim();
 				if (searchTerm.length >= 2) {
 					$liveSearchResults.addClass('active');
-					if(window.location.href.includes('search_keyword')){
+					if (window.location.href.includes('search_keyword')) {
 						performSearch();
 					}
 				}
@@ -184,7 +184,7 @@
 				// If search term exists, perform search
 				if (searchTerm.length >= 2) {
 					performSearch();
-				}else{
+				} else {
 					$liveSearchResults.removeClass('active');
 				}
 			});
@@ -267,7 +267,7 @@
 
 			const $swiper = new Swiper($tiktokSlider[0], {
 				slidesPerView: $itemMobile,
-				loop: true,
+				loop: false,
 				spaceBetween: $spaceBetweenMobile,
 				speed: $speed,
 				freeMode: true,
@@ -300,6 +300,36 @@
 					$swiper.autoplay.start();
 				});
 			}
+			// tiktok popup video
+			$tiktokSlider.find('.bt-play-video').magnificPopup({
+				type: 'inline',
+				preloader: false,
+				removalDelay: 300,
+				mainClass: 'mfp-fade',
+				callbacks: {
+					beforeOpen: function () {
+						this.st.mainClass = this.st.el.attr('data-effect');
+					},
+					open: function() {
+						// Initialize video elements when popup opens
+						const videoPopup = this.content.find('.bt-video-wrap');
+						const videoElement = videoPopup.find('video');
+						
+						if (videoElement.length > 0) {
+							// Handle uploaded video
+							videoElement[0].play();
+						}
+					},
+					close: function() {
+						// Pause video when popup closes
+						const videoElement = this.content.find('video');
+						if (videoElement.length > 0) {
+							videoElement[0].pause();
+							videoElement[0].currentTime = 0;
+						}
+					}
+				}
+			});
 		}
 	};
 	// Make sure you run this code under Elementor.

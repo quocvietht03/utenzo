@@ -424,11 +424,89 @@
       opacity: 0;
     }
     &.loading {
-      .bt-loading-wave {
-        opacity: 1;
-      }
-      .bt-table--body {
-        opacity: 0;
+      .bt-table {
+        &--row {
+          &.bt-product-add-compare {
+            .bt-table--col {
+              position: relative;
+              &::before {
+                content: "";
+                height: 34px;
+                width: 100%;
+                @extend .__bt-animation-loading-card;
+              }
+            }
+            .bt-thumb {
+              &::before{
+                display: none;
+              }
+              .bt-cover-image {
+                @extend .__bt-animation-loading-card;
+                border-radius: 10px;
+                > * {
+                  opacity: 0;
+                  visibility: hidden;
+                }
+              }
+            }
+          }
+        }
+        &--col {
+          .bt-remove-item {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+          }
+          &.bt-add-to-cart {
+            a {
+              @extend .__bt-animation-loading-card;
+              transition: none;
+              height: 34px;
+              box-sizing: border-box;
+              width: 100%;
+              font-size: 0;
+            }
+          }
+          &.bt-thumb {
+            a {
+              @extend .__bt-animation-loading-card;
+              border-radius: 10px;
+              img {
+                opacity: 0;
+              }
+            }
+          }
+          > h3 {
+            @extend .__bt-animation-loading-card;
+            height: 46px;
+            a {
+              opacity: 0;
+              visibility: hidden;
+              z-index: -1;
+              display: block;
+              position: relative;
+            }
+          }
+          > p {
+            @extend .__bt-animation-loading-card;
+            height: 34px;
+            width: 100%;
+            font-size: 0;
+            > * {
+              font-size: 0;
+            }
+          }
+          .bt-product-rating {
+            @extend .__bt-animation-loading-card;
+            height: 34px;
+            width: 100%;
+            font-size: 0;
+            > * {
+              opacity: 0;
+              visibility: hidden;
+            }
+          }
+        }
       }
     }
     .bt-table-title {
@@ -497,17 +575,17 @@
       }
     }
     &--body {
+      @extend .__scrollbar_style;
       display: flex;
       width: 80%;
-      @extend .__scrollbar_style;
       position: relative;
       user-select: none;
       scroll-behavior: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
       &::-webkit-scrollbar {
         display: none;
       }
-      -ms-overflow-style: none;
-      scrollbar-width: none;
     }
     &--row {
       width: 25%;
@@ -657,6 +735,7 @@
           font-style: normal;
           font-weight: 500;
           line-height: 28px;
+          color: $color-primary;
           ins {
             text-decoration: none;
             font-size: 20px;
@@ -1057,7 +1136,7 @@
           position: relative;
           color: $color-primary;
           &:hover {
-            background: #F6F6F6;
+            background: #f6f6f6;
           }
           &::after {
             content: "";

@@ -42,10 +42,14 @@ class Widget_ProductLoopItem extends Widget_Base {
 
 	protected function render() {
 		$settings = $this->get_settings_for_display();
-
+		global $product;
+		
+		if (empty($product) || ! $product->is_visible()) {
+			return;
+		}
 		?>
 			<div class="bt-elwg-product-loop-item">
-				<?php wc_get_template_part( 'content', 'product' ); ?>
+				<?php wc_get_template_part('content', 'product'); ?>
 	    </div>
 		<?php
 	}

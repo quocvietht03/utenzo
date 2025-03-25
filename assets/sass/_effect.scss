@@ -845,7 +845,24 @@
 		}
 	}
 }
-
+/* animation load card */
+@keyframes shimmer {
+	0% {
+		background-position: 100%;
+	}
+	100% {
+		background-position: -100%;
+	}
+}
+.__bt-animation-loading-card{
+	pointer-events: none;
+	background-color: #E9E9E9;
+	color: #E9E9E9;
+	background: linear-gradient(90deg, #E9E9E9 25%, #5a86a973 50%, #E9E9E9 75%);
+	border-radius: 5px;
+	background-size: 200% 100%;
+	animation: shimmer 1.5s infinite linear;
+}
 @keyframes fadeInRight {
 	from {
 		opacity: 0;
