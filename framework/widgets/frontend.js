@@ -310,17 +310,17 @@
 					beforeOpen: function () {
 						this.st.mainClass = this.st.el.attr('data-effect');
 					},
-					open: function() {
+					open: function () {
 						// Initialize video elements when popup opens
 						const videoPopup = this.content.find('.bt-video-wrap');
 						const videoElement = videoPopup.find('video');
-						
+
 						if (videoElement.length > 0) {
 							// Handle uploaded video
 							videoElement[0].play();
 						}
 					},
-					close: function() {
+					close: function () {
 						// Pause video when popup closes
 						const videoElement = this.content.find('video');
 						if (videoElement.length > 0) {
@@ -328,6 +328,263 @@
 							videoElement[0].currentTime = 0;
 						}
 					}
+				}
+			});
+		}
+	};
+	const HotspotProductHandler = function ($scope) {
+		const $HotspotProduct = $scope.find('.bt-elwg-hotspot-product--default');
+		if ($HotspotProduct.length > 0) {
+
+			function hotspotPoint() {
+				$HotspotProduct.find('.bt-hotspot-point').each(function () {
+					const $point = $(this);
+					const $info = $point.find('.bt-hotspot-product-info');
+					const pointLeft = $point.position().left;
+					const pointTop = $point.position().top;
+					const infoWidth = $info.outerWidth() + 55;
+					const infoHeight = $info.outerHeight() + 55;
+					const containerWidth = $point.parent().width();
+					const containerHeight = $point.parent().height();
+					let smallOffset = 5;
+					let largeOffset = 15;
+					if (containerWidth < 700) {
+						smallOffset = 2;
+						largeOffset = 8;
+					}
+
+					// Handle horizontal positioning
+					if (pointLeft < infoWidth) {
+						if (pointTop < infoHeight) {
+							if (containerWidth < 700) {
+								if (pointLeft + infoWidth < containerWidth) {
+									$info.css({
+										'inset': '100% auto auto 100%',
+										'transform': `translate(${smallOffset}px, ${smallOffset}px)`
+									});
+								} else {
+									if (pointTop < infoHeight) {
+										$info.css({
+											'inset': '100% auto auto auto',
+											'transform': `translateY(${largeOffset}px)`
+										});
+									} else {
+										$info.css({
+											'inset': 'auto auto 100% auto',
+											'transform': `translateY(-${largeOffset}px)`
+										});
+									}
+								}
+							} else {
+								$info.css({
+									'inset': '100% auto auto 100%',
+									'transform': `translate(${smallOffset}px, ${smallOffset}px)`
+								});
+							}
+						} else if (pointTop + infoHeight > containerHeight) {
+							if (containerWidth < 700) {
+								if (pointLeft + infoWidth < containerWidth) {
+									$info.css({
+										'inset': 'auto auto 100% 100%',
+										'transform': `translate(${smallOffset}px, -${smallOffset}px)`
+									});
+								} else {
+									if (pointTop < infoHeight) {
+										$info.css({
+											'inset': '100% auto auto auto',
+											'transform': `translateY(${largeOffset}px)`
+										});
+									} else {
+										$info.css({
+											'inset': 'auto auto 100% auto',
+											'transform': `translateY(-${largeOffset}px)`
+										});
+									}
+								}
+							} else {
+								$info.css({
+									'inset': 'auto auto 100% 100%',
+									'transform': `translate(${smallOffset}px, -${smallOffset}px)`
+								});
+							}
+						} else {
+							if (containerWidth < 700) {
+								if (pointLeft + infoWidth < containerWidth) {
+									$info.css({
+										'inset': 'auto auto auto 100%',
+										'transform': `translateX(${largeOffset}px)`
+									});
+								} else {
+									if (pointTop < infoHeight) {
+										$info.css({
+											'inset': '100% auto auto auto',
+											'transform': `translateY(${largeOffset}px)`
+										});
+									} else {
+										$info.css({
+											'inset': 'auto auto 100% auto',
+											'transform': `translateY(-${largeOffset}px)`
+										});
+									}
+								}
+							} else {
+								$info.css({
+									'inset': 'auto auto auto 100%',
+									'transform': `translateX(${largeOffset}px)`
+								});
+							}
+						}
+					} else if (pointLeft + infoWidth > containerWidth) {
+						if (pointTop < infoHeight) {
+							$info.css({
+								'inset': '100% 0 auto auto',
+								'transform': `translate(${smallOffset}px, ${smallOffset}px)`
+							});
+						} else if (pointTop + infoHeight > containerHeight) {
+							$info.css({
+								'inset': 'auto 0 100% auto',
+								'transform': `translate(${smallOffset}px, -${smallOffset}px)`
+							});
+						} else {
+							$info.css({
+								'inset': 'auto 100% auto auto',
+								'transform': `translateX(-${largeOffset}px)`
+							});
+						}
+					} else {
+						if (pointTop < infoHeight) {
+							$info.css({
+								'inset': '100% auto auto auto',
+								'transform': `translateY(${largeOffset}px)`
+							});
+						} else if (pointTop + infoHeight > containerHeight) {
+							$info.css({
+								'inset': 'auto auto 100% auto',
+								'transform': `translateY(-${largeOffset}px)`
+							});
+						} else {
+							if (containerWidth < 700) {
+								if (pointLeft + infoWidth < containerWidth) {
+									$info.css({
+										'inset': 'auto auto auto 100%',
+										'transform': `translateX(${largeOffset}px)`
+									});
+								} else {
+									if (pointTop < infoHeight) {
+										$info.css({
+											'inset': '100% auto auto auto',
+											'transform': `translateY(${largeOffset}px)`
+										});
+									} else {
+										$info.css({
+											'inset': 'auto auto 100% auto',
+											'transform': `translateY(-${largeOffset}px)`
+										});
+									}
+								}
+							} else {
+								$info.css({
+									'inset': 'auto 100% auto auto',
+									'transform': `translateX(-${largeOffset}px)`
+								});
+							}
+
+						}
+					}
+				});
+			}
+			hotspotPoint();
+			$(window).on('resize', function () {
+				hotspotPoint();
+			});
+		}
+		// slider hotspot
+		const $Hotspotslider = $HotspotProduct.find('.bt-hotspot-slider');
+
+		if ($Hotspotslider.length > 0) {
+			const $sliderSettings = $Hotspotslider.data('slider-settings');
+			const $Hotspotwrap = $Hotspotslider.find('.bt-hotspot-slider--inner');
+			const $swiper = new Swiper($Hotspotwrap[0], {
+				slidesPerView: 1,
+				loop: false,
+				spaceBetween: $sliderSettings.spaceBetween.mobile,
+				speed: $sliderSettings.speed,
+				freeMode: true,
+				allowTouchMove: true,
+				autoplay: $sliderSettings.autoplay ? {
+					delay: 3000,
+					disableOnInteraction: false
+				} : false,
+				navigation: {
+					nextEl: $Hotspotslider.find('.bt-button-next')[0],
+					prevEl: $Hotspotslider.find('.bt-button-prev')[0],
+				},
+				breakpoints: {
+					1490: {
+						slidesPerView: 3,
+						spaceBetween: $sliderSettings.spaceBetween.desktop
+					},
+					1024: {
+						slidesPerView: 2,
+						spaceBetween: $sliderSettings.spaceBetween.desktop
+					},
+					767: {
+						slidesPerView: 3,
+						spaceBetween: $sliderSettings.spaceBetween.tablet
+					},
+					600: {
+						slidesPerView: 2,
+						spaceBetween: $sliderSettings.spaceBetween.tablet
+					},
+				},
+			});
+
+			if ($sliderSettings.autoplay) {
+				$Hotspotwrap[0].addEventListener('mouseenter', () => {
+					$swiper.autoplay.stop();
+				});
+				$Hotspotwrap[0].addEventListener('mouseleave', () => {
+					$swiper.autoplay.start();
+				});
+			}
+		}
+		// Add set to cart ajax 
+		const $buttonAddToCart = $HotspotProduct.find('.bt-add-to-cart-wrapper');
+		if ($buttonAddToCart.length > 0) {
+			$buttonAddToCart.on('click', '.bt-add-to-cart-btn', function (e) {
+				e.preventDefault();
+				const $this = $(this);
+				if ($this.hasClass('bt-view-card')) {
+					window.location.href = AJ_Options.cart;
+					return;
+				}
+				const productIds = $this.find('.bt-btn-price').data('ids');
+				if (productIds.length > 0) {
+					$.ajax({
+						type: 'POST',
+						url: AJ_Options.ajax_url,
+						data: {
+							action: 'utenzo_add_multiple_to_cart',
+							product_ids: productIds
+						},
+						beforeSend: function () {
+							$this.addClass('loading');
+						},
+						success: function (response) {
+							$this.removeClass('loading');
+							if (response.success) {
+								// Update cart count and trigger cart refresh
+								$('.bt-cart-count').text(response.data.cart_count);
+								$(document.body).trigger('added_to_cart');
+								$this.html('View Cart');
+								$this.addClass('bt-view-card');
+							}
+						},
+						error: function (jqXHR, textStatus, errorThrown) {
+							$this.removeClass('loading');
+							console.log('Error adding products to cart:', textStatus, errorThrown);
+						}
+					});
 				}
 			});
 		}
@@ -340,6 +597,7 @@
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-search-product.default', SearchProductHandler);
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-heading-animation.default', headingAnimationHandler);
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-tiktok-shop-slider.default', TiktokShopSliderHandler);
+		elementorFrontend.hooks.addAction('frontend/element_ready/bt-hotspot-product.default', HotspotProductHandler);
 	});
 
 })(jQuery);

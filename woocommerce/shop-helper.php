@@ -1650,3 +1650,37 @@ function bt_custom_featured_products_query($query)
 	}
 }
 add_action('elementor/query/bt_featured_products', 'bt_custom_featured_products_query');
+
+// Add multiple to cart ajax 
+function utenzo_add_multiple_to_cart() {
+    if (!isset($_POST['product_ids']) || empty($_POST['product_ids'])) {
+        wp_send_json_error(__('No products selected', 'utenzo'));
+        return;
+    }
+
+    $product_ids = $_POST['product_ids'];
+    $added_count = 0;
+    $cart_count = 0;
+
+    foreach ($product_ids as $product_id) {
+        $product_id = absint($product_id);
+        if ($product_id > 0) {
+            $added = WC()->cart->add_to_cart($product_id);
+            if ($added) {
+                $added_count++;
+            }
+        }
+    }
+
+    if ($added_count > 0) {
+        $cart_count = WC()->cart->get_cart_contents_count();
+        wp_send_json_success(array(
+            'message' => sprintf(__('%d products added to cart', 'utenzo'), $added_count),
+            'cart_count' => $cart_count
+        ));
+    } else {
+        wp_send_json_error(__('Failed to add products to cart', 'utenzo'));
+    }
+}
+add_action('wp_ajax_utenzo_add_multiple_to_cart', 'utenzo_add_multiple_to_cart');
+add_action('wp_ajax_nopriv_utenzo_add_multiple_to_cart', 'utenzo_add_multiple_to_cart');

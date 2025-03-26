@@ -383,11 +383,6 @@
 					compare_local = window.localStorage.getItem('productcomparelocal');
 					$(this).addClass('loading');
 					$(this).removeClass('no-added');
-					setTimeout(function () {
-						$('.bt-product-compare-btn[data-id="' + post_id + '"]').addClass('added');
-						$('.bt-product-compare-btn[data-id="' + post_id + '"]').removeClass('loading');
-					}, 500);
-
 				} else {
 					var compare_arr = compare_local.split(',');
 					if (!compare_arr.includes(post_id)) {
@@ -395,10 +390,6 @@
 						compare_local = window.localStorage.getItem('productcomparelocal');
 						$(this).addClass('loading');
 						$(this).removeClass('no-added');
-						setTimeout(function () {
-							$('.bt-product-compare-btn[data-id="' + post_id + '"]').addClass('added');
-							$('.bt-product-compare-btn[data-id="' + post_id + '"]').removeClass('loading');
-						}, 500);
 					}
 				}
 				var param_ajax = {
@@ -415,6 +406,8 @@
 					},
 					success: function (response) {
 						if (response.success) {
+							$('.bt-product-compare-btn[data-id="' + post_id + '"]').removeClass('loading');
+							$('.bt-product-compare-btn[data-id="' + post_id + '"]').addClass('added');
 							showComparePopup();
 							$('.bt-popup-compare .bt-compare-load').html(response.data['product']).fadeIn('slow');
 							UtenzoCompareContentScroll();
@@ -574,9 +567,6 @@
 				var productid = $(this).data('id');
 				$(this).find('.tooltip').remove();
 				$(this).addClass('loading');
-				setTimeout(function () {
-					$('.bt-product-quick-view-btn').removeClass('loading');
-				}, 500);
 				var param_ajax = {
 					action: 'utenzo_products_quick_view',
 					productid: productid,
@@ -591,6 +581,7 @@
 					},
 					success: function (response) {
 						if (response.success) {
+							$('.bt-product-quick-view-btn').removeClass('loading');
 							showQuickViewPopup();
 							$('.bt-popup-quick-view .bt-quick-view-load').html(response.data['product']).fadeIn('slow');
 							UtenzoShop();

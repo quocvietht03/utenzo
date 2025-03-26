@@ -151,7 +151,6 @@ class Widget_TikTokShopSlider extends Widget_Base
                         ],
                     ],
                 ],
-                'title_field' => '{{{ id_product }}}',
             ]
         );
 
@@ -366,6 +365,15 @@ class Widget_TikTokShopSlider extends Widget_Base
             ]
         );
 
+        $this->start_controls_tabs('arrows_colors_tabs');
+
+        // Normal state
+        $this->start_controls_tab(
+            'arrows_colors_normal',
+            [
+                'label' => __('Normal', 'utenzo'),
+            ]
+        );
         $this->add_control(
             'arrows_color',
             [
@@ -377,7 +385,6 @@ class Widget_TikTokShopSlider extends Widget_Base
                 ],
             ]
         );
-
         $this->add_control(
             'arrows_bg_color',
             [
@@ -389,6 +396,40 @@ class Widget_TikTokShopSlider extends Widget_Base
                 ],
             ]
         );
+        $this->end_controls_tab();
+
+        // Hover state
+        $this->start_controls_tab(
+            'arrows_colors_hover',
+            [
+                'label' => __('Hover', 'utenzo'),
+            ]
+        );
+        $this->add_control(
+            'arrows_color_hover',
+            [
+                'label' => __('Color', 'utenzo'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '#ffffff',
+                'selectors' => [
+                    '{{WRAPPER}} .bt-nav:hover svg path' => 'fill: {{VALUE}}',
+                ],
+            ]
+        );
+        $this->add_control(
+            'arrows_bg_color_hover',
+            [
+                'label' => __('Background Color', 'utenzo'),
+                'type' => Controls_Manager::COLOR,
+                'default' => 'rgba(0,0,0,0.7)',
+                'selectors' => [
+                    '{{WRAPPER}} .bt-nav:hover' => 'background-color: {{VALUE}}',
+                ],
+            ]
+        );
+        $this->end_controls_tab();
+
+        $this->end_controls_tabs();
 
         $this->add_control(
             'arrows_border_radius',

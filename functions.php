@@ -108,11 +108,16 @@ if (!function_exists('utenzo_enqueue_scripts')) {
 		if (function_exists('wc_get_page_id') && wc_get_page_id('shop') > 0) {
 			$shop_url = get_permalink(wc_get_page_id('shop'));
 		}
+		$cart_url = home_url('/cart/');
+		if (function_exists('wc_get_page_id') && wc_get_page_id('cart') > 0) {
+			$cart_url = get_permalink(wc_get_page_id('cart'));
+		}
 		/* Options to script */
 		$js_options = array(
 			'ajax_url' => admin_url('admin-ajax.php'),
 			'page_wishlist' => $wishlist_url,
 			'shop' => 	$shop_url,
+			'cart' => 	$cart_url,
 			'user_info' => wp_get_current_user(),
 		);
 		wp_localize_script('utenzo-main', 'AJ_Options', $js_options);

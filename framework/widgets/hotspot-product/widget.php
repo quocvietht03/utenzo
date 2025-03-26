@@ -62,7 +62,7 @@ class Widget_HotspotProduct extends Widget_Base
         $this->start_controls_section(
             'section_content',
             [
-                'label' => __('Content', 'utenzo'),
+                'label' => __('Hotspot', 'utenzo'),
             ]
         );
         $this->add_control(
@@ -85,7 +85,7 @@ class Widget_HotspotProduct extends Widget_Base
                 'exclude' => ['custom'],
             ]
         );
- 
+
         $repeater = new Repeater();
         $repeater->add_control(
             'id_product',
@@ -113,6 +113,9 @@ class Widget_HotspotProduct extends Widget_Base
                     'unit' => '%',
                     'size' => 50,
                 ],
+                'selectors' => [
+                    '{{WRAPPER}} {{CURRENT_ITEM}}.bt-hotspot-point' => 'left: {{SIZE}}{{UNIT}}; --hotspot-translate-x: {{SIZE}}{{UNIT}};',
+                ],
             ]
         );
 
@@ -132,64 +135,96 @@ class Widget_HotspotProduct extends Widget_Base
                     'unit' => '%',
                     'size' => 50,
                 ],
+                'selectors' => [
+                    '{{WRAPPER}} {{CURRENT_ITEM}}.bt-hotspot-point' => 'top: {{SIZE}}{{UNIT}}; --hotspot-translate-y: {{SIZE}}{{UNIT}};',
+                ],
             ]
         );
         $this->add_control(
-            'list',
+            'hotspot_items',
             [
-                'label' => __('List Products', 'utenzo'),
+                'label' => __('Hotspot', 'utenzo'),
                 'type' => Controls_Manager::REPEATER,
                 'fields' => $repeater->get_controls(),
                 'default' => [
                     [
-                        'hotspot_image' => [
-                            'url' => Utils::get_placeholder_image_src(),
+                        'id_product' => '',
+                        'hotspot_position_x' => [
+                            'unit' => '%',
+                            'size' => 10,
                         ],
-                        'hotspot_url' => [
-                            'url' => '#',
-                            'is_external' => true,
-                            'nofollow' => true,
+                        'hotspot_position_y' => [
+                            'unit' => '%',
+                            'size' => 10,
                         ]
                     ],
                     [
-                        'hotspot_image' => [
-                            'url' => Utils::get_placeholder_image_src(),
+                        'id_product' => '',
+                        'hotspot_position_x' => [
+                            'unit' => '%',
+                            'size' => 70,
                         ],
-                        'hotspot_url' => [
-                            'url' => '#',
-                            'is_external' => true,
-                            'nofollow' => true,
+                        'hotspot_position_y' => [
+                            'unit' => '%',
+                            'size' => 30,
                         ]
                     ],
                     [
-                        'hotspot_image' => [
-                            'url' => Utils::get_placeholder_image_src(),
+                        'id_product' => '',
+                        'hotspot_position_x' => [
+                            'unit' => '%',
+                            'size' => 50,
                         ],
-                        'hotspot_url' => [
-                            'url' => '#',
-                            'is_external' => true,
-                            'nofollow' => true,
+                        'hotspot_position_y' => [
+                            'unit' => '%',
+                            'size' => 90,
                         ]
                     ],
+
+                ],
+            ]
+        );
+        $this->end_controls_section();
+        $this->start_controls_section(
+            'section_slider',
+            [
+                'label' => __('Slider', 'utenzo'),
+            ]
+        );
+        $this->add_control(
+            'show_slider',
+            [
+                'label' => __('Show Slider', 'utenzo'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Yes', 'utenzo'),
+                'label_off' => __('No', 'utenzo'),
+                'default' => 'yes',
+                'separator' => 'before',
+            ]
+        );
+        $this->add_control(
+            'slider_heading',
+            [
+                'label' => __('Heading', 'utenzo'),
+                'type' => Controls_Manager::TEXT,
+                'default' => __('Slider Heading', 'utenzo'),
+                'label_block' => true,
+                'condition' => [
+                    'show_slider' => 'yes',
                 ],
             ]
         );
 
-     
-
-
-        $this->end_controls_section();
-    }
-
-    protected function register_style_section_controls()
-    {
-
-    
-        $this->start_controls_section(
-            'section_style_slider',
+        $this->add_control(
+            'slider_description',
             [
-                'label' => esc_html__('Slider', 'utenzo'),
-                'tab' => Controls_Manager::TAB_STYLE,
+                'label' => __('Description', 'utenzo'),
+                'type' => Controls_Manager::TEXTAREA,
+                'default' => __('Slider description text goes here', 'utenzo'),
+                'label_block' => true,
+                'condition' => [
+                    'show_slider' => 'yes',
+                ],
             ]
         );
         $this->add_control(
@@ -200,14 +235,9 @@ class Widget_HotspotProduct extends Widget_Base
                 'label_on' => __('Yes', 'utenzo'),
                 'label_off' => __('No', 'utenzo'),
                 'default' => 'no',
-            ]
-        );
-        $this->add_responsive_control(
-            'slider_item',
-            [
-                'label' => __('Slider Item', 'utenzo'),
-                'type' => Controls_Manager::NUMBER,
-                'default' => 6,
+                'condition' => [
+                    'show_slider' => 'yes',
+                ],
             ]
         );
         $this->add_control(
@@ -217,7 +247,11 @@ class Widget_HotspotProduct extends Widget_Base
                 'type' => Controls_Manager::NUMBER,
                 'default' => 1000,
                 'min' => 100,
+                'max' => 5000,
                 'step' => 100,
+                'condition' => [
+                    'show_slider' => 'yes',
+                ],
             ]
         );
         $this->add_responsive_control(
@@ -225,7 +259,7 @@ class Widget_HotspotProduct extends Widget_Base
             [
                 'label' => __('Slider SpaceBetween', 'utenzo'),
                 'type' => Controls_Manager::NUMBER,
-                'default' => 10,
+                'default' => 20,
                 'min' => 0,
                 'max' => 100,
                 'step' => 1,
@@ -233,6 +267,9 @@ class Widget_HotspotProduct extends Widget_Base
                 'desktop_default' => 30,
                 'tablet_default' => 20,
                 'mobile_default' => 20,
+                'condition' => [
+                    'show_slider' => 'yes',
+                ],
             ]
         );
         $this->add_control(
@@ -243,53 +280,166 @@ class Widget_HotspotProduct extends Widget_Base
                 'label_on' => __('Yes', 'utenzo'),
                 'label_off' => __('No', 'utenzo'),
                 'default' => 'yes',
+                'condition' => [
+                    'show_slider' => 'yes',
+                ],
+            ]
+        );
+        $this->add_control(
+            'show_add_to_cart',
+            [
+                'label' => __('Show Add to Cart', 'utenzo'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Yes', 'utenzo'),
+                'label_off' => __('No', 'utenzo'),
+                'default' => 'yes',
+                'condition' => [
+                    'show_slider' => 'yes',
+                ],
             ]
         );
         $this->end_controls_section();
-
     }
+
+    protected function register_style_section_controls() {}
 
     protected function register_controls()
     {
         $this->register_layout_section_controls();
         $this->register_style_section_controls();
     }
-    protected function render() {
+    protected function render()
+    {
         $settings = $this->get_settings_for_display();
-        ?>
-
-            <div class="hotspot-image-wrapper">
-            <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@homesgiadinh/video/7467942849229671688" data-video-id="7467942849229671688" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@homesgiadinh" href="https://www.tiktok.com/@homesgiadinh?refer=embed">@homesgiadinh</a> Decor bàn làm việc với mô hình ngộ không bay <a title="decor" target="_blank" href="https://www.tiktok.com/tag/decor?refer=embed">#decor</a><a title="decoration" target="_blank" href="https://www.tiktok.com/tag/decoration?refer=embed">#decoration</a> <a title="yeucongnghe" target="_blank" href="https://www.tiktok.com/tag/yeucongnghe?refer=embed">#yeucongnghe</a><a title="ngokhong" target="_blank" href="https://www.tiktok.com/tag/ngokhong?refer=embed">#ngokhong</a><a title="tonngokhong" target="_blank" href="https://www.tiktok.com/tag/tonngokhong?refer=embed">#tonngokhong</a> <a target="_blank" title="♬ Ôm Nhiều Mộng Mơ (Đại Mèo Remix) - Phát Huy T4, TLong" href="https://www.tiktok.com/music/Ôm-Nhiều-Mộng-Mơ-Đại-Mèo-Remix-7049583855728478978?refer=embed">♬ Ôm Nhiều Mộng Mơ (Đại Mèo Remix) - Phát Huy T4, TLong</a> </section> </blockquote> <script async src="https://www.tiktok.com/embed.js"></script>
-       
-                <?php if (!empty($settings['hotspot_items'])) : ?>
-                    <div class="hotspot-points">
-                        <?php foreach ($settings['hotspot_items'] as $item) : ?>
-                            <?php 
-                            $product = wc_get_product($item['id_product']);
-                            if ($product) : 
-                                $x_position = $item['hotspot_position_x']['size'] ?? 50;
-                                $y_position = $item['hotspot_position_y']['size'] ?? 50;
+        $attachment = wp_get_attachment_image_src($settings['hotspot_image']['id'], $settings['thumbnail_size']);
+?>
+        <div class="bt-elwg-hotspot-product--default <?php echo ($settings['show_slider'] !== 'yes') ? 'bt-no-slider' : ''; ?>">
+            <div class="bt-hotspot-product">
+                <div class="bt-hotspot-product--image">
+                    <?php if (!empty($settings['hotspot_image']['url'])) : ?>
+                        <div class="bt-hotspot-image">
+                            <?php
+                            $attachment = wp_get_attachment_image_src($settings['hotspot_image']['id'], $settings['thumbnail_size']);
+                            if ($attachment) {
+                                echo '<img src="' . esc_url($attachment[0]) . '" alt="">';
+                            } else {
+                                echo '<img src="' . esc_url($settings['hotspot_image']['url']) . '" alt="">';
+                            }
                             ?>
-                                <div class="hotspot-point" 
-                                    style="left: <?php echo esc_attr($x_position); ?>%; 
-                                           top: <?php echo esc_attr($y_position); ?>%;"
-                                    data-product-id="<?php echo esc_attr($item['id_product']); ?>">
-                                    <div class="hotspot-marker"></div>
-                                    <div class="hotspot-product-info">
-                                        <?php echo get_the_post_thumbnail($item['id_product'], 'thumbnail'); ?>
-                                        <h4><?php echo esc_html($product->get_name()); ?></h4>
-                                        <p class="price"><?php echo $product->get_price_html(); ?></p>
-                                        <a href="<?php echo esc_url($product->get_permalink()); ?>" class="btn">
-                                            <?php esc_html_e('View Product', 'utenzo'); ?>
-                                        </a>
+                        </div>
+                    <?php endif; ?>
+                    <?php if (!empty($settings['hotspot_items'])) : ?>
+                        <div class="bt-hotspot-points">
+                            <?php foreach ($settings['hotspot_items'] as $item) : ?>
+                                <?php
+                                $product = wc_get_product($item['id_product']);
+                                if ($product) :
+                                ?>
+                                    <div class="bt-hotspot-point elementor-repeater-item-<?php echo esc_attr($item['_id']); ?>"
+                                        data-product-id="<?php echo esc_attr($item['id_product']); ?>">
+                                        <div class="bt-hotspot-marker"></div>
+                                        <div class="bt-hotspot-product-info">
+                                            <a class="bt-hotspot-product-thumbnail" href="<?php echo esc_url($product->get_permalink()); ?>"><?php echo get_the_post_thumbnail($item['id_product'], 'thumbnail'); ?></a>
+                                            <div class="bt-product-content">
+                                                <h4><a href="<?php echo esc_url($product->get_permalink()); ?>"><?php echo esc_html($product->get_name()); ?></a></h4>
+                                                <p class="bt-price"><?php echo $product->get_price_html(); ?></p>
+                                                <a class="btn bt-product-quick-view-btn" href="#" data-id="<?php echo esc_attr($item['id_product']); ?>">
+                                                    <?php esc_html_e('Quick View', 'utenzo'); ?>
+                                                </a>
+                                            </div>
+
+                                        </div>
                                     </div>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <?php if ($settings['show_slider'] === 'yes') : ?>
+                    <div class="bt-hotspot-product--slider">
+                        <?php
+                        $slider_settings = [
+                            'autoplay' => isset($settings['slider_autoplay']) && $settings['slider_autoplay'] === 'yes',
+                            'speed' => isset($settings['slider_speed']) ? $settings['slider_speed'] : 500,
+                            'spaceBetween' => [
+                                'desktop' => isset($settings['slider_spacebetween']) ? $settings['slider_spacebetween'] : 30,
+                                'tablet' => isset($settings['slider_spacebetween_tablet']) ? $settings['slider_spacebetween_tablet'] : 20,
+                                'mobile' => isset($settings['slider_spacebetween_mobile']) ? $settings['slider_spacebetween_mobile'] : 10
+                            ],
+                        ];
+                        ?>
+                        <div class="bt-hotspot-slider" data-slider-settings='<?php echo json_encode($slider_settings); ?>'>
+                            <?php if (!empty($settings['slider_heading'])) : ?>
+                                <h3 class="bt-hotspot-slider--heading"><?php echo esc_html($settings['slider_heading']); ?></h3>
+                            <?php endif; ?>
+                            <?php if (!empty($settings['slider_description'])) : ?>
+                                <p class="bt-hotspot-slider--description"><?php echo esc_html($settings['slider_description']); ?></p>
+                            <?php endif; ?>
+                            <div class="bt-hotspot-slider--inner swiper">
+                                <div class="bt-hotspot-slider--wrap swiper-wrapper">
+                                    <?php foreach ($settings['hotspot_items'] as $item) : ?>
+                                        <?php
+                                        $product = wc_get_product($item['id_product']);
+                                        if ($product) :
+                                        ?>
+                                            <div class="bt-slider-item swiper-slide">
+                                                <?php
+                                                $post_object = get_post($item['id_product']);
+                                                setup_postdata($GLOBALS['post'] = &$post_object);
+                                                wc_get_template_part('content', 'product');
+                                                wp_reset_postdata();
+                                                ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                </div>
+                                <?php if ($settings['slider_arrows'] === 'yes') : ?>
+                                    <div class="bt-swiper-navigation">
+                                        <div class="bt-nav bt-button-prev">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path d="M15.5307 18.9698C15.6004 19.0395 15.6557 19.1222 15.6934 19.2132C15.7311 19.3043 15.7505 19.4019 15.7505 19.5004C15.7505 19.599 15.7311 19.6965 15.6934 19.7876C15.6557 19.8786 15.6004 19.9614 15.5307 20.031C15.461 20.1007 15.3783 20.156 15.2873 20.1937C15.1962 20.2314 15.0986 20.2508 15.0001 20.2508C14.9016 20.2508 14.804 20.2314 14.7129 20.1937C14.6219 20.156 14.5392 20.1007 14.4695 20.031L6.96948 12.531C6.89974 12.4614 6.84443 12.3787 6.80668 12.2876C6.76894 12.1966 6.74951 12.099 6.74951 12.0004C6.74951 11.9019 6.76894 11.8043 6.80668 11.7132C6.84443 11.6222 6.89974 11.5394 6.96948 11.4698L14.4695 3.96979C14.6102 3.82906 14.8011 3.75 15.0001 3.75C15.1991 3.75 15.39 3.82906 15.5307 3.96979C15.6715 4.11052 15.7505 4.30139 15.7505 4.50042C15.7505 4.69944 15.6715 4.89031 15.5307 5.03104L8.56041 12.0004L15.5307 18.9698Z" fill="currentColor" />
+                                            </svg>
+                                        </div>
+                                        <div class="bt-nav bt-button-next">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path d="M17.0306 12.531L9.53055 20.031C9.46087 20.1007 9.37815 20.156 9.2871 20.1937C9.19606 20.2314 9.09847 20.2508 8.99993 20.2508C8.90138 20.2508 8.8038 20.2314 8.71276 20.1937C8.62171 20.156 8.53899 20.1007 8.4693 20.031C8.39962 19.9614 8.34435 19.8786 8.30663 19.7876C8.26892 19.6965 8.24951 19.599 8.24951 19.5004C8.24951 19.4019 8.26892 19.3043 8.30663 19.2132C8.34435 19.1222 8.39962 19.0395 8.4693 18.9698L15.4396 12.0004L8.4693 5.03104C8.32857 4.89031 8.24951 4.69944 8.24951 4.50042C8.24951 4.30139 8.32857 4.11052 8.4693 3.96979C8.61003 3.82906 8.80091 3.75 8.99993 3.75C9.19895 3.75 9.38982 3.82906 9.53055 3.96979L17.0306 11.4698C17.1003 11.5394 17.1556 11.6222 17.1933 11.7132C17.2311 11.8043 17.2505 11.9019 17.2505 12.0004C17.2505 12.099 17.2311 12.1966 17.1933 12.2876C17.1556 12.3787 17.1003 12.4614 17.0306 12.531Z" fill="currentColor" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                            <?php if ($settings['show_add_to_cart'] === 'yes') : ?>
+                                <div class="bt-add-to-cart-wrapper">
+                                    <button type="button" class="bt-add-to-cart-btn">
+                                        <span class="bt-btn-text"><?php echo esc_html__('Add set to cart - ', 'utenzo'); ?></span>
+                                        <?php
+                                        $total_price = 0;
+                                        $total_regular_price = 0;
+                                        $product_ids = [];
+                                        foreach ($settings['hotspot_items'] as $item) {
+                                            $product = wc_get_product($item['id_product']);
+                                            if ($product) {
+                                                $total_price += (float)$product->get_price();
+                                                if ($product->is_on_sale()) {
+                                                    $total_regular_price += (float)$product->get_regular_price();
+                                                }
+                                                $product_ids[] = $item['id_product'];
+                                            }
+                                        }
+                                        ?>
+                                        <span class="bt-btn-price" data-ids="<?php echo esc_attr(json_encode($product_ids)); ?>"><?php echo wc_price($total_price); ?></span>
+                                        <?php if ($total_regular_price > 0 && $total_regular_price != $total_price) : ?>
+                                            <span class="bt-btn-regular-price"><?php echo wc_price($total_regular_price); ?></span>
+                                        <?php endif; ?>
+                                    </button>
                                 </div>
                             <?php endif; ?>
-                        <?php endforeach; ?>
+                        </div>
                     </div>
                 <?php endif; ?>
             </div>
-        <?php
+        </div>
+<?php
     }
 
 
