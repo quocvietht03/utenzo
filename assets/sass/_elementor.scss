@@ -3064,6 +3064,9 @@ body {
             &.loading {
               color: transparent !important;
               opacity: 0.5;
+              > *{
+                color: transparent !important;
+              }
               &::after {
                 content: "" !important;
                 position: absolute;
