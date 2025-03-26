@@ -45,7 +45,8 @@ class Widget_HotspotProduct extends Widget_Base
 
         $wp_query = new \WP_Query(array(
             'post_type' => 'product',
-            'post_status' => 'publish'
+            'post_status' => 'publish',
+            'posts_per_page' => -1
         ));
 
         if ($wp_query->have_posts()) {
