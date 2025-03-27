@@ -3064,7 +3064,7 @@ body {
             &.loading {
               color: transparent !important;
               opacity: 0.5;
-              > *{
+              > * {
                 color: transparent !important;
               }
               &::after {
@@ -3148,6 +3148,244 @@ body {
         }
         &--slider {
           width: 100%;
+        }
+      }
+    }
+  }
+}
+.bt-elwg-product-testimonial {
+  &--default {
+    border-radius: 12px;
+    overflow: hidden;
+    @media (max-width: $break-sm) {
+      border-radius: 8px;
+    }
+    .bt-product-testimonial {
+      display: flex;
+      flex-wrap: wrap;
+      background: #f9f2e7;
+      &--content {
+        width: 50%;
+        display: flex;
+        padding: 20px 60px;
+        flex-direction: column;
+        justify-content: center;
+        .swiper-wrapper {
+          height: auto;
+        }
+        .bt-swiper-navigation {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          position: relative;
+          margin-top: -54px;
+          z-index: 1;
+          justify-content: flex-end;
+          .bt-nav {
+            padding: 11px;
+            background-color: #fff;
+            border: 1px solid $color-accent;
+            color: $color-primary;
+            border-radius: 50% 50% 50% 50%;
+            cursor: pointer;
+            svg {
+              width: 24px;
+              height: 24px;
+              display: flex;
+            }
+            &:hover {
+              border-color: $color-accent;
+              background: $color-accent;
+              color: #fff;
+            }
+          }
+          @media (max-width: $break-sm) {
+            margin-top: -52px;
+            .bt-nav {
+              padding: 9px;
+              svg {
+                width: 20px !important;
+                height: 20px !important;
+              }
+            }
+          }
+        }
+      }
+      &--label {
+        color: $color-primary;
+        text-align: left;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 26px;
+        text-transform: uppercase;
+        margin: 8px 0 0 0;
+      }
+      &--text {
+        color: $color-primary;
+        font-size: 30px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 42px;
+        margin: 38px 0;
+      }
+      &--rating {
+        display: flex;
+        align-items: center;
+        line-height: 1;
+        padding-right: 123px;
+      }
+      &--author {
+        color: $color-primary;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 28px;
+        margin: 8px 0 0 0;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding-right: 123px;
+      }
+      &--images {
+        width: 50%;
+        position: relative;
+        .bt-image-cover {
+          position: relative;
+          overflow: hidden;
+          background: #cdcdcd;
+          background-position: center;
+          background-size: cover;
+          padding-bottom: 94%;
+          img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover;
+            margin: 0;
+          }
+        }
+        .product-info {
+          position: absolute;
+          z-index: 2;
+          display: block;
+          border-radius: 4px;
+          background: #fff;
+          bottom: 20px;
+          left: 20px;
+          right: 20px;
+          display: flex;
+          align-items: center;
+          padding: 20px;
+          gap: 16px;
+          @media(max-width:$break-xs){
+            padding: 10px;
+          }
+          .product-img {
+            display: block;
+            img {
+              width: 80px;
+              height: 80px;
+              object-fit: cover;
+              display: block;
+            }
+          }
+          .product-content {
+            width: calc(100% - 96px);
+            .product-title {
+              color: var(--On-Surface, #0c2c48);
+              font-family: Urbanist;
+              font-size: 16px;
+              font-style: normal;
+              font-weight: 500;
+              line-height: 24px;
+              margin: 0 0 4px 0;
+            }
+            .product-price {
+              display: flex;
+              flex-direction: row-reverse;
+              justify-content: flex-end;
+              gap: 8px;
+              align-items: baseline;
+              .woocommerce-Price-amount {
+                font-size: 20px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 28px;
+                color: $color-primary;
+              }
+              ins {
+                text-decoration: none;
+                margin-right: 0 !important;
+              }
+              del {
+                .woocommerce-Price-amount {
+                  font-size: 16px;
+                  font-style: normal;
+                  font-weight: 400;
+                  line-height: 26px;
+                  color: #a0a0a0;
+                }
+              }
+            }
+          }
+        }
+      }
+      @media (max-width: $break-lg) and (min-width: $break-md) {
+        &--label {
+          font-size: 14px;
+          line-height: 22px;
+        }
+        &--text {
+          font-size: 22px;
+          line-height: 32px;
+          margin: 20px 0;
+        }
+        &--author {
+          font-size: 18px;
+          line-height: 24px;
+        }
+        &--content{
+          padding: 20px 30px;
+        }
+      }
+      @media (max-width: $break-md) {
+        &--content {
+          width: 100%;
+          padding: 40px 60px 55px;
+        }
+        &--images {
+          width: 100%;
+          .bt-image-cover {
+            padding-bottom: 66.6%;
+          }
+        }
+      }
+      @media(max-width:$break-sm){
+        &--content{
+          padding: 40px 15px 55px;
+        }
+      }
+      @media (max-width: $break-xs) {
+        &--label {
+          font-size: 14px;
+          line-height: 22px;
+        }
+        &--text {
+          font-size: 22px;
+          line-height: 32px;
+          margin: 20px 0;
+        }
+        &--author {
+          font-size: 18px;
+          line-height: 24px;
+        }
+        &--images {
+          .bt-image-cover {
+            padding-bottom:90%;
+          }
         }
       }
     }

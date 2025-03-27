@@ -551,7 +551,7 @@
 	/* Product Quick View */
 	function UtenzoProductQuickView() {
 		if ($('.bt-product-quick-view-btn').length > 0) {
-			$('body').append('<div class="bt-popup-quick-view"><div class="bt-quick-view-overlay"></div><div class="bt-quick-view-body"><div class="bt-quick-view-close"></div><div class="bt-quick-view-load"></div></div></div>');
+			$('body').append('<div class="bt-popup-quick-view"><div class="bt-quick-view-overlay"></div><div class="bt-quick-view-body"><div class="bt-quick-view-load"></div></div></div>');
 			function showQuickViewPopup() {
 				$('.bt-popup-quick-view').addClass('active');
 				$('.bt-quick-view-body').addClass('show');

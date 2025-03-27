@@ -4,8 +4,8 @@
     "fields": [
         {
             "key": "field_658beac69e215",
-            "label": "Avatar",
-            "name": "avatar",
+            "label": "Banner Product",
+            "name": "banner_product",
             "aria-label": "",
             "type": "image",
             "instructions": "",
@@ -25,7 +25,35 @@
             "max_height": "",
             "max_size": "",
             "mime_types": "",
+            "allow_in_bindings": 1,
             "preview_size": "thumbnail"
+        },
+        {
+            "key": "field_671b3f967e6ee",
+            "label": "Product",
+            "name": "product",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "product"
+            ],
+            "post_status": "",
+            "taxonomy": "",
+            "return_format": "id",
+            "multiple": 0,
+            "allow_null": 0,
+            "allow_in_bindings": 1,
+            "bidirectional": 0,
+            "ui": 1,
+            "bidirectional_target": []
         },
         {
             "key": "field_667533ffb579d",
@@ -46,26 +74,6 @@
             "max": "",
             "placeholder": "",
             "step": 1,
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_671b3f967e6ee",
-            "label": "Package",
-            "name": "package",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "33",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
             "prepend": "",
             "append": ""
         },
@@ -108,5 +116,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1733543787
+    "modified": 1743039094
 }

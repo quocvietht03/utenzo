@@ -589,6 +589,62 @@
 			});
 		}
 	};
+	const ProductTestimonialHandler = function ($scope) {
+		const $ProductTestimonial = $scope.find('.bt-elwg-product-testimonial--default');
+		const $testimonialContent = $ProductTestimonial.find('.js-testimonial-content');
+		const $testimonialImages = $ProductTestimonial.find('.js-testimonial-images');
+
+		if ($testimonialContent.length > 0 && $testimonialImages.length > 0) {
+			const $sliderSettings = $ProductTestimonial.data('slider-settings');
+			const sliderSpeed = $sliderSettings.speed || 1000;
+			const autoplay = $sliderSettings.autoplay || false;
+			const autoplayDelay = $sliderSettings.autoplay_delay || 3000;
+			// Initialize the testimonial content slider
+			const testimonialContentSwiper = new Swiper($testimonialContent[0], {
+				slidesPerView: 1,
+				loop: true,
+				speed: sliderSpeed,
+				effect: 'fade',
+				fadeEffect: {
+					crossFade: true
+				},
+				autoplay: autoplay ? {
+					delay: autoplayDelay,
+					disableOnInteraction: false
+				} : false,
+				navigation: {
+					nextEl: $ProductTestimonial.find('.bt-button-next')[0],
+					prevEl: $ProductTestimonial.find('.bt-button-prev')[0],
+				},
+			});
+			// Initialize the testimonial images slider
+			const testimonialImagesSwiper = new Swiper($testimonialImages[0], {
+				slidesPerView: 1,
+				loop: true,
+				speed: sliderSpeed,
+				effect: 'fade',
+				fadeEffect: {
+					crossFade: true
+				},
+				allowTouchMove: false,
+			});
+			
+			// Sync both sliders
+			testimonialContentSwiper.controller.control = testimonialImagesSwiper;
+			testimonialImagesSwiper.controller.control = testimonialContentSwiper;
+			
+			// Pause autoplay on hover if autoplay is enabled
+			if (autoplay) {
+				$testimonialContent[0].addEventListener('mouseenter', () => {
+					testimonialContentSwiper.autoplay.stop();
+				});
+				
+				$testimonialContent[0].addEventListener('mouseleave', () => {
+					testimonialContentSwiper.autoplay.start();
+				});
+			}
+		}
+	};
 	// Make sure you run this code under Elementor.
 	$(window).on('elementor/frontend/init', function () {
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-location-list.default', LocationListHandler);
@@ -598,6 +654,7 @@
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-heading-animation.default', headingAnimationHandler);
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-tiktok-shop-slider.default', TiktokShopSliderHandler);
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-hotspot-product.default', HotspotProductHandler);
+		elementorFrontend.hooks.addAction('frontend/element_ready/bt-product-testimonial.default', ProductTestimonialHandler);
 	});
 
 })(jQuery);

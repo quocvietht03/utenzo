@@ -826,7 +826,7 @@
     justify-content: center;
     right: 15px;
     top: 12px;
-    position: fixed;
+    position: absolute;
     z-index: 9999;
     cursor: pointer;
     background: #fff;
@@ -881,6 +881,7 @@
     box-sizing: border-box;
     background-color: white;
     border-radius: 10px;
+    position: relative;
     @media (min-width: 1170px) {
       min-width: 1045px;
     }

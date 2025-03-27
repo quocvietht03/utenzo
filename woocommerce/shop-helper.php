@@ -1219,6 +1219,7 @@ function utenzo_products_quick_view()
 
   ob_start();
   ?>
+  <div class="bt-quick-view-close"></div>
   <div class="bt-quickview-title">
     <h2><?php esc_html_e('Compare products', 'utenzo') ?></h2>
   </div>
