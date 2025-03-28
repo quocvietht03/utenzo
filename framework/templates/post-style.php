@@ -4,22 +4,25 @@ $category = get_the_terms($post_id, 'category');
 ?>
 <article <?php post_class('bt-post'); ?>>
   <div class="bt-post--inner">
-    <div class="bt-post--wrap-image">
-      <?php echo utenzo_post_cover_featured_render($args['image-size']); ?>
-      <div class="bt-post--publish">
-          <span><?php echo get_the_date('d'); ?></span>
-          <?php echo get_the_date('M'); ?>
-      </div>
-    </div>
+    <?php echo utenzo_post_cover_featured_render($args['image-size']); ?>
     <div class="bt-post--content">
-      <?php echo utenzo_post_title_render(); ?>
-      <?php if (has_excerpt($post_id)) { ?>
-        <div class="bt-post--excerpt">
-          <?php
-          echo get_the_excerpt($post_id);
-          ?>
+      <div class="bt-post--info">
+        <div class="bt-post--publish">
+          <?php echo get_the_date('F j, Y'); ?>
         </div>
-      <?php } ?>
+        <?php if (!empty($category) && is_array($category)) {
+          $first_category = reset($category); ?>
+          <div class="bt-post--category">
+            <a href="<?php echo esc_url(get_category_link($first_category->term_id)); ?>">
+              <?php echo esc_html($first_category->name); ?>
+            </a>
+          </div>
+        <?php } ?>
+      </div>
+      <?php 
+      echo utenzo_post_title_render();
+      echo utenzo_post_button_render('Read More');
+      ?>
     </div>
   </div>
 </article>

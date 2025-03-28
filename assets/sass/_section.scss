@@ -25,285 +25,35 @@
 }
 
 .elementor-element {
-    &.elementor-grid-4 {
-        .elementor-loop-container {
-            &.elementor-grid {
-                @media (max-width: $break-lg) and (min-width: $break-tl) {
-                    grid-column-gap: 15px;
-                    .bt-post {
-                        &--job {
-                            left: 25px;
-                        }
-                        &--title {
-                            font-size: 24px;
-                        }
-                        &--description {
-                            font-size: 16px;
-                        }
-                    }
-                }
+    &.bt-section-banner {
+        @media (max-width: $break-md) and (min-width: $break-sm) {
+            > .e-con-inner {
+                grid-template-columns: 1fr !important;
             }
         }
     }
-    &.bt-text-view-more {
-        a {
-            color: $color-accent;
-            text-decoration: underline;
-        }
-    }
-    &.bt-section-about {
-        > .e-con-inner {
+    &.bt-banner-ads {
+        @media (max-width: $break-lg) and (min-width: $break-md) {
             > .elementor-element {
-                .elementor-icon-list-items {
-                    display: flex;
-                    gap: 12px 20px;
-                    flex-wrap: wrap;
-                }
-                @media (max-width: 450px) {
-                    &:last-child {
-                        padding-left: 50px;
-                        > .elementor-element {
-                            > .elementor-element {
-                                &:nth-child(1) {
-                                    left: -15px;
-                                    img {
-                                        max-width: 60px;
-                                        border-width: 3px;
-                                    }
-                                }
-                                &:nth-child(2) {
-                                    left: -52px;
-                                    img {
-                                        max-width: 65px;
-                                        border-width: 3px;
-                                    }
-                                }
-                                &:nth-child(3) {
-                                    left: -5px;
-                                    img {
-                                        max-width: 70px;
-                                        border-width: 3px;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    &.bt-section-choose-us {
-        .elementor-icon-box-wrapper {
-            .elementor-icon-box-icon {
-                svg {
-                    max-height: 80px;
-                }
-            }
-        }
-    }
-    &.bt-section-featured {
-        .elementor-widget-counter {
-            .elementor-counter-title {
-                @media (max-width: $break-xs) {
-                    font-weight: 400 !important;
-                }
-                @media (max-width: 360px) {
-                    font-size: 14px !important;
-                }
-            }
-        }
-    }
-    &.bt-section-our-offer {
-        @keyframes wave-animation {
-            0%,
-            100% {
-                transform: translateX(0);
-            }
-            50% {
-                transform: translateX(30%);
-            }
-        }
-        .elementor-shape-top {
-            @media (min-width: $break-lg) {
-                svg {
-                    left: -50%;
-                    transform: none;
-                    animation: wave-animation 150s infinite;
-                }
-            }
-        }
-        .elementor-widget-image {
-            &.bt-img-our-offer {
-                height: 100%;
-                @media (max-width: 1300px) and (min-width: $break-tl) {
-                    img {
-                        max-width: 250px;
-                    }
-                }
-            }
-        }
-    }
-    &.bt-section-hero {
-        > .e-con-inner {
-            > .elementor-element {
-                @media (max-width: $break-lg) and (min-width: $break-tl) {
-                    &:first-child {
-                        .elementor-widget-heading {
-                            --container-widget-width: 400px;
-                            h2 {
-                                font-size: 58px;
-                                line-height: 70px;
-                            }
-                        }
-                        .elementor-widget-text-editor {
-                            --container-widget-width: 433px;
-                        }
-                    }
-                    &:last-child {
-                        > .elementor-element {
-                            &:first-child {
-                                .elementor-widget-container {
-                                    margin-right: 0;
-                                }
-                            }
-                            &:nth-child(2) {
-                                left: -30%;
-                                img {
-                                    max-width: 85px;
-                                    border-width: 5px;
-                                }
-                            }
-                            &:nth-child(3) {
-                                left: -15%;
-                                top: 39%;
-                                img {
-                                    max-width: 100px;
-                                    border-width: 5px;
-                                }
-                            }
-                            &:nth-child(4) {
-                                left: -24%;
-                                top: 62%;
-                                img {
-                                    max-width: 120px;
-                                    border-width: 5px;
-                                }
-                            }
-                        }
-                    }
-                }
-                @media (max-width: $break-tl) and (min-width: 900px) {
-                    &:first-child {
-                        width: 55%;
-                        .elementor-widget-heading {
-                            --container-widget-width: 450px;
-                            h2 {
-                                font-size: 60px;
-                                line-height: 70px;
-                            }
-                        }
-                    }
-                    &:last-child {
-                        width: 45%;
-                    }
-                }
-            }
-        }
-    }
-    &.bt-section-about-video {
-        > .e-con-inner {
-            > .elementor-element {
-                .elementor-widget-n-tabs {
-                    .e-n-tabs-heading {
-                        border-bottom: 1px solid #e4e4e4;
-                        .e-n-tab-title {
-                            margin-bottom: -1px;
-                        }
-                    }
-                }
-                &:last-child {
-                    @media (max-width: $break-lg) and (min-width: $break-tl) {
-                        --flex-grow: auto;
-                        --flex-shrink: auto;
-                        --width: 100%;
-                    }
-                }
-            }
-        }
-    }
-    &.bt-section-choose-us-about {
-        > .e-con-inner {
-            > .elementor-element {
-                &:last-child {
+                &:first-child {
+                    padding: 20px 15px;
                     > .elementor-element {
-                        .elementor-icon-list-items {
-                            display: flex;
-                            gap: 12px 2%;
-                            flex-wrap: wrap;
-                            .elementor-icon-list-item {
-                                width: 49%;
-                            }
-                            @media (max-width: $break-sm) {
-                                gap: 12px;
-                                .elementor-icon-list-item {
-                                    width: 100%;
-                                }
-                            }
-                        }
-                        @media (max-width: $break-lg) and (min-width: $break-tl) {
-                            .elementor-icon-list-items {
-                                .elementor-icon-list-item {
-                                    .elementor-icon-list-text {
-                                        font-size: 18px;
-                                    }
-                                }
-                            }
-                            &:last-child {
-                                > .elementor-element {
-                                    > .elementor-element {
-                                        &:nth-child(2) {
-                                            bottom: 62%;
-                                        }
-                                        &:nth-child(4) {
-                                            bottom: 3%;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        @media (max-width: 450px) {
-                            &:last-child {
-                                padding-left: 50px;
-                                > .elementor-element {
-                                    > .elementor-element {
-                                        &:nth-child(2) {
-                                            left: -15px;
-                                            img {
-                                                max-width: 60px;
-                                                border-width: 3px;
-                                                height: 60px;
-                                            }
-                                        }
-                                        &:nth-child(3) {
-                                            left: -38px;
-                                            img {
-                                                max-width: 65px;
-                                                border-width: 3px;
-                                            }
-                                        }
-                                        &:nth-child(4) {
-                                            left: 10px;
-                                            img {
-                                                max-width: 70px;
-                                                border-width: 3px;
-                                            }
-                                        }
-                                    }
-                                }
+                        &:first-child {
+                            h2 {
+                                font-size: 27px;
+                                line-height: 36px;
                             }
                         }
                     }
                 }
+            }
+        }
+    }
+    &.bt-section-box-icon {
+        > .e-con-inner {
+            > .elementor-element {
+                max-width: var(--container-widget-width, 100%) !important;
+                width: 100%;
             }
         }
     }

@@ -330,9 +330,6 @@ if (!function_exists('utenzo_post_button_render')) {
     <div class="bt-post--button">
       <a href="<?php echo esc_url(get_permalink()) ?>">
         <span> <?php echo esc_html($text) ?> </span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M4 12H20M20 12L16 8M20 12L16 16" stroke="#1FBECD" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
       </a>
     </div>
     <?php }

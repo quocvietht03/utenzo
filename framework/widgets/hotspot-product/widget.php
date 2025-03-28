@@ -418,7 +418,7 @@ class Widget_HotspotProduct extends Widget_Base
                             </div>
                             <?php if ($settings['show_add_to_cart'] === 'yes') : ?>
                                 <div class="bt-add-to-cart-wrapper">
-                                    <button type="button" class="bt-add-to-cart-btn">
+                                    <button type="button" class="bt-add-to-cart-btn bt-button-hover">
                                         <span class="bt-btn-text"><?php echo esc_html__('Add set to cart - ', 'utenzo'); ?></span>
                                         <?php
                                         $total_price = 0;

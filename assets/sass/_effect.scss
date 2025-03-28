@@ -580,266 +580,21 @@
 }
 .bt-button-hover-enable {
 	.bt-button-hover {
-		.elementor-button,
-		.bt-button {
-			position: relative;
-			overflow: hidden;
-			display: inline-flex;
-			color: $color-primary;
-			&::before {
-				position: absolute;
-				bottom: -30px;
-				width: 30px;
-				content: "";
-				height: 30px;
-				background-image: url("../images/img-bubble-white.png");
-				background-size: contain;
-				background-repeat: no-repeat;
-				left: 10%;
-			}
-			&::after {
-				position: absolute;
-				bottom: -30px;
-				width: 15px;
-				content: "";
-				height: 15px;
-				background-image: url("../images/img-bubble-white.png");
-				background-size: contain;
-				background-repeat: no-repeat;
-
-				left: 40%;
-			}
-			.elementor-button-content-wrapper,
-			.bt-heading {
-				&::before {
-					position: absolute;
-					bottom: -30px;
-					width: 30px;
-					content: "";
-					height: 30px;
-					background-image: url("../images/img-bubble-white.png");
-					background-size: contain;
-					background-repeat: no-repeat;
-					left: 50%;
-				}
-				&::after {
-					@media (min-width: $break-sm) {
-						content: "";
-						position: absolute;
-						width: 55px;
-						height: 55px;
-						background: url("../images/icon-clean.png") no-repeat center / contain;
-						bottom: -10px;
-						left: -50px;
-						transform: translateY(0) rotate(-30deg);
-						z-index: 1;
-						opacity: 0;
-					}
-				}
-			}
-			&:hover {
-				box-shadow: 0px 4px 50px 0 rgba(0, 0, 0, 0.1);
-				&::before,
-				&::after {
-					animation:
-						effectBubbleRiseButton 5s linear infinite,
-						effectBubbleSideWaysButton 2s ease-in-out infinite alternate;
-				}
-				&::before {
-					animation-duration: 6s;
-				}
-				&::after {
-					animation-duration: 3s;
-				}
-				.elementor-button-content-wrapper,
-				.bt-heading {
-					&::before {
-						animation:
-							effectBubbleRiseButton 5s linear infinite,
-							effectBubbleSideWaysButton 2s ease-in-out infinite alternate;
-					}
-					&::before {
-						animation-duration: 4s;
-					}
-					&::after {
-						animation: effectcCleaningSwipe 2.7s cubic-bezier(0.11, 0.52, 0.53, 0.79) forwards;
-					}
-				}
-			}
+		transition: all 0.3s ease;
+		&:hover {
+			background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%) ;
+			background-size: 200% 100%;
+			animation: shimmer 1.5s infinite linear;
 		}
 	}
-	.bt-button-hover-secondary {
-		.elementor-button,
-		.bt-button {
-			position: relative;
-			overflow: hidden;
-			display: inline-flex;
-			color: $color-primary;
-			&::before {
-				position: absolute;
-				bottom: -30px;
-				width: 30px;
-				content: "";
-				height: 30px;
-				background-image: url("../images/img-bubble-blue.png");
-				background-size: contain;
-				background-repeat: no-repeat;
-				left: 10%;
-			}
-			&::after {
-				position: absolute;
-				bottom: -30px;
-				width: 15px;
-				content: "";
-				height: 15px;
-				background-image: url("../images/img-bubble-blue.png");
-				background-size: contain;
-				background-repeat: no-repeat;
-
-				left: 40%;
-			}
-			.elementor-button-content-wrapper,
-			.bt-heading {
-				&::before {
-					position: absolute;
-					bottom: -30px;
-					width: 30px;
-					content: "";
-					height: 30px;
-					background-image: url("../images/img-bubble-blue.png");
-					background-size: contain;
-					background-repeat: no-repeat;
-					left: 50%;
-				}
-				&::after {
-					@media (min-width: $break-sm) {
-						content: "";
-						position: absolute;
-						width: 55px;
-						height: 55px;
-						background: url("../images/icon-clean.png") no-repeat center / contain;
-						bottom: -10px;
-						left: -50px;
-						transform: translateY(0) rotate(-30deg);
-						z-index: 1;
-						opacity: 0;
-					}
-				}
-			}
-			&:hover {
-				box-shadow: 0px 4px 50px 0 rgba(0, 0, 0, 0.1);
-				&::before,
-				&::after {
-					animation:
-						effectBubbleRiseButton 5s linear infinite,
-						effectBubbleSideWaysButton 2s ease-in-out infinite alternate;
-				}
-				&::before {
-					animation-duration: 6s;
-				}
-				&::after {
-					animation-duration: 3s;
-				}
-				.elementor-button-content-wrapper,
-				.bt-heading {
-					&::before {
-						animation:
-							effectBubbleRiseButton 5s linear infinite,
-							effectBubbleSideWaysButton 2s ease-in-out infinite alternate;
-					}
-					&::before {
-						animation-duration: 4s;
-					}
-					&::after {
-						animation: effectcCleaningSwipe 2.7s cubic-bezier(0.11, 0.52, 0.53, 0.79) forwards;
-					}
-				}
-			}
-		}
-	}
-	.bt-button-slider {
-		a {
-			position: relative;
-			overflow: hidden;
-			display: inline-flex;
-			color: $color-primary;
-			&::before {
-				position: absolute;
-				bottom: -30px;
-				width: 30px;
-				content: "";
-				height: 30px;
-				background-image: url("../images/img-bubble-white.png");
-				background-size: contain;
-				background-repeat: no-repeat;
-				left: 10%;
-				display: block !important;
-			}
-			&::after {
-				position: absolute;
-				bottom: -30px;
-				width: 15px;
-				content: "";
-				height: 15px;
-				background-image: url("../images/img-bubble-white.png");
-				background-size: contain;
-				background-repeat: no-repeat;
-				display: block !important;
-				left: 40%;
-			}
-			> div {
-				&::before {
-					position: absolute;
-					bottom: -30px;
-					width: 30px;
-					content: "";
-					height: 30px;
-					background-image: url("../images/img-bubble-white.png");
-					background-size: contain;
-					background-repeat: no-repeat;
-					left: 50%;
-				}
-				&::after {
-					@media (min-width: $break-sm) {
-						content: "";
-						position: absolute;
-						width: 55px;
-						height: 55px;
-						background: url("../images/icon-clean.png") no-repeat center / contain;
-						bottom: -10px;
-						left: -50px;
-						transform: translateY(0) rotate(-30deg);
-						z-index: 1;
-						opacity: 0;
-					}
-				}
-			}
-			&:hover {
-				box-shadow: 0px 4px 50px 0 rgba(0, 0, 0, 0.1);
-				&::before,
-				&::after {
-					animation:
-						effectBubbleRiseButton 5s linear infinite,
-						effectBubbleSideWaysButton 2s ease-in-out infinite alternate;
-				}
-				&::before {
-					animation-duration: 6s;
-				}
-				&::after {
-					animation-duration: 3s;
-				}
-				> div {
-					&::before {
-						animation:
-							effectBubbleRiseButton 5s linear infinite,
-							effectBubbleSideWaysButton 2s ease-in-out infinite alternate;
-					}
-					&::before {
-						animation-duration: 4s;
-					}
-					&::after {
-						animation: effectcCleaningSwipe 2.7s cubic-bezier(0.11, 0.52, 0.53, 0.79) forwards;
-					}
+	.bt-button-el-hover {
+		.elementor-button-wrapper {
+			.elementor-button {
+				transition: all 0.3s ease;
+				&:hover {
+					background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%) ;
+					background-size: 200% 100%;
+					animation: shimmer 1.5s infinite linear;
 				}
 			}
 		}
@@ -854,11 +609,11 @@
 		background-position: -100%;
 	}
 }
-.__bt-animation-loading-card{
+.__bt-animation-loading-card {
 	pointer-events: none;
-	background-color: #E9E9E9;
-	color: #E9E9E9;
-	background: linear-gradient(90deg, #E9E9E9 25%, #5a86a973 50%, #E9E9E9 75%);
+	background-color: #e9e9e9;
+	color: #e9e9e9;
+	background: linear-gradient(90deg, #e9e9e9 25%, #5a86a973 50%, #e9e9e9 75%);
 	border-radius: 5px;
 	background-size: 200% 100%;
 	animation: shimmer 1.5s infinite linear;
@@ -908,14 +663,14 @@
 }
 @keyframes ZoomIn {
 	0% {
-	  transform: scale(0);
-	  opacity: 0;
+		transform: scale(0);
+		opacity: 0;
 	}
 	100% {
-	  transform: scale(1);
-	  opacity: 1;
+		transform: scale(1);
+		opacity: 1;
 	}
-  }
+}
 .bt-word,
 .bt-letter {
 	display: inline-block;
@@ -925,19 +680,19 @@
 	opacity: 0;
 	transform: translateX(20px);
 
-	.bt-animation-right &{
+	.bt-animation-right & {
 		animation: fadeInRight 0.5s ease forwards;
 	}
-	.bt-animation-left &{
+	.bt-animation-left & {
 		animation: fadeInLeft 0.5s ease forwards;
 	}
-	.bt-animation-up &{
+	.bt-animation-up & {
 		animation: fadeInUp 0.5s ease forwards;
 	}
-	.bt-animation-down &{
+	.bt-animation-down & {
 		animation: fadeInDown 0.5s ease forwards;
 	}
-	.bt-animation-zoom &{
+	.bt-animation-zoom & {
 		animation: ZoomIn 0.5s ease forwards;
 	}
 }

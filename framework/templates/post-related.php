@@ -8,8 +8,9 @@ $category = get_the_terms($post_id, 'category');
     <div class="bt-post--content">
       <div class="bt-post--category">
         <?php
-        if (!empty($category)) {
-          echo  '<a href="'.get_category_link($category[0]->term_id).'">'.$category[0]->name.'</a>';
+        if (!empty($category) && is_array($category)) {
+          $first_category = reset($category);
+          echo '<a href="'.esc_url(get_category_link($first_category->term_id)).'">'.esc_html($first_category->name).'</a>';
         }
         ?>
       </div>
