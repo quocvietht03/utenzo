@@ -944,7 +944,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 20px;
-  @media(max-width:$break-xs){
+  @media (max-width: $break-xs) {
     gap: 10px;
   }
   span {
@@ -1017,37 +1017,26 @@
 }
 
 .__bt-newsletter-form-style {
-  max-width: 833px;
+  max-width: 100%;
   width: 100%;
   form {
     position: relative;
     text-align: left !important;
     display: flex;
-    gap: 16px;
-    @media (max-width: 870px) {
-      flex-wrap: wrap;
-      gap: 12px 2%;
-    }
+    border-radius: 8px;
+    border: 1px solid $color-accent;
+    padding: 5px;
     label {
       display: none;
     }
     .tnp-field-surname,
     .tnp-field-email {
-      width: 38%;
+      width: calc(100% - 120px);
       margin-bottom: 0;
-      @media (max-width: 870px) {
-        width: 49%;
-      }
-      @media (max-width: $break-xs) {
-        width: 100%;
-      }
     }
     .tnp-field-button {
-      width: 24%;
+      width: 120px;
       margin-bottom: 0;
-      @media (max-width: 870px) {
-        width: 100%;
-      }
     }
     input.tnp-surname,
     input.tnp-surname::placeholder,
@@ -1057,50 +1046,42 @@
       font-style: normal;
       font-weight: 400;
       line-height: 26px;
-      color: #a2a3ab;
+      color: rgba(255, 255, 255, 0.3);
       font-family: $text-font;
-      border-radius: 52px;
     }
     input.tnp-surname,
     input.tnp-email {
       width: 100%;
       border: none;
-      background: #fff;
+      background: transparent;
+      border-radius: 0;
       margin: 0;
       max-width: 100%;
-      padding: 14px 16px;
-      color: $color-primary;
-      @media (max-width: $break-sm) {
-        max-width: 100%;
-        padding: 10px 16px;
-      }
+      padding: 7px 11px;
+      color: #fff;
     }
     input.tnp-submit {
+      max-width: 100%;
       width: auto;
-      font-size: 16px;
       font-family: $text-font;
+      padding: 9px 42px 9px 16px;
+      border-radius: 4px;
+      color: #fff;
+      font-size: 14px;
       font-style: normal;
-      font-weight: 700;
-      line-height: normal;
-      line-height: 24px;
-      text-transform: capitalize;
-      padding: 15px 82px 15px 40px;
+      font-weight: 600;
+      line-height: 22px;
       min-height: auto;
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0;
-      color: $color-primary;
-      background: $color-secondary;
-      background-image: url("../images/icon-arrow-right-long.svg");
-      background-position: center right 40px;
+      background: $color-accent;
+      background-image: url("../images/arrow-up-right.svg");
+      background-position: center right 20px;
       background-repeat: no-repeat;
-      background-size: 32px;
-      z-index: 1;
-      border-radius: 40px;
-      @media (max-width: $break-sm) {
-        padding: 13px 75px 13px 40px;
-      }
+      background-size: 18px;
+      text-transform: capitalize;
     }
     .tnp-privacy-field {
       label {
@@ -1223,5 +1204,109 @@
   }
   @media only screen and (max-width: 1024px) {
     padding: 12px 26px;
+  }
+}
+
+@-webkit-keyframes spinAround {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-moz-keyframes spinAround {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+  }
+}
+@keyframes spinAround {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.bt-back-to-top {
+  position: fixed;
+  right: 30px;
+  bottom: -60px;
+  z-index: 99;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: $color-accent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  opacity: 0;
+  visibility: hidden;
+  box-shadow: 0 0 0 2px $color-accent;
+  &::before {
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    content: "";
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    top: -2px;
+    left: -2px;
+    padding: 0;
+    z-index: 10;
+    border: 2px dashed $color-accent;
+  }
+  &:hover {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    background: transparent;
+    &::before {
+      -webkit-animation: spinAround 9s linear infinite;
+      -moz-animation: spinAround 9s linear infinite;
+      animation: spinAround 9s linear infinite;
+    }
+    svg{
+      path{
+        fill: $color-accent;
+        stroke: $color-accent;
+      }
+    }
+  }
+  &.show {
+    bottom: 30px;
+    opacity: 1;
+    visibility: visible;
+  }
+  &--action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  @media only screen and (max-width: 767px) {
+    width: 40px;
+    height: 40px;
+    right: 15px;
+
+    &.show {
+      bottom: 15px;
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
   }
 }

@@ -307,8 +307,8 @@
         }
 
         &-icon {
-          min-width: 56px;
-          min-height: 56px;
+          min-width: 60px;
+          min-height: 60px;
           background-color: $color-secondary;
           border: 1px solid $color-secondary;
           display: flex;
@@ -325,18 +325,18 @@
         &-content {
           h4 {
             color: $color-primary;
-            text-align: left;
-            font-size: 12px;
+            font-size: 16px;
             font-style: normal;
             font-weight: 400;
-            line-height: 20px;
+            line-height: 26px;
+            margin: 0 0 4px 0;
           }
           span {
             color: $color-primary;
-            font-size: 20px;
+            font-size: 24px;
             font-style: normal;
-            font-weight: 700;
-            line-height: 28px;
+            font-weight: 600;
+            line-height: 30px;
           }
         }
 

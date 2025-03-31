@@ -52,7 +52,7 @@ class Widget_SiteInformationStyle1 extends Widget_Base {
 				'label' => esc_html__('Title Phone', 'utenzo'),
 				'type' => Controls_Manager::TEXT,
 				'label_block' => true,
-				'default' => esc_html__('Have any Question?', 'utenzo'),
+				'default' => esc_html__('24/7 Support Center:', 'utenzo'),
 			]
 		);
 		$this->add_control(

@@ -64,6 +64,28 @@ class Widget_SiteSocial extends Widget_Base
 				],
 			]
 		);
+		$this->add_responsive_control(
+			'icon_size',
+			[
+				'label' => __('Icon Size', 'utenzo'),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 10,
+						'max' => 100,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 20,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .bt-elwg-site-social a svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
 		$this->add_control(
 			'icon_color',
 			[

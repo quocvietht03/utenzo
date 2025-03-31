@@ -47,14 +47,36 @@ class Widget_SiteInformation extends Widget_Base
 				'multiple' => true,
 				'options' => [
 					'phone'  => esc_html__('Phone', 'utenzo'),
-					'email' => esc_html__('Email', 'utenzo'),
 					'address' => esc_html__('Address', 'utenzo'),
-					'time' => esc_html__('Opening Times', 'utenzo'),
+					'email' => esc_html__('Email', 'utenzo'),
 				],
 				'default' => ['phone', 'email'],
 			]
 		);
-
+		$this->add_control(
+			'title_phone',
+			[
+				'label' => esc_html__('Title Phone', 'utenzo'),
+				'type' => Controls_Manager::TEXT,
+				'label_block' => true,
+			]
+		);
+		$this->add_control(
+			'title_email',
+			[
+				'label' => esc_html__('Title Email', 'utenzo'),
+				'type' => Controls_Manager::TEXT,
+				'label_block' => true,
+			]
+		);
+		$this->add_control(
+			'title_address',
+			[
+				'label' => esc_html__('Title Address', 'utenzo'),
+				'type' => Controls_Manager::TEXT,
+				'label_block' => true,
+			]
+		);
 		$this->end_controls_section();
 	}
 
@@ -320,7 +342,7 @@ class Widget_SiteInformation extends Widget_Base
 																	if ($settings['icon_show'] != 'yes') {
 																		echo ' bt-no-show-icon';
 																	} ?>">
-			<?php get_template_part('framework/templates/site-information', 'style', array('layout' => 'default', 'data' => $settings['list'])); ?>
+			<?php get_template_part('framework/templates/site-information', 'style', array('layout' => 'default', 'data' => $settings['list'],'title_phone' => $settings['title_phone'],'title_email' => $settings['title_email'],'title_address' => $settings['title_address'])); ?>
 		</div>
 
 <?php }

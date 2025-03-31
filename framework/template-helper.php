@@ -373,6 +373,32 @@ if (! function_exists('utenzo_paging_nav')) {
 			));
 			?>
 		</nav>
-<?php
+	<?php
 	}
 }
+/**
+ * Back to top button
+ * 
+ * Adds a back to top button to the footer
+ */
+if (!function_exists('utenzo_back_to_top')) {
+	function utenzo_back_to_top() {
+		?>
+		<div class="bt-back-to-top">
+			<a href="#" class="bt-back-to-top--action">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+					<g clip-path="url(#clip0_2071_1114)">
+						<path d="M3 11.25L12 2.25L21 11.25H16.5V19.5C16.5 19.6989 16.421 19.8897 16.2803 20.0303C16.1397 20.171 15.9489 20.25 15.75 20.25H8.25C8.05109 20.25 7.86032 20.171 7.71967 20.0303C7.57902 19.8897 7.5 19.6989 7.5 19.5V11.25H3Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+					</g>
+					<defs>
+						<clipPath id="clip0_2071_1114">
+							<rect width="24" height="24" fill="white" />
+						</clipPath>
+					</defs>
+				</svg>
+			</a>
+		</div>
+		<?php
+	}
+}
+add_action('wp_footer', 'utenzo_back_to_top', 99);

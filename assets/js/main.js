@@ -1221,6 +1221,24 @@
 			$(this).attr('href', newHref);
 		});
 	}
+	/* backtotop */
+	function UtenzoBackToTop() {
+		const $backToTop = $('.bt-back-to-top');
+		if ($backToTop.length > 0) {
+			$(window).on('scroll', function() {
+				if ($(this).scrollTop() > 300) {
+					$backToTop.addClass('show');
+				} else {
+					$backToTop.removeClass('show');
+				}
+			});
+			
+			$backToTop.on('click', '.bt-back-to-top--action', function(e) {
+				e.preventDefault();
+				$('html, body').animate({scrollTop: 0}, 500);
+			});
+		}
+	}
 	jQuery(document).ready(function ($) {
 		UtenzoSubmenuAuto();
 		UtenzoToggleMenuMobile();
@@ -1248,6 +1266,7 @@
 		UtenzoProductButtonStatus();
 		UtenzoCopyrightCurrentYear();
 		UtenzoCompareContentScroll();
+		UtenzoBackToTop();
 	});
 
 	jQuery(window).on('resize', function () {

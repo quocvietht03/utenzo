@@ -52,7 +52,7 @@ class Widget_PostLoopItem extends Widget_Base {
 				'label' => __( 'Image Ratio', 'utenzo' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
-					'size' => 0.64,
+					'size' => 0.75,
 				],
 				'range' => [
 					'px' => [
@@ -133,125 +133,311 @@ class Widget_PostLoopItem extends Widget_Base {
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
+
+		// Content Container
 		$this->add_control(
-			'background_content',[
-				'label'     => esc_html__( 'Background Content', 'utenzo' ),
-				'type'      => Controls_Manager::COLOR,
-				'default'   => '',
+			'content_container_heading',
+			[
+				'label' => esc_html__('Container', 'utenzo'),
+				'type' => Controls_Manager::HEADING,
+			]
+		);
+
+		$this->add_responsive_control(
+			'content_padding',
+			[
+				'label' => esc_html__('Padding', 'utenzo'),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => ['px', 'em', '%'],
+				'default' => [
+					'top' => '',
+					'right' => '',
+					'bottom' => '', 
+					'left' => '',
+					'unit' => 'px',
+					'isLinked' => true,
+				],
 				'selectors' => [
-					'{{WRAPPER}} .bt-post--content' => 'background: {{VALUE}};',
+					'{{WRAPPER}} .bt-post--inner' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
 		$this->add_control(
-			'title_style',[
-				'label' => esc_html__( 'Title', 'utenzo' ),
-				'type'  => Controls_Manager::HEADING,
+			'content_background_color',
+			[
+				'label' => esc_html__('Background Color', 'utenzo'),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .bt-post--inner' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Border::get_type(),
+			[
+				'name' => 'content_border',
+				'label' => esc_html__('Border', 'utenzo'),
+				'selector' => '{{WRAPPER}} .bt-post--inner',
+			]
+		);
+
+		$this->add_responsive_control(
+			'content_border_radius',
+			[
+				'label' => esc_html__('Border Radius', 'utenzo'),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => ['px', '%'],
+				'selectors' => [
+					'{{WRAPPER}} .bt-post--inner' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'content_box_shadow',
+				'label' => esc_html__('Box Shadow', 'utenzo'),
+				'selector' => '{{WRAPPER}} .bt-post--inner',
+			]
+		);
+		// Post Date
+		$this->add_control(
+			'post_date_heading',
+			[
+				'label' => esc_html__('Date', 'utenzo'),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'date_typography',
+				'label' => esc_html__('Typography', 'utenzo'),
+				'selector' => '{{WRAPPER}} .bt-post--publish',
 			]
 		);
 
 		$this->add_control(
-			'title_color',[
-				'label'     => esc_html__( 'Color', 'utenzo' ),
-				'type'      => Controls_Manager::COLOR,
-				'default'   => '',
+			'date_color',
+			[
+				'label' => esc_html__('Color', 'utenzo'),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .bt-post--publish' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		// Post Category
+		$this->add_control(
+			'post_category_heading',
+			[
+				'label' => esc_html__('Category', 'utenzo'),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'category_typography',
+				'label' => esc_html__('Typography', 'utenzo'),
+				'selector' => '{{WRAPPER}} .bt-post--category, {{WRAPPER}} .bt-post--category a',
+			]
+		);
+
+		$this->start_controls_tabs('category_color_tabs');
+
+		$this->start_controls_tab(
+			'category_color_normal',
+			[
+				'label' => esc_html__('Normal', 'utenzo'),
+			]
+		);
+
+		$this->add_control(
+			'category_color',
+			[
+				'label' => esc_html__('Color', 'utenzo'),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .bt-post--category a' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'category_color_hover',
+			[
+				'label' => esc_html__('Hover', 'utenzo'),
+			]
+		);
+
+		$this->add_control(
+			'category_hover_color',
+			[
+				'label' => esc_html__('Color', 'utenzo'),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .bt-post--category a:hover' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		// Post Title
+		$this->add_control(
+			'post_title_heading',
+			[
+				'label' => esc_html__('Title', 'utenzo'),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'title_typography',
+				'label' => esc_html__('Typography', 'utenzo'),
+				'selector' => '{{WRAPPER}} .bt-post--title a',
+			]
+		);
+
+		$this->start_controls_tabs('title_color_tabs');
+
+		$this->start_controls_tab(
+			'title_color_normal',
+			[
+				'label' => esc_html__('Normal', 'utenzo'),
+			]
+		);
+
+		$this->add_control(
+			'title_color',
+			[
+				'label' => esc_html__('Color', 'utenzo'),
+				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bt-post--title a' => 'color: {{VALUE}};',
 				],
 			]
 		);
 
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'title_color_hover',
+			[
+				'label' => esc_html__('Hover', 'utenzo'),
+			]
+		);
+
 		$this->add_control(
-			'title_color_hover',[
-				'label'     => esc_html__( 'Color Hover', 'utenzo' ),
-				'type'      => Controls_Manager::COLOR,
-				'default'   => '',
+			'title_hover_color',
+			[
+				'label' => esc_html__('Color', 'utenzo'),
+				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bt-post--title a:hover' => 'color: {{VALUE}};',
 				],
 			]
 		);
 
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),[
-				'name'     => 'title_typography',
-				'label'    => esc_html__( 'Typography', 'utenzo' ),
-				'default'  => '',
-				'selector' => '{{WRAPPER}} .bt-post--title a',
-			]
-		);
 		$this->add_control(
-			'publish_style',[
-				'label' => esc_html__( 'Publish', 'utenzo' ),
-				'type'  => Controls_Manager::HEADING,
+			'title_hover_decoration',
+			[
+				'label' => esc_html__('Text Decoration', 'utenzo'),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'underline',
+				'options' => [
+					'none' => esc_html__('None', 'utenzo'),
+					'underline' => esc_html__('Underline', 'utenzo'),
+					'overline' => esc_html__('Overline', 'utenzo'),
+					'line-through' => esc_html__('Line Through', 'utenzo'),
+				],
+				'selectors' => [
+					'{{WRAPPER}} .bt-post--title a:hover' => 'text-decoration: {{VALUE}};',
+				],
 			]
 		);
 
-		$this->add_control(
-			'publish_color',[
-				'label'     => esc_html__( 'Color', 'utenzo' ),
-				'type'      => Controls_Manager::COLOR,
-				'default'   => '',
-				'selectors' => [
-					'{{WRAPPER}} .bt-post--publish' => 'color: {{VALUE}};',
-				],
-			]
-		);
-		$this->add_control(
-			'publish_background',[
-				'label'     => esc_html__( 'Background', 'utenzo' ),
-				'type'      => Controls_Manager::COLOR,
-				'default'   => '',
-				'selectors' => [
-					'{{WRAPPER}} .bt-post--publish' => 'background: {{VALUE}};',
-				],
-			]
-		);
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'publish_typography',
-				'label'    => esc_html__( 'Typography', 'utenzo' ),
-				'default'  => '',
-				'selector' => '{{WRAPPER}} .bt-post--publish',
-			]
-		);
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'publish_day_typography',
-				'label'    => esc_html__( 'Typography Day', 'utenzo' ),
-				'default'  => '',
-				'selector' => '{{WRAPPER}} .bt-post--publish span',
-			]
-		);
-		$this->add_control(
-			'excerpt_style',[
-				'label' => esc_html__( 'Excerpt', 'utenzo' ),
-				'type'  => Controls_Manager::HEADING,
-			]
-		);
+		$this->end_controls_tab();
 
+		$this->end_controls_tabs();
+
+		// Read More Button
 		$this->add_control(
-			'excerpt_color',[
-				'label'     => esc_html__( 'Color', 'utenzo' ),
-				'type'      => Controls_Manager::COLOR,
-				'default'   => '',
-				'selectors' => [
-					'{{WRAPPER}} .bt-post--excerpt' => 'color: {{VALUE}};',
-				],
+			'read_more_heading',
+			[
+				'label' => esc_html__('Read More Button', 'utenzo'),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
 			]
 		);
 
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name'     => 'excerpt_typography',
-				'label'    => esc_html__( 'Typography', 'utenzo' ),
-				'default'  => '',
-				'selector' => '{{WRAPPER}} .bt-post--excerpt',
+				'name' => 'read_more_typography',
+				'label' => esc_html__('Typography', 'utenzo'),
+				'selector' => '{{WRAPPER}} .bt-post--button',
 			]
 		);
+
+		$this->start_controls_tabs('read_more_color_tabs');
+
+		$this->start_controls_tab(
+			'read_more_color_normal',
+			[
+				'label' => esc_html__('Normal', 'utenzo'),
+			]
+		);
+
+		$this->add_control(
+			'read_more_color',
+			[
+				'label' => esc_html__('Color', 'utenzo'),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .bt-post--button a' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'read_more_color_hover',
+			[
+				'label' => esc_html__('Hover', 'utenzo'),
+			]
+		);
+
+		$this->add_control(
+			'read_more_hover_color',
+			[
+				'label' => esc_html__('Color', 'utenzo'),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .bt-post--button a:hover' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
 
 		$this->end_controls_section();
 
