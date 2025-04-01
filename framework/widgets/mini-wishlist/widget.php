@@ -149,7 +149,7 @@ class Widget_MiniWishlist extends Widget_Base
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'number_wishlist_typography',
-				'label' => __('number_wishlist Typography', 'utenzo'),
+				'label' => __('Typography', 'utenzo'),
 				'default' => '',
 				'selector' => '{{WRAPPER}} .bt-elwg-mini-wishlist--default .bt-mini-wishlist span',
 			]

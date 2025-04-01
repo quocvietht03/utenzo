@@ -63,6 +63,18 @@ class Widget_ProductCategory extends Widget_Base
 				'label' => __('Layout', 'utenzo'),
 			]
 		);
+		$this->add_control(
+			'layout',
+			[
+				'label' => __('Layout', 'utenzo'),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'default',
+				'options' => [
+					'default' => __('Default', 'utenzo'),
+					'style1' => __('Style 1', 'utenzo'),
+				],
+			]
+		);
 		$this->add_group_control(
 			Group_Control_Image_Size::get_type(),
 			[
@@ -92,6 +104,9 @@ class Widget_ProductCategory extends Widget_Base
 				'selectors' => [
 					'{{WRAPPER}} .bt-product-category--thumb .bt-cover-image' => 'padding-bottom: calc( {{SIZE}} * 100% );',
 				],
+				'condition' => [
+					'layout' => 'default',
+				],
 			]
 		);
 		$this->add_control(
@@ -119,6 +134,9 @@ class Widget_ProductCategory extends Widget_Base
 				'prefix_class' => 'elementor-grid%s-',
 				'selectors' => [
 					'{{WRAPPER}} .bt-product-category' => 'grid-template-columns: repeat({{VALUE}}, 1fr);',
+				],
+				'condition' => [
+					'layout' => 'default',
 				],
 			]
 		);
@@ -361,9 +379,10 @@ class Widget_ProductCategory extends Widget_Base
 		$categories = get_terms($args);
 
 		if (!empty($categories) && !is_wp_error($categories)) {
+			$count_cat = count($categories);
 			?>
-			<div class="bt-elwg-product-category">
-				<div class="bt-product-category">
+			<div class="bt-elwg-product-category--<?php echo esc_attr($settings['layout']); ?>">
+				<div class="bt-product-category <?php echo ($count_cat < 4) ? 'bt-item-padding' : ''; ?>">
 					<?php
 					foreach ($categories as $category) {
 						get_template_part('framework/templates/product-cat', 'style', array(
@@ -375,6 +394,7 @@ class Widget_ProductCategory extends Widget_Base
 					?>
 				</div>
 			</div>
+			
 			<?php
 		} else {
 			get_template_part('framework/templates/post', 'none');

@@ -289,84 +289,25 @@
 .elementor-location-header {
   position: relative;
   .elementor-element {
-    &.bt-site-info-top-header {
-      @media (max-width: 650px) {
-        .bt-elwg-site-infor {
-          &--item {
-            &.time {
-              display: none;
+    &.bt-nav-header-style2{
+      @media(max-width: 1300px) and (min-width: $break-tl){
+        > .e-con-inner{
+          --widgets-spacing-column: 15px;
+          > .elementor-element{
+            &:last-child{
+              --widgets-spacing-column: 12px;
             }
           }
         }
-      }
-      @media (max-width: $break-xs) {
-        .bt-elwg-site-social {
-          a {
-            width: 35px;
-            height: 35px;
-            svg {
-              width: 18px;
-            }
-          }
-        }
-      }
-      @media (max-width: 372px) {
-        .bt-elwg-site-social {
-          a {
-            width: 30px;
-            height: 30px;
-           &:nth-child(n+5){
-            display: none;
-           }
-          }
-        }
-      }
-    }
-    &.bt-header-main-nav {
-      &.elementor-sticky {
-        &--effects {
-          box-shadow: 0px 4px 50px rgba(0, 0, 0, 0.1);
-        }
-      }
-      > .e-con-inner {
-        > .elementor-element {
-          .elementor-widget-nav-menu {
-            > .elementor-widget-container {
-              .elementor-nav-menu {
-                .elementor-item {
-                  &::after {
-                    top: 50%;
-                    margin-top: 13px;
-                  }
-                  .sub-arrow {
-                    padding: 4px 0 0 6px;
-                    svg {
-                      height: 12px;
-                      width: 12px;
-                    }
-                  }
-                }
-              }
-            }
-          }
-          @media (max-width: $break-lg) and (min-width: $break-tl) {
-            gap: 10px;
-            &:first-child {
-              width: 73%;
-              .elementor-widget-nav-menu {
-                --e-nav-menu-horizontal-menu-item-margin: 10px;
-              }
-            }
-            &:last-child {
-              width: 27%;
-              gap: 10px;
-              .elementor-widget-button {
-                .elementor-widget-container {
-                  margin-right: 0;
-                  .elementor-button-wrapper {
-                    .elementor-button {
-                      padding: 16px;
-                    }
+        .elementor-widget-n-menu{
+          .e-n-menu-wrapper{
+            > ul{
+              > li{
+                > .e-n-menu-title{
+                  padding-left: 8px;
+                  padding-right: 8px;
+                  > a{
+                    font-size: 14px;
                   }
                 }
               }
@@ -375,235 +316,7 @@
         }
       }
     }
-    &.bt-header-nav-style-1 {
-      &.elementor-sticky {
-        &--effects {
-          box-shadow: 0px 4px 50px rgba(0, 0, 0, 0.1);
-        }
-      }
-      > .e-con-inner {
-        > .elementor-element {
-          .elementor-widget-nav-menu {
-            > .elementor-widget-container {
-              .elementor-nav-menu {
-                .elementor-item {
-                  &::after {
-                    top: 50%;
-                    margin-top: 13px;
-                  }
-                  .sub-arrow {
-                    padding: 4px 0 0 6px;
-                    svg {
-                      height: 12px;
-                      width: 12px;
-                    }
-                  }
-                }
-              }
-            }
-          }
-          .elementor-widget-bt-site-information-style-1 {
-            .bt-elwg-site-infor--style-1 {
-              .bt-elwg-site-infor {
-                &--item-icon {
-                  min-width: 52px;
-                  min-height: 52px;
-                  svg {
-                    max-width: 26px;
-                  }
-                }
-                &--item-content {
-                  h4 {
-                    display: none;
-                  }
-                }
-              }
-            }
-          }
-          @media (max-width: 1410px) and (min-width: $break-tl) {
-            .elementor-widget-bt-site-information-style-1 {
-              display: none;
-            }
-            &:first-child {
-              width: 68%;
-            }
-            &:last-child {
-              width: 32%;
-            }
-          }
-          @media (max-width: $break-lg) and (min-width: $break-tl) {
-            gap: 10px;
-            &:first-child {
-              width: 73%;
-              .elementor-widget-nav-menu {
-                --e-nav-menu-horizontal-menu-item-margin: 10px;
-              }
-            }
-            &:last-child {
-              width: 27%;
-              gap: 10px;
-              .elementor-widget-button {
-                .elementor-widget-container {
-                  margin-right: 0;
-                  .elementor-button-wrapper {
-                    .elementor-button {
-                      padding: 16px;
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-    &.bt-header-nav-style-2 {
-      > .e-con-inner {
-        > .elementor-element {
-          &.elementor-sticky {
-            &--effects {
-              box-shadow: 0px 4px 50px rgba(0, 0, 0, 0.1);
-            }
-          }
-          @media (max-width: $break-lg) and (min-width: $break-tl) {
-            gap: 10px;
-            padding-left: 15px;
-            padding-right: 15px;
-          }
-          > .elementor-element {
-            .elementor-widget-nav-menu {
-              > .elementor-widget-container {
-                .elementor-nav-menu {
-                  .elementor-item {
-                    &::after {
-                      top: 50%;
-                      margin-top: 13px;
-                    }
-                    .sub-arrow {
-                      padding: 4px 0 0 6px;
-                      svg {
-                        height: 12px;
-                        width: 12px;
-                      }
-                    }
-                  }
-                }
-              }
-            }
-            .elementor-widget-bt-site-information-style-1 {
-              .bt-elwg-site-infor--style-1 {
-                .bt-elwg-site-infor {
-                  &--item-icon {
-                    min-width: 52px;
-                    min-height: 52px;
-                    svg {
-                      max-width: 26px;
-                    }
-                  }
-                  &--item-content {
-                    h4 {
-                      display: none;
-                    }
-                  }
-                }
-              }
-            }
-            @media (max-width: 1500px) and (min-width: 1420px) {
-              &:first-child {
-                width: 65%;
-              }
-              &:last-child {
-                width: 35%;
-              }
-              .elementor-widget-bt-site-information-style-1 {
-                .bt-elwg-site-infor--item-content {
-                  display: none;
-                }
-              }
-            }
-            @media (max-width: 1420px) and (min-width: $break-tl) {
-              .elementor-widget-bt-site-information-style-1 {
-                display: none;
-              }
-              &:first-child {
-                width: 68%;
-              }
-              &:last-child {
-                width: 32%;
-              }
-            }
-            @media (max-width: 1270px) and (min-width: $break-tl) {
-              &:first-child {
-                width: 73%;
-                gap: 15px;
-                .elementor-widget-nav-menu {
-                  --e-nav-menu-horizontal-menu-item-margin: 10px;
-                }
-                .elementor-widget-theme-site-logo {
-                  img {
-                    max-width: 160px;
-                  }
-                }
-              }
-              &:last-child {
-                width: 27%;
-                gap: 10px;
-                .elementor-widget-button {
-                  .elementor-widget-container {
-                    margin-right: 0;
-                    .elementor-button-wrapper {
-                      .elementor-button {
-                        padding: 16px;
-                        font-size: 15px;
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-    .elementor-nav-menu {
-      > li {
-        > ul.elementor-nav-menu--dropdown {
-          min-width: 240px !important;
-          padding: 12px;
-          left: -24px !important;
-          ul.elementor-nav-menu--dropdown {
-            min-width: 240px !important;
-            padding: 12px;
-          }
-          .elementor-sub-item {
-            border-radius: 8px !important;
-            border-inline-start: none !important;
-            &.has-submenu {
-              display: flex;
-              justify-content: space-between;
-              svg {
-                height: 12px;
-                width: 12px;
-              }
-            }
-          }
-          .menu-item {
-            &.menu-item-has-children {
-              .elementor-nav-menu--dropdown {
-                margin-left: 227px !important;
-                border-radius: 20px;
-                margin-top: -30% !important;
-              }
-            }
-          }
-        }
-        &:not(:first-child) {
-          > ul.elementor-nav-menu--dropdown {
-            left: calc(var(--e-nav-menu-horizontal-menu-item-margin) - 24px) !important;
-          }
-        }
-      }
-    }
+
   }
 }
 body.admin-bar .dialog-type-lightbox {

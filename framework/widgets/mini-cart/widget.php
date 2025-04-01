@@ -149,7 +149,7 @@ class Widget_MiniCart extends Widget_Base
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'number_cart_typography',
-				'label' => __('number_cart Typography', 'utenzo'),
+				'label' => __('Typography', 'utenzo'),
 				'default' => '',
 				'selector' => '{{WRAPPER}} .bt-elwg-mini-cart--default .bt-mini-cart span',
 			]

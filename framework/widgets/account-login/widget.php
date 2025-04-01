@@ -36,67 +36,6 @@ class Widget_AccountLogin extends Widget_Base
 	protected function register_content_section_controls()
 	{
 		$this->start_controls_section(
-			'section_layout',
-			[
-				'label'   => esc_html__('Layout', 'utenzo'),
-			]
-		);
-
-		$this->add_responsive_control(
-			'text_align',
-			[
-				'label' => esc_html__('Alignment', 'utenzo'),
-				'type'  => Controls_Manager::CHOOSE,
-				'options' => [
-					'start' => [
-						'title' => esc_html__('Left', 'utenzo'),
-						'icon'  => 'eicon-text-align-left',
-					],
-					'center' => [
-						'title' => esc_html__('Center', 'utenzo'),
-						'icon'  => 'eicon-text-align-center',
-					],
-					'end' => [
-						'title' => esc_html__('Right', 'utenzo'),
-						'icon'  => 'eicon-text-align-right',
-					],
-				],
-				'default' => 'start',
-				'toggle' => true,
-				'selectors' => [
-					'{{WRAPPER}} .bt-elwg-account-login-inner ul' => 'justify-content: {{VALUE}};',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'account_login_space',
-			[
-				'label'   => esc_html__('Space Between', 'utenzo'),
-				'type'    => Controls_Manager::SLIDER,
-				'default' => [
-					'size' => 20,
-				],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .bt-elwg-account-login-inner ul' => 'gap: {{SIZE}}{{UNIT}}',
-					'{{WRAPPER}} .bt-elwg-account-login-inner ul li:before' => 'left: calc( -{{SIZE}}{{UNIT}} / 2 )',
-				],
-			]
-		);
-
-		$this->end_controls_section();
-	}
-
-	protected function register_style_content_section_controls()
-	{
-
-		$this->start_controls_section(
 			'section_style_content',
 			[
 				'label' => esc_html__('Content', 'utenzo'),
@@ -111,9 +50,7 @@ class Widget_AccountLogin extends Widget_Base
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '',
 				'selectors' => [
-					'{{WRAPPER}} .bt-elwg-account-login-inner ul li a' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .bt-elwg-account-login-inner ul li span' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .bt-elwg-account-login-inner ul li:before' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .bt-elwg-account-login .bt-account a' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -124,17 +61,15 @@ class Widget_AccountLogin extends Widget_Base
 				'name'     => 'account_login_typography',
 				'label'    => esc_html__('Typography', 'utenzo'),
 				'default'  => '',
-				'selector' => '{{WRAPPER}} .bt-elwg-account-login-inner ul li a, {{WRAPPER}} .bt-elwg-account-login-inner ul li span',
+				'selector' => '{{WRAPPER}} .bt-elwg-account-login .bt-account a',
 			]
 		);
-
 		$this->end_controls_section();
 	}
 
 	protected function register_controls()
 	{
 		$this->register_content_section_controls();
-		$this->register_style_content_section_controls();
 	}
 
 	protected function render()

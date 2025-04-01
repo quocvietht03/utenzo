@@ -93,6 +93,18 @@ class Widget_HotspotProduct extends Widget_Base
                 'exclude' => ['custom'],
             ]
         );
+        $this->add_control(
+            'tooltip_layout',
+            [
+                'label' => __('Layout Tooltip', 'utenzo'),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'default',
+                'options' => [
+                    'default' => __('Default', 'utenzo'),
+                    'style1' => __('Style 1', 'utenzo'),
+                ],
+            ]
+        );
 
         $repeater = new Repeater();
         $repeater->add_control(
@@ -322,7 +334,7 @@ class Widget_HotspotProduct extends Widget_Base
         $attachment = wp_get_attachment_image_src($settings['hotspot_image']['id'], $settings['thumbnail_size']);
 ?>
         <div class="bt-elwg-hotspot-product--default <?php echo ($settings['show_slider'] !== 'yes') ? 'bt-no-slider' : ''; ?>">
-            <div class="bt-hotspot-product">
+            <div class="bt-hotspot-product bt-tooltip-<?php echo esc_attr($settings['tooltip_layout']); ?>">
                 <div class="bt-hotspot-product--image">
                     <?php if (!empty($settings['hotspot_image']['url'])) : ?>
                         <div class="bt-hotspot-image">
