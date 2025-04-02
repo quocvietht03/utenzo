@@ -481,8 +481,8 @@ class Widget_TikTokShopSlider extends Widget_Base
         $is_auto = $settings['slider_autoplay'] === 'yes';
         $slider_settings = [
             'desktop' => [
-                'item' => $settings['slider_item']['size'] ?? $settings['slider_item'],
-                'space' => $settings['slider_spacebetween']['size'] ?? $settings['slider_spacebetween']
+                'item' => $settings['slider_item'] ?? $settings['slider_item'],
+                'space' => $settings['slider_spacebetween'] ?? $settings['slider_spacebetween']
             ],
             'tablet' => [
                 'item' => $settings['slider_item_tablet'] ?? 4,

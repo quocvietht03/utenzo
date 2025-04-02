@@ -1,6 +1,6 @@
 <?php
 
-namespace UtenzoElementorWidgets\Widgets\ProductTestimonial;
+namespace UtenzoElementorWidgets\Widgets\ProductTestimonialSlider;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
@@ -12,17 +12,17 @@ use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_BBorder;
 use Elementor\Group_Control_Box_Shadow;
 
-class Widget_ProductTestimonial extends Widget_Base
+class Widget_ProductTestimonialSlider extends Widget_Base
 {
 
     public function get_name()
     {
-        return 'bt-product-testimonial';
+        return 'bt-product-testimonial-slider';
     }
 
     public function get_title()
     {
-        return __('Product Testimonial', 'utenzo');
+        return __('Product Testimonial Slider', 'utenzo');
     }
 
     public function get_icon()
@@ -67,12 +67,15 @@ class Widget_ProductTestimonial extends Widget_Base
             ]
         );
         $this->add_control(
-            'testimonial_label',
+            'layout',
             [
-                'label' => __('Testimonial Label', 'utenzo'),
-                'type' => Controls_Manager::TEXT,
-                'default' => __('Customer Say!', 'utenzo'),
-                'placeholder' => __('Enter testimonial label', 'utenzo'),
+                'label' => __('Layout', 'utenzo'),
+                'type' => Controls_Manager::SELECT,
+                'options' => [
+                    'style-1' => __('Layout 1', 'utenzo'),
+                    'style-2' => __('Layout 2', 'utenzo'),
+                ],
+                'default' => 'style-1',
             ]
         );
         $this->add_group_control(
@@ -83,6 +86,9 @@ class Widget_ProductTestimonial extends Widget_Base
                 'show_label' => true,
                 'default' => 'medium_large',
                 'exclude' => ['custom'],
+                'condition' => [
+                    'layout' => 'style-2',
+                ],
             ]
         );
 
@@ -129,6 +135,9 @@ class Widget_ProductTestimonial extends Widget_Base
                 'type' => Controls_Manager::MEDIA,
                 'default' => [
                     'url' => Utils::get_placeholder_image_src(),
+                ],
+                'condition' => [
+                    'layout' => 'style-2',
                 ],
             ]
         );
@@ -194,6 +203,30 @@ class Widget_ProductTestimonial extends Widget_Base
                 ],
             ]
         );
+        $this->add_responsive_control(
+            'slider_items',
+            [
+                'label' => __('Items Slide', 'utenzo'),
+                'type' => Controls_Manager::NUMBER,
+                'default' => 2,
+                'min' => 1,
+                'max' => 5,
+                'step' => 1,
+                'description' => __('Number of items to show per slide', 'utenzo'),
+            ]
+        );
+        $this->add_responsive_control(
+            'slider_space_between',
+            [
+                'label' => __('Space Between', 'utenzo'),
+                'type' => Controls_Manager::NUMBER,
+                'default' => 30,
+                'min' => 0,
+                'max' => 100,
+                'step' => 1,
+                'description' => __('Space between slides in pixels', 'utenzo'),
+            ]
+        );
         $this->add_control(
             'slider_speed',
             [
@@ -218,85 +251,14 @@ class Widget_ProductTestimonial extends Widget_Base
         $this->end_controls_section();
     }
 
-    protected function register_style_section_controls() {
+    protected function register_style_section_controls()
+    {
         // Content Style Section
         $this->start_controls_section(
             'section_content_style',
             [
                 'label' => __('Content Style', 'utenzo'),
                 'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_control(
-            'label_heading',
-            [
-                'label' => __('Label', 'utenzo'),
-                'type' => Controls_Manager::HEADING,
-                'separator' => 'before',
-            ]
-        );
-
-        $this->add_control(
-            'label_color',
-            [
-                'label' => __('Label Color', 'utenzo'),
-                'type' => Controls_Manager::COLOR,
-                'default' => '#0C2C48',
-                'selectors' => [
-                    '{{WRAPPER}} .bt-product-testimonial--label' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Typography::get_type(),
-            [
-                'name' => 'label_typography',
-                'selector' => '{{WRAPPER}} .bt-product-testimonial--label',
-            ]
-        );
-        $this->add_control(
-            'quote_icon_heading',
-            [
-                'label' => __('Quote Icon', 'utenzo'),
-                'type' => Controls_Manager::HEADING,
-                'separator' => 'before',
-            ]
-        );
-
-        $this->add_control(
-            'quote_icon_color',
-            [
-                'label' => __('Quote Icon Color', 'utenzo'),
-                'type' => Controls_Manager::COLOR,
-                'default' => '#5A86A9',
-                'selectors' => [
-                    '{{WRAPPER}} .bt-product-testimonial--quote svg path' => 'fill: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'quote_icon_size',
-            [
-                'label' => __('Quote Icon Size', 'utenzo'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px'],
-                'range' => [
-                    'px' => [
-                        'min' => 20,
-                        'max' => 100,
-                        'step' => 1,
-                    ],
-                ],
-                'default' => [
-                    'unit' => 'px',
-                    'size' => 60,
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .bt-product-testimonial--quote svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
-                ],
             ]
         );
         $this->add_control(
@@ -424,6 +386,7 @@ class Widget_ProductTestimonial extends Widget_Base
                 ],
             ]
         );
+
         $this->end_controls_section();
 
         // Navigation Style Section
@@ -591,26 +554,23 @@ class Widget_ProductTestimonial extends Widget_Base
             'autoplay' => isset($settings['slider_autoplay']) && $settings['slider_autoplay'] === 'yes',
             'speed' => isset($settings['slider_speed']) ? $settings['slider_speed'] : 500,
             'autoplay_delay' => isset($settings['slider_autoplay_delay']) ? $settings['slider_autoplay_delay'] : 3000,
+            'space_between' => isset($settings['slider_space_between']) ? $settings['slider_space_between'] : 30,
+            'space_between_mobile' => isset($settings['slider_space_between_mobile']) ? $settings['slider_space_between_mobile'] : 10,
+            'space_between_tablet' => isset($settings['slider_space_between_tablet']) ? $settings['slider_space_between_tablet'] : 20,
+            'items_desktop' => isset($settings['slider_items']) ? $settings['slider_items'] : 2,
+            'items_mobile' => isset($settings['slider_items_mobile']) ? $settings['slider_items_mobile'] : 1,
+            'items_tablet' => isset($settings['slider_items_tablet']) ? $settings['slider_items_tablet'] : 1,
         ];
+
 ?>
-        <div class="bt-elwg-product-testimonial--default" data-slider-settings='<?php echo json_encode($slider_settings); ?>'>
+        <div class="bt-elwg-product-testimonial--<?php echo esc_attr($settings['layout']); ?> js-data-testimonial-slider" data-slider-settings='<?php echo json_encode($slider_settings); ?>'>
             <div class="bt-product-testimonial">
-                <div class="swiper bt-product-testimonial--content js-testimonial-content">
-                    <div class="bt-product-testimonial--quote"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" fill="none">
-                            <path d="M27.1875 16.875V37.5C27.1844 40.4827 25.9981 43.3424 23.889 45.4515C21.7799 47.5606 18.9202 48.7469 15.9375 48.75C15.4402 48.75 14.9633 48.5525 14.6117 48.2008C14.26 47.8492 14.0625 47.3723 14.0625 46.875C14.0625 46.3777 14.26 45.9008 14.6117 45.5492C14.9633 45.1975 15.4402 45 15.9375 45C17.9266 45 19.8343 44.2098 21.2408 42.8033C22.6473 41.3968 23.4375 39.4891 23.4375 37.5V35.625H9.375C8.38044 35.625 7.42661 35.2299 6.72335 34.5266C6.02009 33.8234 5.625 32.8696 5.625 31.875V16.875C5.625 15.8804 6.02009 14.9266 6.72335 14.2233C7.42661 13.5201 8.38044 13.125 9.375 13.125H23.4375C24.4321 13.125 25.3859 13.5201 26.0891 14.2233C26.7924 14.9266 27.1875 15.8804 27.1875 16.875ZM50.625 13.125H36.5625C35.5679 13.125 34.6141 13.5201 33.9109 14.2233C33.2076 14.9266 32.8125 15.8804 32.8125 16.875V31.875C32.8125 32.8696 33.2076 33.8234 33.9109 34.5266C34.6141 35.2299 35.5679 35.625 36.5625 35.625H50.625V37.5C50.625 39.4891 49.8348 41.3968 48.4283 42.8033C47.0218 44.2098 45.1141 45 43.125 45C42.6277 45 42.1508 45.1975 41.7992 45.5492C41.4475 45.9008 41.25 46.3777 41.25 46.875C41.25 47.3723 41.4475 47.8492 41.7992 48.2008C42.1508 48.5525 42.6277 48.75 43.125 48.75C46.1077 48.7469 48.9674 47.5606 51.0765 45.4515C53.1856 43.3424 54.3719 40.4827 54.375 37.5V16.875C54.375 15.8804 53.9799 14.9266 53.2766 14.2233C52.5734 13.5201 51.6196 13.125 50.625 13.125Z" fill="#5A86A9" />
-                        </svg></div>
-                    <?php if (!empty($settings['testimonial_label'])) : ?>
-                        <div class="bt-product-testimonial--label"><?php echo esc_html($settings['testimonial_label']); ?></div>
-                    <?php endif; ?>
+                <div class="swiper bt-product-testimonial--content js-testimonial-slider">
                     <div class="swiper-wrapper">
                         <?php if (!empty($settings['testimonial_items'])) : ?>
                             <?php foreach ($settings['testimonial_items'] as $item) : ?>
                                 <div class="swiper-slide">
                                     <div class="bt-product-testimonial--item">
-                                        <?php if (!empty($item['testimonial_text'])) : ?>
-                                            <div class="bt-product-testimonial--text"><?php echo esc_html($item['testimonial_text']); ?></div>
-                                        <?php endif; ?>
-
                                         <?php if (!empty($item['testimonial_rating'])) : ?>
                                             <div class="bt-product-testimonial--rating">
                                                 <?php for ($i = 1; $i <= 5; $i++) : ?>
@@ -626,6 +586,9 @@ class Widget_ProductTestimonial extends Widget_Base
                                                 <?php endfor; ?>
                                             </div>
                                         <?php endif; ?>
+                                        <?php if (!empty($item['testimonial_text'])) : ?>
+                                            <div class="bt-product-testimonial--text"><?php echo esc_html($item['testimonial_text']); ?></div>
+                                        <?php endif; ?>
                                         <?php if (!empty($item['testimonial_author'])) : ?>
                                             <div class="bt-product-testimonial--author"><?php echo esc_html($item['testimonial_author']); ?><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                                     <g clip-path="url(#clip0_2071_927)">
@@ -639,57 +602,40 @@ class Widget_ProductTestimonial extends Widget_Base
                                                     </defs>
                                                 </svg></div>
                                         <?php endif; ?>
+                                        <?php if (!empty($item['id_product'])) :
+                                            $product = wc_get_product($item['id_product']);
+                                            if ($product) : ?>
+                                                <a href="<?php echo esc_url($product->get_permalink()); ?>" class="product-info">
+                                                    <div class="product-img">
+                                                        <?php echo $product->get_image(); ?>
+                                                    </div>
+                                                    <div class="product-content">
+                                                        <h3 class="product-title"><?php echo esc_html($product->get_name()); ?></h3>
+                                                        <div class="product-price"><?php echo $product->get_price_html(); ?></div>
+                                                    </div>
+                                                </a>
+                                            <?php endif; ?>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
                         <?php endif; ?>
 
                     </div>
-                    <?php if ($settings['slider_arrows'] === 'yes') : ?>
-                        <div class="bt-swiper-navigation">
 
-                            <div class="bt-nav bt-button-prev"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path d="M15.5307 18.9698C15.6004 19.0395 15.6557 19.1222 15.6934 19.2132C15.7311 19.3043 15.7505 19.4019 15.7505 19.5004C15.7505 19.599 15.7311 19.6965 15.6934 19.7876C15.6557 19.8786 15.6004 19.9614 15.5307 20.031C15.461 20.1007 15.3783 20.156 15.2873 20.1937C15.1962 20.2314 15.0986 20.2508 15.0001 20.2508C14.9016 20.2508 14.804 20.2314 14.7129 20.1937C14.6219 20.156 14.5392 20.1007 14.4695 20.031L6.96948 12.531C6.89974 12.4614 6.84443 12.3787 6.80668 12.2876C6.76894 12.1966 6.74951 12.099 6.74951 12.0004C6.74951 11.9019 6.76894 11.8043 6.80668 11.7132C6.84443 11.6222 6.89974 11.5394 6.96948 11.4698L14.4695 3.96979C14.6102 3.82906 14.8011 3.75 15.0001 3.75C15.1991 3.75 15.39 3.82906 15.5307 3.96979C15.6715 4.11052 15.7505 4.30139 15.7505 4.50042C15.7505 4.69944 15.6715 4.89031 15.5307 5.03104L8.56041 12.0004L15.5307 18.9698Z" fill="currentColor" />
-                                </svg></div>
-                            <div class="bt-nav bt-button-next"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path d="M17.0306 12.531L9.53055 20.031C9.46087 20.1007 9.37815 20.156 9.2871 20.1937C9.19606 20.2314 9.09847 20.2508 8.99993 20.2508C8.90138 20.2508 8.8038 20.2314 8.71276 20.1937C8.62171 20.156 8.53899 20.1007 8.4693 20.031C8.39962 19.9614 8.34435 19.8786 8.30663 19.7876C8.26892 19.6965 8.24951 19.599 8.24951 19.5004C8.24951 19.4019 8.26892 19.3043 8.30663 19.2132C8.34435 19.1222 8.39962 19.0395 8.4693 18.9698L15.4396 12.0004L8.4693 5.03104C8.32857 4.89031 8.24951 4.69944 8.24951 4.50042C8.24951 4.30139 8.32857 4.11052 8.4693 3.96979C8.61003 3.82906 8.80091 3.75 8.99993 3.75C9.19895 3.75 9.38982 3.82906 9.53055 3.96979L17.0306 11.4698C17.1003 11.5394 17.1556 11.6222 17.1933 11.7132C17.2311 11.8043 17.2505 11.9019 17.2505 12.0004C17.2505 12.099 17.2311 12.1966 17.1933 12.2876C17.1556 12.3787 17.1003 12.4614 17.0306 12.531Z" fill="currentColor" />
-                                </svg></div>
-                        </div>
-                    <?php endif; ?>
                 </div>
-                <div class="swiper bt-product-testimonial--images js-testimonial-images">
-                    <div class="swiper-wrapper">
-                        <?php if (!empty($settings['testimonial_items'])) : ?>
-                            <?php foreach ($settings['testimonial_items'] as $item) : ?>
-                                <div class="bt-product-testimonial--product swiper-slide">
-                                    <?php if (!empty($item['testimonial_image']['url'])) :
-                                        $attachment = wp_get_attachment_image_src($item['testimonial_image']['id'], $settings['thumbnail_size']);
-                                        $image_url = $attachment ? $attachment[0] : $item['testimonial_image']['url'];
-                                    ?>
-                                        <div class="bt-image-cover">
-                                            <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($item['testimonial_author']); ?>">
-                                        </div>
-                                    <?php endif; ?>
-                                    <?php if (!empty($item['id_product'])) :
-                                        $product = wc_get_product($item['id_product']);
-                                        if ($product) : ?>
-                                            <a href="<?php echo esc_url($product->get_permalink()); ?>" class="product-info">
-                                                <div class="product-img">
-                                                    <?php echo $product->get_image(); ?>
-                                                </div>
-                                                <div class="product-content">
-                                                    <h3 class="product-title"><?php echo esc_html($product->get_name()); ?></h3>
-                                                    <div class="product-price"><?php echo $product->get_price_html(); ?></div>
-                                                </div>
-                                            </a>
-                                        <?php endif; ?>
-                                    <?php endif; ?>
-                                </div>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
+                <?php if ($settings['slider_arrows'] === 'yes') : ?>
+                    <div class="bt-swiper-navigation">
+                        <div class="bt-nav bt-button-prev"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M15.5307 18.9698C15.6004 19.0395 15.6557 19.1222 15.6934 19.2132C15.7311 19.3043 15.7505 19.4019 15.7505 19.5004C15.7505 19.599 15.7311 19.6965 15.6934 19.7876C15.6557 19.8786 15.6004 19.9614 15.5307 20.031C15.461 20.1007 15.3783 20.156 15.2873 20.1937C15.1962 20.2314 15.0986 20.2508 15.0001 20.2508C14.9016 20.2508 14.804 20.2314 14.7129 20.1937C14.6219 20.156 14.5392 20.1007 14.4695 20.031L6.96948 12.531C6.89974 12.4614 6.84443 12.3787 6.80668 12.2876C6.76894 12.1966 6.74951 12.099 6.74951 12.0004C6.74951 11.9019 6.76894 11.8043 6.80668 11.7132C6.84443 11.6222 6.89974 11.5394 6.96948 11.4698L14.4695 3.96979C14.6102 3.82906 14.8011 3.75 15.0001 3.75C15.1991 3.75 15.39 3.82906 15.5307 3.96979C15.6715 4.11052 15.7505 4.30139 15.7505 4.50042C15.7505 4.69944 15.6715 4.89031 15.5307 5.03104L8.56041 12.0004L15.5307 18.9698Z" fill="currentColor" />
+                            </svg></div>
+                        <div class="bt-nav bt-button-next"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M17.0306 12.531L9.53055 20.031C9.46087 20.1007 9.37815 20.156 9.2871 20.1937C9.19606 20.2314 9.09847 20.2508 8.99993 20.2508C8.90138 20.2508 8.8038 20.2314 8.71276 20.1937C8.62171 20.156 8.53899 20.1007 8.4693 20.031C8.39962 19.9614 8.34435 19.8786 8.30663 19.7876C8.26892 19.6965 8.24951 19.599 8.24951 19.5004C8.24951 19.4019 8.26892 19.3043 8.30663 19.2132C8.34435 19.1222 8.39962 19.0395 8.4693 18.9698L15.4396 12.0004L8.4693 5.03104C8.32857 4.89031 8.24951 4.69944 8.24951 4.50042C8.24951 4.30139 8.32857 4.11052 8.4693 3.96979C8.61003 3.82906 8.80091 3.75 8.99993 3.75C9.19895 3.75 9.38982 3.82906 9.53055 3.96979L17.0306 11.4698C17.1003 11.5394 17.1556 11.6222 17.1933 11.7132C17.2311 11.8043 17.2505 11.9019 17.2505 12.0004C17.2505 12.099 17.2311 12.1966 17.1933 12.2876C17.1556 12.3787 17.1003 12.4614 17.0306 12.531Z" fill="currentColor" />
+                            </svg></div>
                     </div>
-
-                </div>
+                    <div class="bt-swiper-pagination"></div>
+                <?php endif; ?>
+               
             </div>
         </div>
 <?php

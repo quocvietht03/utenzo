@@ -1225,17 +1225,17 @@
 	function UtenzoBackToTop() {
 		const $backToTop = $('.bt-back-to-top');
 		if ($backToTop.length > 0) {
-			$(window).on('scroll', function() {
+			$(window).on('scroll', function () {
 				if ($(this).scrollTop() > 300) {
 					$backToTop.addClass('show');
 				} else {
 					$backToTop.removeClass('show');
 				}
 			});
-			
-			$backToTop.on('click', '.bt-back-to-top--action', function(e) {
+
+			$backToTop.on('click', '.bt-back-to-top--action', function (e) {
 				e.preventDefault();
-				$('html, body').animate({scrollTop: 0}, 500);
+				$('html, body').animate({ scrollTop: 0 }, 500);
 			});
 		}
 	}

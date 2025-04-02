@@ -335,161 +335,125 @@
 	const HotspotProductHandler = function ($scope) {
 		const $HotspotProduct = $scope.find('.bt-elwg-hotspot-product--default');
 		if ($HotspotProduct.length > 0) {
-
+			function getPositionPoint($point) {
+				const pointLeft = $point.position().left;
+				const pointTop = $point.position().top;
+				const pointRight = $point.parent().width() - (pointLeft + $point.outerWidth());
+				const pointBottom = $point.parent().height() - (pointTop + $point.outerHeight());
+				const $info = $point.find('.bt-hotspot-product-info');
+				const infoWidth = $info.outerWidth();
+				const halfWidth = infoWidth / 2 - (window.innerWidth <= 600 ? 6 : 10);
+				const infoHeight = $info.outerHeight();
+				const halfHeight = infoHeight / 2 - (window.innerWidth <= 600 ? 6 : 10);
+				const maxPoint = Math.max(pointLeft, pointTop, pointRight, pointBottom);
+				if (maxPoint === pointRight) {
+					if (halfHeight < pointTop && halfHeight < pointBottom) {
+						return 'rightcenter';
+					} else if (infoHeight < pointTop) {
+						return 'righttop';
+					} else {
+						return 'rightbottom';
+					}
+				} else if (maxPoint === pointLeft) {
+					if (halfHeight < pointTop && halfHeight < pointBottom) {
+						return 'leftcenter';
+					} else if (infoHeight < pointTop) {
+						return 'lefttop';
+					} else {
+						return 'leftbottom';
+					}
+				} else if (maxPoint === pointTop) {
+					if (halfWidth < pointLeft && halfWidth < pointRight) {
+						return 'topcenter';
+					} else if (infoWidth < pointLeft) {
+						return 'topleft';
+					} else {
+						return 'topright';
+					}
+				} else if (maxPoint === pointBottom) {
+					if (halfWidth < pointLeft && halfWidth < pointRight) {
+						return 'bottomcenter';
+					} else if (infoWidth < pointLeft) {
+						return 'bottomleft';
+					} else {
+						return 'bottomright';
+					}
+				}
+			}
 			function hotspotPoint() {
 				$HotspotProduct.find('.bt-hotspot-point').each(function () {
 					const $point = $(this);
+					console.log($point);
+					const $positionPoin = getPositionPoint($point);
+					console.log($positionPoin);
 					const $info = $point.find('.bt-hotspot-product-info');
-					const pointLeft = $point.position().left;
-					const pointTop = $point.position().top;
-					const infoWidth = $info.outerWidth() + 55;
-					const infoHeight = $info.outerHeight() + 55;
 					const containerWidth = $point.parent().width();
-					const containerHeight = $point.parent().height();
 					let smallOffset = 5;
 					let largeOffset = 15;
 					if (containerWidth < 700) {
 						smallOffset = 2;
 						largeOffset = 8;
 					}
-
-					// Handle horizontal positioning
-					if (pointLeft < infoWidth) {
-						if (pointTop < infoHeight) {
-							if (containerWidth < 700) {
-								if (pointLeft + infoWidth < containerWidth) {
-									$info.css({
-										'inset': '100% auto auto 100%',
-										'transform': `translate(${smallOffset}px, ${smallOffset}px)`
-									});
-								} else {
-									if (pointTop < infoHeight) {
-										$info.css({
-											'inset': '100% auto auto auto',
-											'transform': `translateY(${largeOffset}px)`
-										});
-									} else {
-										$info.css({
-											'inset': 'auto auto 100% auto',
-											'transform': `translateY(-${largeOffset}px)`
-										});
-									}
-								}
-							} else {
-								$info.css({
-									'inset': '100% auto auto 100%',
-									'transform': `translate(${smallOffset}px, ${smallOffset}px)`
-								});
-							}
-						} else if (pointTop + infoHeight > containerHeight) {
-							if (containerWidth < 700) {
-								if (pointLeft + infoWidth < containerWidth) {
-									$info.css({
-										'inset': 'auto auto 100% 100%',
-										'transform': `translate(${smallOffset}px, -${smallOffset}px)`
-									});
-								} else {
-									if (pointTop < infoHeight) {
-										$info.css({
-											'inset': '100% auto auto auto',
-											'transform': `translateY(${largeOffset}px)`
-										});
-									} else {
-										$info.css({
-											'inset': 'auto auto 100% auto',
-											'transform': `translateY(-${largeOffset}px)`
-										});
-									}
-								}
-							} else {
-								$info.css({
-									'inset': 'auto auto 100% 100%',
-									'transform': `translate(${smallOffset}px, -${smallOffset}px)`
-								});
-							}
-						} else {
-							if (containerWidth < 700) {
-								if (pointLeft + infoWidth < containerWidth) {
-									$info.css({
-										'inset': 'auto auto auto 100%',
-										'transform': `translateX(${largeOffset}px)`
-									});
-								} else {
-									if (pointTop < infoHeight) {
-										$info.css({
-											'inset': '100% auto auto auto',
-											'transform': `translateY(${largeOffset}px)`
-										});
-									} else {
-										$info.css({
-											'inset': 'auto auto 100% auto',
-											'transform': `translateY(-${largeOffset}px)`
-										});
-									}
-								}
-							} else {
-								$info.css({
-									'inset': 'auto auto auto 100%',
-									'transform': `translateX(${largeOffset}px)`
-								});
-							}
-						}
-					} else if (pointLeft + infoWidth > containerWidth) {
-						if (pointTop < infoHeight) {
-							$info.css({
-								'inset': '100% 0 auto auto',
-								'transform': `translate(${smallOffset}px, ${smallOffset}px)`
-							});
-						} else if (pointTop + infoHeight > containerHeight) {
-							$info.css({
-								'inset': 'auto 0 100% auto',
-								'transform': `translate(${smallOffset}px, -${smallOffset}px)`
-							});
-						} else {
-							$info.css({
-								'inset': 'auto 100% auto auto',
-								'transform': `translateX(-${largeOffset}px)`
-							});
-						}
-					} else {
-						if (pointTop < infoHeight) {
-							$info.css({
-								'inset': '100% auto auto auto',
-								'transform': `translateY(${largeOffset}px)`
-							});
-						} else if (pointTop + infoHeight > containerHeight) {
-							$info.css({
-								'inset': 'auto auto 100% auto',
-								'transform': `translateY(-${largeOffset}px)`
-							});
-						} else {
-							if (containerWidth < 700) {
-								if (pointLeft + infoWidth < containerWidth) {
-									$info.css({
-										'inset': 'auto auto auto 100%',
-										'transform': `translateX(${largeOffset}px)`
-									});
-								} else {
-									if (pointTop < infoHeight) {
-										$info.css({
-											'inset': '100% auto auto auto',
-											'transform': `translateY(${largeOffset}px)`
-										});
-									} else {
-										$info.css({
-											'inset': 'auto auto 100% auto',
-											'transform': `translateY(-${largeOffset}px)`
-										});
-									}
-								}
-							} else {
-								$info.css({
-									'inset': 'auto 100% auto auto',
-									'transform': `translateX(-${largeOffset}px)`
-								});
-							}
-
-						}
+					if($positionPoin == 'rightcenter'){
+						$info.css({
+							'inset': 'auto auto auto 100%',
+							'transform': `translateX(${largeOffset}px)`
+						});
+					}else if($positionPoin == 'righttop'){
+						$info.css({
+							'inset': 'auto auto 100% 100%',
+							'transform': `translate(0, -${smallOffset}px)`
+						});
+					}else if($positionPoin == 'rightbottom'){
+						$info.css({
+							'inset': '100% auto auto 100%',
+							'transform': `translate(0, ${smallOffset}px)`
+						});
+					}else if($positionPoin == 'leftcenter'){
+						$info.css({
+							'inset': 'auto 100% auto auto',
+							'transform': `translateX(-${largeOffset}px)`
+						});
+					}else if($positionPoin == 'lefttop'){
+						$info.css({
+							'inset': 'auto 100% 100% auto',
+							'transform': `translate(0, -${smallOffset}px)`
+						});
+					}else if($positionPoin == 'leftbottom'){
+						$info.css({
+							'inset': '100% 100% auto auto',
+							'transform': `translate(0, ${smallOffset}px)`
+						});
+					}else if($positionPoin == 'topcenter'){
+						$info.css({
+							'inset': 'auto auto 100% auto',
+							'transform': `translateY(-${largeOffset}px)`
+						});
+					}else if($positionPoin == 'topleft'){
+						$info.css({
+							'inset': 'auto 100% 100% auto',
+							'transform': `translate(0, -${smallOffset}px)`
+						});
+					}else if($positionPoin == 'topright'){
+						$info.css({
+							'inset': 'auto auto 100% 100%',
+							'transform': `translate(0, -${smallOffset}px)`
+						});
+					}else if($positionPoin == 'bottomcenter'){
+						$info.css({
+							'inset': '100% auto auto auto',
+							'transform': `translateY(${largeOffset}px)`
+						});
+					}else if($positionPoin == 'bottomleft'){
+						$info.css({
+							'inset': '100% 100% auto auto',
+							'transform': `translate(0, ${smallOffset}px)`
+						});
+					}else if($positionPoin == 'bottomright'){
+						$info.css({
+							'inset': '100% auto auto 100%',
+							'transform': `translate(0, ${smallOffset}px)`
+						});
 					}
 				});
 			}
@@ -628,19 +592,75 @@
 				},
 				allowTouchMove: false,
 			});
-			
+
 			// Sync both sliders
 			testimonialContentSwiper.controller.control = testimonialImagesSwiper;
 			testimonialImagesSwiper.controller.control = testimonialContentSwiper;
-			
+
 			// Pause autoplay on hover if autoplay is enabled
 			if (autoplay) {
 				$testimonialContent[0].addEventListener('mouseenter', () => {
 					testimonialContentSwiper.autoplay.stop();
 				});
-				
+
 				$testimonialContent[0].addEventListener('mouseleave', () => {
 					testimonialContentSwiper.autoplay.start();
+				});
+			}
+		}
+	};
+	const ProductTestimonialSliderHandler = function ($scope) {
+		const $ProductTestimonialSlider = $scope.find('.js-data-testimonial-slider');
+		if ($ProductTestimonialSlider.length > 0) {
+			const $sliderSettings = $ProductTestimonialSlider.data('slider-settings') || {};
+			const sliderSpeed = $sliderSettings.speed || 500;
+			const autoplay = $sliderSettings.autoplay || false;
+			const autoplayDelay = $sliderSettings.autoplay_delay || 3000;
+			const spaceBetween = $sliderSettings.space_between || 30;
+			const spaceBetweenMobile = $sliderSettings.space_between_mobile || 10;
+			const spaceBetweenTablet = $sliderSettings.space_between_tablet || 20;
+			const itemsDesktop = $sliderSettings.items_desktop || 1;
+			const itemsMobile = $sliderSettings.items_mobile || 1;
+			const itemsTablet = $sliderSettings.items_tablet || 2;
+			
+			// Initialize the testimonial slider
+			const testimonialSlider = new Swiper($ProductTestimonialSlider.find('.js-testimonial-slider')[0], {
+				slidesPerView: itemsMobile,
+				spaceBetween: spaceBetweenMobile,
+				loop: true,
+				speed: sliderSpeed,
+				autoplay: autoplay ? {
+					delay: autoplayDelay,
+					disableOnInteraction: false
+				} : false,
+				navigation: {
+					nextEl: $scope.find('.bt-button-next')[0],
+					prevEl: $scope.find('.bt-button-prev')[0],
+				},
+				pagination: {
+					el: $scope.find('.bt-swiper-pagination')[0],
+					clickable: true,
+				},
+				breakpoints: {
+					768: {
+						slidesPerView: itemsTablet,
+						spaceBetween: spaceBetweenTablet
+					},
+					1024: {
+						slidesPerView: itemsDesktop,
+						spaceBetween: spaceBetween
+					}
+				}
+			});
+			
+			// Pause autoplay on hover if autoplay is enabled
+			if (autoplay) {
+				$ProductTestimonialSlider.find('.js-testimonial-slider')[0].addEventListener('mouseenter', () => {
+					testimonialSlider.autoplay.stop();
+				});
+
+				$ProductTestimonialSlider.find('.js-testimonial-slider')[0].addEventListener('mouseleave', () => {
+					testimonialSlider.autoplay.start();
 				});
 			}
 		}
@@ -655,6 +675,7 @@
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-tiktok-shop-slider.default', TiktokShopSliderHandler);
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-hotspot-product.default', HotspotProductHandler);
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-product-testimonial.default', ProductTestimonialHandler);
+		elementorFrontend.hooks.addAction('frontend/element_ready/bt-product-testimonial-slider.default', ProductTestimonialSliderHandler);
 	});
 
 })(jQuery);

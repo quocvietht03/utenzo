@@ -54,6 +54,10 @@
             > .elementor-element {
                 max-width: var(--container-widget-width, 100%) !important;
                 width: 100%;
+                @media(max-width:$break-sm){
+                    max-width: 100% !important;
+                    width: 100%;
+                }
             }
         }
     }

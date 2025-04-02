@@ -437,7 +437,7 @@
               }
             }
             .bt-thumb {
-              &::before{
+              &::before {
                 display: none;
               }
               .bt-cover-image {
@@ -1352,6 +1352,96 @@
   }
   .woocommerce-loop-product__thumbnail .button {
     max-width: 200px;
+  }
+  &-style-1 {
+    .bt-product {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      &--image {
+        img {
+          display: block;
+          width: 110px;
+          height: 110px;
+        }
+      }
+      &--content {
+        width: calc(100% - 130px);
+      }
+      &--title {
+        color: $color-primary;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 22px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        margin: 0 0 12px 0;
+      }
+      &--infor {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      &--info {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      &--price {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+        gap: 8px;
+        align-items: baseline;
+        .woocommerce-Price-amount {
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: 28px;
+          color: $color-primary;
+        }
+        ins {
+          text-decoration: none;
+          margin-right: 0 !important;
+        }
+        del {
+          .woocommerce-Price-amount {
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 26px;
+            color: #a0a0a0;
+          }
+        }
+      }
+      &-rating {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        .star-rating {
+          margin: 0;
+          font-size: 16px;
+          height: 18px;
+          width: 101px;
+          color: $color-accent;
+        }
+        &--count {
+          color: $color-text;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 22px;
+          font-family: $accent-font;
+          position: relative;
+          top: 1px;
+        }
+      }
+    }
   }
 }
 
@@ -3215,7 +3305,6 @@
           animation-duration: 1s;
           animation-iteration-count: infinite;
           animation-timing-function: linear;
-          
         }
       }
     }

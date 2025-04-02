@@ -58,6 +58,7 @@ class ElementorWidgets
 			'post-loop-item',
 			'testimonial-loop-item',
 			'product-loop-item',
+			'product-loop-item-style-1',
 			'product-wishlist',
 			'product-compare',
 			'highlighted-heading',
@@ -79,7 +80,8 @@ class ElementorWidgets
 			'mini-wishlist',
 			'tiktok-shop-slider',
 			'hotspot-product',
-			'product-testimonial'
+			'product-testimonial',
+			'product-testimonial-slider'
 		);
 
 		return $this->widgets;
@@ -191,6 +193,7 @@ class ElementorWidgets
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ServiceLoopItemMenu\Widget_ServiceLoopItemMenu());
 
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ProductLoopItem\Widget_ProductLoopItem());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ProductLoopItemStyle1\Widget_ProductLoopItemStyle1());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ProductWishlist\Widget_ProductWishlist());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ProductCompare\Widget_ProductCompare());
 
@@ -211,6 +214,7 @@ class ElementorWidgets
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\TikTokShopSlider\Widget_TikTokShopSlider());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\HotspotProduct\Widget_HotspotProduct());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ProductTestimonial\Widget_ProductTestimonial());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ProductTestimonialSlider\Widget_ProductTestimonialSlider());
 	}
 
 	/**

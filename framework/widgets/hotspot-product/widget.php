@@ -359,7 +359,7 @@ class Widget_HotspotProduct extends Widget_Base
                                         data-product-id="<?php echo esc_attr($item['id_product']); ?>">
                                         <div class="bt-hotspot-marker"></div>
                                         <div class="bt-hotspot-product-info">
-                                            <a class="bt-hotspot-product-thumbnail" href="<?php echo esc_url($product->get_permalink()); ?>"><?php echo get_the_post_thumbnail($item['id_product'], 'thumbnail'); ?></a>
+                                            <a class="bt-hotspot-product-thumbnail" href="<?php echo esc_url($product->get_permalink()); ?>"><?php echo get_the_post_thumbnail($item['id_product'], 'medium'); ?></a>
                                             <div class="bt-product-content">
                                                 <h4><a href="<?php echo esc_url($product->get_permalink()); ?>"><?php echo esc_html($product->get_name()); ?></a></h4>
                                                 <p class="bt-price"><?php echo $product->get_price_html(); ?></p>

@@ -306,7 +306,7 @@ class Widget_BrandSlider extends Widget_Base
             $slider_item_tablet = 'auto';
             $slider_item_mobile = 'auto';
         } else {
-            $slider_item_desktop = $settings['slider_item']['size'] ?? $settings['slider_item'];
+            $slider_item_desktop = $settings['slider_item'] ?? $settings['slider_item'];
             $slider_item_tablet = $settings['slider_item_tablet'] ?? 4;
             $slider_item_mobile = $settings['slider_item_mobile'] ?? 2;
         }
