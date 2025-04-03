@@ -531,6 +531,9 @@
   &--default {
     @extend .__bt-post-style-default;
   }
+  &--style1 {
+    @extend .__bt-post-style-1;
+  }
 }
 
 .bt-elwg-testimonial-loop-item {
@@ -3815,7 +3818,9 @@ body {
           box-shadow: none;
           border-radius: 50px;
           margin: 0 4px;
-          transition: background-color 0.4s ease-in-out, padding 0.4s ease-in-out;
+          transition:
+            background-color 0.4s ease-in-out,
+            padding 0.4s ease-in-out;
           width: auto;
           height: auto;
           &.swiper-pagination-bullet-active {
@@ -3828,8 +3833,41 @@ body {
         .bt-swiper-navigation {
           display: none;
         }
-        .bt-swiper-pagination{
+        .bt-swiper-pagination {
           display: flex;
+        }
+      }
+    }
+  }
+}
+.bt-elwg-product-brand {
+  &--default {
+    .bt-product-brand {
+      gap: 20px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      &--item {
+        height: 100px;
+        display: flex;
+        align-items: center;
+        border-radius: 4px;
+        background: #f6f6f6;
+        justify-content: center;
+        padding: 10px 20px;
+        @media(max-width:$break-sm){
+          height: 80px;
+        }
+        img{
+          display: block;
+          max-height: 40px;
+          object-fit: contain;
+          max-width: 100%;
+        }
+        svg{
+          display: block;
+          max-height: 40px;
+          object-fit: contain;
+          max-width: 100%;
         }
       }
     }

@@ -1233,7 +1233,7 @@
 				}
 			});
 
-			$backToTop.on('click', '.bt-back-to-top--action', function (e) {
+			$backToTop.on('click', function (e) {
 				e.preventDefault();
 				$('html, body').animate({ scrollTop: 0 }, 500);
 			});

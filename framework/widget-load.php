@@ -56,6 +56,7 @@ class ElementorWidgets
 			'post-grid',
 			'post-grid-style-1',
 			'post-loop-item',
+			'post-loop-item-style-1',
 			'testimonial-loop-item',
 			'product-loop-item',
 			'product-loop-item-style-1',
@@ -76,6 +77,7 @@ class ElementorWidgets
 			'account-login',
 			'search-product',
 			'product-category',
+			'product-brand',
 			'heading-animation',
 			'mini-wishlist',
 			'tiktok-shop-slider',
@@ -184,6 +186,7 @@ class ElementorWidgets
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\PostGrid\Widget_PostGrid());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\PostGridStyle1\Widget_PostGridStyle1());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\PostLoopItem\Widget_PostLoopItem());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\PostLoopItemStyle1\Widget_PostLoopItemStyle1());
 
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\TestimonialLoopItem\Widget_TestimonialLoopItem());
 
@@ -196,6 +199,10 @@ class ElementorWidgets
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ProductLoopItemStyle1\Widget_ProductLoopItemStyle1());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ProductWishlist\Widget_ProductWishlist());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ProductCompare\Widget_ProductCompare());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\AccountLogin\Widget_AccountLogin());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\SearchProduct\Widget_SearchProduct());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ProductCategory\Widget_ProductCategory());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ProductBrand\Widget_ProductBrand());
 
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\HighlightedHeading\Widget_HighlightedHeading());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\HighlightedHeadingStyle1\Widget_HighlightedHeadingStyle1());
@@ -206,9 +213,6 @@ class ElementorWidgets
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\MiniCart\Widget_MiniCart());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\BrandSlider\Widget_BrandSlider());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ListFaq\Widget_ListFaq());
-		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\AccountLogin\Widget_AccountLogin());
-		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\SearchProduct\Widget_SearchProduct());
-		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ProductCategory\Widget_ProductCategory());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\HeadingAnimation\Widget_HeadingAnimation());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\MiniWishlist\Widget_MiniWishlist());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\TikTokShopSlider\Widget_TikTokShopSlider());

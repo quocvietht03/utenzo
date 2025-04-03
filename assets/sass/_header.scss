@@ -289,24 +289,24 @@
 .elementor-location-header {
   position: relative;
   .elementor-element {
-    &.bt-nav-header-style2{
-      @media(max-width: 1300px) and (min-width: $break-tl){
-        > .e-con-inner{
+    &.bt-nav-header-style2 {
+      @media (max-width: 1300px) and (min-width: $break-tl) {
+        > .e-con-inner {
           --widgets-spacing-column: 15px;
-          > .elementor-element{
-            &:last-child{
+          > .elementor-element {
+            &:last-child {
               --widgets-spacing-column: 12px;
             }
           }
         }
-        .elementor-widget-n-menu{
-          .e-n-menu-wrapper{
-            > ul{
-              > li{
-                > .e-n-menu-title{
+        .elementor-widget-n-menu {
+          .e-n-menu-wrapper {
+            > ul {
+              > li {
+                > .e-n-menu-title {
                   padding-left: 8px;
                   padding-right: 8px;
-                  > a{
+                  > a {
                     font-size: 14px;
                   }
                 }
@@ -316,16 +316,15 @@
         }
       }
     }
-
   }
 }
 body.admin-bar .dialog-type-lightbox {
   &.bt-menu-mobile-popup {
     position: fixed;
     top: 32px;
-    .elementor-location-popup{
-      > .elementor-element{
-        &:last-child{
+    .elementor-location-popup {
+      > .elementor-element {
+        &:last-child {
           bottom: 32px;
         }
       }
@@ -374,6 +373,29 @@ body.admin-bar .dialog-type-lightbox {
     }
   }
 }
+.bt-megamenu-vertical {
+  > .elementor-widget-container {
+    > .e-n-menu {
+      > .e-n-menu-wrapper {
+        > .e-n-menu-heading {
+          display: flex;
+          flex-direction: column;
+          > .e-n-menu-item {
+            > .e-n-menu-title {
+              max-width: 280px;
+              width: 100%;
+            }
+            > .e-n-menu-content {
+              top: 0;
+              left: 280px;
+              width: calc(100% - 280px);
+            }
+          }
+        }
+      }
+    }
+  }
+}
 .bt-mega-menu {
   a {
     -webkit-transition: none;
@@ -381,7 +403,6 @@ body.admin-bar .dialog-type-lightbox {
   }
 
   .bt-mega-menu-pages {
-    
   }
   &.style-1 {
     .bt-mega-menu-service {
@@ -398,7 +419,6 @@ body.admin-bar .dialog-type-lightbox {
   .e-n-menu-dropdown-icon {
     margin-left: 0 !important;
   }
-
 }
 .elementor-widget-n-menu .e-n-menu:not([data-layout="dropdown"]):not(.content-above) {
   .bt-submenu-content {

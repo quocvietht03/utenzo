@@ -54,9 +54,37 @@
             > .elementor-element {
                 max-width: var(--container-widget-width, 100%) !important;
                 width: 100%;
-                @media(max-width:$break-sm){
+                @media (max-width: $break-sm) {
                     max-width: 100% !important;
                     width: 100%;
+                }
+            }
+        }
+    }
+    &.bt-section-feature-product {
+        @media (max-width: $break-lg) and (min-width: $break-tl) {
+            > .e-con-inner {
+                --column-gap: 20px;
+                .bt-elwg-product-loop-item-style-1 {
+                    .bt-product--price {
+                        gap: 4px;
+                        line-height: 22px;
+                        .woocommerce-Price-amount {
+                            font-size: 16px;
+                            line-height: 22px;
+                        }
+                    }
+
+                    .bt-product-rating {
+                        .star-rating {
+                            font-size: 14px;
+                            height: 14px;
+                            width: 90px;
+                        }
+                        &--count {
+                            top: 2px;
+                        }
+                    }
                 }
             }
         }
