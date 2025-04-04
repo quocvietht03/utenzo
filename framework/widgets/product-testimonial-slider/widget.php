@@ -66,31 +66,7 @@ class Widget_ProductTestimonialSlider extends Widget_Base
                 'label' => __('Testimonial', 'utenzo'),
             ]
         );
-        $this->add_control(
-            'layout',
-            [
-                'label' => __('Layout', 'utenzo'),
-                'type' => Controls_Manager::SELECT,
-                'options' => [
-                    'style-1' => __('Layout 1', 'utenzo'),
-                    'style-2' => __('Layout 2', 'utenzo'),
-                ],
-                'default' => 'style-1',
-            ]
-        );
-        $this->add_group_control(
-            Group_Control_Image_Size::get_type(),
-            [
-                'name' => 'thumbnail',
-                'label' => __('Image Size', 'utenzo'),
-                'show_label' => true,
-                'default' => 'medium_large',
-                'exclude' => ['custom'],
-                'condition' => [
-                    'layout' => 'style-2',
-                ],
-            ]
-        );
+
 
         $repeater = new Repeater();
         $repeater->add_control(
@@ -129,6 +105,17 @@ class Widget_ProductTestimonialSlider extends Widget_Base
             ]
         );
         $repeater->add_control(
+            'show_testimonial_image',
+            [
+                'label' => __('Show Image Banner', 'utenzo'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Yes', 'utenzo'),
+                'label_off' => __('No', 'utenzo'),
+                'default' => 'no',
+            ]
+        );
+
+        $repeater->add_control(
             'testimonial_image',
             [
                 'label' => __('Image Banner', 'utenzo'),
@@ -137,7 +124,7 @@ class Widget_ProductTestimonialSlider extends Widget_Base
                     'url' => Utils::get_placeholder_image_src(),
                 ],
                 'condition' => [
-                    'layout' => 'style-2',
+                    'show_testimonial_image' => 'yes',
                 ],
             ]
         );
@@ -563,13 +550,26 @@ class Widget_ProductTestimonialSlider extends Widget_Base
         ];
 
 ?>
-        <div class="bt-elwg-product-testimonial--<?php echo esc_attr($settings['layout']); ?> js-data-testimonial-slider" data-slider-settings='<?php echo json_encode($slider_settings); ?>'>
-            <div class="bt-product-testimonial">
+        <div class="bt-elwg-product-testimonial--style-1 js-data-testimonial-slider" data-slider-settings='<?php echo json_encode($slider_settings); ?>'>
+            <div class="bt-product-testimonial ">
                 <div class="swiper bt-product-testimonial--content js-testimonial-slider">
                     <div class="swiper-wrapper">
                         <?php if (!empty($settings['testimonial_items'])) : ?>
                             <?php foreach ($settings['testimonial_items'] as $item) : ?>
-                                <div class="swiper-slide">
+                                <div class="swiper-slide<?php echo (isset($item['show_testimonial_image']) && $item['show_testimonial_image'] === 'yes') ? ' bt-testimonial-image' : ''; ?>">
+                                    <?php if (isset($item['show_testimonial_image']) && $item['show_testimonial_image'] === 'yes') : ?>
+                                        <div class="bt-product-testimonial--images">
+                                            <div class="bt-cover-image">
+                                                <?php
+                                                if (!empty($item['testimonial_image']['url'])) :
+                                                    $attachment = wp_get_attachment_image_src($item['testimonial_image']['id'],'large');
+                                                    $image_url = $attachment ? $attachment[0] : $item['testimonial_image']['url'];
+                                                ?>
+                                                    <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($item['testimonial_author']); ?>">
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
                                     <div class="bt-product-testimonial--item">
                                         <?php if (!empty($item['testimonial_rating'])) : ?>
                                             <div class="bt-product-testimonial--rating">
@@ -633,9 +633,8 @@ class Widget_ProductTestimonialSlider extends Widget_Base
                                 <path d="M17.0306 12.531L9.53055 20.031C9.46087 20.1007 9.37815 20.156 9.2871 20.1937C9.19606 20.2314 9.09847 20.2508 8.99993 20.2508C8.90138 20.2508 8.8038 20.2314 8.71276 20.1937C8.62171 20.156 8.53899 20.1007 8.4693 20.031C8.39962 19.9614 8.34435 19.8786 8.30663 19.7876C8.26892 19.6965 8.24951 19.599 8.24951 19.5004C8.24951 19.4019 8.26892 19.3043 8.30663 19.2132C8.34435 19.1222 8.39962 19.0395 8.4693 18.9698L15.4396 12.0004L8.4693 5.03104C8.32857 4.89031 8.24951 4.69944 8.24951 4.50042C8.24951 4.30139 8.32857 4.11052 8.4693 3.96979C8.61003 3.82906 8.80091 3.75 8.99993 3.75C9.19895 3.75 9.38982 3.82906 9.53055 3.96979L17.0306 11.4698C17.1003 11.5394 17.1556 11.6222 17.1933 11.7132C17.2311 11.8043 17.2505 11.9019 17.2505 12.0004C17.2505 12.099 17.2311 12.1966 17.1933 12.2876C17.1556 12.3787 17.1003 12.4614 17.0306 12.531Z" fill="currentColor" />
                             </svg></div>
                     </div>
-                    <div class="bt-swiper-pagination"></div>
                 <?php endif; ?>
-               
+                <div class="bt-swiper-pagination"></div>
             </div>
         </div>
 <?php

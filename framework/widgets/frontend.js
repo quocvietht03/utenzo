@@ -665,6 +665,35 @@
 			}
 		}
 	};
+	function countDownHandler($scope) {
+		const countDown = $scope.find('.bt-countdown-js');
+		const countDownDate = new Date(countDown.data('time')).getTime();
+
+		if (isNaN(countDownDate)) {
+			console.error('Invalid countdown date');
+			return;
+		}
+		const timer = setInterval(() => {
+			const now = new Date().getTime();
+			const distance = countDownDate - now;
+
+			if (distance < 0) {
+				clearInterval(timer);
+				countDown.html('<div class="bt-countdown-expired">EXPIRED</div>');
+				return;
+			}
+
+			const days = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
+			const hours = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+			const mins = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+			const secs = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
+
+			countDown.find('.bt-countdown-days').text(days);
+			countDown.find('.bt-countdown-hours').text(hours);
+			countDown.find('.bt-countdown-mins').text(mins);
+			countDown.find('.bt-countdown-secs').text(secs);
+		}, 1000);
+	}
 	// Make sure you run this code under Elementor.
 	$(window).on('elementor/frontend/init', function () {
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-location-list.default', LocationListHandler);
@@ -676,6 +705,7 @@
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-hotspot-product.default', HotspotProductHandler);
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-product-testimonial.default', ProductTestimonialHandler);
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-product-testimonial-slider.default', ProductTestimonialSliderHandler);
+		elementorFrontend.hooks.addAction('frontend/element_ready/bt-countdown.default', countDownHandler);
 	});
 
 })(jQuery);

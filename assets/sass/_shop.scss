@@ -1344,6 +1344,11 @@
 }
 .bt-elwg-product-loop-item {
   @extend .__bt-loop-product-style;
+  &.layout-1{
+    border-radius: 8px;
+    background: #f6f6f6;
+    padding: 20px;
+  }
   .woocommerce-loop-product .bt-product-rating .star-rating {
     word-break: normal;
     span {
@@ -1561,6 +1566,7 @@
       }
     }
   }
+
 }
 
 .bt-site-appointment {

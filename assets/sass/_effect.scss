@@ -35,7 +35,7 @@
 	}
 }
 
-@keyframes effectBgScroll {
+@keyframes effectBgScrollVertical {
 	from {
 		background-position: center center;
 	}
@@ -71,15 +71,15 @@
 	}
 }
 
-.bt-bg-scroll-enable {
-	.bt-bg-scroll-effect {
-		animation: effectBgScroll 70s infinite;
+.bt-bg-scroll-vertical-effect {
+	@media (min-width: 1025px) {
+		animation: effectBgScrollVertical 50s infinite;
 	}
+}
 
-	.bt-bg-scroll-horizontal-effect {
-		@media (min-width: 1025px) {
-			animation: effectBgScrollHorizontal 50s infinite;
-		}
+.bt-bg-scroll-horizontal-effect {
+	@media (min-width: 1025px) {
+		animation: effectBgScrollHorizontal 70s infinite;
 	}
 }
 
@@ -582,7 +582,7 @@
 	.bt-button-hover {
 		transition: all 0.3s ease;
 		&:hover {
-			background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%) ;
+			background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%);
 			background-size: 200% 100%;
 			animation: shimmer 1.5s infinite linear;
 		}
@@ -592,7 +592,12 @@
 			.elementor-button {
 				transition: all 0.3s ease;
 				&:hover {
-					background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%) ;
+					background-image: linear-gradient(
+						90deg,
+						transparent 25%,
+						rgba(233, 233, 233, 0.39) 50%,
+						transparent 75%
+					);
 					background-size: 200% 100%;
 					animation: shimmer 1.5s infinite linear;
 				}

@@ -372,6 +372,16 @@ body.admin-bar .dialog-type-lightbox {
       }
     }
   }
+  .elementor-icon-box-wrapper {
+    display: flex !important;
+    align-items: center;
+    gap: 4px;
+    .elementor-icon-box-icon {
+      display: flex !important;
+      align-items: center;
+      margin: 0 !important;
+    }
+  }
 }
 .bt-megamenu-vertical {
   > .elementor-widget-container {
@@ -384,11 +394,23 @@ body.admin-bar .dialog-type-lightbox {
             > .e-n-menu-title {
               max-width: 280px;
               width: 100%;
+              display: flex;
+              justify-content: space-between;
             }
             > .e-n-menu-content {
               top: 0;
               left: 280px;
               width: calc(100% - 280px);
+              height: 100%;
+              > .elementor-element {
+                height: 100%;
+                border-radius: 0 0 8px 8px;
+              }
+            }
+            &:last-child {
+              > .e-n-menu-title {
+                border-radius: 0 0 8px 8px;
+              }
             }
           }
         }
@@ -404,20 +426,35 @@ body.admin-bar .dialog-type-lightbox {
 
   .bt-mega-menu-pages {
   }
-  &.style-1 {
-    .bt-mega-menu-service {
-      @media (min-width: 1760px) {
-        margin-left: -150px;
+  &.bt-main {
+    > .elementor-widget-container {
+      > .e-n-menu {
+        > .e-n-menu-wrapper {
+          > .e-n-menu-heading {
+            > li.e-n-menu-item {
+              &:first-child {
+                width: 280px;
+                > .e-n-menu-title {
+                  width: 100%;
+                  display: flex;
+                  justify-content: space-between;
+                  background: $color-primary;
+                  &:hover {
+                    background: $color-primary !important;
+                  }
+                }
+              }
+              @media (max-width: 1110px) and (min-width: $break-tl) {
+                .e-n-menu-title {
+                  padding-left: 18px;
+                  padding-right: 18px;
+                }
+              }
+            }
+          }
+        }
       }
     }
-    .bt-mega-menu-shop {
-      @media (min-width: 1760px) {
-        margin-left: -150px;
-      }
-    }
-  }
-  .e-n-menu-dropdown-icon {
-    margin-left: 0 !important;
   }
 }
 .elementor-widget-n-menu .e-n-menu:not([data-layout="dropdown"]):not(.content-above) {

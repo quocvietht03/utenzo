@@ -83,7 +83,8 @@ class ElementorWidgets
 			'tiktok-shop-slider',
 			'hotspot-product',
 			'product-testimonial',
-			'product-testimonial-slider'
+			'product-testimonial-slider',
+			'countdown'
 		);
 
 		return $this->widgets;
@@ -219,6 +220,7 @@ class ElementorWidgets
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\HotspotProduct\Widget_HotspotProduct());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ProductTestimonial\Widget_ProductTestimonial());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ProductTestimonialSlider\Widget_ProductTestimonialSlider());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\CountDown\Widget_CountDown());
 	}
 
 	/**
