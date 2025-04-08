@@ -68,4 +68,4 @@ defined('ABSPATH') || exit;
   </form>
 </div>
 
-<div class="bt-sidebar-overlay"></div>
+<div class="bt-popup-overlay"></div>

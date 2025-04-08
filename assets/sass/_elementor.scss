@@ -511,20 +511,6 @@
       }
     }
   }
-
-  &--style-1 {
-    @extend .__bt-post-style-1;
-
-    .bt-post-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0 60px;
-      width: 100%;
-      @media (max-width: $break-md) {
-        grid-template-columns: 1fr;
-      }
-    }
-  }
 }
 
 .bt-elwg-post-loop-item {
@@ -533,6 +519,9 @@
   }
   &--style1 {
     @extend .__bt-post-style-1;
+  }
+  &--style2 {
+    @extend .__bt-post-style-2;
   }
 }
 
@@ -804,7 +793,7 @@
     .bt-mini-cart {
       a {
         position: relative;
-        display: flex;
+        display: inline-flex;
         svg {
           display: flex;
           width: 24px;

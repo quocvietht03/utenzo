@@ -876,13 +876,13 @@
 			return false;
 		});
 	}
-	/* Product sidebar toggle */
-	function UtenzoProductSidebarToggle() {
-		if ($('.bt-product-sidebar-toggle').length > 0) {
-			$('.bt-product-sidebar-toggle').on('click', function () {
+	/* Product Button toggle Filter*/
+	function UtenzoProductFilterToggle() {
+		if ($('.bt-product-filter-toggle').length > 0) {
+			$('.bt-product-filter-toggle').on('click', function () {
 				$(this).parents('.bt-main-content').find('.bt-products-sidebar').addClass('active');
 			});
-			$('.bt-sidebar-overlay').on('click', function () {
+			$('.bt-popup-overlay').on('click', function () {
 				$(this).parents('.bt-main-content').find('.bt-products-sidebar').removeClass('active');
 			});
 			$('.bt-form-button .bt-close-btn').on('click', function (e) {
@@ -1037,11 +1037,23 @@
 			});
 		}
 	}
-	/* mega menu add class custom */
-	function UtenzoMegaMenuAddClass() {
+
+	function UtenzoMegaMenu() {
+		/* mega menu add class custom */
 		jQuery('.bt-mega-menu-sub').each(function () {
 			jQuery(this).parent().parent().addClass('bt-submenu-content');
 		});
+		/* mega menu fix hover category*/
+		$(document).on({
+			mouseenter: function() {
+				// Remove no-hover class when hovering in
+				$('.bt-megamenu-shop-category').removeClass('bt-no-hover');
+			},
+			mouseleave: function() {
+				// Add no-hover class when hovering out
+				$('.bt-megamenu-shop-category').addClass('bt-no-hover');
+			}
+		}, '.bt-megamenu-shop-category.e-active .e-n-menu-title, .bt-megamenu-shop-category.e-active .e-n-menu-content,.bt-mega-menu.bt-main > .elementor-widget-container > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > li.e-n-menu-item:first-child > .e-n-menu-title');
 	}
 	function UtenzoBuyNow() {
 		$(document).on('click', '.bt-button-buy-now a', function (e) {
@@ -1239,6 +1251,7 @@
 			});
 		}
 	}
+	/* */
 	jQuery(document).ready(function ($) {
 		UtenzoSubmenuAuto();
 		UtenzoToggleMenuMobile();
@@ -1251,13 +1264,13 @@
 		UtenzoProductWishlistLoad();
 		UtenzoProductQuickView();
 		UtenzoProductsFilter();
-		UtenzoProductSidebarToggle();
+		UtenzoProductFilterToggle();
 		UtenzoAttachTooltips();
 		UtenzoUpdateMiniCart();
 		UtenzoProgressCart();
 		UtenzoCountdownCart();
 		UtenzoSelect2Appointment();
-		UtenzoMegaMenuAddClass();
+		UtenzoMegaMenu();
 		UtenzoBuyNow();
 		UtenzoScrollReview();
 		UtenzoHookGravityFormEvents();

@@ -383,9 +383,9 @@
 			function hotspotPoint() {
 				$HotspotProduct.find('.bt-hotspot-point').each(function () {
 					const $point = $(this);
-					console.log($point);
+					//console.log($point);
 					const $positionPoin = getPositionPoint($point);
-					console.log($positionPoin);
+				//	console.log($positionPoin);
 					const $info = $point.find('.bt-hotspot-product-info');
 					const containerWidth = $point.parent().width();
 					let smallOffset = 5;

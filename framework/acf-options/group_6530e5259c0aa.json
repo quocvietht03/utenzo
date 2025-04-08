@@ -1029,6 +1029,86 @@
             "selected": 0
         },
         {
+            "key": "field_67f4c84019453",
+            "label": "Archive Shop",
+            "name": "archive_shop",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_67f4c84019458",
+                    "label": "Sidebar Shop",
+                    "name": "sidebar_shop",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "sidebar": "Sidebar",
+                        "nosidebar": "No Sidebar"
+                    },
+                    "default_value": false,
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "allow_in_bindings": 1,
+                    "ui": 1,
+                    "ajax": 0,
+                    "placeholder": ""
+                },
+                {
+                    "key": "field_67f4c9071945a",
+                    "label": "Filter Shop",
+                    "name": "filter_shop",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_67f4c84019458",
+                                "operator": "==",
+                                "value": "nosidebar"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "filter-popup": "Filter Popup",
+                        "filter-dropdown": "Filter Dropdown"
+                    },
+                    "default_value": false,
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "allow_in_bindings": 1,
+                    "ui": 1,
+                    "ajax": 0,
+                    "placeholder": ""
+                }
+            ]
+        },
+        {
             "key": "field_67d912bc76d32",
             "label": "Wishlist",
             "name": "wishlist",
@@ -1529,5 +1609,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1742285077
+    "modified": 1744095672
 }

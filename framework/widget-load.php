@@ -54,9 +54,9 @@ class ElementorWidgets
 			'instagram-posts',
 			'page-breadcrumb',
 			'post-grid',
-			'post-grid-style-1',
 			'post-loop-item',
 			'post-loop-item-style-1',
+			'post-loop-item-style-2',
 			'testimonial-loop-item',
 			'product-loop-item',
 			'product-loop-item-style-1',
@@ -185,9 +185,9 @@ class ElementorWidgets
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\PageBreadcrumb\Widget_PageBreadcrumb());
 
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\PostGrid\Widget_PostGrid());
-		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\PostGridStyle1\Widget_PostGridStyle1());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\PostLoopItem\Widget_PostLoopItem());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\PostLoopItemStyle1\Widget_PostLoopItemStyle1());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\PostLoopItemStyle2\Widget_PostLoopItemStyle2());
 
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\TestimonialLoopItem\Widget_TestimonialLoopItem());
 
