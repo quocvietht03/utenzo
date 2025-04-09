@@ -791,6 +791,7 @@
 .bt-elwg-mini-cart {
   &--default {
     .bt-mini-cart {
+      display: flex;
       a {
         position: relative;
         display: inline-flex;

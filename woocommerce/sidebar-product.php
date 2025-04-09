@@ -40,7 +40,9 @@ defined('ABSPATH') || exit;
 
       <!--View current page-->
       <input type="hidden" class="bt-product-current-page" name="current_page" value="<?php echo isset($_GET['current_page']) ? esc_attr($_GET['current_page']) : ''; ?>">
-
+      <!--View type-->
+      <input type="hidden" class="bt-product-view-type" name="view_type" value="<?php if (isset($_GET['view_type'])) echo esc_attr($_GET['view_type']); ?>">
+      
       <div class="bt-form-field bt-field-type-search">
         <input type="text" name="search_keyword" value="<?php if (isset($_GET['search_keyword'])) echo esc_attr($_GET['search_keyword']); ?>" placeholder="<?php esc_attr_e('Search …', 'utenzo'); ?>">
         <a href="#">

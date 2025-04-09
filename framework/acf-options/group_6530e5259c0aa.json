@@ -334,9 +334,10 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "#F1F5FB",
+            "default_value": "",
             "enable_opacity": 1,
-            "return_format": "string"
+            "return_format": "string",
+            "allow_in_bindings": 1
         },
         {
             "key": "field_675ceb80071b8",
@@ -380,46 +381,6 @@
             "default_value": "",
             "enable_opacity": 1,
             "return_format": "string"
-        },
-        {
-            "key": "field_675cebef071b9",
-            "label": "Bubble Enable",
-            "name": "bubble_enable",
-            "aria-label": "",
-            "type": "true_false",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "default_value": 1,
-            "ui_on_text": "",
-            "ui_off_text": "",
-            "ui": 1
-        },
-        {
-            "key": "field_675cec9e071ba",
-            "label": "Wave Enable",
-            "name": "wave_enable",
-            "aria-label": "",
-            "type": "true_false",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "default_value": 1,
-            "ui_on_text": "",
-            "ui_off_text": "",
-            "ui": 1
         },
         {
             "key": "field_6530e9254345c",
@@ -1609,5 +1570,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1744095672
+    "modified": 1744160899
 }

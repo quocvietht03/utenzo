@@ -38,8 +38,9 @@ get_template_part('framework/templates/site', 'titlebar');
 								<div class="bt-results-count">
 									<?php
 									if ($total_products > 0) {
+										$product_text = ($total_products == 1) ? __('%s Product Found', 'utenzo') : __('%s Products Found', 'utenzo');
 										printf(
-											__('%s Products Recommended for You', 'utenzo'),
+											$product_text,
 											'<span class="highlight">' . esc_html($total_products) . '</span>'
 										);
 									} else {
@@ -48,7 +49,30 @@ get_template_part('framework/templates/site', 'titlebar');
 									?>
 								</div>
 							</div>
-
+							<div class="bt-product-view-type">
+								<?php
+								$type_active = 'grid';
+								if (isset($_GET['view_type']) && 'list' == $_GET['view_type']) {
+									$type_active = 'list';
+								}
+								?>
+								<a href="#" class="bt-view-type bt-view-list <?php if ('list' == $type_active) echo 'active'; ?>" data-view="list">
+									<div class="bt-icon">
+										<span class="bt-dot"></span>
+										<span class="bt-dot long"></span>
+										<span class="bt-dot"></span>
+										<span class="bt-dot long"></span>
+									</div>
+								</a>
+								<a href="#" class="bt-view-type bt-view-grid <?php if ('grid' == $type_active) echo 'active'; ?>" data-view="grid">
+									<div class="bt-icon">
+										<span class="bt-dot"></span>
+										<span class="bt-dot"></span>
+										<span class="bt-dot"></span>
+										<span class="bt-dot"></span>
+									</div>
+								</a>
+							</div>
 							<div class="bt-product-orderby">
 								<div class="bt-product-sort-block">
 									<span class="bt-sort-title">
@@ -94,7 +118,7 @@ get_template_part('framework/templates/site', 'titlebar');
 								</div>
 							</div>
 						</div>
-						<div class="bt-product-layout">
+						<div class="bt-product-layout" data-view="<?php echo isset($_GET['view_type']) && $_GET['view_type'] != '' ? $_GET['view_type'] : '' ?>">                     
 							<span class="bt-loading-wave"></span>
 							<?php
 

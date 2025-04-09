@@ -57,34 +57,35 @@ function utenzo_woocommerce_single_product_meta()
 remove_action('woocommerce_cart_collaterals', 'woocommerce_cross_sell_display');
 // custom product loop image
 add_action('utenzo_woocommerce_template_loop_product_thumbnail', 'bt_woocommerce_template_loop_product_thumbnail', 10);
-function bt_woocommerce_template_loop_product_thumbnail() {
-    global $product;
-    $image_size = apply_filters('single_product_archive_thumbnail_size', 'woocommerce_thumbnail');
-    $image_id = $product->get_image_id();
-    $image_url = wp_get_attachment_image_url($image_id, $image_size);
-    
-    // Get gallery images
-    $gallery_image_ids = $product->get_gallery_image_ids();
-    
-    if ($image_url) {
-        echo '<div class="product-images-wrapper">'; 
-        
-        // Always show main image
-        echo '<img src="' . esc_url($image_url) . '" alt="' . esc_attr($product->get_name()) . '" class="woocommerce-loop-product__image main-image" />';
-        
-        // If there are gallery images, show the first one
-        if (!empty($gallery_image_ids)) {
-            $second_image_url = wp_get_attachment_image_url($gallery_image_ids[0], $image_size);
-            echo '<img src="' . esc_url($second_image_url) . '" alt="' . esc_attr($product->get_name()) . '" class="woocommerce-loop-product__image secondary-image" />';
-        } else {
-            // If no gallery images, show main image again
-            echo '<img src="' . esc_url($image_url) . '" alt="' . esc_attr($product->get_name()) . '" class="woocommerce-loop-product__image secondary-image" />';
-        }
-        
-        echo '</div>';
+function bt_woocommerce_template_loop_product_thumbnail()
+{
+  global $product;
+  $image_size = apply_filters('single_product_archive_thumbnail_size', 'woocommerce_thumbnail');
+  $image_id = $product->get_image_id();
+  $image_url = wp_get_attachment_image_url($image_id, $image_size);
+
+  // Get gallery images
+  $gallery_image_ids = $product->get_gallery_image_ids();
+
+  if ($image_url) {
+    echo '<div class="product-images-wrapper">';
+
+    // Always show main image
+    echo '<img src="' . esc_url($image_url) . '" alt="' . esc_attr($product->get_name()) . '" class="woocommerce-loop-product__image main-image" />';
+
+    // If there are gallery images, show the first one
+    if (!empty($gallery_image_ids)) {
+      $second_image_url = wp_get_attachment_image_url($gallery_image_ids[0], $image_size);
+      echo '<img src="' . esc_url($second_image_url) . '" alt="' . esc_attr($product->get_name()) . '" class="woocommerce-loop-product__image secondary-image" />';
     } else {
-        echo '<img src="' . esc_url(wc_placeholder_img_src()) . '" alt="' . esc_attr__('Placeholder', 'woocommerce') . '" class="woocommerce-loop-product__image" />';
+      // If no gallery images, show main image again
+      echo '<img src="' . esc_url($image_url) . '" alt="' . esc_attr($product->get_name()) . '" class="woocommerce-loop-product__image secondary-image" />';
     }
+
+    echo '</div>';
+  } else {
+    echo '<img src="' . esc_url(wc_placeholder_img_src()) . '" alt="' . esc_attr__('Placeholder', 'woocommerce') . '" class="woocommerce-loop-product__image" />';
+  }
 }
 
 
@@ -791,8 +792,9 @@ function utenzo_products_filter()
   // Update Results Block
   ob_start();
   if ($total_products > 0) {
+    $product_text = ($total_products == 1) ? __('%s Product Found', 'utenzo') : __('%s Products Found', 'utenzo');
     printf(
-      __('%s Products Recommended for You', 'utenzo'),
+      $product_text,
       '<span class="highlight">' . esc_html($total_products) . '</span>'
     );
   } else {
@@ -803,11 +805,14 @@ function utenzo_products_filter()
   // Update Loop Post
   if ($wp_query->have_posts()) {
     ob_start();
+    global $is_ajax_filter_product;
+    $is_ajax_filter_product = true;
     while ($wp_query->have_posts()) {
       $wp_query->the_post();
+      
       wc_get_template_part('content', 'product');
     }
-
+    $is_ajax_filter_product = false;
     $output['items'] = ob_get_clean();
     $output['pagination'] = utenzo_product_pagination($current_page, $total_page);
   } else {
@@ -1628,60 +1633,61 @@ add_action('wp_ajax_nopriv_utenzo_search_live', 'utenzo_search_live');
 /* query id elementor Popular Products*/
 function bt_custom_popular_products_query($query)
 {
-	if (isset($query)) {
-		$query->set('post_type', 'product');
-		$query->set('meta_key', 'total_sales');
-		$query->set('orderby', 'meta_value_num');
-		$query->set('order', 'desc');
-	}
+  if (isset($query)) {
+    $query->set('post_type', 'product');
+    $query->set('meta_key', 'total_sales');
+    $query->set('orderby', 'meta_value_num');
+    $query->set('order', 'desc');
+  }
 }
 add_action('elementor/query/bt_popular_products', 'bt_custom_popular_products_query');
 /* query id elementor Featured Products*/
 function bt_custom_featured_products_query($query)
 {
-	if (isset($query)) {
-		$query->set('post_type', 'product');
-		$query->set('tax_query', array(
-			array(
-				'taxonomy' => 'product_visibility',
-				'field'    => 'name',
-				'terms'    => 'featured',
-			),
-		));
-	}
+  if (isset($query)) {
+    $query->set('post_type', 'product');
+    $query->set('tax_query', array(
+      array(
+        'taxonomy' => 'product_visibility',
+        'field'    => 'name',
+        'terms'    => 'featured',
+      ),
+    ));
+  }
 }
 add_action('elementor/query/bt_featured_products', 'bt_custom_featured_products_query');
 
 // Add multiple to cart ajax 
-function utenzo_add_multiple_to_cart() {
-    if (!isset($_POST['product_ids']) || empty($_POST['product_ids'])) {
-        wp_send_json_error(__('No products selected', 'utenzo'));
-        return;
-    }
+function utenzo_add_multiple_to_cart()
+{
+  if (!isset($_POST['product_ids']) || empty($_POST['product_ids'])) {
+    wp_send_json_error(__('No products selected', 'utenzo'));
+    return;
+  }
 
-    $product_ids = $_POST['product_ids'];
-    $added_count = 0;
-    $cart_count = 0;
+  $product_ids = $_POST['product_ids'];
+  $added_count = 0;
+  $cart_count = 0;
 
-    foreach ($product_ids as $product_id) {
-        $product_id = absint($product_id);
-        if ($product_id > 0) {
-            $added = WC()->cart->add_to_cart($product_id);
-            if ($added) {
-                $added_count++;
-            }
-        }
+  foreach ($product_ids as $product_id) {
+    $product_id = absint($product_id);
+    if ($product_id > 0) {
+      $added = WC()->cart->add_to_cart($product_id);
+      if ($added) {
+        $added_count++;
+      }
     }
+  }
 
-    if ($added_count > 0) {
-        $cart_count = WC()->cart->get_cart_contents_count();
-        wp_send_json_success(array(
-            'message' => sprintf(__('%d products added to cart', 'utenzo'), $added_count),
-            'cart_count' => $cart_count
-        ));
-    } else {
-        wp_send_json_error(__('Failed to add products to cart', 'utenzo'));
-    }
+  if ($added_count > 0) {
+    $cart_count = WC()->cart->get_cart_contents_count();
+    wp_send_json_success(array(
+      'message' => sprintf(__('%d products added to cart', 'utenzo'), $added_count),
+      'cart_count' => $cart_count
+    ));
+  } else {
+    wp_send_json_error(__('Failed to add products to cart', 'utenzo'));
+  }
 }
 add_action('wp_ajax_utenzo_add_multiple_to_cart', 'utenzo_add_multiple_to_cart');
 add_action('wp_ajax_nopriv_utenzo_add_multiple_to_cart', 'utenzo_add_multiple_to_cart');
