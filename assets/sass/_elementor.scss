@@ -2137,6 +2137,9 @@
         .bt-compare-load {
           width: 100%;
           background: #f6f6f6;
+          > .bt-compare-close{
+            display: none;
+          }
           .bt-table-title {
             display: none;
           }

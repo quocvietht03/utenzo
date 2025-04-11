@@ -26,6 +26,36 @@ add_filter('woocommerce_product_description_heading', '__return_null');
 
 add_action('utenzo_woocommerce_template_single_meta', 'utenzo_woocommerce_single_product_meta', 40);
 
+function register_product_taxonomy()
+{
+  $labels = array(
+    'name'              => _x('Materials', 'utenzo'),
+    'singular_name'     => _x('Material', 'utenzo'),
+    'search_items'      => __('Search Materials', 'utenzo'),
+    'all_items'         => __('All Materials', 'utenzo'),
+    'parent_item'       => __('Parent Material', 'utenzo'),
+    'parent_item_colon' => __('Parent Material:', 'utenzo'),
+    'edit_item'         => __('Edit Material', 'utenzo'),
+    'update_item'       => __('Update Material', 'utenzo'),
+    'add_new_item'      => __('Add New Material', 'utenzo'),
+    'new_item_name'     => __('New Material Name', 'utenzo'),
+    'menu_name'         => __('Materials', 'utenzo'),
+  );
+
+  $args = array(
+    'hierarchical'          => true,
+    'labels'                => $labels,
+    'show_ui'               => true,
+    'show_admin_column'     => false,
+    'query_var'             => true,
+    'show_in_rest'          => true,
+    'publicly_queryable'    => false,
+  );
+
+  register_taxonomy('product_material', array('product'), $args);
+}
+add_action('init', 'register_product_taxonomy');
+
 function utenzo_woocommerce_single_product_meta()
 {
   global $product;
@@ -340,7 +370,7 @@ if (!function_exists('woocommerce_icon_add_to_cart_fragment')) {
     return $fragments;
   }
 }
-/* Create Product Wishlist Page */
+/* Create Product Wishlist Page And Compare Page */
 function utenzo_product_create_pages_support()
 {
   $product_wishlist_page = get_posts(array(
@@ -356,6 +386,22 @@ function utenzo_product_create_pages_support()
       'post_title' => 'Products Wishlist',
       'post_content' => 'Products Wishlist Page.',
       'post_name' => 'products-wishlist',
+    ));
+  }
+
+  $product_compare_page = get_posts(array(
+    'title' => 'Products Compare',
+    'post_type' => 'page',
+    'post_status' => 'any'
+  ));
+
+  if (count($product_compare_page) == 0) {
+    wp_insert_post(array(
+      'post_type' => 'page',
+      'post_status' => 'publish',
+      'post_title' => 'Products Compare',
+      'post_content' => 'Products Compare Page.',
+      'post_name' => 'products-compare',
     ));
   }
 }
@@ -396,19 +442,19 @@ function utenzo_product_field_radio_html($slug = '', $field_title = '', $field_v
   $field_title_default = !empty($field_title) ? $field_title : 'Choose';
 
   if (!empty($terms)) { ?>
-    <div class="bt-form-field bt-field-type-radio <?php echo 'bt-field-' . $slug; ?>">
+    <div class="bt-form-field bt-field-type-radio <?php echo 'bt-field-' . $slug; ?>" data-name="<?php echo esc_attr($slug); ?>">
       <div class="bt-field-title"><?php echo esc_html($field_title_default) ?></div>
       <?php foreach ($terms as $term) { ?>
         <?php if ($term->slug == $field_value) { ?>
           <div class="item-radio">
             <input type="radio" name="<?php echo esc_attr($slug); ?>" id="<?php echo esc_attr($term->slug); ?>" value="<?php echo esc_attr($term->slug); ?>" checked>
-            <label for="<?php echo esc_attr($term->slug); ?>"> <?php echo esc_html($term->name); ?> </label>
+            <label for="<?php echo esc_attr($term->slug); ?>" data-slug="<?php echo esc_attr($term->slug); ?>"> <?php echo esc_html($term->name); ?> </label>
             <span class="bt-count"><?php echo '(' . $term->count . ')'; ?></span>
           </div>
         <?php } else { ?>
           <div class="item-radio">
             <input type="radio" name="<?php echo esc_attr($slug); ?>" id="<?php echo esc_attr($term->slug); ?>" value="<?php echo esc_attr($term->slug); ?>">
-            <label for="<?php echo esc_attr($term->slug); ?>"> <?php echo esc_html($term->name); ?> </label>
+            <label for="<?php echo esc_attr($term->slug); ?>" data-slug="<?php echo esc_attr($term->slug); ?>"> <?php echo esc_html($term->name); ?> </label>
             <span class="bt-count"><?php echo '(' . $term->count . ')'; ?></span>
           </div>
         <?php } ?>
@@ -458,7 +504,49 @@ function utenzo_product_field_multiple_html($slug = '', $field_title = '', $fiel
   <?php
   }
 }
+function utenzo_product_field_multiple_color_html($slug = '', $field_title = '', $field_value = '')
+{
+  if (empty($slug)) {
+    return;
+  }
 
+  $terms = get_terms(array(
+    'taxonomy' => $slug,
+    'hide_empty' => true
+  ));
+
+  if (!empty($terms)) {
+  ?>
+    <div class="bt-form-field bt-field-type-multi bt-field-color" data-name="<?php echo esc_attr($slug); ?>">
+      <?php
+      if (!empty($field_title)) {
+        echo '<div class="bt-field-title">' . $field_title . '</div>';
+      }
+      ?>
+
+      <div class="bt-field-list">
+        <?php foreach ($terms as $term) {
+          $term_id = $term->term_id;
+          $color = get_field('color', 'pa_color_' . $term_id);
+          if (!$color) {
+            $color = $term->slug;
+          }
+        ?>
+          <div class="<?php echo (str_contains($field_value, $term->slug)) ? 'bt-field-item checked' : 'bt-field-item' ?>">
+            <a href="#" data-slug="<?php echo esc_attr($term->slug); ?>">
+              <span style="background:<?php echo esc_attr($color); ?>">
+              </span>
+              <?php echo esc_html($term->name); ?>
+            </a>
+          </div>
+        <?php } ?>
+      </div>
+
+      <input type="hidden" name="<?php echo esc_attr($slug); ?>" value="<?php echo esc_attr($field_value); ?>">
+    </div>
+  <?php
+  }
+}
 function utenzo_product_field_price_slider($field_title = '', $field_min_value = '', $field_max_value = '')
 {
   $prices = utenzo_highest_and_lowest_product_price();
@@ -471,7 +559,7 @@ function utenzo_product_field_price_slider($field_title = '', $field_min_value =
   $start_max_value = !empty($field_max_value) ? $field_max_value : $prices['highest_price'];
 
   ?>
-  <div class="bt-form-field bt-field-price">
+  <div class="bt-form-field bt-field-price" data-name="product_price">
     <?php
     if (!empty($field_title)) {
       echo '<div class="bt-field-title">' . $field_title . '</div>';
@@ -501,7 +589,7 @@ function utenzo_product_field_rating($slug = '', $field_title = '', $field_value
 
   $field_title_default = !empty($field_title) ? $field_title : 'Choose';
 ?>
-  <div class="bt-form-field bt-field-type-rating <?php echo 'bt-field-' . $slug; ?>">
+  <div class="bt-form-field bt-field-type-rating <?php echo 'bt-field-' . $slug; ?>" data-name="<?php echo esc_attr($slug); ?>">
     <div class="bt-field-title"><?php echo esc_html($field_title_default) ?></div>
     <?php for ($rating = 5; $rating >= 1; $rating--) {
       $stars = str_repeat('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -726,13 +814,20 @@ function utenzo_products_query_args($params = array(), $limit = 9)
       'terms' => explode(',', $params['product_brand'])
     );
   }
-  $query_tax[] = array(
-    'taxonomy' => 'product_type',
-    'field' => 'slug',
-    'terms' => 'redq_rental',
-    'operator' => 'NOT IN'
-  );
-
+  if (isset($params['product_material']) && $params['product_material'] != '') {
+    $query_tax[] = array(
+      'taxonomy' => 'product_material',
+      'field' => 'slug',
+      'terms' => explode(',', $params['product_material'])
+    );
+  }
+  if (isset($params['pa_color']) && $params['pa_color'] != '') {
+    $query_tax[] = array(
+      'taxonomy' => 'pa_color',
+      'field' => 'slug',
+      'terms' => explode(',', $params['pa_color'])
+    );
+  }
   if (!empty($query_tax)) {
     $query_args['tax_query'] = $query_tax;
   }
@@ -801,7 +896,10 @@ function utenzo_products_filter()
     echo esc_html__('No results', 'utenzo');
   }
   $output['results'] = ob_get_clean();
-
+  //update button Results
+  $product_text = ($total_products == 1) ? __('Show %s Product', 'utenzo') : __('Show %s Products', 'utenzo');
+  printf($total_products > 0 ? $product_text : esc_html__('No products found', 'utenzo'), $total_products);
+  $output['button-results'] = ob_get_clean();
   // Update Loop Post
   if ($wp_query->have_posts()) {
     ob_start();
@@ -809,7 +907,7 @@ function utenzo_products_filter()
     $is_ajax_filter_product = true;
     while ($wp_query->have_posts()) {
       $wp_query->the_post();
-      
+
       wc_get_template_part('content', 'product');
     }
     $is_ajax_filter_product = false;
@@ -849,6 +947,7 @@ function utenzo_products_compare()
       $fields_show_compare = array('price', 'rating', 'stock_status', 'weight', 'dimensions', 'color', 'size');
     }
   ?>
+    <div class="bt-compare-close"></div>
     <div class="bt-table-title">
       <h2><?php esc_html_e('Compare products', 'utenzo') ?></h2>
     </div>

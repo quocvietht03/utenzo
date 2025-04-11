@@ -19,7 +19,7 @@ defined('ABSPATH') || exit;
         <span><?php echo esc_html_e('Filters', 'utenzo') ?></span>
       </h2>
       <div class="bt-form-button">
-        <a href="#" class="bt-reset-btn disable">
+        <a href="#" class="bt-reset-filter-product-btn disable">
           <svg width="800px" height="800px" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
             <g fill="none" fill-rule="evenodd" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" transform="matrix(0 1 1 0 2.5 2.5)">
               <path d="m3.98652376 1.07807068c-2.38377179 1.38514556-3.98652376 3.96636605-3.98652376 6.92192932 0 4.418278 3.581722 8 8 8s8-3.581722 8-8-3.581722-8-8-8" />
@@ -42,7 +42,7 @@ defined('ABSPATH') || exit;
       <input type="hidden" class="bt-product-current-page" name="current_page" value="<?php echo isset($_GET['current_page']) ? esc_attr($_GET['current_page']) : ''; ?>">
       <!--View type-->
       <input type="hidden" class="bt-product-view-type" name="view_type" value="<?php if (isset($_GET['view_type'])) echo esc_attr($_GET['view_type']); ?>">
-      
+
       <div class="bt-form-field bt-field-type-search">
         <input type="text" name="search_keyword" value="<?php if (isset($_GET['search_keyword'])) echo esc_attr($_GET['search_keyword']); ?>" placeholder="<?php esc_attr_e('Search …', 'utenzo'); ?>">
         <a href="#">
@@ -55,17 +55,32 @@ defined('ABSPATH') || exit;
       $field_name = __('Product Categories', 'utenzo');
       $field_value = (isset($_GET['product_cat'])) ? $_GET['product_cat'] : '';
       utenzo_product_field_radio_html('product_cat', $field_name, $field_value);
+      $field_name = __('Material', 'utenzo');
+      $field_value = (isset($_GET['product_material'])) ? $_GET['product_material'] : '';
+      utenzo_product_field_multiple_html('product_material', $field_name, $field_value);
+      $field_name = __('Brand', 'utenzo');
+      $field_value = (isset($_GET['product_brand'])) ? $_GET['product_brand'] : '';
+      utenzo_product_field_multiple_html('product_brand', $field_name, $field_value);
       $field_title = __('Price', 'utenzo');
       $field_min_value = (isset($_GET['min_price'])) ? $_GET['min_price'] : '';
       $field_max_value = (isset($_GET['max_price'])) ? $_GET['max_price'] : '';
       utenzo_product_field_price_slider($field_title, $field_min_value, $field_max_value);
-      $field_name = __('Brand', 'utenzo');
-      $field_value = (isset($_GET['product_brand'])) ? $_GET['product_brand'] : '';
-      utenzo_product_field_multiple_html('product_brand', $field_name, $field_value);
+      $field_name = __('Colors', 'utenzo');
+      $field_value = (isset($_GET['pa_color'])) ? $_GET['pa_color'] : '';
+      utenzo_product_field_multiple_color_html('pa_color', $field_name, $field_value);
       $field_name = __('Customer Rating', 'utenzo');
       $field_value = (isset($_GET['product_rating'])) ? $_GET['product_rating'] : '';
       utenzo_product_field_rating('product_rating', $field_name, $field_value);
       ?>
+      <div class="bt-form-button-results">
+        <a href="#" class="bt-product-results-btn">
+          <?php
+          $total_products = isset($args['total_products']) ? intval($args['total_products']) : 0;
+          $product_text = ($total_products == 1) ? __('Show %s Product', 'utenzo') : __('Show %s Products', 'utenzo');
+          printf($total_products > 0 ? $product_text : esc_html__('No products found', 'utenzo'), $total_products);
+          ?>
+        </a>
+      </div>
     </div>
   </form>
 </div>

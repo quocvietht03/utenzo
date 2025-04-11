@@ -104,6 +104,11 @@ if (!function_exists('utenzo_enqueue_scripts')) {
 		if ($wishlist && isset($wishlist['page_wishlist']) && $wishlist['page_wishlist'] != '') {
 			$wishlist_url = get_permalink($wishlist['page_wishlist']);
 		}
+		$compare = get_field('compare', 'options');
+		$compare_url = home_url('/products-compare/');
+		if ($compare && isset($compare['page_compare']) && $compare['page_compare'] != '') {
+			$compare_url = get_permalink($compare['page_compare']);
+		}
 		$shop_url = home_url('/shop/');
 		if (function_exists('wc_get_page_id') && wc_get_page_id('shop') > 0) {
 			$shop_url = get_permalink(wc_get_page_id('shop'));
@@ -116,6 +121,7 @@ if (!function_exists('utenzo_enqueue_scripts')) {
 		$js_options = array(
 			'ajax_url' => admin_url('admin-ajax.php'),
 			'page_wishlist' => $wishlist_url,
+			'page_compare' => $compare_url,
 			'shop' => 	$shop_url,
 			'cart' => 	$cart_url,
 			'user_info' => wp_get_current_user(),
@@ -175,7 +181,10 @@ if (function_exists('get_field')) {
 	{
 		$effect_load_heading = get_field('effect_load_heading', 'options');
 		$button_hover = get_field('effect_button_hover', 'options');
-
+		$archive_shop = get_field('archive_shop', 'options');
+		if(isset($archive_shop['product_toast']) && $archive_shop['product_toast']){
+			$classes[] = 'bt-product-toast-enable';
+		}
 		if ($effect_load_heading) {
 			$classes[] = 'bt-effect-heading-enable';
 		}
