@@ -1034,8 +1034,23 @@
 						behavior: 'smooth'
 					});
 
-					$('.bt-product-layout').addClass('loading');
-					$('.bt-product-layout .woocommerce-loop-products').fadeOut('fast');
+					// Show loading skeleton for 6 product items
+					let skeletonHtml = '';
+					for (let i = 0; i < 12; i++) {
+						skeletonHtml += `
+							<div class="bt-product-skeleton product">
+								<div class="bt-skeleton-thumbnail"></div>
+								<div class="bt-skeleton-content">
+									<div class="bt-skeleton-title"></div>
+									<div class="bt-skeleton-price"></div>
+									<div class="bt-skeleton-rating"></div>
+									<div class="bt-skeleton-description"></div>
+									<div class="bt-skeleton-action"></div>
+								</div>
+							</div>
+						`;
+					}
+					$('.bt-product-layout .woocommerce-loop-products').html(skeletonHtml).fadeIn('fast');
 					$('.bt-product-pagination-wrap').fadeOut('fast');
 				},
 				success: function (response) {
@@ -1047,7 +1062,7 @@
 							$('.bt-product-results-btn').html(response.data['button-results']).fadeIn('slow');
 							$('.bt-product-layout .woocommerce-loop-products').html(response.data['items']).fadeIn('slow');
 							$('.bt-product-pagination-wrap').html(response.data['pagination']).fadeIn('slow');
-							$('.bt-product-layout').removeClass('loading');
+						//	$('.bt-product-layout').removeClass('loading');
 							UtenzoProductButtonStatus();
 						}, 500);
 					} else {
@@ -1107,7 +1122,7 @@
 	}
 	function UtenzoAttachTooltips() {
 		UtenzoAttachTooltip('.bt-product-wishlist-btn.no-added', 'Add to Wishlist');
-		UtenzoAttachTooltip('.bt-product-wishlist-btn.added', 'View Wishlist');
+		UtenzoAttachTooltip('.bt-product-wishlist-btn.added', 'Remove Wishlist');
 		UtenzoAttachTooltip('.bt-product-compare-btn.no-added', 'Add to Compare');
 		UtenzoAttachTooltip('.bt-product-compare-btn.added', 'View Compare');
 		UtenzoAttachTooltip('.bt-product-quick-view-btn', 'Quick View');

@@ -134,24 +134,23 @@ get_template_part('framework/templates/site', 'titlebar');
 						<div class="bt-product-layout" data-view="<?php echo isset($_GET['view_type']) && $_GET['view_type'] != '' ? $_GET['view_type'] : '' ?>">
 							<span class="bt-loading-wave"></span>
 							<?php
-							woocommerce_product_loop_start();
-
 							if ($wp_query->have_posts()) {
+								woocommerce_product_loop_start();
 								while ($wp_query->have_posts()) {
 									$wp_query->the_post();
 									wc_get_template_part('content', 'product');
 								}
-
+								woocommerce_product_loop_end();
 								echo '<div class="bt-product-pagination-wrap">'
 									. utenzo_product_pagination($current_page, $total_page)
 									. '</div>';
 							} else {
+								woocommerce_product_loop_start();
 								echo '<h3 class="not-found-post">'
 									. esc_html__('Sorry, No products found', 'utenzo')
 									. '</h3>';
+								woocommerce_product_loop_end();
 							}
-
-							woocommerce_product_loop_end();
 							?>
 						</div>
 					</div>
