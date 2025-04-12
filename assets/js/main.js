@@ -1082,6 +1082,7 @@
 		if ($('.bt-product-filter-toggle').length > 0) {
 			$('.bt-product-filter-toggle').on('click', function () {
 				$(this).parents('.bt-main-content').find('.bt-products-sidebar').addClass('active');
+				$(this).parents('.bt-main-content').find('.bt-products-dropdown').slideToggle();
 			});
 			$('.bt-popup-overlay').on('click', function () {
 				$(this).parents('.bt-main-content').find('.bt-products-sidebar').removeClass('active');

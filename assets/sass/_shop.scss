@@ -507,7 +507,7 @@
           .bt-product-filter-form {
             max-height: calc(100dvh - 32px);
           }
-        }       
+        }
         .bt-product-filter-form {
           overflow-y: auto;
           overflow-y: auto;
@@ -534,7 +534,6 @@
         .admin-bar & {
           top: 32px;
         }
-       
       }
       .bt-popup-overlay {
         position: fixed;
@@ -547,6 +546,69 @@
         opacity: 0;
         visibility: hidden;
         transition: all 0.3s;
+      }
+      &.active {
+        .bt-product-sidebar {
+          opacity: 1;
+          transform: translateX(0);
+        }
+        .bt-popup-overlay {
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+    }
+  }
+  /* filter Dropdown no sidebar */
+  &.bt-template-nosidebar-dropdown {
+    .bt-products-dropdown {
+      display: none;
+      position: absolute;
+      z-index: 9999;
+      top: 42px;
+      background: #fff;
+      width: calc(100% + 60px);
+      padding: 30px;
+      border-radius: 8px;
+      box-sizing: border-box;
+      margin: 0 -30px;
+      box-shadow: 0px 27px 20px 0px rgba(43, 52, 74, 0.05);
+      .bt-product-sidebar {
+        @extend .__bt-product-filter-form;
+        .bt-form-action {
+          display: none;
+        }
+        .bt-product-filter-fields {
+          display: flex;
+          gap: 50px;
+          flex-wrap: wrap;
+          .bt-form-field {
+            width: calc(25% - 37.5px);
+            display: flex;
+            flex-direction: column;
+            margin-top: 0;
+            border-top: none;
+            padding-top: 0;
+            &.bt-field-type-search {
+              order: 1;
+              input {
+                width: auto;
+              }
+            }
+          }
+          .bt-form-button-results {
+            order: 2;
+            width: 100%;
+            margin: 0;
+            .bt-product-results-btn {
+              width: auto;
+              display: inline-block;
+            }
+          }
+        }
+      }
+      .bt-popup-overlay {
+        display: none;
       }
       &.active {
         .bt-product-sidebar {
@@ -2467,7 +2529,7 @@
             padding: 0 0 0 20px;
           }
           .bt-skeleton-rating {
-            display: none
+            display: none;
           }
           .bt-skeleton-description {
             height: 40px;
@@ -2484,10 +2546,10 @@
             width: 100%;
             padding: 15px 0 0 0;
           }
-          .bt-skeleton-title{
+          .bt-skeleton-title {
             height: 30px;
           }
-          .bt-skeleton-description{
+          .bt-skeleton-description {
             height: 50px;
           }
         }
