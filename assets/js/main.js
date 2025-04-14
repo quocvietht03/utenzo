@@ -407,12 +407,20 @@
 		function showComparePopup() {
 			$('.bt-popup-compare').addClass('active');
 			$('.bt-compare-body').addClass('show');
+			$('body').css({
+				'overflow': 'hidden',
+				'padding-right': `${window.innerWidth - $(window).width()}px` // Prevent layout shift
+			}); // Disable body scroll
 		}
 		function removeComparePopup() {
 			$('.bt-compare-body').removeClass('show');
 			setTimeout(function () {
 				$('.bt-popup-compare').removeClass('active');
 			}, 300);
+			$('body').css({
+				'overflow': 'auto', // Restore body scroll
+				'padding-right': '0' // Reset padding-right
+			});
 		}
 		if ($('.bt-product-compare-btn').length > 0) {
 			$('body').append('<div class="bt-popup-compare"><div class="bt-compare-overlay"></div><div class="bt-compare-body"><div class="bt-loading-wave"></div><div class="bt-compare-load"></div></div></div>').fadeIn('slow');
@@ -490,7 +498,7 @@
 		$(document).on('click', '.bt-product-add-compare .bt-cover-image', function () {
 			$('.bt-compare-body').removeClass('show');
 			setTimeout(function () {
-				if ($('body').hasClass('archive')) {
+				if (!$('.bt-popup-compare').hasClass('bt-compare-elwwg')) {
 					$('.bt-popup-compare').removeClass('active');
 				} else {
 					window.location.href = AJ_Options.shop;
@@ -601,12 +609,20 @@
 			function showQuickViewPopup() {
 				$('.bt-popup-quick-view').addClass('active');
 				$('.bt-quick-view-body').addClass('show');
+				$('body').css({
+					'overflow': 'hidden',
+					'padding-right': `${window.innerWidth - $(window).width()}px` // Prevent layout shift
+				}); // Disable body scroll
 			}
 			function removeQuickViewPopup() {
 				$('.bt-quick-view-body').removeClass('show');
 				setTimeout(function () {
 					$('.bt-popup-quick-view').removeClass('active');
 				}, 300);
+				$('body').css({
+					'overflow': 'auto', // Restore body scroll
+					'padding-right': '0' // Reset padding-right
+				});
 			}
 			$(document).on('click', '.bt-product-quick-view-btn', function (e) {
 				e.preventDefault();
@@ -667,6 +683,7 @@
 			params.delete('current_page');
 			params.delete('sort_order');
 			params.delete('view_type');
+			params.delete('search_keyword');
 			const hasValidParams = params.size > 0;
 			if (hasValidParams) {
 				const tagsContainer = $('.bt-list-tag-filter').addClass('active');
@@ -1062,7 +1079,7 @@
 							$('.bt-product-results-btn').html(response.data['button-results']).fadeIn('slow');
 							$('.bt-product-layout .woocommerce-loop-products').html(response.data['items']).fadeIn('slow');
 							$('.bt-product-pagination-wrap').html(response.data['pagination']).fadeIn('slow');
-						//	$('.bt-product-layout').removeClass('loading');
+							//	$('.bt-product-layout').removeClass('loading');
 							UtenzoProductButtonStatus();
 						}, 500);
 					} else {
@@ -1081,19 +1098,14 @@
 	function UtenzoProductFilterToggle() {
 		if ($('.bt-product-filter-toggle').length > 0) {
 			$('.bt-product-filter-toggle').on('click', function () {
-				$(this).parents('.bt-main-content').find('.bt-products-sidebar').addClass('active');
-				$(this).parents('.bt-main-content').find('.bt-products-dropdown').slideToggle();
+				const $mainContent = $(this).parents('.bt-main-content');
+				$mainContent.find('.bt-products-sidebar').addClass('active');
+				$mainContent.find('.bt-products-dropdown').toggleClass('active');
 			});
-			$('.bt-popup-overlay').on('click', function () {
-				$(this).parents('.bt-main-content').find('.bt-products-sidebar').removeClass('active');
-			});
-			$('.bt-form-button .bt-close-btn').on('click', function (e) {
+			$('.bt-popup-overlay, .bt-form-button .bt-close-btn, .bt-form-button-results .bt-product-results-btn').on('click', function (e) {
 				e.preventDefault();
-				$(this).parents('.bt-main-content').find('.bt-products-sidebar').removeClass('active');
-			});
-			$('.bt-form-button-results .bt-product-results-btn').on('click', function (e) {
-				e.preventDefault();
-				$(this).parents('.bt-main-content').find('.bt-products-sidebar').removeClass('active');
+				const $mainContent = $(this).parents('.bt-main-content');
+				$mainContent.find('.bt-products-sidebar, .bt-products-dropdown').removeClass('active');
 			});
 		}
 	}

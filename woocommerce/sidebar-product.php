@@ -73,6 +73,7 @@ defined('ABSPATH') || exit;
       utenzo_product_field_rating('product_rating', $field_name, $field_value);
       ?>
       <div class="bt-form-button-results">
+        <a href="#" class="bt-reset-filter-product-btn disable"><?php echo esc_html__('Clear All Filters', 'utenzo'); ?></a>
         <a href="#" class="bt-product-results-btn">
           <?php
           $total_products = isset($args['total_products']) ? intval($args['total_products']) : 0;

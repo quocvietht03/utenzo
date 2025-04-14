@@ -1864,7 +1864,7 @@
     .bt-table {
       background: #ffffff;
       overflow: hidden;
-      border: 1px solid #dadada;
+      border: 1px solid #e5e7eb;
       border-radius: 20px;
       &--head {
         background: $color-accent;
@@ -1902,7 +1902,7 @@
         display: flex;
         align-items: center;
         &.bt-product-item:not(:last-child) {
-          border-bottom: 1px solid #dadada;
+          border-bottom: 1px solid #e5e7eb;
         }
       }
       &--col {
@@ -2019,7 +2019,7 @@
         }
       }
       &--foot {
-        border-top: 1px solid #dadada;
+        border-top: 1px solid #e5e7eb;
       }
       .bt-no-results {
         font-size: 20px;
@@ -2136,7 +2136,8 @@
         }
         .bt-compare-load {
           width: 100%;
-          background: #f6f6f6;
+          background: #fff;
+          border: 1px solid #e5e7eb;
           > .bt-compare-close{
             display: none;
           }
@@ -2149,11 +2150,11 @@
           .bt-table-compare {
             padding: 0;
             .bt-table--head {
-              background: $color-background;
+              background: #f9fafb;
               .bt-table--col {
                 font-size: 17px;
                 padding: 15px;
-                background: #e9e9e9;
+                background: #f9fafb;
               }
             }
             .bt-table--row {

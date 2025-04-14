@@ -196,19 +196,11 @@ if (function_exists('get_field')) {
 	add_filter('body_class', 'utenzo_body_class');
 }
 
-/* Custom number posts per page */
-add_action('pre_get_posts', 'bt_custom_posts_per_page');
-function bt_custom_posts_per_page($query)
-{
-	if ($query->is_post_type_archive('service') && $query->is_main_query() && ! is_admin()) {
-		$query->set('posts_per_page', 3);
-	}
-};
 /* Custom search posts */
 function bt_custom_search_filter($query)
 {
 	if ($query->is_search() && !is_admin()) {
-		if (!is_post_type_archive('product') && !is_tax('product_cat') && !is_singular('product')) {
+		if (!is_post_type_archive('product') && !is_tax('product_cat') && !is_singular('product') && !is_page_template('woocommerce/template-nosidebar-dropdown.php') && !is_page_template('woocommerce/template-nosidebar-popup.php') && !is_page_template('woocommerce/template-sidebar.php')) {
 			$query->set('post_type', 'post');
 		}
 	}

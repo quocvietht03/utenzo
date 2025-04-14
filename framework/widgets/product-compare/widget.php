@@ -162,13 +162,10 @@ class Widget_ProductCompare extends Widget_Base
 										echo '<div class="bt-table--col">' . esc_html__('Brand', 'utenzo') . '</div>';
 									}
 									if (in_array('stock_status', $fields_show_compare)) {
-										echo '<div class="bt-table--col">' . esc_html__('Stock status', 'utenzo') . '</div>';
+										echo '<div class="bt-table--col">' . esc_html__('Availability', 'utenzo') . '</div>';
 									}
 									if (in_array('sku', $fields_show_compare)) {
 										echo '<div class="bt-table--col">' . esc_html__('SKU', 'utenzo') . '</div>';
-									}
-									if (in_array('availability', $fields_show_compare)) {
-										echo '<div class="bt-table--col">' . esc_html__('Availability', 'utenzo') . '</div>';
 									}
 									if (in_array('weight', $fields_show_compare)) {
 										echo '<div class="bt-table--col">' . esc_html__('Weight', 'utenzo') . '</div>';
@@ -200,7 +197,14 @@ class Widget_ProductCompare extends Widget_Base
 											$product_image_url = $product_image[0];
 										}
 										$product_price = $product->get_price_html();
-										$stock_status = $product->is_in_stock() ? __('In Stock', 'utenzo') : __('Out of Stock', 'utenzo');
+										$stock_status = $product->get_stock_status();
+										if ($stock_status == 'onbackorder') {
+											$stock_status_custom = '<p class="stock on-backorder">' . __('On Backorder', 'utenzo') . '</p>';
+										} elseif ($product->is_in_stock()) {
+											$stock_status_custom = '<p class="stock in-stock">' . __('In Stock', 'utenzo') . '</p>';
+										} else {
+											$stock_status_custom = '<p class="stock out-of-stock">' . __('Out of Stock', 'utenzo') . '</p>';
+										}
 										$brand = wp_get_post_terms($id, 'product_brand', ['fields' => 'names']);
 										$brand_list = !empty($brand) ? implode(', ', $brand) : '';
 
@@ -224,7 +228,7 @@ class Widget_ProductCompare extends Widget_Base
 											<?php if (!empty($fields_show_compare)) {
 												if (in_array('short_desc', $fields_show_compare)) { ?>
 													<div class="bt-table--col bt-description">
-														<?php echo '<p>' . wp_trim_words($product->get_short_description(), 10) . '</p>'; ?>
+														<?php echo '<p>' . wp_trim_words($product->get_short_description(), 20) . '</p>'; ?>
 													</div>
 												<?php } ?>
 												<?php if (in_array('price', $fields_show_compare)) { ?>
@@ -251,17 +255,12 @@ class Widget_ProductCompare extends Widget_Base
 												<?php } ?>
 												<?php if (in_array('stock_status', $fields_show_compare)) { ?>
 													<div class="bt-table--col bt-stock">
-														<?php echo '<p>' . $stock_status . '</p>'; ?>
+														<?php echo $stock_status_custom; ?>
 													</div>
 												<?php } ?>
 												<?php if (in_array('sku', $fields_show_compare)) { ?>
 													<div class="bt-table--col bt-sku">
 														<?php echo '<p>' . $product->get_sku() . '</p>'; ?>
-													</div>
-												<?php } ?>
-												<?php if (in_array('availability', $fields_show_compare)) { ?>
-													<div class="bt-table--col bt-availability">
-														<?php echo '<p>' . ($product->get_stock_quantity() ? $product->get_stock_quantity() : 'N/A') . '</p>'; ?>
 													</div>
 												<?php } ?>
 												<?php if (in_array('weight', $fields_show_compare)) { ?>
@@ -277,8 +276,15 @@ class Widget_ProductCompare extends Widget_Base
 												<?php if (in_array('color', $fields_show_compare)) { ?>
 													<div class="bt-table--col bt-color">
 														<?php
-														$colors = wp_get_post_terms($id, 'pa_color', ['fields' => 'names']);
-														echo '<p>' . (!empty($colors) ? implode(', ', $colors) : 'N/A') . '</p>';
+														$colors = wp_get_post_terms($id, 'pa_color', ['fields' => 'ids']);
+														foreach ($colors as $color_id) {
+															$color_value = get_field('color', 'pa_color_' . $color_id);
+															$color = get_term($color_id, 'pa_color');
+															if (!$color_value) {
+																$color_value = $color->slug;
+															}
+															echo '<div class="bt-item-color"><span style="background-color: ' . esc_attr($color_value) . ';"></span>' . esc_html($color->name) . '</div>'; 
+														}
 														?>
 													</div>
 												<?php } ?>
@@ -324,9 +330,6 @@ class Widget_ProductCompare extends Widget_Base
 												<?php } ?>
 												<?php if (in_array('sku', $fields_show_compare)) { ?>
 													<div class="bt-table--col bt-sku"></div>
-												<?php } ?>
-												<?php if (in_array('availability', $fields_show_compare)) { ?>
-													<div class="bt-table--col bt-availability"></div>
 												<?php } ?>
 												<?php if (in_array('weight', $fields_show_compare)) { ?>
 													<div class="bt-table--col bt-weight"></div>
