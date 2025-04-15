@@ -1486,7 +1486,6 @@
 		if (productId) {
 			var recentlyViewed = localStorage.getItem('recentlyViewed') || '[]';
 			recentlyViewed = JSON.parse(recentlyViewed);
-			console.log(recentlyViewed);
 			// Remove the product if it's already in the list
 			recentlyViewed = recentlyViewed.filter(id => id !== productId);
 			// Add the product to the beginning of the list

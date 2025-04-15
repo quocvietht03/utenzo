@@ -3952,38 +3952,29 @@
                     }
                   }
                 }
+                p.stars a:hover ~ a::before {
+                  content: "\e021";
+                  color: rgb(233, 233, 233);
+                }
 
-                p.stars {
-                  $star-empty: "\e021";
-                  $star-filled: "\e020";
-                  $star-color-empty: rgb(233, 233, 233);
-                  a {
-                    &:hover ~ a::before {
-                      content: $star-empty;
-                      color: $star-color-empty;
-                    }
-                  }
+                p.stars:hover a::before {
+                  content: "\e020";
+                  color: $color-accent;
+                }
 
-                  &:hover a::before,
-                  &.selected {
-                    content: $star-filled;
-                    color: $color-accent;
+                p.stars.selected a.active::before {
+                  content: "\e020";
+                  color: $color-accent;
+                }
 
-                    a.active::before {
-                      content: $star-filled;
-                      color: $color-accent;
-                    }
+                p.stars.selected a.active ~ a::before {
+                  content: "\e021";
+                  color: rgb(233, 233, 233);
+                }
 
-                    a.active ~ a::before {
-                      content: $star-empty;
-                      color: $star-color-empty;
-                    }
-
-                    a:not(.active)::before {
-                      content: $star-filled;
-                      color: $color-accent;
-                    }
-                  }
+                p.stars.selected a:not(.active)::before {
+                  content: "\e020";
+                  color: $color-accent;
                 }
               }
               p {
