@@ -1469,7 +1469,75 @@
 			});
 		}
 	}
+	/* addToRecentlyViewed */
+	function UtenzoAddToRecentlyViewed(productId) {
+		// Check if not single product page, return early
+		if (!$('body').hasClass('single-product')) {
+			return;
+		}
+		const MAX_PRODUCTS = 5;
+		// Get product ID from URL
+		const bodyClasses = document.body.className;
+		const match = bodyClasses.match(/postid-(\d+)/);
 
+		if (match && match[1]) {
+			var productId = parseInt(match[1]);
+		}
+		if (productId) {
+			var recentlyViewed = localStorage.getItem('recentlyViewed') || '[]';
+			recentlyViewed = JSON.parse(recentlyViewed);
+			console.log(recentlyViewed);
+			// Remove the product if it's already in the list
+			recentlyViewed = recentlyViewed.filter(id => id !== productId);
+			// Add the product to the beginning of the list
+			recentlyViewed.unshift(productId);
+			// Limit the list to the last 5 products
+			if (recentlyViewed.length > MAX_PRODUCTS) {
+				recentlyViewed = recentlyViewed.slice(0, MAX_PRODUCTS);
+			}
+			localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewed));
+		}
+	}
+	/* loadRecentlyViewedProducts */
+	function UtenzoLoadRecentlyViewedProducts() {
+		const recentlyViewed = localStorage.getItem('recentlyViewed') || '[]';
+		const parsedRecentlyViewed = JSON.parse(recentlyViewed);
+		$('.bt-related-tab-heading .bt-tab-title').addClass('bt-heading-related');
+		if (parsedRecentlyViewed.length > 1) {
+			$('.bt-related-tab-heading .bt-tab-title').removeClass('bt-heading-related');
+			$('.bt-related-tab-heading .bt-tab-title.recently-viewed').show();
+
+			$.ajax({
+				url: AJ_Options.ajax_url,
+				type: 'POST',
+				data: {
+					action: 'load_recently_viewed',
+					recently_viewed: parsedRecentlyViewed
+				},
+				success: function (response) {
+					if (response.success) {
+						$('.recently-viewed-products').html(response.data);
+					}
+				}
+			})
+			const $tabTitles = $('.bt-tab-title');
+			const $tabPanes = $('.bt-tab-pane');
+
+			// Tab switching functionality
+			$tabTitles.on('click', function () {
+				const $this = $(this);
+				const tabId = $this.data('tab');
+
+				// Update active states
+				$tabTitles.removeClass('active');
+				$this.addClass('active');
+
+				$tabPanes.removeClass('active');
+				$(`[data-tab-content="${tabId}"]`).addClass('active');
+			});
+
+		}
+	}
 	jQuery(document).ready(function ($) {
 		UtenzoSubmenuAuto();
 		UtenzoToggleMenuMobile();
@@ -1499,6 +1567,8 @@
 		UtenzoCompareContentScroll();
 		UtenzoBackToTop();
 		LoadFilterTagProduct();
+		UtenzoAddToRecentlyViewed();
+		UtenzoLoadRecentlyViewedProducts();
 	});
 	$(document.body).on('added_to_cart', function (event, fragments, cart_hash, $button) {
 		UtenzoshowToast('Product added to cart! <span>View your <a href="' + AJ_Options.page_wishlist + '">Cart</a>.</span>');

@@ -15,30 +15,29 @@
  * @package WooCommerce\Templates
  * @version 4.3.0
  */
-
 defined('ABSPATH') || exit;
 
 global $product;
 
 if (!comments_open()) {
-	return;
+    return;
 }
 
 $rating_counts = $product->get_rating_counts();
 $total_ratings = $product->get_rating_count();
 
 $distribution = array(
-	5 => 0,
-	4 => 0,
-	3 => 0,
-	2 => 0,
-	1 => 0
+    5 => 0,
+    4 => 0,
+    3 => 0,
+    2 => 0,
+    1 => 0
 );
 
 if (!empty($rating_counts)) {
-	foreach ($rating_counts as $rating => $count) {
-		$distribution[$rating] = round(($count / $total_ratings) * 100);
-	}
+    foreach ($rating_counts as $rating => $count) {
+        $distribution[$rating] = round(($count / $total_ratings) * 100);
+    }
 }
 ?>
 <div id="reviews" class="woocommerce-Reviews">
@@ -53,9 +52,9 @@ if (!empty($rating_counts)) {
 						<div class="bt-product-rating--count">
 							<span class="bt-count-text">
 								(<?php
-									echo esc_html($product->get_rating_count());
-									echo esc_html($product->get_rating_count() == 1 ? ' Rating' : ' Ratings');
-									?>)
+    echo esc_html($product->get_rating_count());
+    echo esc_html($product->get_rating_count() == 1 ? ' Rating' : ' Ratings');
+    ?>)
 							</span>
 							<span class="bt-count-text-version-two">
 								(<?php echo esc_html($product->get_rating_count()); ?>)
@@ -68,9 +67,9 @@ if (!empty($rating_counts)) {
 
 			<div class="bt-center-summary">
 				<?php
-				if (!empty($distribution)) {
-					foreach ($distribution as $key => $rating) {
-				?>
+                if (!empty($distribution)) {
+                    foreach ($distribution as $key => $rating) {
+                        ?>
 						<div class="bt-bar">
 							<div class="bt-num"><?php echo esc_html($key); ?></div>
 							<svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -84,9 +83,9 @@ if (!empty($rating_counts)) {
 							<div class="bt-num-percent"><?php echo esc_html($rating); ?>%</div>
 						</div>
 				<?php
-					}
-				}
-				?>
+                    }
+                }
+                ?>
 			</div>
 
 			<div class="bt-right-summary">
@@ -97,15 +96,15 @@ if (!empty($rating_counts)) {
 
 		<h2 class="woocommerce-Reviews-title">
 			<?php
-			$count = $product->get_review_count();
-			if ($count && wc_review_ratings_enabled()) {
-				/* translators: 1: reviews count 2: product name */
-				$reviews_title = sprintf(esc_html(_n('%1$s review', '%1$s reviews', $count, 'utenzo')), esc_html($count));
-				echo apply_filters('woocommerce_reviews_title', $reviews_title, $count, $product); // WPCS: XSS ok.
-			} else {
-				esc_html_e('Reviews', 'utenzo');
-			}
-			?>
+            $count = $product->get_review_count();
+            if ($count && wc_review_ratings_enabled()) {
+                /* translators: 1: reviews count 2: product name */
+                $reviews_title = sprintf(esc_html(_n('%1$s review', '%1$s reviews', $count, 'utenzo')), esc_html($count));
+                echo apply_filters('woocommerce_reviews_title', $reviews_title, $count, $product);  // WPCS: XSS ok.
+            } else {
+                esc_html_e('Reviews', 'utenzo');
+            }
+            ?>
 		</h2>
 
 		<?php if (have_comments()): ?>
@@ -114,21 +113,21 @@ if (!empty($rating_counts)) {
 			</ol>
 
 			<?php
-			if (get_comment_pages_count() > 1 && get_option('page_comments')):
-				echo '<nav class="woocommerce-pagination">';
-				paginate_comments_links(
-					apply_filters(
-						'woocommerce_comment_pagination_args',
-						array(
-							'prev_text' => is_rtl() ? '&rarr;' : '&larr;',
-							'next_text' => is_rtl() ? '&larr;' : '&rarr;',
-							'type' => 'list',
-						)
-					)
-				);
-				echo '</nav>';
-			endif;
-			?>
+            if (get_comment_pages_count() > 1 && get_option('page_comments')):
+                echo '<nav class="woocommerce-pagination">';
+                paginate_comments_links(
+                    apply_filters(
+                        'woocommerce_comment_pagination_args',
+                        array(
+                            'prev_text' => is_rtl() ? '&rarr;' : '&larr;',
+                            'next_text' => is_rtl() ? '&larr;' : '&rarr;',
+                            'type' => 'list',
+                        )
+                    )
+                );
+                echo '</nav>';
+            endif;
+            ?>
 		<?php else: ?>
 			<p class="woocommerce-noreviews"><?php esc_html_e('There are no reviews yet.', 'utenzo'); ?></p>
 		<?php endif; ?>
@@ -138,72 +137,75 @@ if (!empty($rating_counts)) {
 		<div id="review_form_wrapper">
 			<div id="review_form">
 				<?php
-				$commenter = wp_get_current_commenter();
-				$comment_form = array(
-					'title_reply' => '',
-					'title_reply_to' => esc_html__('Leave a Reply to %s', 'utenzo'),
-					'title_reply_before' => '<span id="reply-title" class="comment-reply-title">',
-					'title_reply_after' => '</span>',
-					'comment_notes_after' => '',
-					'label_submit' => esc_html__('Submit Review', 'utenzo'),
-					'logged_in_as' => '',
-					'comment_field' => '',
-				);
+                $commenter = wp_get_current_commenter();
+                $comment_form = array(
+                    'title_reply' => '',
+                    'title_reply_to' => esc_html__('Leave a Reply to %s', 'utenzo'),
+                    'title_reply_before' => '<span id="reply-title" class="comment-reply-title">',
+                    'title_reply_after' => '</span>',
+                    'comment_notes_after' => '',
+                    'label_submit' => esc_html__('Submit Review', 'utenzo'),
+                    'logged_in_as' => '',
+                    'comment_field' => '',
+                );
 
-				$name_email_required = (bool) get_option('require_name_email', 1);
-				$fields = array(
-					'author' => array(
-						'label' => __('Name', 'utenzo'),
-						'type' => 'text',
-						'value' => $commenter['comment_author'],
-						'required' => $name_email_required,
-						'placeholder' => 'You Name (Public)*'
-					),
-					'email' => array(
-						'label' => __('Email', 'utenzo'),
-						'type' => 'email',
-						'value' => $commenter['comment_author_email'],
-						'required' => $name_email_required,
-						'placeholder' => 'Your email (private)*'
-					),
-				);
+                $name_email_required = (bool) get_option('require_name_email', 1);
+                $fields = array(
+                    'author' => array(
+                        'label' => __('You Name (Public)', 'utenzo'),
+                        'type' => 'text',
+                        'value' => $commenter['comment_author'],
+                        'required' => $name_email_required,
+                        'placeholder' => 'You Name (Public)'
+                    ),
+                    'email' => array(
+                        'label' => __('Your email (private)', 'utenzo'),
+                        'type' => 'email',
+                        'value' => $commenter['comment_author_email'],
+                        'required' => $name_email_required,
+                        'placeholder' => 'Your email (private)'
+                    ),
+                );
 
-				$comment_form['fields'] = array();
+                $comment_form['fields'] = array();
 
-				foreach ($fields as $key => $field) {
-					$field_html = '<p class="comment-form-' . esc_attr($key) . '">';
-					$field_html .= '<label for="' . esc_attr($key) . '">' . esc_html($field['label']);
+                foreach ($fields as $key => $field) {
+                    $field_html = '<p class="comment-form-' . esc_attr($key) . '">';
+                    $field_html .= '<label for="' . esc_attr($key) . '">' . esc_html($field['label']);
 
-					if ($field['required']) {
-						$field_html .= '&nbsp;<span class="required">*</span>';
-					}
+                    if ($field['required']) {
+                        $field_html .= '&nbsp;<span class="required">*</span>';
+                    }
 
-					$field_html .= '</label><input id="' . esc_attr($key) . '" name="' . esc_attr($key) . '" placeholder="' . $field['placeholder'] . '" type="' . esc_attr($field['type']) . '" value="' . esc_attr($field['value']) . '" size="30" ' . ($field['required'] ? 'required' : '') . ' /></p>';
+                    $field_html .= '</label><input id="' . esc_attr($key) . '" name="' . esc_attr($key) . '" placeholder="' . $field['placeholder'] . '" type="' . esc_attr($field['type']) . '" value="' . esc_attr($field['value']) . '" size="30" ' . ($field['required'] ? 'required' : '') . ' /></p>';
 
-					$comment_form['fields'][$key] = $field_html;
-				}
+                    $comment_form['fields'][$key] = $field_html;
+                }
 
-				$account_page_url = wc_get_page_permalink('myaccount');
-				if ($account_page_url) {
-					/* translators: %s opening and closing link tags respectively */
-					$comment_form['must_log_in'] = '<p class="must-log-in">' . sprintf(esc_html__('You must be %1$slogged in%2$s to post a review.', 'utenzo'), '<a href="' . esc_url($account_page_url) . '">', '</a>') . '</p>';
-				}
+                $account_page_url = wc_get_page_permalink('myaccount');
+				
+               if ($account_page_url) {
+                    /* translators: %s opening and closing link tags respectively */
+                    $comment_form['must_log_in'] = '<p class="must-log-in">' . sprintf(esc_html__('You must be %1$slogged in%2$s to post a review.', 'utenzo'), '<a href="' . esc_url($account_page_url) . '">', '</a>') . '</p>';
+                }
 
-				if (wc_review_ratings_enabled()) {
-					$comment_form['comment_field'] = '<div class="comment-form-rating"><label for="rating">' . esc_html__('Write a review:', 'utenzo') . (wc_review_ratings_required() ? '&nbsp;<span class="required">*</span>' : '') . '</label><select name="rating" id="rating" required>
-						<option value="">' . esc_html__('Rate&hellip;', 'utenzo') . '</option>
-						<option value="5">' . esc_html__('Perfect', 'utenzo') . '</option>
-						<option value="4">' . esc_html__('Good', 'utenzo') . '</option>
-						<option value="3">' . esc_html__('Average', 'utenzo') . '</option>
-						<option value="2">' . esc_html__('Not that bad', 'utenzo') . '</option>
-						<option value="1">' . esc_html__('Very poor', 'utenzo') . '</option>
-					</select></div>';
-				}
+                if (wc_review_ratings_enabled()) {
+                   
+                    $comment_form['comment_field'] = '<div class="comment-form-rating"><label for="rating">' . esc_html__('Write a review:', 'utenzo') . (wc_review_ratings_required() ? '&nbsp;<span class="required">*</span>' : '') . "</label><select name=\"rating\" id=\"rating\" required>
+\t\t\t\t\t\t<option value=\"\">" . esc_html__('Rate&hellip;', 'utenzo') . "</option>
+\t\t\t\t\t\t<option value=\"5\">" . esc_html__('Perfect', 'utenzo') . "</option>
+\t\t\t\t\t\t<option value=\"4\">" . esc_html__('Good', 'utenzo') . "</option>
+\t\t\t\t\t\t<option value=\"3\">" . esc_html__('Average', 'utenzo') . "</option>
+\t\t\t\t\t\t<option value=\"2\">" . esc_html__('Not that bad', 'utenzo') . "</option>
+\t\t\t\t\t\t<option value=\"1\">" . esc_html__('Very poor', 'utenzo') . "</option>
+\t\t\t\t\t</select></div>";
+                }
+$comment_form['comment_field'] .= '<p class="comment-form-review-title"><label for="review_title">' . esc_html__('Review Title', 'utenzo') . '</label><input id="review_title" name="review_title" type="text" placeholder="' . esc_attr__('Give your review a title', 'utenzo') . '" required /></p>';
 
-				$comment_form['comment_field'] .= '<p class="comment-form-comment"><label for="comment">' . esc_html__('Write your comment here', 'utenzo') . '&nbsp;<span class="required">*</span></label><textarea placeholder="Write your comment here*" id="comment" name="comment" cols="45" rows="8" required></textarea></p>';
+                $comment_form['comment_field'] .= '<p class="comment-form-comment"><label for="comment">' . esc_html__('Review', 'utenzo') . '</label><textarea placeholder="' . esc_attr__('Write your comment here', 'utenzo') . '" id="comment" name="comment" cols="45" rows="8" required></textarea></p>';
 
-				comment_form(apply_filters('woocommerce_product_review_comment_form_args', $comment_form));
-				?>
+                comment_form(apply_filters('woocommerce_product_review_comment_form_args', $comment_form));
+                ?>
 			</div>
 		</div>
 	<?php else: ?>

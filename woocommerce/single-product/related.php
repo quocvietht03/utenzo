@@ -18,8 +18,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-if ( $related_products ) :
+if ( $related_products || !empty($recently_viewed_products) ) :
 
 	if(function_exists('get_field')){
 		$related_posts = get_field('product_related_posts', 'options');
@@ -30,33 +29,50 @@ if ( $related_products ) :
 	}
 
 ?>
-
 	<section class="related products">
 
-		<div class="bt-related-heading">
-			<?php
-				if(!empty($related_posts['heading'])) {
-					echo '<h2 class="bt-main-text">' . $related_posts['heading'] . '</h2>';
-				}
-
-			?>
+		<div class="bt-related-tab-heading">
+			<div class="bt-tab-nav">
+				<?php if ($related_products && !empty($related_posts['heading'])) : ?>
+					<h2 class="bt-main-text bt-tab-title active related" data-tab="related"><?php echo $related_posts['heading']; ?></h2>
+				<?php endif; ?>
+				<h2 class="bt-main-text bt-tab-title recently-viewed" data-tab="recently-viewed"><?php echo esc_html__('Recently Viewed', 'utenzo'); ?></h2>
+			</div>
 		</div>
 
-		<?php woocommerce_product_loop_start(); ?>
+		<div class="bt-tab-content">
+			<?php if ($related_products) : ?>
+			<div class="bt-tab-pane<?php echo ' active'; ?>" data-tab-content="related">
+				<?php woocommerce_product_loop_start(); ?>
+					<?php foreach ($related_products as $related_product) : ?>
+						<?php
+						$post_object = get_post($related_product->get_id());
+						setup_postdata($GLOBALS['post'] =& $post_object);
+						wc_get_template_part('content', 'product');
+						?>
+					<?php endforeach; ?>
+				<?php woocommerce_product_loop_end(); ?>
+			</div>
+			<?php endif; ?>
 
-			<?php foreach ( $related_products as $related_product ) : ?>
-
-					<?php
-					$post_object = get_post( $related_product->get_id() );
-
-					setup_postdata( $GLOBALS['post'] =& $post_object ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited, Squiz.PHP.DisallowMultipleAssignments.Found
-
-					wc_get_template_part( 'content', 'product' );
-					?>
-
-			<?php endforeach; ?>
-
-		<?php woocommerce_product_loop_end(); ?>
+			<div class="bt-tab-pane<?php echo empty($related_products) ? ' active' : ''; ?>" data-tab-content="recently-viewed">
+				<div class="recently-viewed-products">
+					<?php if (!empty($recently_viewed_products)) : ?>
+						<?php woocommerce_product_loop_start(); ?>
+						<?php foreach ($recently_viewed_products as $recent_product) : ?>
+							<?php
+							$post_object = get_post($recent_product->get_id());
+							setup_postdata($GLOBALS['post'] =& $post_object);
+							wc_get_template_part('content', 'product');
+							?>
+						<?php endforeach; ?>
+						<?php woocommerce_product_loop_end(); ?>
+					<?php else : ?>
+						<p class="no-products"><?php esc_html_e('No recently viewed products.', 'utenzo'); ?></p>
+					<?php endif; ?>
+				</div>
+			</div>
+		</div>
 	</section>
 	<?php
 endif;

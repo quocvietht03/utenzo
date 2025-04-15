@@ -291,30 +291,6 @@ function utenzo_display_sold_after_rating()
 }
 add_action('utenzo_woocommerce_template_single_rating', 'utenzo_display_sold_after_rating', 15);
 
-/* Remove the additional information tab */
-add_filter('woocommerce_product_tabs', 'utenzo_woocommerce_remove_additional_information_tabs', 98);
-
-function utenzo_woocommerce_remove_additional_information_tabs($tabs)
-{
-  unset($tabs['additional_information']);
-  return $tabs;
-}
-/* Add additional information to the bottom of the description */
-add_filter('the_content', 'utenzo_woocommerce_add_additional_information');
-function utenzo_woocommerce_add_additional_information($content)
-{
-  global $product;
-  if (is_product()) {
-    ob_start();
-    do_action('woocommerce_product_additional_information', $product);
-    $additional_info_content = ob_get_clean();
-    if (!empty($additional_info_content)) {
-      $content .= '<h3>' . esc_html__('Additional Information:', 'utenzo') . '</h3>' . $additional_info_content;
-    }
-  }
-  return $content;
-}
-
 /* Custom the "Review" tab title */
 add_filter('woocommerce_product_tabs', 'utenzo_woocommerce_custom_reviews_tab_title');
 function utenzo_woocommerce_custom_reviews_tab_title($tabs)
@@ -322,10 +298,55 @@ function utenzo_woocommerce_custom_reviews_tab_title($tabs)
   if (isset($tabs['reviews'])) {
     global $product;
     $review_count = $product->get_review_count();
-    $tabs['reviews']['title'] = esc_html__('Reviews', 'utenzo');
+    $tabs['reviews']['title'] = esc_html__('Customer Reviews', 'utenzo');
   }
   return $tabs;
 }
+// Add meta box for review title
+function utenzo_add_review_title_meta_box() {
+  add_meta_box(
+    'review_title_meta_box',
+    __('Review Title', 'utenzo'), 
+    'utenzo_render_review_title_meta_box',
+    'comment',
+    'normal',
+    'high'
+  );
+}
+add_action('add_meta_boxes_comment', 'utenzo_add_review_title_meta_box');
+
+// Render meta box content 
+function utenzo_render_review_title_meta_box($comment) {
+  $review_title = get_comment_meta($comment->comment_ID, 'review_title', true);
+  wp_nonce_field('utenzo_review_title_update', 'review_title_nonce');
+  ?>
+  <p>
+    <label for="review_title"><?php esc_html_e('Review Title', 'utenzo'); ?></label><br>
+    <input type="text" id="review_title" name="review_title" value="<?php echo esc_attr($review_title); ?>" size="30" maxlength="100">
+  </p>
+  <?php
+}
+
+// Save review title from both admin and frontend
+function utenzo_save_review_title($comment_id) {
+  // For admin form submission
+  if (isset($_POST['review_title_nonce']) && wp_verify_nonce($_POST['review_title_nonce'], 'utenzo_review_title_update')) {
+    if (isset($_POST['review_title'])) {
+      $review_title = sanitize_text_field($_POST['review_title']);
+      update_comment_meta($comment_id, 'review_title', $review_title);
+    }
+  }
+  // For frontend form submission
+  elseif (isset($_POST['comment_post_ID'])) {
+    if (isset($_POST['review_title'])) {
+      $review_title = sanitize_text_field($_POST['review_title']);
+      update_comment_meta($comment_id, 'review_title', $review_title);
+    }
+  }
+}
+add_action('comment_post', 'utenzo_save_review_title');
+add_action('edit_comment', 'utenzo_save_review_title');
+
 /* add tax brand product */
 function utenzo_create_brand_taxonomy()
 {
@@ -1793,3 +1814,45 @@ function utenzo_add_multiple_to_cart()
 }
 add_action('wp_ajax_utenzo_add_multiple_to_cart', 'utenzo_add_multiple_to_cart');
 add_action('wp_ajax_nopriv_utenzo_add_multiple_to_cart', 'utenzo_add_multiple_to_cart');
+
+// AJAX handler for loading recently viewed products
+function utenzo_load_recently_viewed_products() {
+  if (!isset($_POST['recently_viewed']) || !is_array($_POST['recently_viewed'])) {
+      wp_send_json_error();
+      return;
+  }
+
+  $recently_viewed_ids = array_map('intval', $_POST['recently_viewed']);
+  $recently_viewed_products = array();
+
+// Skip first ID and get next 4 products
+$count = 0;
+foreach ($recently_viewed_ids as $product_id) {
+    if ($count > 0 && $count <= 4) { // Skip first item and limit to 4 items
+        $product = wc_get_product($product_id);
+        if ($product && $product->is_visible()) {
+            $recently_viewed_products[] = $product;
+        }
+    }
+    $count++;
+}
+
+  ob_start();
+  if (!empty($recently_viewed_products)) {
+    echo '<div class="woocommerce-loop-products products columns-4">';
+      foreach ($recently_viewed_products as $recent_product) {
+          $post_object = get_post($recent_product->get_id());
+          setup_postdata($GLOBALS['post'] =& $post_object);
+          wc_get_template_part('content', 'product');
+      }
+     echo '</div>';
+      wp_reset_postdata();
+  } else {
+      echo '<p class="no-products">' . esc_html__('No recently viewed products.', 'utenzo') . '</p>';
+  }
+  $content = ob_get_clean();
+
+  wp_send_json_success($content);
+}
+add_action('wp_ajax_load_recently_viewed', 'utenzo_load_recently_viewed_products');
+add_action('wp_ajax_nopriv_load_recently_viewed', 'utenzo_load_recently_viewed_products');

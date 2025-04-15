@@ -562,6 +562,7 @@ function utenzo_comment_fields_custom_order($fields)
   $fields['author'] = $author_field;
   $fields['email'] = $email_field;
   $fields['comment'] = $comment_field;
+  $fields['cookies'] = $cookies_field;
   // done ordering, now return the fields:
   return $fields;
 }

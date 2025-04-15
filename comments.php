@@ -70,6 +70,10 @@ if (post_password_required()) {
 									<label class="bt-form-url__label" for="bt-form-url__input">Search</label>
 									<input class="bt-form-url__input" name="url" type="text" value="' . esc_attr($commenter['comment_author_url']) . '" size="30" placeholder="' . __('Website', 'utenzo') . '" />
 								</div>',
+		'cookies' => '<div class="bt-form-cookies-consent">
+								<input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"' . (empty($commenter['comment_author_email']) ? '' : ' checked="checked"') . ' />
+								<label for="wp-comment-cookies-consent">' . __('Save my name, email, and website in this browser for the next time I comment.', 'utenzo') . '</label>
+							</div>',
 	);
 
 	$args = array(
