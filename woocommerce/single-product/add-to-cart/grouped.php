@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Grouped product add to cart
  *
@@ -15,113 +16,112 @@
  * @version 7.0.1
  */
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 
 global $product, $post;
 
-do_action( 'woocommerce_before_add_to_cart_form' ); ?>
+do_action('woocommerce_before_add_to_cart_form');
+?>
 
-<form class="cart grouped_form" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>" method="post" enctype='multipart/form-data'>
-	<table cellspacing="0" class="woocommerce-grouped-product-list group_table">
-		<tbody>
-			<?php
-			$quantites_required      = false;
-			$previous_post           = $post;
-			$grouped_product_columns = apply_filters(
-				'woocommerce_grouped_product_columns',
-				array(
-					'quantity',
-					'label',
-					'price',
-				),
-				$product
-			);
-			$show_add_to_cart_button = false;
+<form class="cart grouped_form" action="<?php echo esc_url(apply_filters('woocommerce_add_to_cart_form_action', $product->get_permalink())); ?>" method="post" enctype='multipart/form-data'>
+	<ul cellspacing="0" class="woocommerce-grouped-product-list group_table bt-product-grouped-js">
 
-			do_action( 'woocommerce_grouped_product_list_before', $grouped_product_columns, $quantites_required, $product );
+		<?php
+		$quantites_required      = false;
+		$previous_post           = $post;
+		$grouped_product_columns = apply_filters(
+			'woocommerce_grouped_product_columns',
+			array(
+				'quantity',
+				'label',
+				'price',
+			),
+			$product
+		);
+		$show_add_to_cart_button = false;
 
-			foreach ( $grouped_products as $grouped_product_child ) {
-				$post_object        = get_post( $grouped_product_child->get_id() );
-				$quantites_required = $quantites_required || ( $grouped_product_child->is_purchasable() && ! $grouped_product_child->has_options() );
-				$post               = $post_object; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-				setup_postdata( $post );
+		do_action('woocommerce_grouped_product_list_before', $grouped_product_columns, $quantites_required, $product);
 
-				if ( $grouped_product_child->is_in_stock() ) {
-					$show_add_to_cart_button = true;
-				}
+		foreach ($grouped_products as $grouped_product_child) {
+			$post_object        = get_post($grouped_product_child->get_id());
+			$quantites_required = $quantites_required || ($grouped_product_child->is_purchasable() && ! $grouped_product_child->has_options());
+			$post               = $post_object; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+			setup_postdata($post);
 
-				echo '<tr id="product-' . esc_attr( $grouped_product_child->get_id() ) . '" class="woocommerce-grouped-product-list-item ' . esc_attr( implode( ' ', wc_get_product_class( '', $grouped_product_child ) ) ) . '">';
-
-				// Output columns for each product.
-				foreach ( $grouped_product_columns as $column_id ) {
-					do_action( 'woocommerce_grouped_product_list_before_' . $column_id, $grouped_product_child );
-
-					switch ( $column_id ) {
-						case 'quantity':
-							ob_start();
-
-							if ( ! $grouped_product_child->is_purchasable() || $grouped_product_child->has_options() || ! $grouped_product_child->is_in_stock() ) {
-								woocommerce_template_loop_add_to_cart();
-							} elseif ( $grouped_product_child->is_sold_individually() ) {
-								echo '<input type="checkbox" name="' . esc_attr( 'quantity[' . $grouped_product_child->get_id() . ']' ) . '" value="1" class="wc-grouped-product-add-to-cart-checkbox" id="' . esc_attr( 'quantity-' . $grouped_product_child->get_id() ) . '" />';
-								echo '<label for="' . esc_attr( 'quantity-' . $grouped_product_child->get_id() ) . '" class="screen-reader-text">' . esc_html__( 'Buy one of this item', 'woocommerce' ) . '</label>';
-							} else {
-								do_action( 'woocommerce_before_add_to_cart_quantity' );
-
-								woocommerce_quantity_input(
-									array(
-										'input_name'  => 'quantity[' . $grouped_product_child->get_id() . ']',
-										'input_value' => isset( $_POST['quantity'][ $grouped_product_child->get_id() ] ) ? wc_stock_amount( wc_clean( wp_unslash( $_POST['quantity'][ $grouped_product_child->get_id() ] ) ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Missing
-										'min_value'   => apply_filters( 'woocommerce_quantity_input_min', 0, $grouped_product_child ),
-										'max_value'   => apply_filters( 'woocommerce_quantity_input_max', $grouped_product_child->get_max_purchase_quantity(), $grouped_product_child ),
-										'placeholder' => '0',
-									)
-								);
-
-								do_action( 'woocommerce_after_add_to_cart_quantity' );
-							}
-
-							$value = ob_get_clean();
-							break;
-						case 'label':
-							$value  = '<label for="product-' . esc_attr( $grouped_product_child->get_id() ) . '">';
-							$value .= $grouped_product_child->is_visible() ? '<a href="' . esc_url( apply_filters( 'woocommerce_grouped_product_list_link', $grouped_product_child->get_permalink(), $grouped_product_child->get_id() ) ) . '">' . $grouped_product_child->get_name() . '</a>' : $grouped_product_child->get_name();
-							$value .= '</label>';
-							break;
-						case 'price':
-							$value = $grouped_product_child->get_price_html() . wc_get_stock_html( $grouped_product_child );
-							break;
-						default:
-							$value = '';
-							break;
-					}
-
-					echo '<td class="woocommerce-grouped-product-list-item__' . esc_attr( $column_id ) . '">' . apply_filters( 'woocommerce_grouped_product_list_column_' . $column_id, $value, $grouped_product_child ) . '</td>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-
-					do_action( 'woocommerce_grouped_product_list_after_' . $column_id, $grouped_product_child );
-				}
-
-				echo '</tr>';
+			if ($grouped_product_child->is_in_stock()) {
+				$show_add_to_cart_button = true;
 			}
-			$post = $previous_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-			setup_postdata( $post );
 
-			do_action( 'woocommerce_grouped_product_list_after', $grouped_product_columns, $quantites_required, $product );
-			?>
-		</tbody>
-	</table>
+			echo '<li id="product-' . esc_attr($grouped_product_child->get_id()) . '" class="woocommerce-grouped-product-list-item ' . esc_attr(implode(' ', wc_get_product_class('', $grouped_product_child))) . '">';
 
-	<input type="hidden" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" />
+			// Output columns for each product.
+			foreach ($grouped_product_columns as $column_id) {
+				do_action('woocommerce_grouped_product_list_before_' . $column_id, $grouped_product_child);
+				switch ($column_id) {
 
-	<?php if ( $quantites_required && $show_add_to_cart_button ) : ?>
+					case 'label':
+						$value = '<div class="product-wrapper">';
+						$value .= '<div class="checkbox-wrapper">';
+						$value .= '<input type="checkbox" id="checkbox-' . esc_attr($grouped_product_child->get_id()) . '" name="product_id[]" value="' . $grouped_product_child->get_id() . '"></input>';
+						$value .= '</div>';
+						$thumbnail = wp_get_attachment_image($grouped_product_child->get_image_id(), 'thumbnail');
+						$value .= '<div class="product-thumbnail">' . $thumbnail . '</div>';
+						$value .= '<div class="product-info">';
+						$value .= '<label for="product-' . esc_attr($grouped_product_child->get_id()) . '">';
+						$value .= $grouped_product_child->is_visible() ? '<a href="' . esc_url(apply_filters('woocommerce_grouped_product_list_link', $grouped_product_child->get_permalink(), $grouped_product_child->get_id())) . '">' . $grouped_product_child->get_name() . '</a>' : $grouped_product_child->get_name();
+						$value .= '</label>';
+						$value .= '<div class="product-price">' . $grouped_product_child->get_price_html() . wc_get_stock_html($grouped_product_child) . '</div>';
+						$value .= '</div>';
+						$value .= '</div>';
+						break;
+					case 'quantity':
+						ob_start();
+						do_action('woocommerce_before_add_to_cart_quantity');
 
-		<?php do_action( 'woocommerce_before_add_to_cart_button' ); ?>
+						woocommerce_quantity_input(
+							array(
+								'input_name'  => 'quantity[' . $grouped_product_child->get_id() . ']',
+								'input_value' => isset($_POST['quantity'][$grouped_product_child->get_id()]) ? wc_stock_amount(wc_clean(wp_unslash($_POST['quantity'][$grouped_product_child->get_id()]))) : '0', // phpcs:ignore WordPress.Security.NonceVerification.Missing
+								'min_value'   => apply_filters('woocommerce_quantity_input_min', 0, $grouped_product_child),
+								'max_value'   => apply_filters('woocommerce_quantity_input_max', $grouped_product_child->get_max_purchase_quantity(), $grouped_product_child),
+								'placeholder' => '0',
+							)
+						);
 
-		<button type="submit" class="single_add_to_cart_button button alt<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>"><?php echo esc_html( $product->single_add_to_cart_text() ); ?></button>
+						do_action('woocommerce_after_add_to_cart_quantity');
+						$value = ob_get_clean();
+						break;
+					default:
+						$value = '';
+						break;
+				}
 
-		<?php do_action( 'woocommerce_after_add_to_cart_button' ); ?>
+				echo '<td class="woocommerce-grouped-product-list-item__' . esc_attr($column_id) . '">' . apply_filters('woocommerce_grouped_product_list_column_' . $column_id, $value, $grouped_product_child) . '</td>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+				do_action('woocommerce_grouped_product_list_after_' . $column_id, $grouped_product_child);
+			}
+
+			echo '</li>';
+		}
+		$post = $previous_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+		setup_postdata($post);
+
+		do_action('woocommerce_grouped_product_list_after', $grouped_product_columns, $quantites_required, $product);
+		?>
+
+	</ul>
+
+	<input type="hidden" name="add-to-cart" value="<?php echo esc_attr($product->get_id()); ?>" />
+
+	<?php if ($quantites_required && $show_add_to_cart_button) : ?>
+
+		<?php do_action('woocommerce_before_add_to_cart_button'); ?>
+
+		<button type="submit" class="single_add_to_cart_button button alt<?php echo esc_attr(wc_wp_theme_get_element_class_name('button') ? ' ' . wc_wp_theme_get_element_class_name('button') : ''); ?>"><?php echo esc_html($product->single_add_to_cart_text()); ?></button>
+
+		<?php do_action('woocommerce_after_add_to_cart_button'); ?>
 
 	<?php endif; ?>
 </form>
 
-<?php do_action( 'woocommerce_after_add_to_cart_form' ); ?>
+<?php do_action('woocommerce_after_add_to_cart_form'); ?>

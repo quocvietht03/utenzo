@@ -1537,6 +1537,89 @@
 
 		}
 	}
+	/* Countdown product sale  */
+	function UtenzoCountdownProductSale() {
+		if ($('.bt-countdown-product-sale').length > 0) {
+			var idproduct = $('.bt-countdown-product-sale .bt-countdown-product-js').data('idproduct');
+			const countDown = $('.bt-countdown-product-sale .bt-countdown-product-js[data-idproduct="' + idproduct + '"]');
+
+			const countDownDate = new Date(countDown.data('time')).getTime();
+			console.log(countDownDate);
+			if (isNaN(countDownDate)) {
+				console.error('Invalid countdown date');
+				return;
+			}
+			const timer = setInterval(() => {
+				const now = new Date().getTime();
+				const distance = countDownDate - now;
+
+				if (distance < 0) {
+					clearInterval(timer);
+					countDown.html('<div class="bt-countdown-expired">EXPIRED</div>');
+					window.location.reload();
+					return;
+				}
+
+				const days = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
+				const hours = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+				const mins = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+				const secs = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
+
+				countDown.find('.bt-countdown-days').text(days);
+				countDown.find('.bt-countdown-hours').text(hours);
+				countDown.find('.bt-countdown-mins').text(mins);
+				countDown.find('.bt-countdown-secs').text(secs);
+			}, 1000);
+			// progress bar countdown product sale
+			let targetWidth = $(".bt-progress-bar").data("width");
+			let currentWidth = 0;
+			var interval = setInterval(function () {
+				if (currentWidth >= targetWidth) {
+					clearInterval(interval);
+				} else {
+					currentWidth++;
+					$(".bt-progress-bar").css("width", currentWidth + "%");
+				}
+			}, 30);
+		}
+	}
+	// js Customize WooCommerce product toggle on single product page
+	function UtenzoCustomizeProductToggle() {
+		// Check if the product toggle exist
+		if ($('.bt-product-toggle-js').length > 0) {
+			$('.bt-product-toggle-js .bt-item-title').on('click', function (e) {
+				e.preventDefault();
+				if ($(this).hasClass('active')) {
+					$(this).parent().find('.bt-item-content').slideUp();
+					$(this).removeClass('active');
+				} else {
+					$('.bt-product-toggle-js .bt-item-content').slideUp();
+					$('.bt-product-toggle-js .bt-item-title').removeClass('active');
+					$(this).parent().find('.bt-item-content').slideDown();
+					$(this).addClass('active');
+				}
+			});
+		}
+	}
+	// checkbox customize grouped product
+	function UtenzoCustomizeGroupedProduct() {
+		// Check if the product toggle exist
+		if ($('.bt-product-grouped-js').length > 0) {
+			$('.bt-product-grouped-js input[type="checkbox"]').on('change', function () {
+				var parent = $(this).parents('.woocommerce-grouped-product-list-item');
+				var quantityInput = parent.find('.quantity input');
+				var currentQuantity = parseInt(quantityInput.val()) || 0;
+
+				if ($(this).is(':checked')) {
+					if (currentQuantity === 0) {
+						quantityInput.val(1).trigger('change');
+					}
+				} else {
+					quantityInput.val(0).trigger('change');
+				}
+			});
+		}
+	}
 	jQuery(document).ready(function ($) {
 		UtenzoSubmenuAuto();
 		UtenzoToggleMenuMobile();
@@ -1568,6 +1651,9 @@
 		LoadFilterTagProduct();
 		UtenzoAddToRecentlyViewed();
 		UtenzoLoadRecentlyViewedProducts();
+		UtenzoCountdownProductSale();
+		UtenzoCustomizeProductToggle();
+		UtenzoCustomizeGroupedProduct();
 	});
 	$(document.body).on('added_to_cart', function (event, fragments, cart_hash, $button) {
 		UtenzoshowToast('Product added to cart! <span>View your <a href="' + AJ_Options.page_wishlist + '">Cart</a>.</span>');
