@@ -439,11 +439,14 @@ class Widget_HotspotProduct extends Widget_Base
                                         foreach ($settings['hotspot_items'] as $item) {
                                             $product = wc_get_product($item['id_product']);
                                             if ($product) {
-                                                $total_price += (float)$product->get_price();
+                                                $product_ids[] = $item['id_product'];
                                                 if ($product->is_on_sale()) {
                                                     $total_regular_price += (float)$product->get_regular_price();
+                                                    $total_price += (float)$product->get_sale_price();
+                                                } else {
+                                                    $total_price += (float)$product->get_regular_price();
+                                                    $total_regular_price += (float)$product->get_regular_price();
                                                 }
-                                                $product_ids[] = $item['id_product'];
                                             }
                                         }
                                         ?>

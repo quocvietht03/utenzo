@@ -1656,7 +1656,7 @@
 		UtenzoCustomizeGroupedProduct();
 	});
 	$(document.body).on('added_to_cart', function (event, fragments, cart_hash, $button) {
-		UtenzoshowToast('Product added to cart! <span>View your <a href="' + AJ_Options.page_wishlist + '">Cart</a>.</span>');
+		UtenzoshowToast('Product added to cart! <span>View your <a href="' + AJ_Options.cart + '">Cart</a>.</span>');
 	});
 	jQuery(window).on('resize', function () {
 		UtenzoSubmenuAuto();
