@@ -70,7 +70,8 @@ do_action('woocommerce_before_add_to_cart_form');
 						$value .= '<label for="product-' . esc_attr($grouped_product_child->get_id()) . '">';
 						$value .= $grouped_product_child->is_visible() ? '<a href="' . esc_url(apply_filters('woocommerce_grouped_product_list_link', $grouped_product_child->get_permalink(), $grouped_product_child->get_id())) . '">' . $grouped_product_child->get_name() . '</a>' : $grouped_product_child->get_name();
 						$value .= '</label>';
-						$value .= '<div class="product-price">' . $grouped_product_child->get_price_html() . wc_get_stock_html($grouped_product_child) . '</div>';
+						$price_class = $grouped_product_child->is_type('variable') ? ' variable-price' : '';
+						$value .= '<div class="product-price' . $price_class . '">' . $grouped_product_child->get_price_html() . wc_get_stock_html($grouped_product_child) . '</div>';
 						$value .= '</div>';
 						$value .= '</div>';
 						break;
@@ -110,7 +111,9 @@ do_action('woocommerce_before_add_to_cart_form');
 		?>
 
 	</ul>
-
+	<div class="bt-total-price"><span class="bt-title"><?php echo esc_html__('Total Price:', 'utenzo') ?></span>
+		<div class="bt-price"></div>
+	</div>
 	<input type="hidden" name="add-to-cart" value="<?php echo esc_attr($product->get_id()); ?>" />
 
 	<?php if ($quantites_required && $show_add_to_cart_button) : ?>

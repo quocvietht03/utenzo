@@ -1276,18 +1276,28 @@
 	function UtenzoBuyNow() {
 		$(document).on('click', '.bt-button-buy-now a', function (e) {
 			e.preventDefault();
-			var product_id = $(this).data('id').toString();
-			var variation_id = $(this).data('variation');
-			var param_ajax = {
-				action: 'utenzo_products_buy_now',
-				product_id: product_id
-			};
+			var product_id_grouped = $(this).data('grouped');
+			if (product_id_grouped) {
+				product_id_grouped = product_id_grouped.toString();
+				var param_ajax = {
+					action: 'utenzo_products_buy_now',
+					product_id_grouped: product_id_grouped
+				};
+			} else {
+				var product_id = $(this).data('id').toString();
+				var variation_id = $(this).data('variation');
+				var quantity = $('input[name="quantity"]').val();
+				var param_ajax = {
+					action: 'utenzo_products_buy_now',
+					product_id: product_id,
+					quantity: quantity
+				};
 
-			// Add variation_id to AJAX data if it exists
-			if (variation_id) {
-				param_ajax.variation_id = variation_id;
+				// Add variation_id to AJAX data if it exists
+				if (variation_id) {
+					param_ajax.variation_id = variation_id;
+				}
 			}
-
 			$.ajax({
 				type: 'POST',
 				dataType: 'json',
@@ -1609,13 +1619,74 @@
 				var parent = $(this).parents('.woocommerce-grouped-product-list-item');
 				var quantityInput = parent.find('.quantity input');
 				var currentQuantity = parseInt(quantityInput.val()) || 0;
-
 				if ($(this).is(':checked')) {
 					if (currentQuantity === 0) {
 						quantityInput.val(1).trigger('change');
 					}
 				} else {
 					quantityInput.val(0).trigger('change');
+				}
+			});
+			$('.bt-product-grouped-js .quantity input').on('change', function () {
+				var parent = $(this).parents('.woocommerce-grouped-product-list-item');
+				var checkbox = parent.find('input[type="checkbox"]');
+				var quantity = parseInt($(this).val()) || 0;
+
+				if (quantity > 0) {
+					checkbox.prop('checked', true);
+				} else {
+					checkbox.prop('checked', false);
+				}
+				// Get all checked checkboxes and store their values
+				// Get checked products and their quantities
+				var productGrouped = [];
+				let totalPrice = 0;
+				let regularTotalPrice = 0;
+				let currencySymbol = '$';
+				$('.bt-product-grouped-js input[type="checkbox"]:checked').each(function () {
+					const $checkbox = $(this);
+					const $item = $checkbox.closest('.woocommerce-grouped-product-list-item');
+					const $quantity = $item.find('.quantity input');
+
+					// Add product to grouped array
+					productGrouped.push($checkbox.val() + ':' + $quantity.val());
+
+					// Calculate total price of checked products
+					currencySymbol = $item.find('.woocommerce-Price-currencySymbol').first().text() || '$';
+					const $priceElement = $item.find('.woocommerce-Price-amount');
+					let price;
+
+					// Get regular price
+					const regularPrice = parseFloat($priceElement.first().text().replace(/[^0-9.-]+/g, ''));
+
+					// Get sale price if exists
+					if ($item.find('ins').length) {
+						price = parseFloat($item.find('ins .woocommerce-Price-amount').text().replace(/[^0-9.-]+/g, ''));
+					} else {
+						price = regularPrice;
+					}
+
+					const quantity = parseInt($quantity.val()) || 0;
+					totalPrice += price * quantity;
+					regularTotalPrice += regularPrice * quantity;
+				});
+
+				// Update price display
+				if (totalPrice < regularTotalPrice) {
+					$('.bt-price').html(`<del>${currencySymbol}${regularTotalPrice.toFixed(2)}</del> ${currencySymbol}${totalPrice.toFixed(2)}`);
+				} else {
+					$('.bt-price').text(currencySymbol + totalPrice.toFixed(2));
+				}
+				// Update buy now button state
+				const $buyNowBtn = $('.bt-button-buy-now a');
+				if (productGrouped.length) {
+					$buyNowBtn
+						.attr('data-grouped', productGrouped.join(','))
+						.removeClass('disabled');
+					$('.bt-total-price ').addClass('active');
+				} else {
+					$buyNowBtn.addClass('disabled');
+					$('.bt-total-price ').removeClass('active');
 				}
 			});
 		}

@@ -29,26 +29,19 @@ global $product;
 				<?php
 				do_action('utenzo_woocommerce_template_single_price');
 				do_action('utenzo_woocommerce_show_product_loop_sale_flash');
-
 				?>
 			</div>
 			<div class="bt-product-excerpt-add-to-cart">
 				<?php
 				do_action('utenzo_woocommerce_template_single_excerpt');
+				do_action('utenzo_woocommerce_template_single_countdown');
 				do_action('utenzo_woocommerce_template_single_add_to_cart');
+				do_action('utenzo_woocommerce_template_single_more_information');
+				?>
 
-				?>
-				<?php if ($product->is_in_stock() && $product->is_purchasable()) { ?>
-					<div class="bt-button-buy-now">
-						<a class="button <?php echo $product->is_type('variable') ? 'disabled' : ''; ?>" data-id="<?php echo get_the_ID(); ?>"><?php echo esc_html__('Buy it now ', 'utenzo') ?></a>
-					</div>
-				<?php } 
-				 do_action('utenzo_woocommerce_template_single_more_information');
-				?>
-				
 			</div>
 			<?php do_action('utenzo_woocommerce_template_single_meta');
-			 do_action('utenzo_woocommerce_template_single_safe_checkout');
+			do_action('utenzo_woocommerce_template_single_safe_checkout');
 			?>
 		</div>
 	</div>

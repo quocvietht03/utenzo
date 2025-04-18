@@ -25,6 +25,7 @@ add_filter('woocommerce_product_description_heading', '__return_null');
 
 add_action('utenzo_woocommerce_template_single_meta', 'utenzo_woocommerce_single_product_meta', 40);
 add_action('utenzo_woocommerce_template_related_products', 'woocommerce_output_related_products', 20);
+remove_action('woocommerce_cart_collaterals', 'woocommerce_cross_sell_display');
 function register_product_taxonomy()
 {
     $labels = array(
@@ -84,7 +85,7 @@ function utenzo_woocommerce_single_product_meta()
     echo '</ul>';
 }
 
-remove_action('woocommerce_cart_collaterals', 'woocommerce_cross_sell_display');
+
 // custom product loop image
 add_action('utenzo_woocommerce_template_loop_product_thumbnail', 'bt_woocommerce_template_loop_product_thumbnail', 10);
 
@@ -252,7 +253,6 @@ if (function_exists('get_field')) {
     $enable_related_posts = get_field('enable_related_posts', 'options');
     if (!$enable_related_posts) {
         remove_action('woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20);
-
     }
 }
 
@@ -1391,7 +1391,7 @@ function utenzo_products_quick_view()
     ?>
     <div class="bt-quick-view-close"></div>
     <div class="bt-quickview-title">
-        <h2><?php esc_html_e('Compare products', 'utenzo') ?></h2>
+        <h2><?php esc_html_e('Quick View', 'utenzo') ?></h2>
     </div>
     <div class="bt-quickview-wrap woocommerce">
         <?php
@@ -1475,7 +1475,8 @@ add_filter('woocommerce_product_cross_sells_products_heading', 'bt_custom_cross_
 
 function bt_custom_cross_sells_title($title)
 {
-    return esc_html__('Related Products', 'utenzo');
+    $heading = get_field('heading_cross_sells', 'options');
+    return !empty($heading) ? esc_html($heading) : esc_html__('You may be interested in…', 'utenzo');
 }
 
 function bt_limit_cross_sells_display($limit)
@@ -1632,6 +1633,37 @@ function utenzo_woocommerce_product_label()
         echo '<div class="woocommerce-product-label ' . esc_attr(utenzo_convert_title_to_slug($label)) . '">' . esc_html($label) . '</div>';
     }
 }
+// hook button buy now after add to cart
+add_action('woocommerce_after_add_to_cart_button', 'utenzo_display_button_buy_now');
+function utenzo_display_button_buy_now()
+{
+    global $product;
+    if ($product->is_type('simple')) {
+        if ($product->is_in_stock() && $product->is_purchasable()) {
+            echo '<div class="bt-button-buy-now">';
+            echo '<a class="button" data-id="' . get_the_ID() . '">' . esc_html__('Buy it now ', 'utenzo') . '</a>';
+            echo '</div>';
+        }
+    } else if ($product->is_type('variable')) {
+        if ($product->is_type('variable')) {
+            $variations = $product->get_available_variations();
+            if (!empty($variations)) {
+                echo '<div class="bt-button-buy-now">';
+                echo '<a class="button ' . ($product->is_type('variable') ? 'disabled' : '') . '" data-id="' . get_the_ID() . '">' . esc_html__('Buy it now ', 'utenzo') . '</a>';
+                echo '</div>';
+            }
+        }
+    } else if ($product->is_type('grouped')) {
+        if ($product->is_type('grouped')) {
+            $children = $product->get_children();
+            if (!empty($children)) {
+                echo '<div class="bt-button-buy-now">';
+                echo '<a class="button disabled" data-id="' . get_the_ID() . '">' . esc_html__('Buy it now ', 'utenzo') . '</a>';
+                echo '</div>';
+            }
+        }
+    }
+}
 
 /* ajax by now product */
 add_action('wp_ajax_utenzo_products_buy_now', 'utenzo_products_buy_now');
@@ -1639,7 +1671,20 @@ add_action('wp_ajax_nopriv_utenzo_products_buy_now', 'utenzo_products_buy_now');
 
 function utenzo_products_buy_now()
 {
-    if (isset($_POST['product_id']) && !empty($_POST['product_id'])) {
+    if (isset($_POST['product_id_grouped']) && !empty($_POST['product_id_grouped'])) {
+        $product_data = explode(',', $_POST['product_id_grouped']);
+        // Loop through product data and add to cart
+        foreach ($product_data as $item) {
+            $item_data = explode(':', $item);
+            $product_id = intval($item_data[0]);
+            $quantity = isset($item_data[1]) ? intval($item_data[1]) : 1;
+
+            WC()->cart->add_to_cart($product_id, $quantity);
+        }
+        $redirect_url = wc_get_checkout_url();
+        wp_send_json_success(array('redirect_url' => $redirect_url));
+        wp_die();
+    } else if (isset($_POST['product_id']) && !empty($_POST['product_id'])) {
         $product_id = intval($_POST['product_id']);
         $variation_id = isset($_POST['variation_id']) ? intval($_POST['variation_id']) : 0;
         $quantity = isset($_POST['quantity']) ? intval($_POST['quantity']) : 1;
@@ -2251,10 +2296,11 @@ function utenzo_woocommerce_single_product_safe_checkout()
 
 // Customize WooCommerce product tabs to toggle with slide animation on single product page
 add_action('utenzo_woocommerce_template_single_toggle', 'utenzo_woocommerce_single_product_toggle', 10);
-function utenzo_woocommerce_single_product_toggle(){
-   $product_tabs = apply_filters('woocommerce_product_tabs', array()); ?>
+function utenzo_woocommerce_single_product_toggle()
+{
+    $product_tabs = apply_filters('woocommerce_product_tabs', array()); ?>
     <div class="woocommerce-tabs bt-product-toggle bt-product-toggle-js">
-        <?php foreach ($product_tabs as $key => $product_tab) :?>
+        <?php foreach ($product_tabs as $key => $product_tab) : ?>
             <div class="bt-item">
                 <div class="bt-item-inner">
                     <div class="bt-item-title <?php echo ($key == 'description') ? 'active' : ''; ?>">
@@ -2275,5 +2321,5 @@ function utenzo_woocommerce_single_product_toggle(){
             </div>
         <?php endforeach; ?>
     </div>
-    <?php
+<?php
 }

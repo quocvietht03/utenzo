@@ -34,13 +34,14 @@ global $product;
 				?>
 			</div>
 			<?php
-			do_action('utenzo_woocommerce_template_single_title');
+			$product_title = $product->get_title();
+			$product_link = get_permalink($product->get_id());
+			echo '<h2 class="product_title entry-title"><a href="' . esc_url($product_link) . '">' . esc_html($product_title) . '</a></h2>';
 			?>
 			<div class="woocommerce-product-price-wrap">
 				<?php
 				do_action('utenzo_woocommerce_template_single_price');
 				do_action('utenzo_woocommerce_show_product_loop_sale_flash');
-
 				?>
 			</div>
 			<div class="bt-product-excerpt-add-to-cart">
@@ -48,9 +49,6 @@ global $product;
 				do_action('utenzo_woocommerce_template_single_excerpt');
 				do_action('utenzo_woocommerce_template_single_add_to_cart');
 				?>
-				<div class="bt-button-buy-now">
-					<a class="button <?php echo $product->is_type('variable') ? 'disabled' : ''; ?>" data-id="<?php echo $product->get_id(); ?>"><?php echo esc_html__('Buy it now ', 'utenzo') ?></a>
-				</div>
 			</div>
 		</div>
 	</div>

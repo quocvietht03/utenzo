@@ -1332,6 +1332,24 @@
             ]
         },
         {
+            "key": "field_6801fa7612d0a",
+            "label": "Cart",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
             "key": "field_67492ca724263",
             "label": "Time Promotion",
             "name": "time_promotion",
@@ -1393,6 +1411,27 @@
                     "return_format": "i:s"
                 }
             ]
+        },
+        {
+            "key": "field_6801fb07e1944",
+            "label": "Heading Cross Sells",
+            "name": "heading_cross_sells",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
         },
         {
             "key": "field_659f8f55f25bc",
@@ -1725,5 +1764,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1744618079
+    "modified": 1744960318
 }

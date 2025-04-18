@@ -72,23 +72,17 @@ global $product;
                 do_action('utenzo_woocommerce_template_single_excerpt');
                 do_action('utenzo_woocommerce_template_single_countdown');
                 do_action('utenzo_woocommerce_template_single_add_to_cart');
-                ?>
-                <?php if ($product->is_in_stock() && $product->is_purchasable()) { ?>
-                    <div class="bt-button-buy-now">
-                        <a class="button <?php echo $product->is_type('variable') ? 'disabled' : ''; ?>" data-id="<?php echo get_the_ID(); ?>"><?php echo esc_html__('Buy it now ', 'utenzo') ?></a>
-                    </div>
-                <?php } 
-                  do_action('utenzo_woocommerce_template_single_more_information');
+                do_action('utenzo_woocommerce_template_single_more_information');
                 ?>
             </div>
-            <?php do_action('utenzo_woocommerce_template_single_meta'); 
-                do_action('utenzo_woocommerce_template_single_safe_checkout');
-                do_action( 'utenzo_woocommerce_template_single_toggle' );
-                ?>
-          
+            <?php do_action('utenzo_woocommerce_template_single_meta');
+            do_action('utenzo_woocommerce_template_single_safe_checkout');
+            do_action('utenzo_woocommerce_template_single_toggle');
+            ?>
+
         </div>
     </div>
-   
+
     <?php
 
     /**
@@ -98,7 +92,7 @@ global $product;
      * @hooked woocommerce_upsell_display - 15
      * @hooked woocommerce_output_related_products - 20
      */
-   do_action('utenzo_woocommerce_template_related_products');
+    do_action('utenzo_woocommerce_template_related_products');
     ?>
 
 
