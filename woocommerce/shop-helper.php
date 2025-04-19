@@ -2323,3 +2323,35 @@ function utenzo_woocommerce_single_product_toggle()
     </div>
 <?php
 }
+
+/**
+ * Add or modify placeholders for existing WooCommerce checkout fields
+ */
+
+add_filter('woocommerce_checkout_fields', 'utenzo_checkout_field_placeholders');
+
+function utenzo_checkout_field_placeholders($fields) {
+    // Billing fields placeholders
+    $fields['billing']['billing_first_name']['placeholder'] = 'First Name *';
+    $fields['billing']['billing_last_name']['placeholder'] = 'Last Name *'; 
+    $fields['billing']['billing_company']['placeholder'] = 'Company name';
+    $fields['billing']['billing_address_1']['placeholder'] = 'Street,...';
+    $fields['billing']['billing_city']['placeholder'] = 'Town/City *';
+    $fields['billing']['billing_postcode']['placeholder'] = 'Postal Code *';
+    $fields['billing']['billing_state']['placeholder'] = 'Select state/province';
+    $fields['billing']['billing_phone']['placeholder'] = 'Phone Number *';
+    $fields['billing']['billing_email']['placeholder'] = 'Email Address *';
+
+    // Shipping fields placeholders
+    $fields['shipping']['shipping_first_name']['placeholder'] = 'First Name *';
+    $fields['shipping']['shipping_last_name']['placeholder'] = 'Last Name *';
+    $fields['shipping']['shipping_company']['placeholder'] = 'Company name';
+    $fields['shipping']['shipping_address_1']['placeholder'] = 'Street,...';
+    $fields['shipping']['shipping_city']['placeholder'] = 'Town/City *';
+    $fields['shipping']['shipping_postcode']['placeholder'] = 'Postal Code *';
+
+    // Order fields placeholders
+    $fields['order']['order_comments']['placeholder'] = 'Write note...';
+
+    return $fields;
+}

@@ -4986,15 +4986,15 @@
     margin: 0;
     a {
       display: inline-block;
-      padding: 16px 40px;
+      padding: 13px 40px;
       font-size: 16px;
       line-height: 1.5;
-      color: $color-primary;
-      border-radius: 30px;
-      background-color: $color-secondary;
+      color: #fff;
+      border-radius: 8px;
+      background-color: $color-accent;
       font-weight: 700;
       white-space: nowrap;
-      text-transform: capitalize;
+      text-transform: uppercase;
       &:hover {
         background-color: $color-accent;
         color: #fff;
@@ -5648,22 +5648,25 @@
   .woocommerce-form-coupon-toggle,
   .woocommerce-form-login-toggle {
     .woocommerce-info {
+      background: #f6f6f6;
+      padding-top: 11px;
+      padding-bottom: 11px;
       font-size: 16px;
       font-style: normal;
       font-weight: 400;
       line-height: 26px;
       border-radius: 4px;
-      background: $color-background;
       border-top: none;
       color: $color-text;
       margin-bottom: 12px;
       &::before {
-        color: $color-secondary;
+        color: $color-primary;
+        top: 11px;
       }
       a {
         font-size: 16px;
         font-style: normal;
-        font-weight: 700;
+        font-weight: 600;
         line-height: 24px;
         text-transform: capitalize;
         text-decoration-line: underline;
@@ -5673,6 +5676,16 @@
         text-underline-offset: 3px;
         text-underline-position: from-font;
         color: $color-primary;
+      }
+      @media(max-width:$break-xs){
+        padding: 10px;
+        font-size: 15px;
+        &::before{
+          display: none;
+        }
+        a{
+          font-size: 15px;
+        }
       }
     }
   }
@@ -5729,17 +5742,19 @@
         font-size: 16px;
         font-weight: 700;
         line-height: 24px;
-        text-transform: capitalize;
+        text-transform: uppercase;
         padding: 8px 26px;
-        background: $color-secondary;
+        background: $color-accent;
         border-radius: 4px;
         width: auto;
         display: inline-block;
         min-width: auto;
-        color: $color-primary;
+        color: #fff;
         &:hover {
-          background: $color-accent;
-          color: #fff;
+          background: $color-primary;
+          background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%);
+          background-size: 200% 100%;
+          animation: shimmer 1.5s infinite linear;
         }
       }
       @media (max-width: 420px) {
@@ -5775,12 +5790,22 @@
       }
     }
     .form-row {
+      label {
+        display: block;
+      }
       .button {
-        padding: 10px 32px !important;
+        padding: 11px 32px;
         &:hover {
-          background: $color-accent;
-          color: #fff;
+          background: $color-primary;
+          background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%);
+          background-size: 200% 100%;
+          animation: shimmer 1.5s infinite linear;
         }
+      }
+      .woocommerce-form-login__rememberme {
+        line-height: 48px;
+        margin: 0;
+        display: inline-block;
       }
     }
   }
@@ -5818,8 +5843,8 @@
           margin: 0 0 20px 0;
           font-size: 24px;
           font-style: normal;
-          font-weight: 700;
-          line-height: 32px;
+          font-weight: 600;
+          line-height: 30px;
         }
       }
       .bt-heading-order,
@@ -5827,8 +5852,8 @@
         margin: 0 0 20px 0;
         font-size: 24px;
         font-style: normal;
-        font-weight: 700;
-        line-height: 32px;
+        font-weight: 600;
+        line-height: 30px;
       }
     }
     .woocommerce-billing-fields__field-wrapper,
@@ -5858,6 +5883,7 @@
       label {
         font-weight: 400;
         font-size: 16px;
+        display: none;
         .required {
           text-decoration: none;
         }
@@ -5870,48 +5896,51 @@
       textarea {
         font-size: 16px;
         line-height: 24px;
-        padding: 12px 15px;
-        border-color: #ececec;
-        border-radius: 10px;
+        padding: 11px 16px;
+        border-radius: 4px;
+        border: 1px solid #e9e9e9;
         font-family: $text-font;
         font-weight: 400;
+        color: $color-text;
         &::placeholder {
           letter-spacing: 0;
           font-size: 16px;
           font-family: $text-font;
+          color: #a0a0a0;
         }
       }
       textarea {
         min-height: 120px;
       }
       .select2-container--default {
-        height: 50px;
-        min-height: 50px;
+        height: 48px;
+        min-height: 48px;
         .select2-selection--single {
-          height: 50px;
-          border: 1px solid #ececec;
-          border-radius: 10px;
+          height: 48px;
+          border: 1px solid #e9e9e9;
+          border-radius: 4px;
           .select2-selection__rendered {
-            line-height: 50px;
-            color: $color-text;
-            padding-left: 15px;
+            line-height: 48px;
+            color: $color-primary;
+            padding-left: 16px;
           }
           .select2-selection__arrow {
-            height: 50px;
+            height: 48px;
             width: 30px;
           }
         }
       }
       .button {
         font-size: 16px;
-        font-weight: 700;
-        line-height: 24px;
-        text-transform: capitalize;
-        padding: 8px 26px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 26px;
+        text-transform: uppercase;
+        padding: 8px 30px;
         background: $color-secondary;
-        border-radius: 30px;
+        border-radius: 4px;
         display: inline-block;
-        color: $color-primary;
+        color: #fff;
       }
     }
   }
@@ -5924,7 +5953,7 @@
     .cart_item {
       &:first-child {
         td {
-          padding-top: 12px;
+          padding-top: 0;
         }
       }
     }
@@ -5933,8 +5962,8 @@
       padding: 20px 0;
       font-size: 16px;
       font-style: normal;
-      font-weight: 700;
-      line-height: 24px;
+      font-weight: 600;
+      line-height: 26px;
       text-transform: capitalize;
       color: $color-primary;
       @media (max-width: $break-xs) {
@@ -5942,15 +5971,19 @@
         line-height: 22px;
       }
       &.product-name {
+        width: 70%;
         a {
           display: flex;
           align-items: center;
-          gap: 16px;
+          gap: 24px;
           font-size: 16px;
           font-style: normal;
-          font-weight: 700;
+          font-weight: 500;
           line-height: 24px;
           text-transform: capitalize;
+          @media(max-width:$break-md){
+            gap: 16px;
+          }
           img {
             max-width: 100px;
             object-fit: contain;
@@ -5977,40 +6010,80 @@
       }
     }
     tfoot {
-      th,
-      td {
-        border-width: 0 0 1px 0;
-        padding: 20px 0;
-      }
-      td {
-        text-align: right;
-        ul {
-          min-width: 134px;
-          li {
-            margin-bottom: 0 !important;
-            display: flex;
-            align-items: center;
-            gap: 9px;
-            justify-content: flex-end;
-            input {
-              margin: 0 !important;
-              vertical-align: middle;
-            }
-            label {
-              margin: 0;
-              font-weight: 400;
-            }
-          }
-        }
-      }
-      .order-total {
+      tr {
         th,
         td {
           border-width: 0;
-          font-size: 24px;
+          padding: 16px 0 0 0;
+          color: $color-primary;
+        }
+        &:first-child {
+          th,
+          td {
+            padding-top: 20px;
+          }
+        }
+        &:nth-last-child(2) {
+          th,
+          td {
+            padding-bottom: 20px;
+          }
+        }
+        &:last-child {
+          th,
+          td {
+            padding-top: 20px;
+            border-width: 1px 0 0 0;
+          }
+        }
+        th,
+        td {
+          font-size: 16px;
           font-style: normal;
-          font-weight: 700;
-          line-height: 32px;
+          font-weight: 600;
+          line-height: 26px; /* 162.5% */
+          text-transform: uppercase;
+        }
+        td {
+          text-align: right;
+          ul {
+            min-width: 145px;
+            li {
+              margin-bottom: 0 !important;
+              display: flex;
+              align-items: center;
+              gap: 9px;
+              justify-content: flex-end;
+              input {
+                margin: 0 !important;
+                vertical-align: middle;
+                accent-color: $color-primary;
+
+                &:checked {
+                  background-color: $color-primary;
+                  border-color: $color-primary;
+                }
+              }
+              label {
+                margin: 0;
+                font-weight: 400;
+                text-transform: capitalize;
+              }
+              .amount {
+                font-weight: 600;
+              }
+            }
+          }
+        }
+        &.order-total {
+          th,
+          td {
+            font-size: 24px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 30px;
+            text-transform: capitalize;
+          }
         }
       }
     }
@@ -6028,7 +6101,7 @@
   }
   .woocommerce-account-fields,
   .woocommerce-additional-fields {
-    margin-bottom: 30px;
+    margin-bottom: 40px;
   }
   .woocommerce-billing-fields,
   .shipping_address {
@@ -6152,7 +6225,7 @@
             cursor: pointer;
             font-size: 16px;
             font-style: normal;
-            font-weight: 700;
+            font-weight: 500;
             line-height: 24px;
             text-transform: capitalize;
             margin: 0;
@@ -6179,8 +6252,8 @@
           }
           &:has(input:checked) {
             padding: 20px;
-            background: $color-background;
-            border-color: $color-background;
+            background: #f6f6f6;
+            border-color: #f6f6f6;
           }
         }
       }
@@ -6188,6 +6261,7 @@
         padding: 0;
         margin-top: 40px;
         width: 100%;
+        margin-bottom: 0;
         @media (max-width: $break-xs) {
           margin-top: 25px;
         }
@@ -6201,17 +6275,18 @@
         }
         #place_order {
           text-transform: capitalize;
-          color: $color-primary;
-          background: $color-secondary;
+          color: #fff;
+          background: $color-accent;
           margin-top: 15px;
-          padding: 14px 40px;
-          border-radius: 30px;
+          padding: 11px 40px;
+          border-radius: 4px;
           font-size: 16px;
           font-style: normal;
-          font-weight: 700;
-          line-height: 24px;
-          text-transform: capitalize;
+          font-weight: 600;
+          line-height: 26px; /* 162.5% */
+          text-transform: uppercase;
           width: 100%;
+          margin-bottom: 0;
           &:hover {
             background: $color-accent;
             color: #fff;
