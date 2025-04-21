@@ -876,8 +876,8 @@ div[data-name=more_information] .acf-editor-wrap.delay .wp-editor-area {
 
 .__bt-pagination-style {
   display: flex;
-  justify-content: center;
-  margin-top: 60px;
+  justify-content: flex-start;
+  margin-top: 40px;
   gap: 8px;
 }
 .__bt-pagination-style .page-numbers {
@@ -1348,76 +1348,23 @@ div[data-name=more_information] .acf-editor-wrap.delay .wp-editor-area {
 * Import
 */
 .widget:not(:last-child) {
-  padding-bottom: 30px;
+  padding-bottom: 40px;
 }
 .widget .wp-block-group {
   margin: 0;
-  border-radius: 15px;
-  background: var(--e-global-color-31e49eb, #E9E9E9);
-  padding: 60px 35px 40px 35px;
   position: relative;
-  margin-top: 35px;
-}
-@media (max-width: 1199.98px) and (min-width: 991.98px) {
-  .widget .wp-block-group {
-    margin-top: 28px;
-    padding: 52px 15px 30px;
-  }
-}
-@media (max-width: 519.98px) {
-  .widget .wp-block-group {
-    margin-top: 28px;
-    padding: 52px 15px 30px;
-  }
 }
 .widget .wp-block-heading,
 .widget .wg-title,
 .widget .widget-title {
   color: var(--e-global-color-primary, #0C2C48);
-  font-size: 20px;
+  font-size: 24px;
   font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  border-radius: 20px 20px 20px 0px;
-  background: var(--e-global-color-secondary, #5A86A9);
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding: 20px 20px 20px 30px;
-  position: absolute;
-  top: -35px;
-  left: 0;
-  width: 90%;
-  margin: 0;
+  font-weight: 600;
+  line-height: 30px;
+  text-transform: capitalize;
+  margin: 0 0 16px 0;
   box-sizing: border-box;
-}
-.widget .wp-block-heading::before,
-.widget .wg-title::before,
-.widget .widget-title::before {
-  content: "";
-  background-image: url("../images/icon-title-siderbar.svg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 22px;
-  height: 22px;
-  display: block;
-}
-@media (max-width: 1199.98px) and (min-width: 991.98px) {
-  .widget .wp-block-heading,
-  .widget .wg-title,
-  .widget .widget-title {
-    padding: 13px 15px 13px 15px;
-    top: -28px;
-  }
-}
-@media (max-width: 519.98px) {
-  .widget .wp-block-heading,
-  .widget .wg-title,
-  .widget .widget-title {
-    padding: 13px 15px 13px 15px;
-    top: -28px;
-  }
 }
 .widget ul,
 .widget ol {
@@ -1440,31 +1387,35 @@ div[data-name=more_information] .acf-editor-wrap.delay .wp-editor-area {
 .widget ul.wp-block-categories li,
 .widget ul.wp-block-page-list li, .widget.widget_archive ul li, .widget.widget_categories ul li, .widget.widget_pages ul li, .widget.widget_meta ul li, .widget.widget_nav_menu ul li, .widget.widget_recent_comments ul li, .widget.widget_recent_entries ul li {
   position: relative;
-}
-.widget ul.wp-block-archives li:not(:last-child),
-.widget ul.wp-block-categories li:not(:last-child),
-.widget ul.wp-block-page-list li:not(:last-child), .widget.widget_archive ul li:not(:last-child), .widget.widget_categories ul li:not(:last-child), .widget.widget_pages ul li:not(:last-child), .widget.widget_meta ul li:not(:last-child), .widget.widget_nav_menu ul li:not(:last-child), .widget.widget_recent_comments ul li:not(:last-child), .widget.widget_recent_entries ul li:not(:last-child) {
-  padding-bottom: 15px;
-  margin-bottom: 15px;
-  border-bottom: 1px solid #e4e4e4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--e-global-typography-secondary-font-family, "Urbanist");
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 26px;
+  text-transform: capitalize;
+  color: var(--e-global-color-text, #5A6167);
 }
 .widget ul.wp-block-archives li a,
 .widget ul.wp-block-categories li a,
 .widget ul.wp-block-page-list li a, .widget.widget_archive ul li a, .widget.widget_categories ul li a, .widget.widget_pages ul li a, .widget.widget_meta ul li a, .widget.widget_nav_menu ul li a, .widget.widget_recent_comments ul li a, .widget.widget_recent_entries ul li a {
-  color: var(--e-global-color-primary, #0C2C48);
-  font-family: var(--e-global-typography-secondary-font-family, "Urbanist");
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  text-transform: capitalize;
+  color: var(--e-global-color-text, #5A6167);
   display: flex;
   align-items: center;
+  transition: all 0.3s ease;
 }
-.widget ul.wp-block-archives li a:hover,
-.widget ul.wp-block-categories li a:hover,
-.widget ul.wp-block-page-list li a:hover, .widget.widget_archive ul li a:hover, .widget.widget_categories ul li a:hover, .widget.widget_pages ul li a:hover, .widget.widget_meta ul li a:hover, .widget.widget_nav_menu ul li a:hover, .widget.widget_recent_comments ul li a:hover, .widget.widget_recent_entries ul li a:hover {
-  color: var(--e-global-color-accent, #5A86A9);
+.widget ul.wp-block-archives li:hover,
+.widget ul.wp-block-categories li:hover,
+.widget ul.wp-block-page-list li:hover, .widget.widget_archive ul li:hover, .widget.widget_categories ul li:hover, .widget.widget_pages ul li:hover, .widget.widget_meta ul li:hover, .widget.widget_nav_menu ul li:hover, .widget.widget_recent_comments ul li:hover, .widget.widget_recent_entries ul li:hover {
+  color: var(--e-global-color-primary, #0C2C48);
+  font-weight: 600;
+}
+.widget ul.wp-block-archives li:hover a,
+.widget ul.wp-block-categories li:hover a,
+.widget ul.wp-block-page-list li:hover a, .widget.widget_archive ul li:hover a, .widget.widget_categories ul li:hover a, .widget.widget_pages ul li:hover a, .widget.widget_meta ul li:hover a, .widget.widget_nav_menu ul li:hover a, .widget.widget_recent_comments ul li:hover a, .widget.widget_recent_entries ul li:hover a {
+  color: var(--e-global-color-primary, #0C2C48);
 }
 .widget .wp-block-calendar caption,
 .widget .wp-block-calendar table,
@@ -1591,8 +1542,8 @@ div[data-name=more_information] .acf-editor-wrap.delay .wp-editor-area {
   font-family: var(--e-global-typography-primary-font-family, "Urbanist");
   border-radius: 10px;
 }
-.widget .wp-block-search__icon-button .wp-block-search__input {
-  padding-right: 65px !important;
+.widget .wp-block-search.wp-block-search__searchfield-hidden .wp-block-search__input {
+  display: none;
 }
 .widget .wp-block-search__no-button .wp-block-search__inside-wrapper {
   width: 100%;
@@ -1616,6 +1567,13 @@ div[data-name=more_information] .acf-editor-wrap.delay .wp-editor-area {
 .widget .wp-block-search__button-outside .wp-block-search__button svg {
   fill: currentColor;
 }
+.widget .wp-block-search__button-inside.wp-block-search__icon-button .wp-block-search__input {
+  padding: 12px 0;
+  padding-right: 34px !important;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid #e9e9e9;
+}
 .widget .wp-block-search__button-inside .wp-block-search__inside-wrapper {
   position: relative;
   padding: 0;
@@ -1633,6 +1591,18 @@ div[data-name=more_information] .acf-editor-wrap.delay .wp-editor-area {
   margin: 0;
   border-radius: 0 10px 10px 0;
   border: none;
+}
+.widget .wp-block-search__button-inside .wp-block-search__button.has-icon {
+  border-radius: 0;
+  border: none;
+  background: transparent;
+  color: var(--e-global-color-primary, #0C2C48);
+  padding: 0;
+}
+.widget .wp-block-search__button-inside .wp-block-search__button.has-icon svg {
+  transform: rotate(275deg);
+  width: 30px;
+  height: 30px;
 }
 .widget .wp-block-search__button-inside .wp-block-search__button svg {
   fill: currentColor;
@@ -1670,21 +1640,21 @@ div[data-name=more_information] .acf-editor-wrap.delay .wp-editor-area {
 .widget .wp-block-tag-cloud a,
 .widget .tagcloud a {
   display: inline-block;
-  font-size: 16px !important;
+  font-size: 14px !important;
   font-style: normal;
   font-weight: 400;
   text-transform: capitalize;
-  line-height: normal;
+  line-height: 22px;
   color: var(--e-global-color-text, #5A6167);
-  padding: 7px 12px;
-  border-radius: 10px;
-  background: #fff;
+  padding: 5px 16px;
   transition: none;
+  border-radius: 4px;
+  background: #f6f6f6;
 }
 .widget .wp-block-tag-cloud a:hover,
 .widget .tagcloud a:hover {
   color: #ffffff;
-  background: var(--e-global-color-accent, #5A86A9);
+  background: var(--e-global-color-primary, #0C2C48);
 }
 
 .bt-block-recent-posts {
@@ -1692,61 +1662,72 @@ div[data-name=more_information] .acf-editor-wrap.delay .wp-editor-area {
   flex-direction: column;
   padding: 0;
 }
-.bt-block-recent-posts .bt-post:not(:last-child) {
-  padding-bottom: 26px;
-  margin-bottom: 30px;
-  border-bottom: 1px solid #e4e4e4;
-}
-.bt-block-recent-posts .bt-post a {
+.bt-block-recent-posts .bt-post {
   display: flex;
-  gap: 15px;
+  gap: 28px;
   color: inherit;
+  align-items: center;
+}
+.bt-block-recent-posts .bt-post:not(:last-child) {
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #E9E9E9;
 }
 .bt-block-recent-posts .bt-post .bt-cover-image {
   padding-bottom: 100%;
-  border-radius: 10px;
+  border-radius: 4px;
 }
 .bt-block-recent-posts .bt-post--thumbnail {
-  width: 100px;
+  width: 90px;
+  display: block;
 }
 .bt-block-recent-posts .bt-post--infor {
-  width: calc(100% - 115px);
+  width: calc(100% - 118px);
 }
-.bt-block-recent-posts .bt-post--date {
+.bt-block-recent-posts .bt-post--meta {
   display: flex;
   align-items: center;
-  gap: 7px;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 18px;
-  color: var(--e-global-color-accent, #5A86A9);
-  margin-bottom: 8px;
-  color: var(--e-global-color-text, #5A6167);
+  gap: 12px;
 }
-@media (max-width: 1199.98px) and (min-width: 991.98px) {
-  .bt-block-recent-posts .bt-post--date {
-    font-size: 14px;
-  }
+.bt-block-recent-posts .bt-post--publish {
+  color: var(--e-global-color-text, #5A6167);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 16px; /* 133.333% */
+  letter-spacing: 0.96px;
+  text-transform: uppercase;
+  padding-right: 12px;
+  position: relative;
+}
+.bt-block-recent-posts .bt-post--publish::before {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 12px;
+  background: #e9e9e9;
+  right: 0;
+  content: "";
+}
+.bt-block-recent-posts .bt-post--category {
+  color: var(--e-global-color-text, #5A6167);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 16px; /* 133.333% */
+  letter-spacing: 0.96px;
+  text-transform: uppercase;
 }
 .bt-block-recent-posts .bt-post--title {
   word-break: break-word;
-  margin: 0 0 10px;
+  margin: 4px 0 0 0;
   color: var(--e-global-color-primary, #0C2C48);
   font-family: var(--e-global-typography-secondary-font-family, "Urbanist");
   font-size: 16px;
+  font-style: normal;
   font-weight: 500;
   line-height: 24px;
-}
-.bt-block-recent-posts .bt-post--author {
-  color: var(--e-global-color-accent, #5A86A9);
-  display: flex;
-  gap: 7px;
-  align-items: center;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  text-transform: capitalize;
 }
 
 .bt-block-video-popup {
@@ -1800,4 +1781,4 @@ div[data-name=more_information] .acf-editor-wrap.delay .wp-editor-area {
   padding: 0;
 }
 
-/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../sass/admin-main.scss%22,%22../sass/_vars.scss%22,%22../sass/_fonts.scss%22,%22../sass/_admin-fixed.scss%22,%22../sass/_general.scss%22,%22../sass/_widget.scss%22,%22../sass/_block.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAAA;AAAA;AAAA;ACAA;AAAA;AAAA;AAOA;AAAA;AAAA;AAWA;AAOA;ACzBA;AACA;EACE;EACA;EACA;EACA;EACA;EACA;;AAEF;AACA;EACE;EACA;EACA;EACA;EACA;EACA;;AAEF;AACA;EACE;EACA;EACA;EACA;EACA;EACA;;AAEF;AACA;EACE;EACA;EACA;EACA;EACA;EACA;;AClCF;EACE,aFEU;;;AEEV;EACE;;AAEF;EACE;EACA;EACA;EACA;;AACA;EACE;;AAGJ;EACE,aFdW;EEeX;EACA;EACA,OFVY;;AEYd;AAAA;EAEE;EACA;EACA;EACA;EACA;EACA;;AAEF;EACE;;AAEF;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AAEF;EAEE;EACA;;AAEF;EACE;EACA;;;AAIJ;EACE;EACA;EACA;EACA;;AAEE;EACE;;AAEF;EACE;EACA;EACA;;;AAKJ;EACE;;;AC3EF;EACE;;AACA;EACE;EACA;EACA,YHQS;EGPT;EACA;;AACA;EACE,YHIO;;AGHP;EACE;EACA;;AAEF;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AAEF;EACE;;AACA;EACE,YHhBM;;AGkBR;EACE,YHjBG;;AGqBT;AAAA;EAEE;EACA;EACA;EACA;;AAEF;EACE;;AAEF;EACE;;AAGJ;EACE;;AACA;EACE;;AAEE;AAAA;EAEE;;AAEF;EACE;EACA;EACA;EACA;EACA;;AAGA;EACE,OHrDC;;AGuDH;EACE;EACA,OH5DE;EG6DF;;AAEF;EACE;EACA,OHjEE;EGkEF;;AAOZ;EACE;EACA;;AACA;AAAA;EAEE;;AAEF;EACE;;AAGA;EACE;EACA;;AAEF;EACE;EACA;EACA;EACA;;;AAKR;EACE;EACA;;AACA;EACE;EACA;EACA;EACA;EACA;;AACA;EACE;;AAGA;EACE;EACA,OH7GO;;AG+GT;EACE;EACA,OHjHO;;AGqHX;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AAGF;EACE;EACA;EACA;EACA;EACA;EACA;EACA,OH3IO;EG4IP;;AAEF;EACE;EACA;EACA;EACA;EACA;EACA,OHpJO;;;AGyJb;AAAA;EAEE;EACA;EACA;;AAMQ;AAAA;EACE;;AAOV;AAAA;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AAGE;AAAA;EACE;EACA;EACA;;AACA;AAAA;EACE;EACA;EACA;EACA,OH9LK;EG+LL;EACA;;AAQJ;AAAA;EACE,OH1MK;EG2ML;EACA;;AAGF;AAAA;EACE;EACA;;AAGJ;AAAA;AAAA;AAAA;EAEE,kBHrNS;;AG6Nf;AAAA;EAEE;EACA;EACA;EACA;;;AAIF;AAAA;EAEE;;AACA;AAAA;EACE;EACA;;;AAGJ;AAAA;EAEE;;;AAGF;EACE,WH/OU;EGgPV;EACA;EACA,cHjPc;EGkPd,eHjPY;;;AGqPZ;EACE;;AAEF;EACE;;;AAIJ;EACE;EACA;EACA;EACA;EACA;EACA;EACA;;;AAGF;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AACA;EAEE;;;AAIJ;EACE;EACA;EACA;EACA;;AAMF;EACE;EACA;EACA;EACA;EACA;EACA;;;AAGF;EACE;IACE;IACA;;EAEF;IACE;IACA;;;AAIJ;EACE;EACA;EACA;EACA;EACA;EACA;EACA;;AACA;EAEE;EACA;EACA;EACA;EACA,YHzUW;EG0UX;EACA;EACA;EACA;;AAEF;EACE;;;AAKF;EACE;;AACA;EACE;;;AAKN;EACE;EACA;EACA;EACA;EACA;;;AAEF;EACE;EACA;EACA;EACA;EACA;EACA;EACA,YH3Wa;EG4Wb;EACA;EACA;EACA,aHzXa;EG0Xb;EACA;;AACA;EAEE;EACA,YHrXW;;AGwXb;EApBF;IAqBI;IACA;;;;AAGJ;EAEE,YHjYgB;;AGkYhB;EAEE,YHpYc;EGqYd,cHrYc;;;AGwYlB;EAEE,OHxYa;EGyYb;;AACA;EAEE;EACA,YH7YW;;;AGgZf;EAEE,OHrZc;EGsZd;EACA;;AACA;EAEE;EACA,YH1Zc;;;AG6ZlB;EACE;;AACA;EACE;EACA;EACA;EACA;;AAEF;EACE;EACA,kBHraW;EGsaX;;AAEF;EACE;EACA;;;AAGJ;AAAA;EACE;;AACA;AAAA;EACE;EACA;EACA;EACA;;AAEF;AAAA;EACE;EACA;EACA;;AAEF;AAAA;EACE;EACA;;;AAGJ;EACE,OHncc;;AGocd;EACE;;AAEF;EACE;;AAEF;EACE;EACA;EACA,OH7cY;EG8cZ,aHpda;EGqdb;EACA;EACA;EACA;;AACA;EATF;IAUI;IACA;;;AAGJ;EACE;EACA;EACA,OH3dY;EG4dZ,aHlea;EGmeb;EACA;EACA;EACA;;AACA;EATF;IAUI;IACA;;;AAGJ;EACE;EACA;;AACA;EACE;EACA;;AACA;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AAKN;EACE;EACA;;AACA;EAHF;IAII;;;AAEF;EACE;;AAEF;EACE;;AAGJ;EACE;EACA;EACA;;AACA;EACE;;AACA;EACE;;AAGJ;EACE;;AACA;EACE;;AAEF;EACE;;AAEF;AAAA;EAEE;;AAGJ;EAvBF;IAwBI;;EACA;IACE;IACA;;EAEF;IACE;IACA;;;AAGJ;EAlCF;IAmCI;;;AAIF;EADF;IAEI;;EACA;IACE;IACA;;;AAKJ;EACE;EACA;;AACA;EACE;EACA;;AACA;EACE;;AAMN;EACE;;AAEF;EACE;EACA;;AACA;EACE;;AACA;EACE;;AAEF;EACE;;AAKJ;EACE;EACA;;AAIN;AAAA;AAAA;AAAA;AAAA;EAKE;EACA;;AACA;AAAA;AAAA;AAAA;AAAA;EACE;;AAGJ;EACE;EACA;;AACA;EACE;EACA;;AACA;EACE;;AAIN;EACE;EACA;;AACA;EACE;;AAEF;EACE;;AAEF;EACE;EACA;EACA;;AAKA;EACE;EACA;EACA;EACA;EACA;;AAIF;EACE;;AAIF;EACE;;AAGJ;EACE;EACA;;AAEF;EACE;;;AAIN;EACE;EACA;;AACA;EACE,OH/pBW;EGgqBX,aH1qBW;EG2qBX;EACA;EACA;EACA;;AAEF;EACE;EACA;EACA;EACA;EACA;;AACA;EACE;EACA;EACA,aHxrBW;EGyrBX,OHhrBS;;AGirBT;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AAIN;EACE;EACA;EACA;;AAEF;EACE;IACE;;;AAGJ;EACE;IACE;;EAEF;IACE;;EAEF;IACE;IACA;;;AAGJ;EACE;IACE;;;AAGJ;EACE;IACE;;EAEF;IACE;;EAEF;IACE;IACA;;;;AAKN;EACE;EACA;EACA,OH9uBc;EG+uBd,aHrvBe;EGsvBf;EACA;EACA;EACA;EACA;;AACA;EAVF;IAWI;;;AAEF;EACE;EACA;EACA;EACA;EACA;EACA;EACA,YH5vBW;EG6vBX;EACA;;;AAIJ;EACE;EACA;EACA;EACA;;AACA;EACE;EACA;EACA;EACA;EACA;EACA,aHvxBW;EGwxBX;EACA;EACA;EACA,OHpxBY;EGqxBZ;EACA;EACA;EACA;;AACA;EACE,OHvxBS;;AGyxBP;EACE,MH1xBK;;AG8xBX;EACE;EACA;EACA,YHjyBS;EGkyBT,cHlyBS;;AGoyBX;EAEE;EACA;;AACA;EACE;EACA;;AAIF;EACE;;AAGJ;EACE;EACA;;AAGJ;EACE;IACE;;EAEF;IACE;;;;AAKN;EACE;EACA;EACA;;AACA;EACE;EACA;EACA;EACA;;AACA;EACE;EACA;;AACA;EACE;;AAEF;EACE;;AACA;EACE;EACA;EACA;EACA;;AAGJ;EACE;EACA;EACA;;AAIN;EACE;;;AAIJ;EACE;EACA;EACA;EACA;;AACA;EALF;IAMI;;;AAEF;EACE;EACA,aHz3BW;EG03BX;EACA;EACA;EACA,OHt3BY;EGu3BZ;;AAEF;EACE;EACA;EACA;EACA,OH73BY;;;AGm4BZ;EACE,aH34BS;EG44BT;EACA;EACA;EACA,OHx4BU;EGy4BV;;AACA;EACE,aHj5BS;EGk5BT,OHz4BO;;AG44BX;EACE;EACA;EACA;;AACA;EACE;;AAEF;EACE;;AAEF;EACE;;AAIF;EACE;EACA;;AAGJ;EACE;EACA;EACA;EACA,aH96BS;EG+6BT;EACA;EACA;EACA;EACA,OHz6BS;EG06BT;;AACA;EACE;;;AAMR;EACE;EACA;;AACA;EACE;EACA;EACA;EACA;EACA;EACA;;AACA;EACE;;AAEF;AAAA;EAEE;EACA;;AAEF;EACE;EACA;;AAEF;AAAA;AAAA;AAAA;EAIE;EACA;EACA;EACA;EACA;EACA,aH59BM;;AG89BR;AAAA;EAEE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AAEF;EACE;EACA;EACA,aH5+BM;EG6+BN;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA,YH9+BS;EG++BT;EACA;EACA;EACA;EACA;;AAGA;EACE,OHx/BK;EGy/BL;EACA;EACA;EACA;EACA;EACA;;AACA;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AACA;EACE;EACA;EACA;EACA;EACA;;AAGJ;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AAEF;EACE,OH/hCG;;AGgiCH;EACE,OHjiCC;;;AG0iCX;EACE;EACA;EACA;EACA;;AACA;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AACA;EACE;EACA;EACA;EACA;EACA;;AAGJ;EACE;EACA;EACA;EACA;EACA;EACA;EACA;;AAEF;EACE;EACA;EACA;EACA;EACA;EACA;;AACA;EACE;EACA;;;AAMR;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA,OHtmCc;EGumCd;EACA,kBHvmCgB;EGwmChB,aHhnCa;EGinCb;EACA;;AACA;EACE;;AAEF;EAjBF;IAkBI;;;;AAIJ;EACE;IACE;;EAEF;IACE;IACA;;EAEF;IACE;;;AAGJ;EACE;IACE;;EAEF;IACE;IACA;;EAEF;IACE;;;AAGJ;EACE;IACE;;EAEF;IACE;IACA;;EAEF;IACE;;;AAIJ;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA,kBH9pCa;EG+pCb;EACA;EACA;EACA;EACA;EACA;EACA;;AAEE;EACE;EACA;EACA;;AAGA;EACE;;AAIN;EACE;EACA;EACA;;AAEF;EACE;EACA;;AAGF;EAtCF;IAuCI;IACA;IACA;;EAEA;IACE;;EAGF;IACE;IACA;;;;AAIN;EACE;EACA;EACA;EACA;EACA,OHntCc;EGotCd;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AACA;EACE;;AAEF;EACE;EACA;;AACA;EACE,OHtuCU;;;ADHhB;AAAA;AAAA;AKPE;EACE;;AAEF;EACE;EACA;EACA,YJQe;EIPf;EACA;EACA;;AACA;EAPF;IAQI;IACA;;;AAEF;EAXF;IAYI;IACA;;;AAGJ;AAAA;AAAA;EAGE,OJZY;EIaZ;EACA;EACA;EACA;EACA;EACA,YJjBc;EIkBd;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AACA;AAAA;AAAA;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AAEF;EA9BF;AAAA;AAAA;IA+BI;IACA;;;AAEF;EAlCF;AAAA;AAAA;IAmCI;IACA;;;AAGJ;AAAA;EAEE;EACA;EACA;;AACA;AAAA;EACE;;AACA;AAAA;EACE;;AAIN;EACE;;AAaA;AAAA;AAAA;EACE;;AACA;AAAA;AAAA;EACE;EACA;EACA;;AAEF;AAAA;AAAA;EACE,OJlFQ;EImFR,aJzFS;EI0FT;EACA;EACA;EACA;EACA;EACA;EACA;;AACA;AAAA;AAAA;EACE,OJzFK;;AIgGX;AAAA;AAAA;AAAA;EAEE;;AAIF;EACE;EACA;;AACA;EACE;;AAEF;EACE;EACA;EACA;;AAGJ;EACE,aJ7HS;EI8HT,OJvHU;;AIwHV;EACE,OJtHO;;AIyHX;EACE;;AACA;EACE;;AACA;EACE;;AAMN;EACE;EACA;EACA;EACA;;AACA;EACE;;AAGJ;EACE;EACA,aJzJS;EI0JT,OJnJU;;AIoJV;EACE,OJlJO;;AIqJX;EACE;EACA;;AAIF;EACE;EACA;EACA;EACA;;AACA;EACE;;AAGJ;EACE;EACA,aJhLS;;AIiLT;EACE,OJ3KQ;;AI4KR;EACE,OJ1KK;;AI8KX;EACE;;AAIF;EACE;;AACA;EACE;;AAEF;EACE,aJnMO;EIoMP,OJ7LQ;;AI8LR;EACE,OJ5LK;;AI+LT;AAAA;EAEE;EACA;;AAIN;EACE,aJjNW;EIkNX,OJ3MY;;AI4MZ;EACE,OJ1MS;;AI8MX;EACE,OJlNU;EImNV,aJ1NS;EI2NT;EACA;EACA;EACA;EACA;EACA;;AAEF;EACE;EACA;EACA;EACA;EACA;;AAEF;EACE;EACA;EACA,aJ5OS;EI6OT;;AAIE;EACE;;AAMF;EACE;EACA;;AAMF;EACE;EACA;EACA;EACA;;AAGA;EACE;;AAOJ;EACE;EACA;EACA;EACA;;AAGA;EACE;;AAOJ;EACE;EACA;;AAEF;EACE;;AAEF;EACE;EACA;EACA;EACA;EACA;EACA,YJjSK;EIkSL;EACA;EACA;;AACA;EACE;;AAMV;EACE;;AACA;EACE;;AAEF;EACE;EACA;;AAEF;EACE;EACA;EACA;EACA;EACA;EACA;;AAGJ;EACE;;AACA;EACE;;AAGJ;AAAA;EAEE;EACA;EACA;;AACA;AAAA;EACE;EACA;EACA;EACA;EACA;EACA;EACA,OJjVO;EIkVP;EACA;EACA;EACA;;AACA;AAAA;EACE;EACA,YJvVO;;;AKdf;EACE;EACA;EACA;;AAEE;EACE;EACA;EACA;;AAEF;EACE;EACA;EACA;;AAEF;EACE;EACA;;AAEF;EACE;;AAEF;EACE;;AAEF;EACE;EACA;EACA;EACA;EACA;EACA;EACA,OLlBS;EKmBT;EACA,OLrBO;;AKsBP;EAVF;IAWI;;;AAGJ;EAEE;EACA;EACA,OLhCU;EKiCV,aLvCW;EKwCX;EACA;EACA;;AAEF;EACE,OLpCS;EKqCT;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;;AAIN;EACE;EACA;EACA;EACA;EACA;EACA;;AACA;EACE;EACA;EACA;EACA;EACA;EACA;EACA,YL9DW;EK+DX;EACA;;AAEF;EAlBF;IAmBI;;;AAEF;EArBF;IAsBI;;;AAEF;EACE;;AACA;EACE;EACA,aLrFW;EKsFX;EACA;EACA;EACA;EACA;;AAEF;EACE;EACA;EACA;;;AAIN;EACE%22,%22file%22:%22admin-main.css%22%7D */
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../sass/admin-main.scss%22,%22../sass/_vars.scss%22,%22../sass/_fonts.scss%22,%22../sass/_admin-fixed.scss%22,%22../sass/_general.scss%22,%22../sass/_widget.scss%22,%22../sass/_block.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAAA;AAAA;AAAA;ACAA;AAAA;AAAA;AAOA;AAAA;AAAA;AAWA;AAOA;ACzBA;AACA;EACE;EACA;EACA;EACA;EACA;EACA;;AAEF;AACA;EACE;EACA;EACA;EACA;EACA;EACA;;AAEF;AACA;EACE;EACA;EACA;EACA;EACA;EACA;;AAEF;AACA;EACE;EACA;EACA;EACA;EACA;EACA;;AClCF;EACE,aFEU;;;AEEV;EACE;;AAEF;EACE;EACA;EACA;EACA;;AACA;EACE;;AAGJ;EACE,aFdW;EEeX;EACA;EACA,OFVY;;AEYd;AAAA;EAEE;EACA;EACA;EACA;EACA;EACA;;AAEF;EACE;;AAEF;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AAEF;EAEE;EACA;;AAEF;EACE;EACA;;;AAIJ;EACE;EACA;EACA;EACA;;AAEE;EACE;;AAEF;EACE;EACA;EACA;;;AAKJ;EACE;;;AC3EF;EACE;;AACA;EACE;EACA;EACA,YHQS;EGPT;EACA;;AACA;EACE,YHIO;;AGHP;EACE;EACA;;AAEF;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AAEF;EACE;;AACA;EACE,YHhBM;;AGkBR;EACE,YHjBG;;AGqBT;AAAA;EAEE;EACA;EACA;EACA;;AAEF;EACE;;AAEF;EACE;;AAGJ;EACE;;AACA;EACE;;AAEE;AAAA;EAEE;;AAEF;EACE;EACA;EACA;EACA;EACA;;AAGA;EACE,OHrDC;;AGuDH;EACE;EACA,OH5DE;EG6DF;;AAEF;EACE;EACA,OHjEE;EGkEF;;AAOZ;EACE;EACA;;AACA;AAAA;EAEE;;AAEF;EACE;;AAGA;EACE;EACA;;AAEF;EACE;EACA;EACA;EACA;;;AAKR;EACE;EACA;;AACA;EACE;EACA;EACA;EACA;EACA;;AACA;EACE;;AAGA;EACE;EACA,OH7GO;;AG+GT;EACE;EACA,OHjHO;;AGqHX;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AAGF;EACE;EACA;EACA;EACA;EACA;EACA;EACA,OH3IO;EG4IP;;AAEF;EACE;EACA;EACA;EACA;EACA;EACA,OHpJO;;;AGyJb;AAAA;EAEE;EACA;EACA;;AAMQ;AAAA;EACE;;AAOV;AAAA;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AAGE;AAAA;EACE;EACA;EACA;;AACA;AAAA;EACE;EACA;EACA;EACA,OH9LK;EG+LL;EACA;;AAQJ;AAAA;EACE,OH1MK;EG2ML;EACA;;AAGF;AAAA;EACE;EACA;;AAGJ;AAAA;AAAA;AAAA;EAEE,kBHrNS;;AG6Nf;AAAA;EAEE;EACA;EACA;EACA;;;AAIF;AAAA;EAEE;;AACA;AAAA;EACE;EACA;;;AAGJ;AAAA;EAEE;;;AAGF;EACE,WH/OU;EGgPV;EACA;EACA,cHjPc;EGkPd,eHjPY;;;AGqPZ;EACE;;AAEF;EACE;;;AAIJ;EACE;EACA;EACA;EACA;EACA;EACA;EACA;;;AAGF;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AACA;EAEE;;;AAIJ;EACE;EACA;EACA;EACA;;AAMF;EACE;EACA;EACA;EACA;EACA;EACA;;;AAGF;EACE;IACE;IACA;;EAEF;IACE;IACA;;;AAIJ;EACE;EACA;EACA;EACA;EACA;EACA;EACA;;AACA;EAEE;EACA;EACA;EACA;EACA,YHzUW;EG0UX;EACA;EACA;EACA;;AAEF;EACE;;;AAKF;EACE;;AACA;EACE;;;AAKN;EACE;EACA;EACA;EACA;EACA;;;AAEF;EACE;EACA;EACA;EACA;EACA;EACA;EACA,YH3Wa;EG4Wb;EACA;EACA;EACA,aHzXa;EG0Xb;EACA;;AACA;EAEE;EACA,YHrXW;;AGwXb;EApBF;IAqBI;IACA;;;;AAGJ;EAEE,YHjYgB;;AGkYhB;EAEE,YHpYc;EGqYd,cHrYc;;;AGwYlB;EAEE,OHxYa;EGyYb;;AACA;EAEE;EACA,YH7YW;;;AGgZf;EAEE,OHrZc;EGsZd;EACA;;AACA;EAEE;EACA,YH1Zc;;;AG6ZlB;EACE;;AACA;EACE;EACA;EACA;EACA;;AAEF;EACE;EACA,kBHraW;EGsaX;;AAEF;EACE;EACA;;;AAGJ;AAAA;EACE;;AACA;AAAA;EACE;EACA;EACA;EACA;;AAEF;AAAA;EACE;EACA;EACA;;AAEF;AAAA;EACE;EACA;;;AAGJ;EACE,OHncc;;AGocd;EACE;;AAEF;EACE;;AAEF;EACE;EACA;EACA,OH7cY;EG8cZ,aHpda;EGqdb;EACA;EACA;EACA;;AACA;EATF;IAUI;IACA;;;AAGJ;EACE;EACA;EACA,OH3dY;EG4dZ,aHlea;EGmeb;EACA;EACA;EACA;;AACA;EATF;IAUI;IACA;;;AAGJ;EACE;EACA;;AACA;EACE;EACA;;AACA;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AAKN;EACE;EACA;;AACA;EAHF;IAII;;;AAEF;EACE;;AAEF;EACE;;AAGJ;EACE;EACA;EACA;;AACA;EACE;;AACA;EACE;;AAGJ;EACE;;AACA;EACE;;AAEF;EACE;;AAEF;AAAA;EAEE;;AAGJ;EAvBF;IAwBI;;EACA;IACE;IACA;;EAEF;IACE;IACA;;;AAGJ;EAlCF;IAmCI;;;AAIF;EADF;IAEI;;EACA;IACE;IACA;;;AAKJ;EACE;EACA;;AACA;EACE;EACA;;AACA;EACE;;AAMN;EACE;;AAEF;EACE;EACA;;AACA;EACE;;AACA;EACE;;AAEF;EACE;;AAKJ;EACE;EACA;;AAIN;AAAA;AAAA;AAAA;AAAA;EAKE;EACA;;AACA;AAAA;AAAA;AAAA;AAAA;EACE;;AAGJ;EACE;EACA;;AACA;EACE;EACA;;AACA;EACE;;AAIN;EACE;EACA;;AACA;EACE;;AAEF;EACE;;AAEF;EACE;EACA;EACA;;AAKA;EACE;EACA;EACA;EACA;EACA;;AAIF;EACE;;AAIF;EACE;;AAGJ;EACE;EACA;;AAEF;EACE;;;AAIN;EACE;EACA;;AACA;EACE,OH/pBW;EGgqBX,aH1qBW;EG2qBX;EACA;EACA;EACA;;AAEF;EACE;EACA;EACA;EACA;EACA;;AACA;EACE;EACA;EACA,aHxrBW;EGyrBX,OHhrBS;;AGirBT;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AAIN;EACE;EACA;EACA;;AAEF;EACE;IACE;;;AAGJ;EACE;IACE;;EAEF;IACE;;EAEF;IACE;IACA;;;AAGJ;EACE;IACE;;;AAGJ;EACE;IACE;;EAEF;IACE;;EAEF;IACE;IACA;;;;AAKN;EACE;EACA;EACA,OH9uBc;EG+uBd,aHrvBe;EGsvBf;EACA;EACA;EACA;EACA;;AACA;EAVF;IAWI;;;AAEF;EACE;EACA;EACA;EACA;EACA;EACA;EACA,YH5vBW;EG6vBX;EACA;;;AAIJ;EACE;EACA;EACA;EACA;;AACA;EACE;EACA;EACA;EACA;EACA;EACA,aHvxBW;EGwxBX;EACA;EACA;EACA,OHpxBY;EGqxBZ;EACA;EACA;EACA;;AACA;EACE,OHvxBS;;AGyxBP;EACE,MH1xBK;;AG8xBX;EACE;EACA;EACA,YHjyBS;EGkyBT,cHlyBS;;AGoyBX;EAEE;EACA;;AACA;EACE;EACA;;AAIF;EACE;;AAGJ;EACE;EACA;;AAGJ;EACE;IACE;;EAEF;IACE;;;;AAKN;EACE;EACA;EACA;;AACA;EACE;EACA;EACA;EACA;;AACA;EACE;EACA;;AACA;EACE;;AAEF;EACE;;AACA;EACE;EACA;EACA;EACA;;AAGJ;EACE;EACA;EACA;;AAIN;EACE;;;AAIJ;EACE;EACA;EACA;EACA;;AACA;EALF;IAMI;;;AAEF;EACE;EACA,aHz3BW;EG03BX;EACA;EACA;EACA,OHt3BY;EGu3BZ;;AAEF;EACE;EACA;EACA;EACA,OH73BY;;;AGm4BZ;EACE,aH34BS;EG44BT;EACA;EACA;EACA,OHx4BU;EGy4BV;;AACA;EACE,aHj5BS;EGk5BT,OHz4BO;;AG44BX;EACE;EACA;EACA;;AACA;EACE;;AAEF;EACE;;AAEF;EACE;;AAIF;EACE;EACA;;AAGJ;EACE;EACA;EACA;EACA,aH96BS;EG+6BT;EACA;EACA;EACA;EACA,OHz6BS;EG06BT;;AACA;EACE;;;AAMR;EACE;EACA;;AACA;EACE;EACA;EACA;EACA;EACA;EACA;;AACA;EACE;;AAEF;AAAA;EAEE;EACA;;AAEF;EACE;EACA;;AAEF;AAAA;AAAA;AAAA;EAIE;EACA;EACA;EACA;EACA;EACA,aH59BM;;AG89BR;AAAA;EAEE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AAEF;EACE;EACA;EACA,aH5+BM;EG6+BN;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA,YH9+BS;EG++BT;EACA;EACA;EACA;EACA;;AAGA;EACE,OHx/BK;EGy/BL;EACA;EACA;EACA;EACA;EACA;;AACA;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AACA;EACE;EACA;EACA;EACA;EACA;;AAGJ;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AAEF;EACE,OH/hCG;;AGgiCH;EACE,OHjiCC;;;AG0iCX;EACE;EACA;EACA;EACA;;AACA;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AACA;EACE;EACA;EACA;EACA;EACA;;AAGJ;EACE;EACA;EACA;EACA;EACA;EACA;EACA;;AAEF;EACE;EACA;EACA;EACA;EACA;EACA;;AACA;EACE;EACA;;;AAMR;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA,OHtmCc;EGumCd;EACA,kBHvmCgB;EGwmChB,aHhnCa;EGinCb;EACA;;AACA;EACE;;AAEF;EAjBF;IAkBI;;;;AAIJ;EACE;IACE;;EAEF;IACE;IACA;;EAEF;IACE;;;AAGJ;EACE;IACE;;EAEF;IACE;IACA;;EAEF;IACE;;;AAGJ;EACE;IACE;;EAEF;IACE;IACA;;EAEF;IACE;;;AAIJ;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA,kBH9pCa;EG+pCb;EACA;EACA;EACA;EACA;EACA;EACA;;AAEE;EACE;EACA;EACA;;AAGA;EACE;;AAIN;EACE;EACA;EACA;;AAEF;EACE;EACA;;AAGF;EAtCF;IAuCI;IACA;IACA;;EAEA;IACE;;EAGF;IACE;IACA;;;;AAIN;EACE;EACA;EACA;EACA;EACA,OHntCc;EGotCd;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AACA;EACE;;AAEF;EACE;EACA;;AACA;EACE,OHtuCU;;;ADHhB;AAAA;AAAA;AKPE;EACE;;AAEF;EACE;EACA;;AAEF;AAAA;AAAA;EAGE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AAEF;AAAA;EAEE;EACA;EACA;;AACA;AAAA;EACE;;AACA;AAAA;EACE;;AAIN;EACE;;AAaA;AAAA;AAAA;EACE;EACA;EACA;EACA;EACA,aJ9CW;EI+CX;EACA;EACA;EACA;EACA;EACA,OJ5CO;;AI6CP;AAAA;AAAA;EACE,OJ9CK;EI+CL;EACA;EACA;;AAEF;AAAA;AAAA;EACE,OJtDQ;EIuDR;;AACA;AAAA;AAAA;EACE,OJzDM;;AIgEZ;AAAA;AAAA;AAAA;EAEE;;AAIF;EACE;EACA;;AACA;EACE;;AAEF;EACE;EACA;EACA;;AAGJ;EACE,aJ1FS;EI2FT,OJpFU;;AIqFV;EACE,OJnFO;;AIsFX;EACE;;AACA;EACE;;AACA;EACE;;AAMN;EACE;EACA;EACA;EACA;;AACA;EACE;;AAGJ;EACE;EACA,aJtHS;EIuHT,OJhHU;;AIiHV;EACE,OJ/GO;;AIkHX;EACE;EACA;;AAIF;EACE;EACA;EACA;EACA;;AACA;EACE;;AAGJ;EACE;EACA,aJ7IS;;AI8IT;EACE,OJxIQ;;AIyIR;EACE,OJvIK;;AI2IX;EACE;;AAIF;EACE;;AACA;EACE;;AAEF;EACE,aJhKO;EIiKP,OJ1JQ;;AI2JR;EACE,OJzJK;;AI4JT;AAAA;EAEE;EACA;;AAIN;EACE,aJ9KW;EI+KX,OJxKY;;AIyKZ;EACE,OJvKS;;AI2KX;EACE,OJ/KU;EIgLV,aJvLS;EIwLT;EACA;EACA;EACA;EACA;EACA;;AAEF;EACE;EACA;EACA;EACA;EACA;;AAEF;EACE;EACA;EACA,aJzMS;EI0MT;;AAGA;EACE;;AAKA;EACE;EACA;;AAMF;EACE;EACA;EACA;EACA;;AAGA;EACE;;AAOJ;EACE;EACA;EACA;EACA;;AAGA;EACE;;AAQF;EACE;EACA;EACA;EACA;EACA;;AAKJ;EACE;EACA;;AAEF;EACE;;AAEF;EACE;EACA;EACA;EACA;EACA;EACA,YJvQK;EIwQL;EACA;EACA;;AACA;EACE;EACA;EACA;EACA,OJlRI;EImRJ;;AACA;EACE;EACA;EACA;;AAGJ;EACE;;AAMV;EACE;;AACA;EACE;;AAEF;EACE;EACA;;AAEF;EACE;EACA;EACA;EACA;EACA;EACA;;AAGJ;EACE;;AACA;EACE;;AAGJ;AAAA;EAEE;EACA;EACA;;AACA;AAAA;EACE;EACA;EACA;EACA;EACA;EACA;EACA,OJnUO;EIoUP;EACA;EACA;EACA;;AACA;AAAA;EACE;EACA,YJ5UQ;;;AKXhB;EACE;EACA;EACA;;AACA;EACE;EACA;EACA;EACA;;AACA;EACE;EACA;EACA;;AAEF;EACE;EACA;;AAEF;EACE;EACA;;AAEF;EACE;;AAEF;EACE;EACA;EACA;;AAEF;EACE,OLlBO;EKmBP;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AACA;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AAGJ;EACE,OLvCO;EKwCP;EACA;EACA;EACA;EACA;EACA;;AAEF;EAEE;EACA;EACA,OLrDU;EKsDV,aL5DW;EK6DX;EACA;EACA;EACA;;;AAIN;EACE;EACA;EACA;EACA;EACA;EACA;;AACA;EACE;EACA;EACA;EACA;EACA;EACA;EACA,YLzEW;EK0EX;EACA;;AAEF;EAlBF;IAmBI;;;AAEF;EArBF;IAsBI;;;AAEF;EACE;;AACA;EACE;EACA,aLhGW;EKiGX;EACA;EACA;EACA;EACA;;AAEF;EACE;EACA;EACA;;;AAIN;EACE%22,%22file%22:%22admin-main.css%22%7D */

@@ -1,5 +1,9 @@
+<?php
+	$shop_page_url = get_permalink(wc_get_page_id('shop'));
+    $category_url = $shop_page_url . '?product_cat=' . $args['category']->slug;
+?>
 <div class="bt-product-category--item">
-    <a class="bt-product-category--inner" href="<?php echo esc_url(get_term_link($args['category'])); ?>">
+    <a class="bt-product-category--inner" href="<?php echo esc_url($category_url); ?>">
         <div class="bt-product-category--thumb">
             <div class="bt-cover-image">
                 <?php

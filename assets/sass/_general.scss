@@ -784,8 +784,8 @@
 
 .__bt-pagination-style {
   display: flex;
-  justify-content: center;
-  margin-top: 60px;
+  justify-content: flex-start;
+  margin-top: 40px;
   gap: 8px;
   .page-numbers {
     display: flex;

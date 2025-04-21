@@ -235,9 +235,7 @@ if (!function_exists('utenzo_post_content_render')) {
     <?php
     } else {
     ?>
-      <div class="bt-post--excerpt">
-        <?php echo get_the_excerpt(); ?>
-      </div>
+      <div class="bt-post--excerpt"><?php echo get_the_excerpt(); ?></div>
     <?php
     }
 

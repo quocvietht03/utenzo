@@ -737,6 +737,12 @@
 									tagElement.text(nameTag).append(svgElement);
 								}
 								tagsContainer.append(tagElement);
+							} else {
+								const titleCase = tag.split('-')
+									.map(word => word.charAt(0).toUpperCase() + word.slice(1))
+									.join(' ');
+								tagElement.text(titleCase).append(svgElement);
+								tagsContainer.append(tagElement);
 							}
 						}
 					});
@@ -1614,82 +1620,80 @@
 	// checkbox customize grouped product
 	function UtenzoCustomizeGroupedProduct() {
 		// Check if the product toggle exist
-		if ($('.bt-product-grouped-js').length > 0) {
-			$('.bt-product-grouped-js input[type="checkbox"]').on('change', function () {
-				var parent = $(this).parents('.woocommerce-grouped-product-list-item');
-				var quantityInput = parent.find('.quantity input');
-				var currentQuantity = parseInt(quantityInput.val()) || 0;
-				if ($(this).is(':checked')) {
-					if (currentQuantity === 0) {
-						quantityInput.val(1).trigger('change');
-					}
-				} else {
-					quantityInput.val(0).trigger('change');
+		$(document).on('change', '.bt-product-grouped-js input[type="checkbox"]', function () {
+			var parent = $(this).parents('.woocommerce-grouped-product-list-item');
+			var quantityInput = parent.find('.quantity input');
+			var currentQuantity = parseInt(quantityInput.val()) || 0;
+			if ($(this).is(':checked')) {
+				if (currentQuantity === 0) {
+					quantityInput.val(1).trigger('change');
 				}
+			} else {
+				quantityInput.val(0).trigger('change');
+			}
+		});
+		$(document).on('change', '.bt-product-grouped-js .quantity input', function () {
+			var parent = $(this).parents('.woocommerce-grouped-product-list-item');
+			var checkbox = parent.find('input[type="checkbox"]');
+			var quantity = parseInt($(this).val()) || 0;
+
+			if (quantity > 0) {
+				checkbox.prop('checked', true);
+			} else {
+				checkbox.prop('checked', false);
+			}
+			// Get all checked checkboxes and store their values
+			// Get checked products and their quantities
+			var productGrouped = [];
+			let totalPrice = 0;
+			let regularTotalPrice = 0;
+			let currencySymbol = '$';
+			$('.bt-product-grouped-js input[type="checkbox"]:checked').each(function () {
+				const $checkbox = $(this);
+				const $item = $checkbox.closest('.woocommerce-grouped-product-list-item');
+				const $quantity = $item.find('.quantity input');
+
+				// Add product to grouped array
+				productGrouped.push($checkbox.val() + ':' + $quantity.val());
+
+				// Calculate total price of checked products
+				currencySymbol = $item.find('.woocommerce-Price-currencySymbol').first().text() || '$';
+				const $priceElement = $item.find('.woocommerce-Price-amount');
+				let price;
+
+				// Get regular price
+				const regularPrice = parseFloat($priceElement.first().text().replace(/[^0-9.-]+/g, ''));
+
+				// Get sale price if exists
+				if ($item.find('ins').length) {
+					price = parseFloat($item.find('ins .woocommerce-Price-amount').text().replace(/[^0-9.-]+/g, ''));
+				} else {
+					price = regularPrice;
+				}
+
+				const quantity = parseInt($quantity.val()) || 0;
+				totalPrice += price * quantity;
+				regularTotalPrice += regularPrice * quantity;
 			});
-			$('.bt-product-grouped-js .quantity input').on('change', function () {
-				var parent = $(this).parents('.woocommerce-grouped-product-list-item');
-				var checkbox = parent.find('input[type="checkbox"]');
-				var quantity = parseInt($(this).val()) || 0;
 
-				if (quantity > 0) {
-					checkbox.prop('checked', true);
-				} else {
-					checkbox.prop('checked', false);
-				}
-				// Get all checked checkboxes and store their values
-				// Get checked products and their quantities
-				var productGrouped = [];
-				let totalPrice = 0;
-				let regularTotalPrice = 0;
-				let currencySymbol = '$';
-				$('.bt-product-grouped-js input[type="checkbox"]:checked').each(function () {
-					const $checkbox = $(this);
-					const $item = $checkbox.closest('.woocommerce-grouped-product-list-item');
-					const $quantity = $item.find('.quantity input');
-
-					// Add product to grouped array
-					productGrouped.push($checkbox.val() + ':' + $quantity.val());
-
-					// Calculate total price of checked products
-					currencySymbol = $item.find('.woocommerce-Price-currencySymbol').first().text() || '$';
-					const $priceElement = $item.find('.woocommerce-Price-amount');
-					let price;
-
-					// Get regular price
-					const regularPrice = parseFloat($priceElement.first().text().replace(/[^0-9.-]+/g, ''));
-
-					// Get sale price if exists
-					if ($item.find('ins').length) {
-						price = parseFloat($item.find('ins .woocommerce-Price-amount').text().replace(/[^0-9.-]+/g, ''));
-					} else {
-						price = regularPrice;
-					}
-
-					const quantity = parseInt($quantity.val()) || 0;
-					totalPrice += price * quantity;
-					regularTotalPrice += regularPrice * quantity;
-				});
-
-				// Update price display
-				if (totalPrice < regularTotalPrice) {
-					$('.bt-price').html(`<del>${currencySymbol}${regularTotalPrice.toFixed(2)}</del> ${currencySymbol}${totalPrice.toFixed(2)}`);
-				} else {
-					$('.bt-price').text(currencySymbol + totalPrice.toFixed(2));
-				}
-				// Update buy now button state
-				const $buyNowBtn = $('.bt-button-buy-now a');
-				if (productGrouped.length) {
-					$buyNowBtn
-						.attr('data-grouped', productGrouped.join(','))
-						.removeClass('disabled');
-					$('.bt-total-price ').addClass('active');
-				} else {
-					$buyNowBtn.addClass('disabled');
-					$('.bt-total-price ').removeClass('active');
-				}
-			});
-		}
+			// Update price display
+			if (totalPrice < regularTotalPrice) {
+				$('.bt-price').html(`<del>${currencySymbol}${regularTotalPrice.toFixed(2)}</del> ${currencySymbol}${totalPrice.toFixed(2)}`);
+			} else {
+				$('.bt-price').text(currencySymbol + totalPrice.toFixed(2));
+			}
+			// Update buy now button state
+			const $buyNowBtn = $('.bt-button-buy-now a');
+			if (productGrouped.length) {
+				$buyNowBtn
+					.attr('data-grouped', productGrouped.join(','))
+					.removeClass('disabled');
+				$('.bt-total-price ').addClass('active');
+			} else {
+				$buyNowBtn.addClass('disabled');
+				$('.bt-total-price ').removeClass('active');
+			}
+		});
 	}
 	jQuery(document).ready(function ($) {
 		UtenzoSubmenuAuto();

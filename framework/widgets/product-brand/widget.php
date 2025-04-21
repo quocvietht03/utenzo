@@ -297,7 +297,8 @@ class Widget_ProductBrand extends Widget_Base
 					foreach ($brands as $brand) {
 						$thumbnail_id = get_term_meta($brand->term_id, 'thumbnail_id', true);
 						$image = wp_get_attachment_url($thumbnail_id);
-						$brand_url = get_term_link($brand->term_id, 'product_brand');
+						$shop_page_url = get_permalink(wc_get_page_id('shop'));
+						$brand_url = $shop_page_url . '?product_brand=' . $brand->slug;
 						$is_svg = false;
 						
 						// Check if the image is SVG
