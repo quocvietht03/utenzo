@@ -69,6 +69,13 @@
           color: $color-primary;
         }
       }
+      &.current-cat{
+        color: $color-primary;
+        font-weight: 600;
+        a{
+          color: $color-primary;
+        }
+      }
     }
   }
   .wp-block-calendar,
