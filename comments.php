@@ -88,7 +88,7 @@ if (post_password_required()) {
 
 		'comment_field' =>  '<div class="bt-form-message">
 														<label class="bt-form-message__label" for="bt-form-message__input">' . __('Message', 'utenzo') . '<span class="required">*</span></label>
-														<textarea id="comment" class="bt-form-message__input" name="comment" cols="60" rows="6" aria-required="true" placeholder="' . esc_attr__('Start typing here', 'utenzo') . '">' . '</textarea>
+														<textarea id="comment" class="bt-form-message__input" name="comment" cols="60" rows="6" aria-required="true" placeholder="' . esc_attr__('Write your comment here', 'utenzo') . '">' . '</textarea>
 													</div>',
 
 		'must_log_in' => '<div class="bt-must-log-in">' . esc_html__('You must be', 'utenzo') . ' <a href="' . wp_login_url(apply_filters('the_permalink', get_permalink())) . '">' . esc_html__('logged in', 'utenzo') . '</a> ' . esc_html__('to post a comment.', 'utenzo') . '</div>',

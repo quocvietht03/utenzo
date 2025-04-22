@@ -7,7 +7,7 @@
 		} else {
 			echo utenzo_post_title_render();
 		}
-		echo utenzo_post_meta_render();
+		echo utenzo_post_meta_single_render();
 		?>
 	</div>
 	<?php

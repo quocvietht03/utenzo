@@ -1426,7 +1426,7 @@
                     align-items: flex-start;
                     .quantity {
                       width: 100%;
-                      .qty{
+                      .qty {
                         width: 100%;
                       }
                     }
@@ -6485,6 +6485,7 @@
     line-height: 42px;
     margin: 0 0 28px 0;
   }
+
   .woocommerce form {
     border: none;
     padding: 0;
@@ -6624,7 +6625,7 @@
         animation: shimmer 1.5s infinite linear;
       }
     }
-    .woocommerce-password-strength{
+    .woocommerce-password-strength {
       margin-top: 10px;
     }
     .show-password-input {
@@ -6687,15 +6688,23 @@
     }
     fieldset {
       padding: 0;
+      legend {
+        font-weight: 600;
+        margin-bottom: 10px;
+        font-size: 18px;
+      }
     }
     .form-row {
+      label {
+        display: block !important;
+      }
       input.input-text,
       textarea {
         font-size: 16px;
         line-height: 24px;
-        padding: 12px 15px;
-        border-color: #ececec;
-        border-radius: 10px;
+        padding: 11px 16px;
+        border-color: #e9e9e9;
+        border-radius: 4px;
       }
       .select2-container--default {
         height: 50px;
@@ -6734,20 +6743,96 @@
         }
       }
     }
+    .woocommerce-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      &::before{
+        top:25px;
+        @media(max-width:$break-xs){
+          top:16px;
+        }
+      }
+      &::after {
+        display: none;
+      }
+    }
+    .woocommerce-orders-table {
+      thead {
+        tr {
+          th {
+            &:last-child {
+              border-right: none;
+            }
+          }
+        }
+      }
+      tbody {
+        th,
+        td {
+          border-top: none;
+        }
+        tr {
+          &:last-child {
+            th,
+            td {
+              border-bottom: none;
+            }
+          }
+          td {
+            &:last-child {
+              border-right: none;
+            }
+          }
+        }
+      }
+    }
     .col2-set .col-1,
     .col2-set .col-2 {
       max-width: unset;
     }
+    .woocommerce-Addresses {
+      &.col2-set {
+        gap: 60px;
+        .woocommerce-Address {
+          .woocommerce-Address-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            gap: 10px;
+            flex-wrap: wrap;
+            &::before,
+            &::after {
+              display: none;
+            }
+            h2 {
+              font-size: 24px;
+              line-height: 30px;
+              margin: 0;
+            }
+          }
+        }
+        @media (max-width: $break-md) {
+          gap: 0;
+          .col-1 {
+            padding-bottom: 0;
+          }
+        }
+      }
+    }
     button.button {
       font-family: $primary-font;
-      font-size: 14px;
-      font-weight: 700;
-      line-height: 20px;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 24px;
       text-transform: uppercase;
       color: #fff;
       background: $color-accent;
-      padding: 20px 35px;
-      border-radius: 15px;
+      padding: 12px 30px;
+      border-radius: 4px;
     }
   }
   .woocommerce-ResetPassword {
@@ -6780,12 +6865,15 @@
 .woocommerce-page .woocommerce-message .button {
   background: $color-accent;
   color: #fff;
-  border-radius: 10px;
+  border-radius: 4px;
   padding: 10px 30px;
   font-size: 16px;
   line-height: 24px;
   &:hover {
-    background: $color-accent;
+    background: $color-primary;
     color: #fff;
+    background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
   }
 }

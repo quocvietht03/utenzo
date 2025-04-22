@@ -9,7 +9,7 @@ $category = get_the_terms($post_id, 'category');
       <?php 
       echo utenzo_post_meta_render();
       echo utenzo_post_title_render();
-      echo utenzo_post_content_render();
+      echo utenzo_post_excerpt_render();
       echo utenzo_post_button_render('Read More');
       ?>
     </div>

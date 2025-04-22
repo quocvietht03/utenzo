@@ -89,4 +89,19 @@
             }
         }
     }
+    &.bt-section-our-blog-01 {
+        > .e-con-inner {
+            @media (max-width: $break-lg) and (min-width: $break-tl) {
+                gap: 30px;
+                > .elementor-element {
+                    &:first-child {
+                        width: calc(68% - 15px);
+                    }
+                    &:last-child {
+                        width: calc(32% - 15px);
+                    }
+                }
+            }
+        }
+    }
 }
