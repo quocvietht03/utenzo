@@ -250,8 +250,8 @@ function utenzo_woocommerce_related_products_args($args)
 }
 
 if (function_exists('get_field')) {
-    $enable_related_posts = get_field('enable_related_posts', 'options');
-    if (!$enable_related_posts) {
+    $enable_related_product = get_field('enable_related_product', 'options');
+    if (!$enable_related_product) {
         remove_action('woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20);
     }
 }

@@ -188,7 +188,7 @@ if (!function_exists('utenzo_post_meta_render')) {
         </div>
       <?php } ?>
     </div>
-    <?php
+  <?php
     return ob_get_clean();
   }
 }
@@ -321,7 +321,7 @@ if (!function_exists('utenzo_share_render')) {
                       </svg>
                       </a>
                     </li>';
-  $social_item[] = '<li>
+    $social_item[] = '<li>
                     <a target="_blank" data-btIcon="fa fa-instagram" data-toggle="tooltip" title="' . esc_attr__('Instagram', 'utenzo') . '" href="https://www.instagram.com/sharer.php?u=' . get_the_permalink() . '">
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                           <path d="M13.75 1.875H6.25C5.09006 1.87624 3.97798 2.33758 3.15778 3.15778C2.33758 3.97798 1.87624 5.09006 1.875 6.25V13.75C1.87624 14.9099 2.33758 16.022 3.15778 16.8422C3.97798 17.6624 5.09006 18.1238 6.25 18.125H13.75C14.9099 18.1238 16.022 17.6624 16.8422 16.8422C17.6624 16.022 18.1238 14.9099 18.125 13.75V6.25C18.1238 5.09006 17.6624 3.97798 16.8422 3.15778C16.022 2.33758 14.9099 1.87624 13.75 1.875ZM10 13.75C9.25832 13.75 8.5333 13.5301 7.91661 13.118C7.29993 12.706 6.81928 12.1203 6.53545 11.4351C6.25162 10.7498 6.17736 9.99584 6.32206 9.26841C6.46675 8.54098 6.8239 7.8728 7.34835 7.34835C7.8728 6.8239 8.54098 6.46675 9.26841 6.32206C9.99584 6.17736 10.7498 6.25162 11.4351 6.53545C12.1203 6.81928 12.706 7.29993 13.118 7.91661C13.5301 8.5333 13.75 9.25832 13.75 10C13.749 10.9942 13.3535 11.9475 12.6505 12.6505C11.9475 13.3535 10.9942 13.749 10 13.75ZM14.6875 6.25C14.5021 6.25 14.3208 6.19502 14.1667 6.092C14.0125 5.98899 13.8923 5.84257 13.8214 5.67127C13.7504 5.49996 13.7318 5.31146 13.768 5.1296C13.8042 4.94775 13.8935 4.7807 14.0246 4.64959C14.1557 4.51848 14.3227 4.42919 14.5046 4.39301C14.6865 4.35684 14.875 4.37541 15.0463 4.44636C15.2176 4.51732 15.364 4.63748 15.467 4.79165C15.57 4.94582 15.625 5.12708 15.625 5.3125C15.625 5.56114 15.5262 5.7996 15.3504 5.97541C15.1746 6.15123 14.9361 6.25 14.6875 6.25ZM12.5 10C12.5 10.4945 12.3534 10.9778 12.0787 11.3889C11.804 11.8 11.4135 12.1205 10.9567 12.3097C10.4999 12.4989 9.99723 12.5484 9.51227 12.452C9.02732 12.3555 8.58186 12.1174 8.23223 11.7678C7.8826 11.4181 7.6445 10.9727 7.54804 10.4877C7.45157 10.0028 7.50108 9.50011 7.6903 9.04329C7.87952 8.58648 8.19995 8.19603 8.61107 7.92133C9.0222 7.64662 9.50555 7.5 10 7.5C10.663 7.5 11.2989 7.76339 11.7678 8.23223C12.2366 8.70107 12.5 9.33696 12.5 10Z" fill="currentColor"/>
@@ -536,50 +536,68 @@ if (!function_exists('utenzo_author_render')) {
 if (!function_exists('utenzo_related_posts')) {
   function utenzo_related_posts()
   {
-    $post_id = get_the_ID();
-    $cat_ids = array();
-    $categories = get_the_category($post_id);
+    if (function_exists('get_field')) {
+      $enable_related_posts = get_field('enable_related_posts', 'options');
+      $related_posts = get_field('related_posts', 'options');
+    } else {
+      $enable_related_posts = true;
+      $related_posts = array(
+        'heading' => __('Related Articles', 'utenzo'),
+        'description' => __('Discover the Hottest Fashion News and Trends Straight from the Runway', 'utenzo'),
+        'number_posts' => 3,
+      );
+    }
+    if ($enable_related_posts) {
 
-    if (!empty($categories) && !is_wp_error($categories)) {
-      foreach ($categories as $category) {
-        array_push($cat_ids, $category->term_id);
+      $post_id = get_the_ID();
+      $cat_ids = array();
+      $categories = get_the_category($post_id);
+
+      if (!empty($categories) && !is_wp_error($categories)) {
+        foreach ($categories as $category) {
+          array_push($cat_ids, $category->term_id);
+        }
       }
-    }
 
-    $current_post_type = get_post_type($post_id);
+      $current_post_type = get_post_type($post_id);
 
-    $query_args = array(
-      'category__in'   => $cat_ids,
-      'post_type'      => $current_post_type,
-      'post__not_in'    => array($post_id),
-      'posts_per_page'  => 3,
-    );
+      $query_args = array(
+        'category__in'   => $cat_ids,
+        'post_type'      => $current_post_type,
+        'post__not_in'    => array($post_id),
+        'posts_per_page'  => !empty($related_posts['number_posts']) ? $related_posts['number_posts'] : 3,
+      );
 
-    $list_posts = new WP_Query($query_args);
+      $list_posts = new WP_Query($query_args);
 
-    ob_start();
+      ob_start();
 
-    if ($list_posts->have_posts()) {
+      if ($list_posts->have_posts()) {
     ?>
-      <div class="bt-related-posts">
-      <div class="bt-container">
-        <div class="bt-related-posts--heading">
-           <h2 class="bt-head"><?php esc_html_e('related articles', 'utenzo'); ?></h2>
-          <p class="bt-sub"><?php esc_html_e('Discover the Hottest Fashion News and Trends Straight from the Runway', 'utenzo'); ?></p>
+        <div class="bt-related-posts">
+          <div class="bt-container">
+            <div class="bt-related-posts--heading">
+              <?php if (!empty($related_posts['heading'])): ?>
+                <h2 class="bt-head"><?php echo esc_html($related_posts['heading']); ?></h2>
+              <?php endif; ?>
+              <?php if (!empty($related_posts['description'])): ?>
+                <p class="bt-sub"><?php echo esc_html($related_posts['description']); ?></p>
+              <?php endif; ?>
+            </div>
+            <div class="bt-related-posts--list bt-image-effect">
+              <?php
+              while ($list_posts->have_posts()) : $list_posts->the_post();
+                get_template_part('framework/templates/post', 'style', array('image-size' => "large"));
+              endwhile;
+              wp_reset_postdata();
+              ?>
+            </div>
+          </div>
         </div>
-        <div class="bt-related-posts--list bt-image-effect">
-          <?php
-          while ($list_posts->have_posts()) : $list_posts->the_post();
-          get_template_part('framework/templates/post', 'style', array('image-size' => "large"));
-          endwhile;
-          wp_reset_postdata();
-          ?>
-        </div>
-      </div>
-      </div>
     <?php
+      }
+      return ob_get_clean();
     }
-    return ob_get_clean();
   }
 }
 
@@ -651,7 +669,7 @@ if (!function_exists('utenzo_custom_comment')) {
         </div>
         <div class="bt-content">
           <div class="bt-text">
-              <?php comment_text(); ?>
+            <?php comment_text(); ?>
           </div>
           <?php comment_reply_link(array_merge($args, array('add_below' => $add_below, 'depth' => $depth, 'max_depth' => $args['max_depth']))); ?>
         </div>

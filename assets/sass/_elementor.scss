@@ -111,11 +111,32 @@
 
 .elementor-pagination {
   @extend .__bt-pagination-style;
-
+   display: block;
   .page-numbers {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    padding: 0px 5px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    &:nth-child(2){
+      &.current{
+        margin-left: 0!important;
+      }
+    }
+    &:nth-last-child(2){
+      &.current{
+        margin-right: 0!important;
+      }
+    }
     &.prev,
     &.next {
       font-size: inherit;
+      svg {
+        position: relative;
+        top: 2px;
+      }
     }
   }
 

@@ -99,31 +99,49 @@ if (!function_exists('utenzo_enqueue_scripts')) {
 				wp_add_inline_script('utenzo-main', $custom_script);
 			}
 		}
-		$wishlist = get_field('wishlist', 'options');
+		// Get wishlist URL
 		$wishlist_url = home_url('/products-wishlist/');
-		if ($wishlist && isset($wishlist['page_wishlist']) && $wishlist['page_wishlist'] != '') {
-			$wishlist_url = get_permalink($wishlist['page_wishlist']);
+		if (function_exists('get_field')) {
+			$wishlist = get_field('wishlist', 'options');
+			if (!empty($wishlist['page_wishlist'])) {
+				$wishlist_url = get_permalink($wishlist['page_wishlist']);
+			}
 		}
-		$compare = get_field('compare', 'options');
+
+		// Get compare URL
 		$compare_url = home_url('/products-compare/');
-		if ($compare && isset($compare['page_compare']) && $compare['page_compare'] != '') {
-			$compare_url = get_permalink($compare['page_compare']);
+		if (function_exists('get_field')) {
+			$compare = get_field('compare', 'options');
+			if (!empty($compare['page_compare'])) {
+				$compare_url = get_permalink($compare['page_compare']);
+			}
 		}
+
+		// Get shop URL
 		$shop_url = home_url('/shop/');
-		if (function_exists('wc_get_page_id') && wc_get_page_id('shop') > 0) {
-			$shop_url = get_permalink(wc_get_page_id('shop'));
+		if (function_exists('wc_get_page_id')) {
+			$shop_page_id = wc_get_page_id('shop');
+			if ($shop_page_id > 0) {
+				$shop_url = get_permalink($shop_page_id);
+			}
 		}
+
+		// Get cart URL
 		$cart_url = home_url('/cart/');
-		if (function_exists('wc_get_page_id') && wc_get_page_id('cart') > 0) {
-			$cart_url = get_permalink(wc_get_page_id('cart'));
+		if (function_exists('wc_get_page_id')) {
+			$cart_page_id = wc_get_page_id('cart');
+			if ($cart_page_id > 0) {
+				$cart_url = get_permalink($cart_page_id);
+			}
 		}
+
 		/* Options to script */
 		$js_options = array(
 			'ajax_url' => admin_url('admin-ajax.php'),
 			'page_wishlist' => $wishlist_url,
 			'page_compare' => $compare_url,
-			'shop' => 	$shop_url,
-			'cart' => 	$cart_url,
+			'shop' => $shop_url,
+			'cart' => $cart_url,
 			'user_info' => wp_get_current_user(),
 		);
 		wp_localize_script('utenzo-main', 'AJ_Options', $js_options);
@@ -182,7 +200,7 @@ if (function_exists('get_field')) {
 		$effect_load_heading = get_field('effect_load_heading', 'options');
 		$button_hover = get_field('effect_button_hover', 'options');
 		$archive_shop = get_field('archive_shop', 'options');
-		if(isset($archive_shop['product_toast']) && $archive_shop['product_toast']){
+		if (isset($archive_shop['product_toast']) && $archive_shop['product_toast']) {
 			$classes[] = 'bt-product-toast-enable';
 		}
 		if ($effect_load_heading) {

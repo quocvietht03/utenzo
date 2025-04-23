@@ -30,7 +30,6 @@ if ( $related_products || !empty($recently_viewed_products) ) :
 
 ?>
 	<section class="related products">
-
 		<div class="bt-related-tab-heading">
 			<div class="bt-tab-nav">
 				<?php if ($related_products && !empty($related_posts['heading'])) : ?>

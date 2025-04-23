@@ -54,6 +54,9 @@
 
 .bt-comment-wrapper {
   margin-top: 60px;
+  @media (max-width: $break-sm) {
+    margin-top: 40px;
+  }
   .bt-heading-comment {
     color: $color-primary;
     font-family: $secondary-font;
@@ -225,9 +228,9 @@
           width: 100%;
         }
       }
-      .bt-form-message{
+      .bt-form-message {
         order: -1;
-        textarea{
+        textarea {
           display: block;
         }
       }
@@ -241,9 +244,9 @@
       label {
         display: none;
       }
-     .bt-form-cookies-consent{
+      .bt-form-cookies-consent {
         display: flex;
-        align-items: center;
+        align-items: baseline;
         justify-content: flex-start;
         gap: 6px;
         input {
@@ -253,7 +256,7 @@
           height: 15px;
           accent-color: $color-primary;
           position: relative;
-          top: -2px;
+          top: 3px;
           &:checked {
             background-color: $color-primary;
             border-color: $color-primary;
@@ -282,7 +285,7 @@
         color: $color-text;
         border-radius: 4px;
         &::placeholder {
-          color: #A0A0A0;
+          color: #a0a0a0;
           font-size: 16px;
           font-style: normal;
           font-weight: 400;
@@ -304,7 +307,7 @@
         border-radius: 4px;
         color: $color-text;
         &::placeholder {
-          color: #A0A0A0;
+          color: #a0a0a0;
           letter-spacing: 0;
           font-size: 16px;
           font-style: normal;
@@ -336,6 +339,12 @@
           animation: shimmer 1.5s infinite linear;
         }
       }
+    }
+  }
+  @media (max-width: $break-sm) {
+    .comment-respond {
+      padding: 20px 15px;
+      margin-top: 40px;
     }
   }
   @media (max-width: $break-xs) {
@@ -370,12 +379,17 @@
     .bt-comment-item .bt-comment-item {
       margin-left: 25px;
     }
-    .comment-respond .comment-reply-title {
-      font-size: 24px;
-      padding-right: 100px;
-      small {
-        top: 2px;
-        font-size: 14px;
+    .comment-respond {
+      border: none;
+      padding: 0;
+      margin-top: 30px;
+      .comment-reply-title {
+        font-size: 24px;
+        padding-right: 90px;
+        small {
+          top: 2px;
+          font-size: 14px;
+        }
       }
     }
   }

@@ -2099,14 +2099,13 @@
     .bt-container {
       .bt-row-breadcrumb-product {
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         justify-content: space-between;
         gap: 15px;
         .bt-breadcrumb {
           display: flex;
           align-items: center;
           gap: 8px;
-          flex-wrap: wrap;
           font-size: 14px;
           font-style: normal;
           font-weight: 400;
@@ -2118,6 +2117,10 @@
           }
           .current {
             color: #a0a0a0;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
           }
         }
         .bt-product-navigation {

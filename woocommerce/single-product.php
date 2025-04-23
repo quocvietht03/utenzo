@@ -29,7 +29,7 @@ $product_type = $product->get_type();
 	<div class="bt-container">
 		<div class="bt-row-breadcrumb-product">
 		<?php
-        $home_text = 'Homepage';
+        $home_text = 'Home';
         $delimiter = '/';
         echo '<div class="bt-breadcrumb">';
         echo utenzo_page_breadcrumb($home_text, $delimiter);

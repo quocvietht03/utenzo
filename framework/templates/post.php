@@ -11,6 +11,10 @@
 		?>
 	</div>
 	<?php
+	$layout = isset($args['layout']) ? $args['layout'] : 'layout-default';
+	if ($layout == 'layout-01') {
+		echo utenzo_post_featured_render();
+	}
 	echo utenzo_post_content_render();
 	?>
 </article>

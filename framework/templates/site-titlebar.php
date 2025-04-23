@@ -34,7 +34,7 @@ if ($background_color || $background_image) {
     <div class="bt-page-titlebar">
       <div class="bt-page-titlebar--breadcrumb">
         <?php
-        $home_text = 'Homepage';
+        $home_text = 'Home';
         $delimiter = '/';
         echo utenzo_page_breadcrumb($home_text, $delimiter);
         ?>
