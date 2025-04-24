@@ -2925,9 +2925,9 @@
               > div {
                 border: 2px solid transparent;
                 border-radius: 4px;
-               img{
-                height: 100%;
-               }
+                img {
+                  height: 100%;
+                }
                 @media (max-width: $break-xs) {
                   border: 1px solid transparent;
                   border-radius: 2px;
@@ -2949,6 +2949,46 @@
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 15px;
+        }
+        .bt-skeleton-gallery {
+          .bt-skeleton-main-image {
+            display: none;
+          }
+          .bt-skeleton-thumbnails {
+            display: flex;
+            gap: 15px;
+            flex-direction: column;
+            .bt-skeleton-thumb {
+              &:last-child {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+      .bt-skeleton-gallery {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        .bt-skeleton-main-image {
+          padding-bottom: 100%;
+          border-radius: 8px;
+          width: 100%;
+          box-sizing: border-box;
+          display: flex;
+          @extend .__bt-animation-loading-card;
+        }
+        .bt-skeleton-thumbnails {
+          display: grid;
+          gap: 10px;
+          grid-template-columns: repeat(5, 1fr);
+          .bt-skeleton-thumb {
+            display: block;
+            padding-bottom: 100%;
+            box-sizing: border-box;
+            height: auto;
+            @extend .__bt-animation-loading-card;
+          }
         }
       }
     }

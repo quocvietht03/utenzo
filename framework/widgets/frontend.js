@@ -137,14 +137,30 @@
 						context: this,
 						beforeSend: function () {
 							$liveSearchResults.addClass('active');
-							$liveSearchResults.addClass('loading');
+						//	$liveSearchResults.addClass('loading');
+							// Show loading skeleton for 3 product items
+							let skeletonHtml = '';
+							for (let i = 0; i < 3; i++) {
+								skeletonHtml += `
+							<div class="bt-product-skeleton product">
+								<div class="bt-skeleton-thumb">
+									<div class="bt-skeleton-image"></div>
+									<div class="bt-skeleton-content">
+										<div class="bt-skeleton-title"></div>
+										<div class="bt-skeleton-price"></div>
+									</div>
+								</div>
+								<div class="bt-skeleton-add-to-cart"></div>
+							</div>
+						`;
+							}
+							$dataSearch.html(skeletonHtml);
 						},
 						success: function (response) {
 							if (response.success) {
-								$dataSearch.html(response.data['items']);
 								setTimeout(function () {
-									$liveSearchResults.removeClass('loading');
-								}, 100);
+									$dataSearch.html(response.data['items']);
+								}, 300);
 							} else {
 								console.log('error');
 							}
@@ -385,7 +401,7 @@
 					const $point = $(this);
 					//console.log($point);
 					const $positionPoin = getPositionPoint($point);
-				//	console.log($positionPoin);
+					//	console.log($positionPoin);
 					const $info = $point.find('.bt-hotspot-product-info');
 					const containerWidth = $point.parent().width();
 					let smallOffset = 5;
@@ -394,62 +410,62 @@
 						smallOffset = 2;
 						largeOffset = 8;
 					}
-					if($positionPoin == 'rightcenter'){
+					if ($positionPoin == 'rightcenter') {
 						$info.css({
 							'inset': 'auto auto auto 100%',
 							'transform': `translateX(${largeOffset}px)`
 						});
-					}else if($positionPoin == 'righttop'){
+					} else if ($positionPoin == 'righttop') {
 						$info.css({
 							'inset': 'auto auto 100% 100%',
 							'transform': `translate(0, -${smallOffset}px)`
 						});
-					}else if($positionPoin == 'rightbottom'){
+					} else if ($positionPoin == 'rightbottom') {
 						$info.css({
 							'inset': '100% auto auto 100%',
 							'transform': `translate(0, ${smallOffset}px)`
 						});
-					}else if($positionPoin == 'leftcenter'){
+					} else if ($positionPoin == 'leftcenter') {
 						$info.css({
 							'inset': 'auto 100% auto auto',
 							'transform': `translateX(-${largeOffset}px)`
 						});
-					}else if($positionPoin == 'lefttop'){
+					} else if ($positionPoin == 'lefttop') {
 						$info.css({
 							'inset': 'auto 100% 100% auto',
 							'transform': `translate(0, -${smallOffset}px)`
 						});
-					}else if($positionPoin == 'leftbottom'){
+					} else if ($positionPoin == 'leftbottom') {
 						$info.css({
 							'inset': '100% 100% auto auto',
 							'transform': `translate(0, ${smallOffset}px)`
 						});
-					}else if($positionPoin == 'topcenter'){
+					} else if ($positionPoin == 'topcenter') {
 						$info.css({
 							'inset': 'auto auto 100% auto',
 							'transform': `translateY(-${largeOffset}px)`
 						});
-					}else if($positionPoin == 'topleft'){
+					} else if ($positionPoin == 'topleft') {
 						$info.css({
 							'inset': 'auto 100% 100% auto',
 							'transform': `translate(0, -${smallOffset}px)`
 						});
-					}else if($positionPoin == 'topright'){
+					} else if ($positionPoin == 'topright') {
 						$info.css({
 							'inset': 'auto auto 100% 100%',
 							'transform': `translate(0, -${smallOffset}px)`
 						});
-					}else if($positionPoin == 'bottomcenter'){
+					} else if ($positionPoin == 'bottomcenter') {
 						$info.css({
 							'inset': '100% auto auto auto',
 							'transform': `translateY(${largeOffset}px)`
 						});
-					}else if($positionPoin == 'bottomleft'){
+					} else if ($positionPoin == 'bottomleft') {
 						$info.css({
 							'inset': '100% 100% auto auto',
 							'transform': `translate(0, ${smallOffset}px)`
 						});
-					}else if($positionPoin == 'bottomright'){
+					} else if ($positionPoin == 'bottomright') {
 						$info.css({
 							'inset': '100% auto auto 100%',
 							'transform': `translate(0, ${smallOffset}px)`
@@ -622,7 +638,7 @@
 			const itemsDesktop = $sliderSettings.items_desktop || 1;
 			const itemsMobile = $sliderSettings.items_mobile || 1;
 			const itemsTablet = $sliderSettings.items_tablet || 2;
-			
+
 			// Initialize the testimonial slider
 			const testimonialSlider = new Swiper($ProductTestimonialSlider.find('.js-testimonial-slider')[0], {
 				slidesPerView: itemsMobile,
@@ -652,7 +668,7 @@
 					}
 				}
 			});
-			
+
 			// Pause autoplay on hover if autoplay is enabled
 			if (autoplay) {
 				$ProductTestimonialSlider.find('.js-testimonial-slider')[0].addEventListener('mouseenter', () => {

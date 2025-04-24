@@ -259,6 +259,7 @@ if (function_exists('get_field')) {
 /* Sold Product */
 function utenzo_woocommerce_item_sold($product_id)
 {
+    global $post;
     $args = array(
         'status' => 'completed',
         'limit' => -1,
@@ -274,6 +275,10 @@ function utenzo_woocommerce_item_sold($product_id)
                 }
             }
         }
+    }
+    $quantity_sold_option = get_post_meta($post->ID, '_product_sold', true);
+    if ($quantity_sold_option != '' && $quantity_sold_option > 0) {
+        $total_quantity_sold = $quantity_sold_option;
     }
     echo '<div class="woocommerce-loop-product__sold">';
 
@@ -1529,8 +1534,7 @@ add_action('woocommerce_product_options_advanced', 'utenzo_woocommerce_custom_fi
 
 function utenzo_woocommerce_custom_field()
 {
-    global $post;
-
+    global $post, $product_object;
     // Add layout selector
     $layout_options = array(
         'layout-product-1' => __('Layout 1', 'utenzo'),
@@ -1549,6 +1553,16 @@ function utenzo_woocommerce_custom_field()
         'description' => '',
         'options' => $layout_options,
         'value' => $layout_value
+    ));
+    // add product sold
+    woocommerce_wp_text_input(array(
+        'id' => '_product_sold',
+        'label' => __('Product Sold', 'utenzo'),
+        'description' => '',
+        'type' => 'number',
+        'custom_attributes' => array(
+            'min' => 0
+        )
     ));
     // Add product label selector
     $label_options = array(
@@ -1574,21 +1588,57 @@ function utenzo_woocommerce_custom_field()
         'value' => $label_value
     ));
 
-    woocommerce_wp_text_input(array(
-        'id' => '_product_datetime',
-        'label' => __('Product Date & Time Sale', 'utenzo'),
-        'description' => __("Set the date and time when this product's sale price will expire.", 'utenzo'),
-        'type' => 'datetime-local',
-        'custom_attributes' => array(
-            'step' => '60',  // 1 minute steps
-            'pattern' => '[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}'  // YYYY-MM-DDThh:mm format
-        )
-    ));
-    woocommerce_wp_checkbox(array(
-        'id' => '_disable_sale_price',
-        'label' => __('Disable Sale Price', 'utenzo'),
-        'description' => __('Check this box to automatically remove the sale price when the sale period ends. The product will return to its regular price.', 'utenzo')
-    ));
+    // Only show checkbox for simple and variable products
+    if ($product_object && ($product_object->is_type('simple') || $product_object->is_type('variable'))) {
+        woocommerce_wp_text_input(array(
+            'id' => '_product_start_datetime',
+            'label' => __('Date Start Sale', 'utenzo'),
+            'description' => __("Set the date and time when this product's sale price will expire.", 'utenzo'),
+            'type' => 'datetime-local',
+            'custom_attributes' => array(
+                'step' => '60',  // 1 minute steps
+                'pattern' => '[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}'  // YYYY-MM-DDThh:mm format
+            )
+        ));
+        woocommerce_wp_text_input(array(
+            'id' => '_product_datetime',
+            'label' => __('Product Date & Time Sale', 'utenzo'),
+            'description' => __("Set the date and time when this product's sale price will expire.", 'utenzo'),
+            'type' => 'datetime-local',
+            'custom_attributes' => array(
+                'step' => '60',  // 1 minute steps
+                'pattern' => '[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}'  // YYYY-MM-DDThh:mm format
+            )
+        ));
+        woocommerce_wp_checkbox(array(
+            'id' => '_disable_sale_price',
+            'label' => __('Disable Sale Price', 'utenzo'),
+            'description' => __('Check this box to automatically remove the sale price when the sale period ends. The product will return to its regular price.', 'utenzo')
+        ));
+        woocommerce_wp_checkbox(array(
+            'id' => '_enable_percentage_sold',
+            'label' => __('Enable Percentage Sold', 'utenzo'),
+            'description' => __('Check this box to display the percentage of products sold.', 'utenzo')
+        ));
+        woocommerce_wp_text_input(array(
+            'id' => '_product_sold_sale',
+            'label' => __('Product Sold Sale', 'utenzo'),
+            'description' => '',
+            'type' => 'number',
+            'custom_attributes' => array(
+                'min' => 0
+            )
+        ));
+        woocommerce_wp_text_input(array(
+            'id' => '_product_stock_sale',
+            'label' => __('Product Stock Sale', 'utenzo'),
+            'description' => '',
+            'type' => 'number',
+            'custom_attributes' => array(
+                'min' => 0
+            )
+        ));
+    }
 }
 
 add_action('woocommerce_process_product_meta', 'utenzo_woocommerce_custom_field_save');
@@ -1603,12 +1653,29 @@ function utenzo_woocommerce_custom_field_save($post_id)
         $layout = sanitize_text_field($_POST['_layout_product']);
         update_post_meta($post_id, '_layout_product', $layout);
     }
+    if (isset($_POST['_product_sold'])) {
+        $product_sold = intval($_POST['_product_sold']);
+        update_post_meta($post_id, '_product_sold', $product_sold);
+    }
     if (isset($_POST['_product_datetime'])) {
         $datetime = sanitize_text_field($_POST['_product_datetime']);
         update_post_meta($post_id, '_product_datetime', $datetime);
+        if (empty(get_post_meta($post_id, '_product_start_datetime', true))) {
+            update_post_meta($post_id, '_product_start_datetime', current_time('Y-m-d\TH:i'));
+        }
     }
     $disable_sale_price = isset($_POST['_disable_sale_price']) ? 'yes' : 'no';
     update_post_meta($post_id, '_disable_sale_price', $disable_sale_price);
+    $enable_percentage_sold = isset($_POST['_enable_percentage_sold']) ? 'yes' : 'no';
+    update_post_meta($post_id, '_enable_percentage_sold', $enable_percentage_sold);
+    if (isset($_POST['_product_sold_sale'])) {
+        $product_sold_sale = intval($_POST['_product_sold_sale']);
+        update_post_meta($post_id, '_product_sold_sale', $product_sold_sale);
+    }
+    if (isset($_POST['_product_stock_sale'])) {
+        $product_stock_sale = intval($_POST['_product_stock_sale']);
+        update_post_meta($post_id, '_product_stock_sale', $product_stock_sale);
+    }
 }
 
 function utenzo_convert_title_to_slug($title)
@@ -2011,11 +2078,89 @@ function utenzo_load_recently_viewed_products()
 add_action('wp_ajax_load_recently_viewed', 'utenzo_load_recently_viewed_products');
 add_action('wp_ajax_nopriv_load_recently_viewed', 'utenzo_load_recently_viewed_products');
 
+// Hook the function to run after checkout is completed
+add_action('woocommerce_thankyou', 'utenzo_after_checkout_product', 10, 1);
+// Add a flag to prevent duplicate processing
+add_action('woocommerce_checkout_order_processed', 'mark_order_as_processed', 10, 1);
+
+function mark_order_as_processed($order_id)
+{
+    update_post_meta($order_id, '_utenzo_order_processed', 'no');
+}
+function utenzo_after_checkout_product($order_id)
+{
+    // Check if this order has already been processed
+    if (get_post_meta($order_id, '_utenzo_order_processed', true) === 'yes') {
+        return;
+    }
+    $order = wc_get_order($order_id);
+    $items = $order->get_items();
+    $order_time = $order->get_date_created();
+    if (!$order_time) {
+        return;
+    }
+    $order_time->setTimezone(new DateTimeZone(wp_timezone_string()));
+
+    foreach ($items as $item) {
+        $item_product_id = $item->get_product_id();
+        $product = wc_get_product($item_product_id);
+        $sale_date_start = get_post_meta($item_product_id, '_product_start_datetime', true);
+        $sale_date = get_post_meta($item_product_id, '_product_datetime', true);
+        $sale_date_start = new DateTime($sale_date_start, new DateTimeZone(wp_timezone_string()));
+        $sale_date = new DateTime($sale_date, new DateTimeZone(wp_timezone_string()));
+        if (empty($sale_date_start) || empty($sale_date)) {
+            return;
+        }
+        if ($order_time < $sale_date_start || $order_time > $sale_date) {
+            continue;
+        }
+        $enable_percentage_sold = get_post_meta($item_product_id, '_enable_percentage_sold', true);
+
+        if ($enable_percentage_sold === 'yes') {
+            $quantity = $item->get_quantity();
+            $current_sold = absint(get_post_meta($item_product_id, '_product_sold_sale', true));
+            $new_sold = $current_sold + $quantity;
+            update_post_meta($item_product_id, '_product_sold_sale', $new_sold);
+            $product_sold_sale = get_post_meta($item_product_id, '_product_sold_sale', true);
+            $product_stock_sale = get_post_meta($item_product_id, '_product_stock_sale', true);
+            $disable_sale = get_post_meta($item_product_id, '_disable_sale_price', true);
+            if ($product_sold_sale >= $product_stock_sale) {
+                if ($disable_sale === 'yes') {
+                    // Handle variable products
+                    if ($product->is_type('variable')) {
+                        // Remove sale price for each variation
+                        foreach ($product->get_available_variations() as $variation) {
+                            $variation_id = $variation['variation_id'];
+                            $variation_obj = wc_get_product($variation_id);
+                            update_post_meta($variation_id, '_sale_price', '');
+                            $variation_obj->set_sale_price('');
+                            $variation_obj->save();
+                        }
+                    } else {
+                        // Handle simple, grouped, external products
+                        update_post_meta($product->get_id(), '_sale_price', '');
+                        $product->set_sale_price('');
+                    }
+                }
+
+                // Update common metadata for all product types
+                update_post_meta($item_product_id, '_product_datetime', '');
+                update_post_meta($item_product_id, '_disable_sale_price', 'no');
+                update_post_meta($item_product_id, '_enable_percentage_sold', 'no');
+                update_post_meta($item_product_id, '_product_start_datetime', '');
+                update_post_meta($item_product_id, '_product_sold_sale', '');
+                update_post_meta($item_product_id, '_product_stock_sale', '');
+                $product->save();
+            }
+        }
+    }
+     // Mark this order as processed
+     update_post_meta($order_id, '_utenzo_order_processed', 'yes');
+}
 /* hook check sale date countdown product */
 function utenzo_check_sale_date_countdown()
 {
     global $product;
-
     // Get sale end date from product meta
     $sale_date = get_post_meta($product->get_id(), '_product_datetime', true);
     $disable_sale = get_post_meta($product->get_id(), '_disable_sale_price', true);
@@ -2026,36 +2171,31 @@ function utenzo_check_sale_date_countdown()
         // If sale date has passed and disable sale is checked
         if ($current_timestamp > $sale_timestamp) {
             if ($disable_sale === 'yes') {
-                // Handle different product types
+                // Handle variable products
                 if ($product->is_type('variable')) {
-                    // Get all variations
-                    $variations = $product->get_available_variations();
-
-                    foreach ($variations as $variation) {
-                        $variation_obj = wc_get_product($variation['variation_id']);
-                        // Remove sale price for each variation
-                        update_post_meta($variation['variation_id'], '_sale_price', '');
+                    // Remove sale price for each variation
+                    foreach ($product->get_available_variations() as $variation) {
+                        $variation_id = $variation['variation_id'];
+                        $variation_obj = wc_get_product($variation_id);
+                        update_post_meta($variation_id, '_sale_price', '');
                         $variation_obj->set_sale_price('');
                         $variation_obj->save();
                     }
-
-                    // Update parent variable product
-                    update_post_meta($product->get_id(), '_product_datetime', '');
-                    update_post_meta($product->get_id(), '_disable_sale_price', 'no');
-                    $product->save();
                 } else {
-                    // Simple, grouped, external products
+                    // Handle simple, grouped, external products
                     update_post_meta($product->get_id(), '_sale_price', '');
-                    update_post_meta($product->get_id(), '_product_datetime', '');
-                    update_post_meta($product->get_id(), '_disable_sale_price', 'no');
                     $product->set_sale_price('');
-                    $product->save();
                 }
-            } else {
-                update_post_meta($product->get_id(), '_product_datetime', '');
-                update_post_meta($product->get_id(), '_disable_sale_price', 'no');
-                $product->save();
             }
+
+            // Update common metadata for all product types
+            update_post_meta($product->get_id(), '_product_datetime', '');
+            update_post_meta($product->get_id(), '_disable_sale_price', 'no');
+            update_post_meta($product->get_id(), '_enable_percentage_sold', 'no');
+            update_post_meta($product->get_id(), '_product_start_datetime', '');
+            update_post_meta($product->get_id(), '_product_sold_sale', '');
+            update_post_meta($product->get_id(), '_product_stock_sale', '');
+            $product->save();
         }
     }
 }
@@ -2068,7 +2208,6 @@ add_action('utenzo_woocommerce_template_single_countdown', 'utenzo_woocommerce_s
 function utenzo_woocommerce_single_product_countdown()
 {
     global $product;
-
     $time = get_post_meta($product->get_id(), '_product_datetime', true);
     $stock_status = $product->get_stock_status();
 
@@ -2111,25 +2250,12 @@ function utenzo_woocommerce_single_product_countdown()
         </div>
         <?php
 
-        $stock_quantity = $product->get_stock_quantity();
-
-        if ($stock_quantity) {
-            // Get total sold quantity from completed orders
-            $product_id = $product->get_id();
-            $total_quantity_sold = array_sum(array_map(
-                function ($order) use ($product_id) {
-                    return array_sum(array_map(
-                        function ($item) use ($product_id) {
-                            return $item->get_product_id() == $product_id ? $item->get_quantity() : 0;
-                        },
-                        $order->get_items()
-                    ));
-                },
-                wc_get_orders(['status' => 'completed', 'limit' => -1])
-            ));
-
-            $percentage = min(100, max(0, ($total_quantity_sold / $stock_quantity) * 100));
-            $remaining_products = $stock_quantity - $total_quantity_sold;
+        $enable_percentage_sold = get_post_meta($product->get_id(), '_enable_percentage_sold', true);
+        if ($enable_percentage_sold === 'yes') {
+            $product_sold_sale = get_post_meta($product->get_id(), '_product_sold_sale', true);
+            $product_stock_sale = get_post_meta($product->get_id(), '_product_stock_sale', true);
+            $percentage = min(100, max(0, ($product_sold_sale / $product_stock_sale) * 100));
+            $remaining_products = $product_stock_sale - $product_sold_sale;
         ?>
             <div class="bt-product-percentage-sold">
                 <span class="bt-heading"><?php echo esc_html__('Sold It:', 'utenzo'); ?></span>

@@ -131,39 +131,57 @@
 						url: AJ_Options.ajax_url,
 						data: param_ajax,
 						beforeSend: function () {
-							$('.woocommerce-product-gallery').addClass('loading');
+							// Show loading skeleton
+							let skeletonHtml = '';
+							skeletonHtml = `
+										<div class="bt-skeleton-gallery">
+												<div class="bt-skeleton-main-image"></div>
+												<div class="bt-skeleton-thumbnails">
+													<div class="bt-skeleton-thumb"></div>
+													<div class="bt-skeleton-thumb"></div>
+													<div class="bt-skeleton-thumb"></div>
+													<div class="bt-skeleton-thumb"></div>
+													<div class="bt-skeleton-thumb"></div>
+												</div>
+										</div>`;
+							if ($('.bt-layout-product-2').length > 0) {
+								$('.bt-gallery-product').html(skeletonHtml);
+							} else {
+								$('.woocommerce-product-gallery').html(skeletonHtml);
+							}
+
 						},
 						success: function (response) {
 							if (response.success) {
-								if ($('.bt-layout-product-2').length > 0) {
-									
-									$('.bt-gallery-product').html(response.data['gallery-layout02']);
-								} else {
-									$('.woocommerce-product-gallery').html(response.data['gallery']);
-								}
+								setTimeout(function () {
+									if ($('.bt-layout-product-2').length > 0) {
+										$('.bt-gallery-product').html(response.data['gallery-layout02']);
+									} else {
+										$('.woocommerce-product-gallery').html(response.data['gallery']);
+									}
 
 
-								// Reinitialize zoom and slider
-								$('.woocommerce-product-zoom__image').zoom();
+									// Reinitialize zoom and slider
+									$('.woocommerce-product-zoom__image').zoom();
 
-								$('.woocommerce-product-gallery__slider').slick({
-									slidesToShow: 1,
-									slidesToScroll: 1,
-									fade: true,
-									arrows: false,
-									asNavFor: '.woocommerce-product-gallery__slider-nav',
-									prevArrow: '<button type=\"button\" class=\"slick-prev\">Prev</button>',
-									nextArrow: '<button type=\"button\" class=\"slick-next\">Next</button>'
-								});
-								$('.woocommerce-product-gallery__slider-nav').slick({
-									slidesToShow: 5,
-									slidesToScroll: 1,
-									arrows: false,
-									focusOnSelect: true,
-									asNavFor: '.woocommerce-product-gallery__slider'
-								});
+									$('.woocommerce-product-gallery__slider').slick({
+										slidesToShow: 1,
+										slidesToScroll: 1,
+										fade: true,
+										arrows: false,
+										asNavFor: '.woocommerce-product-gallery__slider-nav',
+										prevArrow: '<button type=\"button\" class=\"slick-prev\">Prev</button>',
+										nextArrow: '<button type=\"button\" class=\"slick-next\">Next</button>'
+									});
+									$('.woocommerce-product-gallery__slider-nav').slick({
+										slidesToShow: 5,
+										slidesToScroll: 1,
+										arrows: false,
+										focusOnSelect: true,
+										asNavFor: '.woocommerce-product-gallery__slider'
+									});
 
-								$('.woocommerce-product-gallery').removeClass('loading');
+								}, 300);
 							}
 						},
 						error: function (xhr, status, error) {
@@ -1612,7 +1630,7 @@
 			const countDown = $('.bt-countdown-product-sale .bt-countdown-product-js[data-idproduct="' + idproduct + '"]');
 
 			const countDownDate = new Date(countDown.data('time')).getTime();
-		//	console.log(countDownDate);
+			//	console.log(countDownDate);
 			if (isNaN(countDownDate)) {
 				console.error('Invalid countdown date');
 				return;
