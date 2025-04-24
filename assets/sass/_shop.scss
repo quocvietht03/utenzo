@@ -2131,6 +2131,7 @@
             display: flex;
           }
           a {
+            display: flex;
             &:hover {
               svg {
                 path {
@@ -2924,6 +2925,9 @@
               > div {
                 border: 2px solid transparent;
                 border-radius: 4px;
+               img{
+                height: 100%;
+               }
                 @media (max-width: $break-xs) {
                   border: 1px solid transparent;
                   border-radius: 2px;
@@ -3069,6 +3073,11 @@
           font-weight: 600;
           line-height: 23px;
           text-transform: capitalize;
+        }
+        &.variations {
+          .price {
+            flex-direction: row;
+          }
         }
       }
       .bt-product-excerpt-add-to-cart {
@@ -4175,6 +4184,9 @@
             &:nth-child(even) {
               background-color: #f9fafb; // White for even rows
             }
+          }
+          p {
+            margin: 0 !important;
           }
         }
         @media (max-width: $break-lg) {
@@ -6752,10 +6764,10 @@
       gap: 10px;
       flex-wrap: wrap;
       justify-content: space-between;
-      &::before{
-        top:25px;
-        @media(max-width:$break-xs){
-          top:16px;
+      &::before {
+        top: 25px;
+        @media (max-width: $break-xs) {
+          top: 16px;
         }
       }
       &::after {

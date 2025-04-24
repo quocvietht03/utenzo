@@ -25,7 +25,7 @@ global $product;
 			<?php
 			do_action('utenzo_woocommerce_template_single_title');
 			?>
-			<div class="woocommerce-product-price-wrap">
+			<div class="woocommerce-product-price-wrap <?php echo $product->is_type('variable') ? 'variations' : ''; ?>">
 				<?php
 				do_action('utenzo_woocommerce_template_single_price');
 				do_action('utenzo_woocommerce_show_product_loop_sale_flash');

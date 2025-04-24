@@ -119,6 +119,58 @@
 				var variationId = $('input.variation_id').val();
 				if (variationId) {
 					$('.bt-button-buy-now a').removeClass('disabled').attr('data-variation', variationId);
+					// Load gallery
+					var param_ajax = {
+						action: 'utenzo_load_product_gallery',
+						variation_id: variationId
+					};
+
+					$.ajax({
+						type: 'POST',
+						dataType: 'json',
+						url: AJ_Options.ajax_url,
+						data: param_ajax,
+						beforeSend: function () {
+							$('.woocommerce-product-gallery').addClass('loading');
+						},
+						success: function (response) {
+							if (response.success) {
+								if ($('.bt-layout-product-2').length > 0) {
+									
+									$('.bt-gallery-product').html(response.data['gallery-layout02']);
+								} else {
+									$('.woocommerce-product-gallery').html(response.data['gallery']);
+								}
+
+
+								// Reinitialize zoom and slider
+								$('.woocommerce-product-zoom__image').zoom();
+
+								$('.woocommerce-product-gallery__slider').slick({
+									slidesToShow: 1,
+									slidesToScroll: 1,
+									fade: true,
+									arrows: false,
+									asNavFor: '.woocommerce-product-gallery__slider-nav',
+									prevArrow: '<button type=\"button\" class=\"slick-prev\">Prev</button>',
+									nextArrow: '<button type=\"button\" class=\"slick-next\">Next</button>'
+								});
+								$('.woocommerce-product-gallery__slider-nav').slick({
+									slidesToShow: 5,
+									slidesToScroll: 1,
+									arrows: false,
+									focusOnSelect: true,
+									asNavFor: '.woocommerce-product-gallery__slider'
+								});
+
+								$('.woocommerce-product-gallery').removeClass('loading');
+							}
+						},
+						error: function (xhr, status, error) {
+							console.log('Error loading gallery:', error);
+							$('.woocommerce-product-gallery').removeClass('loading');
+						}
+					});
 				} else {
 					$('.bt-button-buy-now a').addClass('disabled').removeAttr('data-variation');
 				}
@@ -1560,7 +1612,7 @@
 			const countDown = $('.bt-countdown-product-sale .bt-countdown-product-js[data-idproduct="' + idproduct + '"]');
 
 			const countDownDate = new Date(countDown.data('time')).getTime();
-			console.log(countDownDate);
+		//	console.log(countDownDate);
 			if (isNaN(countDownDate)) {
 				console.error('Invalid countdown date');
 				return;

@@ -77,3 +77,32 @@ div[data-name="more_information"] {
     height: 85px !important;
   }
 }
+.variation-gallery-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 10px 0;
+}
+.variation-gallery-images .image {
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.variation-gallery-images .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.delete-variation-gallery-image {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #dc3232;
+  color: #fff;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 18px;
+  text-decoration: none;
+}
