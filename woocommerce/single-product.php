@@ -20,7 +20,6 @@ if (!defined('ABSPATH')) {
 }
 
 get_header('shop');
-
 $product_id = get_the_ID();
 $product = wc_get_product($product_id);
 $product_type = $product->get_type();

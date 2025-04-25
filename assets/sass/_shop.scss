@@ -2883,6 +2883,7 @@
           border-radius: 8px;
           padding-bottom: 100%;
           position: relative;
+          cursor: zoom-in;
           img {
             object-fit: cover;
             position: absolute;
@@ -3113,11 +3114,6 @@
           font-weight: 600;
           line-height: 23px;
           text-transform: capitalize;
-        }
-        &.variable,&.grouped {
-          .price {
-            flex-direction: row;
-          }
         }
       }
       .bt-product-excerpt-add-to-cart {
@@ -6931,5 +6927,10 @@
     background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite linear;
+  }
+}
+.product-type-grouped,.product-type-variable {
+  .price {
+    flex-direction: row !important;
   }
 }

@@ -76,16 +76,16 @@ class Widget_ListFaq extends Widget_Base
                 'fields' => $repeater->get_controls(),
                 'default' => [
                     [
-                        'faq_title' => __('FAQ title 01', 'utenzo'),
-                        'faq_content' => 'we provide high-quality, eco-friendly cleaning supplies and equipment for every job. Our products are safe for your family and the environment. If you have specific preferences or sensitivities, let us know, and we will gladly accommodate your requests to ensure your satisfaction!'
+                        'faq_title' => __('What is Utenzo?', 'utenzo'),
+                        'faq_content' => __('Utenzo is a powerful WordPress theme that helps you build beautiful websites quickly and easily.', 'utenzo')
                     ],
                     [
-                        'faq_title' => __('FAQ title 02', 'utenzo'),
-                        'faq_content' => 'we provide high-quality, eco-friendly cleaning supplies and equipment for every job. Our products are safe for your family and the environment. If you have specific preferences or sensitivities, let us know, and we will gladly accommodate your requests to ensure your satisfaction!'
+                        'faq_title' => __('How do I get started with Utenzo?', 'utenzo'),
+                        'faq_content' => __('Simply install the theme, import a demo, and customize it using our intuitive page builder.', 'utenzo')
                     ],
                     [
-                        'faq_title' => __('FAQ title 03', 'utenzo'),
-                        'faq_content' => 'we provide high-quality, eco-friendly cleaning supplies and equipment for every job. Our products are safe for your family and the environment. If you have specific preferences or sensitivities, let us know, and we will gladly accommodate your requests to ensure your satisfaction!'
+                        'faq_title' => __('Do you offer support?', 'utenzo'),
+                        'faq_content' => __('Yes, we provide dedicated support through our help center and ticket system.', 'utenzo')
                     ],
                 ],
                 'title_field' => '{{{ faq_title }}}',
@@ -122,12 +122,8 @@ class Widget_ListFaq extends Widget_Base
                         'max' => 100,
                     ],
                 ],
-                'default' => [
-                    'unit' => 'px',
-                    'size' => 1,
-                ],
                 'selectors' => [
-                    '{{WRAPPER}} .bt-elwg-list-faq--default .item-faq-inner' => 'border-bottom: {{SIZE}}{{UNIT}} solid #E4E4E4;',
+                    '{{WRAPPER}} .bt-elwg-list-faq--default .item-faq-inner' => 'border-bottom: {{SIZE}}{{UNIT}} solid #E9E9E9;',
                 ],
             ]
         );
@@ -136,7 +132,6 @@ class Widget_ListFaq extends Widget_Base
             [
                 'label' => __('Border Color', 'utenzo'),
                 'type' => Controls_Manager::COLOR,
-                'default' => '#E4E4E4',
                 'selectors' => [
                     '{{WRAPPER}} .bt-elwg-list-faq--default .item-faq-inner' => 'border-color: {{VALUE}};',
                 ],
@@ -159,16 +154,33 @@ class Widget_ListFaq extends Widget_Base
                         'max' => 100,
                     ],
                 ],
-                'default' => [
-                    'unit' => 'px',
-                    'size' => 20,
-                ],
                 'selectors' => [
                     '{{WRAPPER}} .bt-elwg-list-faq--default .item-faq-inner' => 'padding-top: {{SIZE}}{{UNIT}};padding-bottom: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
-
+        $this->add_responsive_control(
+            'list_gap_horizontal',
+            [
+                'label' => __('Horizontal Padding', 'utenzo'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%'],
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 100,
+                        'step' => 1,
+                    ],
+                    '%' => [
+                        'min' => 0,
+                        'max' => 100,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .bt-elwg-list-faq--default .item-faq-inner' => 'padding-left: {{SIZE}}{{UNIT}};padding-right: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
         $this->end_controls_section();
 
 
@@ -200,7 +212,7 @@ class Widget_ListFaq extends Widget_Base
         $this->add_control(
             'list_title_hover_color',
             [
-                'label' => __('Color Hover', 'utenzo'),
+                'label' => __('Color Hover/Active', 'utenzo'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '',
                 'selectors' => [

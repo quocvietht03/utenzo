@@ -188,6 +188,9 @@ require_once get_template_directory() . '/framework/block-load.php';
 /* Widgets Load */
 require_once get_template_directory() . '/framework/widget-load.php';
 
+/* Cron Functions */
+require_once get_template_directory() . '/framework/cron-helper.php';
+
 /* Woocommerce functions */
 if (class_exists('Woocommerce')) {
 	require_once get_template_directory() . '/woocommerce/shop-helper.php';

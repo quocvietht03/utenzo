@@ -1819,11 +1819,10 @@
 
     .item-faq-inner {
       border-bottom: 1px solid;
-      border-color: #e4e4e4;
-      padding: 20px 32px;
+      border-color: #e9e9e9;
+      padding: 20px;
       @media (max-width: $break-xs) {
-        padding-left: 15px;
-        padding-right: 15px;
+        padding: 15px;
       }
     }
 
@@ -1856,27 +1855,36 @@
           transform: rotate(0);
           transform-origin: 50% 50%;
         }
+        @media(max-width: $break-xs) {
+          width: 14px;
+          height: 14px;
+        }
       }
 
       h3 {
         color: $color-primary;
-        font-size: 24px;
+        font-size: 20px;
         font-style: normal;
-        font-weight: 700;
-        line-height: 32px;
+        font-weight: 600;
+        line-height: 28px;
+        @media (max-width: $break-xs) {
+          font-size: 18px;
+          line-height: 1.2;
+        }
       }
     }
 
     .bt-item-content {
       display: none;
       color: $color-text;
-      font-size: 16px;
+      font-size: 18px;
       font-style: normal;
       font-weight: 400;
-      line-height: 26px;
-      padding: 12px 0 0 0;
-      @media (max-width: $break-tl) {
-        padding: 8px 0 0 0;
+      line-height: 28px;
+      padding: 8px 0 0 0;
+      @media (max-width: $break-xs) {
+        font-size: 16px;
+        line-height: 1.5;
       }
     }
   }
@@ -3037,7 +3045,7 @@ body {
       align-items: center;
       flex-wrap: wrap;
       background: #f6f6f6;
-      @media (max-width: 1672px) {
+      @media (max-width: 1340px) {
         align-items: flex-start;
         justify-content: center;
       }
@@ -3097,6 +3105,12 @@ body {
       &--image {
         width: 50%;
         position: relative;
+        @media (max-width: 1489px) {
+          width: 60%;
+        }
+        @media (max-width: 1340px) {
+          width: 52%;
+        }
         .bt-hotspot-image {
           img {
             width: 100%;
@@ -3298,7 +3312,13 @@ body {
         margin: 0;
         padding: 20px 15px 20px 80px;
         @media (max-width: 1700px) and (min-width: $break-tl) {
-          padding: 20px 15px 40px 20px;
+          padding: 30px 15px 30px 20px;
+        }
+        @media (max-width: 1489px) {
+          width: 40%;
+        }
+        @media (max-width: 1340px) {
+          width: 48%;
         }
         @media (max-width: $break-tl) {
           padding: 40px 15px 40px 15px;
@@ -3385,7 +3405,7 @@ body {
                       }
                     }
                   }
-                  @media (max-width: 1130px) and (min-width: $break-tl) {
+                  @media (max-width: 1220px) and (min-width: $break-tl) {
                     .bt-icon-btn {
                       width: 30px;
                       height: 30px;
@@ -3408,6 +3428,9 @@ body {
                 }
                 .bt-add-to-cart a {
                   text-transform: capitalize;
+                  @media (max-width: 1220px) and (min-width: $break-tl) {
+                    line-height: 22px;
+                  }
                 }
               }
             }
@@ -4030,6 +4053,124 @@ body {
         }
         .bt-delimiter {
           margin: 0 15px;
+        }
+      }
+    }
+  }
+}
+.bt-elwg-our-teams {
+  &--default {
+    .bt-team-members {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      .bt-team-member {
+        overflow: hidden;
+        .bt-member-image {
+          position: relative;
+
+          .bt-cover-image {
+            border-radius: 16px;
+            transition: transform 0.4s ease;
+          }
+
+          .bt-member-social {
+            position: absolute;
+            transform: translateX(100px);
+            right: 12px;
+            top: 12px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            padding: 8px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.95);
+            flex-direction: column;
+            transition: 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            a {
+              display: flex;
+              border: 1px solid #e9e9e9;
+              width: 35px;
+              height: 35px;
+              align-items: center;
+              justify-content: center;
+              border-radius: 50%;
+              box-sizing: border-box;
+              color: $color-primary;
+              opacity: 0;
+              transition: none;
+              &:hover {
+                border-color: $color-accent;
+                background: $color-accent;
+                color: #fff;
+              }
+
+              @for $i from 1 through 5 {
+                &:nth-child(#{$i}) {
+                  transition-delay: #{$i * 0.1}s;
+                }
+              }
+            }
+          }
+        }
+
+        .bt-member-info {
+          margin-top: 24px;
+
+          .bt-member-name {
+            margin: 0 0 4px 0;
+            line-height: 1;
+            word-break: break-word;
+            color: $color-primary;
+            font-size: 24px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 30px;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            cursor: pointer;
+            transition: color 0.3s ease;
+
+            &:hover {
+              color: $color-accent;
+              text-decoration: underline;
+              text-decoration-skip-ink: none;
+              text-underline-offset: 1px;
+              text-decoration-thickness: 0.5px;
+            }
+          }
+
+          .bt-member-position {
+            color: $color-text;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 26px;
+          }
+        }
+
+        &:hover {
+          .bt-member-image {
+            .bt-cover-image {
+              img {
+                transform: scale(1.05);
+              }
+            }
+
+            .bt-member-social {
+              transform: translateX(0);
+              opacity: 1;
+              visibility: visible;
+              a {
+                transform: translateX(0);
+                opacity: 1;
+              }
+            }
+          }
         }
       }
     }

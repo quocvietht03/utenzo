@@ -2,14 +2,6 @@
 defined('ABSPATH') || exit;
 
 global $product;
-$product_type = '';
-if ($product->is_type('simple')) {
-	$product_type = 'simple';
-} elseif ($product->is_type('variable')) {
-	$product_type = 'variable';
-} elseif ($product->is_type('grouped')) {
-	$product_type = 'grouped';
-}
 ?>
 <div id="product-<?php the_ID(); ?>" <?php wc_product_class('', $product); ?>>
 	<div class="bt-product-inner">
@@ -33,7 +25,7 @@ if ($product->is_type('simple')) {
 			<?php
 			do_action('utenzo_woocommerce_template_single_title');
 			?>
-			<div class="woocommerce-product-price-wrap <?php echo esc_attr($product_type); ?>">
+			<div class="woocommerce-product-price-wrap">
 				<?php
 				do_action('utenzo_woocommerce_template_single_price');
 				do_action('utenzo_woocommerce_show_product_loop_sale_flash');

@@ -104,4 +104,39 @@
             }
         }
     }
+    &.bt-section-genuine-product {
+        > .e-con-inner {
+            > .elementor-element {
+                &:last-child {
+                    @media (max-width: $break-lg) and (min-width: $break-tl) {
+                        .bt-elwg-heading-animation {
+                            h2 {
+                                font-size: 36px;
+                                line-height: 40px;
+                            }
+                        }
+                        .elementor-widget-icon-box{
+                            &:not(:last-child){
+                                > .elementor-widget-container{
+                                   margin-bottom: 15px;
+                                }
+                            }
+                            
+                        }
+                        .elementor-icon-box-wrapper{
+                            .elementor-icon-box-icon{
+                                .elementor-icon{
+                                    font-size: 60px;
+                                }
+                            }
+                            .elementor-icon-box-title{
+                                font-size: 26px;
+                                line-height: 32px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
