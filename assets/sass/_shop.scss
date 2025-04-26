@@ -899,6 +899,19 @@
               }
             }
           }
+          &.bt-color{
+            position: relative;
+            &::before{
+              content: '';
+              @extend.__bt-animation-loading-card;
+              height: 34px;
+              width: 100%;
+            }
+            .bt-item-color{
+              opacity: 0;
+              display: none;
+            }
+          }
           > h3 {
             @extend .__bt-animation-loading-card;
             height: 46px;
@@ -915,10 +928,15 @@
             height: 34px;
             width: 100%;
             font-size: 0;
+            &.out-of-stock,&.on-backorder{
+              background-color: #e9e9e9 !important;
+              background: linear-gradient(90deg, #e9e9e9 25%, rgba(12, 44, 72, 0.2588235294) 50%, #e9e9e9 75%) !important;
+            }
             > * {
               font-size: 0;
             }
           }
+
           .bt-product-rating {
             @extend .__bt-animation-loading-card;
             height: 34px;

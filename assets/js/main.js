@@ -615,7 +615,7 @@
 						//console.log(response.data['count']);
 						if (response.data['count'] && response.data['count'] > 0) {
 							$('.bt-popup-compare .bt-compare-load').html(response.data['product']).fadeIn('slow');
-							$('.bt-compare-body').removeClass('loading');
+							//$('.bt-compare-body').removeClass('loading');
 							UtenzoCompareContentScroll();
 						} else {
 							if (!$('.bt-popup-compare').hasClass('bt-compare-elwwg')) {

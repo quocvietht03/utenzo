@@ -188,6 +188,66 @@ class Widget_TikTokShopSlider extends Widget_Base
         );
 
         $this->end_controls_section();
+        $this->start_controls_section(
+            'section_style_slider',
+            [
+                'label' => esc_html__('Slider', 'utenzo'),
+            ]
+        );
+        $this->add_control(
+            'slider_autoplay',
+            [
+                'label' => __('Slider Autoplay', 'utenzo'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Yes', 'utenzo'),
+                'label_off' => __('No', 'utenzo'),
+                'default' => 'no',
+            ]
+        );
+        $this->add_responsive_control(
+            'slider_item',
+            [
+                'label' => __('Slider Item', 'utenzo'),
+                'type' => Controls_Manager::NUMBER,
+                'default' => 6,
+            ]
+        );
+        $this->add_control(
+            'slider_speed',
+            [
+                'label' => __('Slider Speed', 'utenzo'),
+                'type' => Controls_Manager::NUMBER,
+                'default' => 1000,
+                'min' => 100,
+                'step' => 100,
+            ]
+        );
+        $this->add_responsive_control(
+            'slider_spacebetween',
+            [
+                'label' => __('Slider SpaceBetween', 'utenzo'),
+                'type' => Controls_Manager::NUMBER,
+                'default' => 10,
+                'min' => 0,
+                'max' => 100,
+                'step' => 1,
+                'devices' => ['desktop', 'tablet', 'mobile'],
+                'desktop_default' => 30,
+                'tablet_default' => 20,
+                'mobile_default' => 20,
+            ]
+        );
+        $this->add_control(
+            'slider_arrows',
+            [
+                'label' => __('Show Arrows', 'utenzo'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Yes', 'utenzo'),
+                'label_off' => __('No', 'utenzo'),
+                'default' => 'yes',
+            ]
+        );
+        $this->end_controls_section();
     }
 
     protected function register_style_section_controls()
@@ -270,68 +330,6 @@ class Widget_TikTokShopSlider extends Widget_Base
             ]
         );
 
-        $this->end_controls_section();
-
-        $this->start_controls_section(
-            'section_style_slider',
-            [
-                'label' => esc_html__('Slider', 'utenzo'),
-                'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-        $this->add_control(
-            'slider_autoplay',
-            [
-                'label' => __('Slider Autoplay', 'utenzo'),
-                'type' => Controls_Manager::SWITCHER,
-                'label_on' => __('Yes', 'utenzo'),
-                'label_off' => __('No', 'utenzo'),
-                'default' => 'no',
-            ]
-        );
-        $this->add_responsive_control(
-            'slider_item',
-            [
-                'label' => __('Slider Item', 'utenzo'),
-                'type' => Controls_Manager::NUMBER,
-                'default' => 6,
-            ]
-        );
-        $this->add_control(
-            'slider_speed',
-            [
-                'label' => __('Slider Speed', 'utenzo'),
-                'type' => Controls_Manager::NUMBER,
-                'default' => 1000,
-                'min' => 100,
-                'step' => 100,
-            ]
-        );
-        $this->add_responsive_control(
-            'slider_spacebetween',
-            [
-                'label' => __('Slider SpaceBetween', 'utenzo'),
-                'type' => Controls_Manager::NUMBER,
-                'default' => 10,
-                'min' => 0,
-                'max' => 100,
-                'step' => 1,
-                'devices' => ['desktop', 'tablet', 'mobile'],
-                'desktop_default' => 30,
-                'tablet_default' => 20,
-                'mobile_default' => 20,
-            ]
-        );
-        $this->add_control(
-            'slider_arrows',
-            [
-                'label' => __('Show Arrows', 'utenzo'),
-                'type' => Controls_Manager::SWITCHER,
-                'label_on' => __('Yes', 'utenzo'),
-                'label_off' => __('No', 'utenzo'),
-                'default' => 'yes',
-            ]
-        );
         $this->end_controls_section();
 
         $this->start_controls_section(

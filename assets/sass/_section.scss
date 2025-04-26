@@ -26,6 +26,23 @@
 
 .elementor-element {
     &.bt-section-banner {
+        >.e-con-inner {
+            > .elementor-element{
+                &:hover{
+                    .elementor-widget-image{
+                        img{
+                            transform: scale(1.1, 1.1) translateZ(0);
+                        }
+                    }
+                }
+                .elementor-widget-image{
+                    img{
+                        transform: scale(1, 1) translateZ(0);
+                        transition: all 2s cubic-bezier(0, 0, 0.44, 1.18);
+                    }
+                }
+            }
+        }
         @media (max-width: $break-md) and (min-width: $break-sm) {
             > .e-con-inner {
                 grid-template-columns: 1fr !important;
