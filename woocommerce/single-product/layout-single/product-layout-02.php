@@ -87,13 +87,16 @@ global $product;
     <?php
 
     /**
-     * Hook: woocommerce_after_single_product_summary.
+     * Hook: utenzo_woocommerce_template_related_products.
      *
-     * @hooked woocommerce_output_product_data_tabs - 10
-     * @hooked woocommerce_upsell_display - 15
      * @hooked woocommerce_output_related_products - 20
      */
-    do_action('utenzo_woocommerce_template_related_products');
+    if (function_exists('get_field')) {
+        $enable_related_product = get_field('enable_related_product', 'options');
+        if ($enable_related_product) {
+            do_action('utenzo_woocommerce_template_related_products');
+        }
+    }
     ?>
 
 

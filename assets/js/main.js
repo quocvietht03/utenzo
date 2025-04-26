@@ -158,8 +158,8 @@
 						success: function (response) {
 							if (response.success) {
 								if ($('.bt-layout-product-2').length > 0) {
+									$('.bt-gallery-product').html(response.data['gallery-layout02']);
 									setTimeout(function () {
-										$('.bt-gallery-product').html(response.data['gallery-layout02']);
 										$('.bt-skeleton-gallery').remove();
 										$('.bt-gallery-products').removeClass('loading');
 									}, 300);
@@ -168,6 +168,14 @@
 										$('.woocommerce-product-gallery__wrapper').html(response.data['gallery']);
 										// Initialize zoom
 										$('.woocommerce-product-zoom__image').zoom();
+										// Initialize nav slider
+										$('.woocommerce-product-gallery__slider-nav').slick({
+											slidesToShow: 5,
+											slidesToScroll: 1,
+											arrows: false,
+											focusOnSelect: true,
+											asNavFor: '.woocommerce-product-gallery__slider'
+										});
 										// Initialize main slider with proper callbacks
 										$('.woocommerce-product-gallery__slider').slick({
 											slidesToShow: 1,
@@ -178,15 +186,7 @@
 											prevArrow: '<button type="button" class="slick-prev">Prev</button>',
 											nextArrow: '<button type="button" class="slick-next">Next</button>'
 										});
-
-										// Initialize nav slider
-										$('.woocommerce-product-gallery__slider-nav').slick({
-											slidesToShow: 5,
-											slidesToScroll: 1,
-											arrows: false,
-											focusOnSelect: true,
-											asNavFor: '.woocommerce-product-gallery__slider'
-										});
+										// Remove loading class and remove skeleton
 										setTimeout(function () {
 											$('.woocommerce-product-gallery').removeClass('loading');
 											$('.bt-skeleton-gallery').remove();
