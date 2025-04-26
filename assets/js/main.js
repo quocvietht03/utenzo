@@ -158,10 +158,9 @@
 						success: function (response) {
 							if (response.success) {
 								if ($('.bt-layout-product-2').length > 0) {
-									$('.bt-gallery-product').html(response.data['gallery-layout02']);
 									setTimeout(function () {
+										$('.bt-gallery-product').html(response.data['gallery-layout02']);
 										$('.bt-gallery-product').removeClass('loading');
-										$('.bt-skeleton-gallery').remove();
 									}, 300);
 								} else {
 									setTimeout(function () {

@@ -2979,6 +2979,7 @@
           gap: 15px;
         }
         .bt-skeleton-gallery {
+          position: relative;
           .bt-skeleton-main-image {
             display: none;
           }
@@ -2999,11 +3000,9 @@
           }
         }
         &.loading {
-          @media (max-width: $break-md) {
-            padding-bottom: 100%;
-            box-sizing: border-box;
-            height: 0;
-          }
+          display: block;
+          height: auto;
+          padding-bottom: 0;
         }
       }
       &.loading {
@@ -3015,8 +3014,7 @@
         @media (max-width: $break-xs) {
           padding-bottom: calc(100% + 20%);
         }
-        .woocommerce-product-gallery__wrapper,
-        .bt-gallery-product--image {
+        .woocommerce-product-gallery__wrapper {
           opacity: 0;
           visibility: hidden;
         }
