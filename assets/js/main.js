@@ -156,16 +156,10 @@
 						},
 						success: function (response) {
 							if (response.success) {
-								setTimeout(function () {
-									if ($('.bt-layout-product-2').length > 0) {
-										$('.bt-gallery-product').append(response.data['gallery-layout02']);
-										$('.bt-gallery-product').removeClass('loading');
-										$('.bt-skeleton-gallery').remove();
-									} else {
-										$('.woocommerce-product-gallery').append(response.data['gallery']);
-										 $('.woocommerce-product-gallery').removeClass('loading');
-										 $('.bt-skeleton-gallery').remove();
-									}
+								if ($('.bt-layout-product-2').length > 0) {
+									$('.bt-gallery-product').append(response.data['gallery-layout02']);
+								} else {
+									$('.woocommerce-product-gallery').append(response.data['gallery']);
 									// Reinitialize zoom and slider
 									$('.woocommerce-product-zoom__image').zoom();
 
@@ -185,8 +179,16 @@
 										focusOnSelect: true,
 										asNavFor: '.woocommerce-product-gallery__slider'
 									});
-
-								}, 300);
+								}
+								setTimeout(function () {
+									if ($('.bt-layout-product-2').length > 0) {
+										$('.bt-gallery-product').removeClass('loading');
+										$('.bt-skeleton-gallery').remove();
+									} else {
+										$('.woocommerce-product-gallery').removeClass('loading');
+										$('.bt-skeleton-gallery').remove();
+									}
+								}, 500);
 							}
 						},
 						error: function (xhr, status, error) {
