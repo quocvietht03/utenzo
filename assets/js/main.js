@@ -145,8 +145,11 @@
 												</div>
 										</div>`;
 							if ($('.bt-layout-product-2').length > 0) {
+								$('.bt-gallery-product').addClass('loading');
 								$('.bt-gallery-product').html(skeletonHtml);
 							} else {
+								// Remove existing gallery
+								$('.woocommerce-product-gallery').addClass('loading');
 								$('.woocommerce-product-gallery').html(skeletonHtml);
 							}
 
@@ -155,12 +158,14 @@
 							if (response.success) {
 								setTimeout(function () {
 									if ($('.bt-layout-product-2').length > 0) {
-										$('.bt-gallery-product').html(response.data['gallery-layout02']);
+										$('.bt-gallery-product').append(response.data['gallery-layout02']);
+										$('.bt-gallery-product').removeClass('loading');
+										$('.bt-skeleton-gallery').remove();
 									} else {
-										$('.woocommerce-product-gallery').html(response.data['gallery']);
+										$('.woocommerce-product-gallery').append(response.data['gallery']);
+										 $('.woocommerce-product-gallery').removeClass('loading');
+										 $('.bt-skeleton-gallery').remove();
 									}
-
-
 									// Reinitialize zoom and slider
 									$('.woocommerce-product-zoom__image').zoom();
 
