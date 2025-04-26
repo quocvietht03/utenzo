@@ -150,65 +150,48 @@
 							} else {
 								// Remove existing gallery
 								$('.woocommerce-product-gallery').addClass('loading');
-								$('.woocommerce-product-gallery').html(skeletonHtml);
+								$('.woocommerce-product-gallery__wrapper').html('');
+								$('.woocommerce-product-gallery').append(skeletonHtml);
 							}
 
 						},
 						success: function (response) {
 							if (response.success) {
 								if ($('.bt-layout-product-2').length > 0) {
-									$('.bt-gallery-product').append(response.data['gallery-layout02']);
+									$('.bt-gallery-product').html(response.data['gallery-layout02']);
 									setTimeout(function () {
 										$('.bt-gallery-product').removeClass('loading');
 										$('.bt-skeleton-gallery').remove();
 									}, 300);
 								} else {
-									$('.woocommerce-product-gallery').append(response.data['gallery']);
-									// Initialize zoom
-									$('.woocommerce-product-zoom__image').zoom();
-
-									// Function to run after all slider initialization is completely done
-									function completeLoading() {
-										$('.woocommerce-product-gallery').removeClass('loading');
-										$('.bt-skeleton-gallery').remove();
-									}
-
-									// Initialize main slider with proper callbacks
-									$('.woocommerce-product-gallery__slider').slick({
-										slidesToShow: 1,
-										slidesToScroll: 1,
-										fade: true,
-										arrows: false,
-										asNavFor: '.woocommerce-product-gallery__slider-nav',
-										prevArrow: '<button type="button" class="slick-prev">Prev</button>',
-										nextArrow: '<button type="button" class="slick-next">Next</button>'
-									});
-
-									// Initialize nav slider
-									$('.woocommerce-product-gallery__slider-nav').slick({
-										slidesToShow: 5,
-										slidesToScroll: 1,
-										arrows: false,
-										focusOnSelect: true,
-										asNavFor: '.woocommerce-product-gallery__slider'
-									});
-
-									// by checking for the presence of slick-initialized classes
-									var checkInterval = setInterval(function () {
-										if ($('.woocommerce-product-gallery__slider.slick-initialized').length &&
-											$('.woocommerce-product-gallery__slider-nav.slick-initialized').length) {
-											// Both sliders are fully initialized
-											clearInterval(checkInterval);
-											// Add a small delay to ensure rendering completes
-											setTimeout(completeLoading, 100);
-										}
-									}, 50);
-
-									// Failsafe timeout in case the check interval doesn't detect initialization
 									setTimeout(function () {
-										clearInterval(checkInterval);
-										completeLoading();
-									}, 2000);
+										$('.woocommerce-product-gallery__wrapper').html(response.data['gallery']);
+										// Initialize zoom
+										$('.woocommerce-product-zoom__image').zoom();
+										// Initialize main slider with proper callbacks
+										$('.woocommerce-product-gallery__slider').slick({
+											slidesToShow: 1,
+											slidesToScroll: 1,
+											fade: true,
+											arrows: false,
+											asNavFor: '.woocommerce-product-gallery__slider-nav',
+											prevArrow: '<button type="button" class="slick-prev">Prev</button>',
+											nextArrow: '<button type="button" class="slick-next">Next</button>'
+										});
+
+										// Initialize nav slider
+										$('.woocommerce-product-gallery__slider-nav').slick({
+											slidesToShow: 5,
+											slidesToScroll: 1,
+											arrows: false,
+											focusOnSelect: true,
+											asNavFor: '.woocommerce-product-gallery__slider'
+										});
+										setTimeout(function () {
+											$('.woocommerce-product-gallery').removeClass('loading');
+											$('.bt-skeleton-gallery').remove();
+										}, 500);
+									}, 300);
 								}
 							}
 						},

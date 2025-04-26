@@ -2154,8 +2154,8 @@ function utenzo_after_checkout_product($order_id)
             }
         }
     }
-     // Mark this order as processed
-     update_post_meta($order_id, '_utenzo_order_processed', 'yes');
+    // Mark this order as processed
+    update_post_meta($order_id, '_utenzo_order_processed', 'yes');
 }
 /* hook check sale date countdown product */
 function utenzo_check_sale_date_countdown()
@@ -2559,7 +2559,6 @@ function utenzo_load_product_gallery()
     $variation = wc_get_product($variation_id);
     $variation_image_id = $variation->get_image_id();
     ob_start();
-    echo '<figure class="woocommerce-product-gallery__wrapper">';
     echo '<div class="woocommerce-product-gallery__slider">';
 
     // Add main product image variation
@@ -2644,7 +2643,6 @@ function utenzo_load_product_gallery()
         }
     }
     echo '</div>';
-    echo '</figure>';
 
     $output['gallery'] = ob_get_clean();
     // load gallery product layout 02    
