@@ -145,8 +145,8 @@
 												</div>
 										</div>`;
 							if ($('.bt-layout-product-2').length > 0) {
-								$('.bt-gallery-product').addClass('loading');
-								$('.bt-gallery-product').html(skeletonHtml);
+								$('.bt-gallery-products').addClass('loading');
+								$('.bt-gallery-products').append(skeletonHtml);
 							} else {
 								// Remove existing gallery
 								$('.woocommerce-product-gallery').addClass('loading');
@@ -160,7 +160,8 @@
 								if ($('.bt-layout-product-2').length > 0) {
 									setTimeout(function () {
 										$('.bt-gallery-product').html(response.data['gallery-layout02']);
-										$('.bt-gallery-product').removeClass('loading');
+										$('.bt-skeleton-gallery').remove();
+										$('.bt-gallery-products').removeClass('loading');
 									}, 300);
 								} else {
 									setTimeout(function () {
