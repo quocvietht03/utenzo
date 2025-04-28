@@ -463,14 +463,13 @@
   }
 }
 .__bt-format-post-content {
-  color: $color-text;
+	font-family: $text-font;
   font-size: 18px;
-  font-style: normal;
   font-weight: 400;
-  line-height: 28px;
-  @media (max-width: $break-sm) {
-    font-size: 16px;
-    line-height: 24px;
+  line-height: 176%;
+  color: $color-text;
+  @media(max-width: $break-lg) {
+    font-size: 16px; 
   }
   > *:first-child {
     margin-top: 0 !important;
@@ -478,63 +477,74 @@
   > *:last-child {
     margin-bottom: 0 !important;
   }
-  p {
-    margin: 12px 0;
+  strong, b {
+    color: $color-primary;
+  }
+  a {
+    font-weight: 600;
+    color: $color-primary;
   }
   h2 {
-    margin: 16px 0;
-    color: $color-primary;
     font-size: 30px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 42px;
     @media (max-width: $break-xs) {
       font-size: 24px;
-      line-height: 1.3;
     }
   }
   h3 {
     font-size: 24px;
-    margin: 16px 0;
-    color: $color-primary;
-    font-family: $secondary-font;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 32px;
     @media (max-width: $break-xs) {
       font-size: 22px;
-      line-height: 1.3;
     }
   }
   ul {
     padding: 0;
     list-style: none;
-    margin-bottom: 12px;
-    color: $color-primary;
+    margin-bottom: 16px;
     > li:not(.blocks-gallery-item) {
       position: relative;
       padding-left: 28px;
       &:not(:last-child) {
-        margin-bottom: 12px;
+        margin-bottom: 16px;
       }
       &:before {
         content: "";
         display: inline-block;
-        width: 2px;
-        height: 2px;
+        width: 6px;
+        height: 6px;
         border-radius: 50%;
         background: $color-primary;
         position: absolute;
-        left: 11px;
-        top: 13px;
-        @media (max-width: $break-sm) {
+        left: 8px;
+        top: 12px;
+        @media(max-width: $break-sm) {
           top: 11px;
         }
       }
     }
   }
-  .wp-block-image {
-    img {
+  ol {
+    list-style: none;
+    counter-reset: bt-awesome-counter;
+    padding-left: 0;
+    li {
+      counter-increment: bt-awesome-counter;
+      position: relative;
+      padding-left: 28px;
+      &:not(:last-child) {
+        margin-bottom: 16px;
+      }
+      ::before {
+        content: counter(bt-awesome-counter) ". ";
+        position: absolute;
+        left: 6px;
+        top: 0;
+        font-weight: 600;
+        color: $color-primary;
+      }
+    }
+  }
+  .wp-block-image{
+    img{
       border-radius: 20px;
     }
     @media (max-width: $break-sm) {
@@ -549,7 +559,7 @@
     gap: 20px;
     @media (max-width: $break-sm) {
       --wp--style--unstable-gallery-gap: auto;
-      margin: 20px 0;
+      margin: 24px 0;
     }
     img {
       border-radius: 8px;
