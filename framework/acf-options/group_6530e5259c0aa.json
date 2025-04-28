@@ -1519,33 +1519,6 @@
             "selected": 0
         },
         {
-            "key": "field_68085d44a2faa",
-            "label": "Layout Single",
-            "name": "layout_single_post",
-            "aria-label": "",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "layout-default": "Default",
-                "layout-01": "Layout 01 (Sidebar)"
-            },
-            "default_value": "layout-default",
-            "return_format": "value",
-            "multiple": 0,
-            "allow_null": 0,
-            "allow_in_bindings": 1,
-            "ui": 1,
-            "ajax": 0,
-            "placeholder": ""
-        },
-        {
             "key": "field_680847a407655",
             "label": "Enable Related Posts",
             "name": "enable_related_posts",
@@ -1988,5 +1961,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1745808764
+    "modified": 1745831128
 }

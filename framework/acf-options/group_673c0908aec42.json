@@ -3,11 +3,11 @@
     "title": "Post Options",
     "fields": [
         {
-            "key": "field_6808684ad263e",
-            "label": "Enable Layout",
-            "name": "enable_layout",
+            "key": "field_680864ca0aa10",
+            "label": "Layout",
+            "name": "layout_post",
             "aria-label": "",
-            "type": "true_false",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -16,38 +16,9 @@
                 "class": "",
                 "id": ""
             },
-            "message": "",
-            "default_value": 0,
-            "allow_in_bindings": 1,
-            "ui_on_text": "",
-            "ui_off_text": "",
-            "ui": 1
-        },
-        {
-            "key": "field_680864ca0aa10",
-            "label": "Layout",
-            "name": "layout_post",
-            "aria-label": "",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_6808684ad263e",
-                        "operator": "==",
-                        "value": "1"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
             "choices": {
                 "layout-default": "Default",
-                "layout-01": "Layout 01 (Sidebar)"
+                "layout-01": "Layout No Sidebar"
             },
             "default_value": false,
             "return_format": "value",
@@ -66,7 +37,15 @@
             "type": "image",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_680864ca0aa10",
+                        "operator": "==",
+                        "value": "layout-01"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -95,7 +74,7 @@
         ]
     ],
     "menu_order": 0,
-    "position": "normal",
+    "position": "side",
     "style": "default",
     "label_placement": "top",
     "instruction_placement": "label",
@@ -103,5 +82,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1745381499
+    "modified": 1745831564
 }

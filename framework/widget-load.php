@@ -86,7 +86,8 @@ class ElementorWidgets
 			'product-testimonial',
 			'product-testimonial-slider',
 			'countdown',
-			'our-teams'
+			'our-teams',
+			'our-store'
 		);
 
 		return $this->widgets;
@@ -225,6 +226,7 @@ class ElementorWidgets
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ProductTestimonialSlider\Widget_ProductTestimonialSlider());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\CountDown\Widget_CountDown());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\OurTeams\Widget_OurTeams());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\OurStore\Widget_OurStore());
 	}
 
 	/**
