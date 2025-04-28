@@ -204,6 +204,17 @@ class Widget_TikTokShopSlider extends Widget_Base
                 'default' => 'no',
             ]
         );
+        $this->add_control(
+            'slider_loop',
+            [
+                'label' => __('Infinite Loop', 'utenzo'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Yes', 'utenzo'),
+                'label_off' => __('No', 'utenzo'),
+                'default' => 'yes',
+                'description' => __('Enable continuous loop mode', 'utenzo'),
+            ]
+        );
         $this->add_responsive_control(
             'slider_item',
             [
@@ -502,9 +513,9 @@ class Widget_TikTokShopSlider extends Widget_Base
             'data-spacebetween' => $slider_settings['desktop']['space'],
             'data-spacebetween-tablet' => $slider_settings['tablet']['space'],
             'data-spacebetween-mobile' => $slider_settings['mobile']['space'],
-            'data-autoplay' => $is_auto ? 'true' : 'false'
+            'data-autoplay' => $is_auto ? 'true' : 'false',
+            'data-loop' => $settings['slider_loop'] === 'yes' ? 'true' : 'false'
         ];
-
         // Start slider container
         echo '<div ' . $this->render_attributes($slider_attrs) . '>';
         echo '<ul class="bt-tiktok-shop-slider swiper-wrapper">';
@@ -566,7 +577,7 @@ class Widget_TikTokShopSlider extends Widget_Base
         }
         // End slider container
         echo '</ul>';
-        ?>
+?>
       <?php
         // Navigation arrows
         if ($settings['slider_arrows'] === 'yes') {

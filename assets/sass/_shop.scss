@@ -98,6 +98,8 @@
         flex-direction: column;
         gap: 12px;
         max-height: 230px;
+        margin-right: -8px;
+        padding-right: 8px;
       }
       .bt-field-item {
         position: relative;
@@ -149,7 +151,7 @@
         .bt-field-list {
           flex-wrap: wrap;
           flex-direction: unset;
-          gap: 12px;
+          gap: 7px;
           .bt-field-item {
             display: inline-block;
             a {
@@ -276,6 +278,8 @@
           top: 0;
           left: 0;
           cursor: pointer;
+          width: 100%;
+          height: 100%;
         }
         &:has(input:checked) {
           span {
@@ -1814,6 +1818,9 @@
       margin: 0;
       display: block;
       text-align: left;
+      &:hover {
+        color: $color-accent;
+      }
     }
     span.price {
       display: flex;

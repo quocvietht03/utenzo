@@ -581,6 +581,10 @@
 			setTimeout(function () {
 				if (!$('.bt-popup-compare').hasClass('bt-compare-elwwg')) {
 					$('.bt-popup-compare').removeClass('active');
+					$('body').css({
+						'overflow': 'auto', // Restore body scroll
+						'padding-right': '0' // Reset padding-right
+					});
 				} else {
 					window.location.href = AJ_Options.shop;
 				}

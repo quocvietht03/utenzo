@@ -1341,6 +1341,64 @@
             ]
         },
         {
+            "key": "field_680ee32e75eba",
+            "label": "Top Popular",
+            "name": "top_popular_product",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "Enter a product to display its top popular variations. If no product is provided, the filter will automatically query and display the best-selling products.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "product"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "return_format": "id",
+            "multiple": 1,
+            "allow_null": 0,
+            "allow_in_bindings": 1,
+            "bidirectional": 0,
+            "ui": 1,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_680eec9540dc4",
+            "label": "Featured Products",
+            "name": "featured_products",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "Enter a product to display its featured variations. If no product is provided, the filter will automatically query and display the featured products.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "product"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "return_format": "id",
+            "multiple": 1,
+            "allow_null": 0,
+            "allow_in_bindings": 1,
+            "bidirectional": 0,
+            "ui": 1,
+            "bidirectional_target": []
+        },
+        {
             "key": "field_6801fa7612d0a",
             "label": "Cart",
             "name": "",
@@ -1930,5 +1988,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1745378793
+    "modified": 1745808764
 }

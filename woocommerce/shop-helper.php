@@ -669,7 +669,7 @@ function utenzo_product_field_rating($slug = '', $field_title = '', $field_value
                     <span class="check-rating"></span>
                     <input type="radio" name="<?php echo esc_attr($slug); ?>" id="<?php echo 'rating' . $rating ?>" value="<?php echo esc_attr($rating); ?>" checked>
                     <?php
-                    echo '<label class="bt-star" for="rating' . $rating . '">' . $stars . '<span>' . esc_html__('& up', 'utenzo') . '</span></label>';
+                    echo '<label class="bt-star" for="rating' . $rating . '">' . $stars . '</label>';
                     ?>
                     <span class="bt-count"><?php echo utenzo_get_products_by_rating($rating) ?></span>
                 </div>
@@ -678,7 +678,7 @@ function utenzo_product_field_rating($slug = '', $field_title = '', $field_value
                     <span class="check-rating"></span>
                     <input type="radio" name="<?php echo esc_attr($slug); ?>" id="<?php echo 'rating' . $rating ?>" value="<?php echo esc_attr($rating); ?>">
                     <?php
-                    echo '<label class="bt-star" for="rating' . $rating . '">' . $stars . '<span>' . esc_html__('& up', 'utenzo') . '</span></label>';
+                    echo '<label class="bt-star" for="rating' . $rating . '">' . $stars . '</label>';
                     ?>
                     <span class="bt-count"><?php echo utenzo_get_products_by_rating($rating) ?></span>
                 </div>
@@ -1971,8 +1971,40 @@ add_action('wp_ajax_nopriv_utenzo_search_live', 'utenzo_search_live');
 /* query id elementor Popular Products */
 function bt_custom_popular_products_query($query)
 {
-    if (isset($query)) {
-        $query->set('post_type', 'product');
+    if (!isset($query)) {
+        return;
+    }
+
+    $query->set('post_type', 'product');
+
+    // Get popular products selection from ACF
+    $top_popular_products = get_field('top_popular_product', 'options');
+
+    // Check if specific products are selected
+    if (!empty($top_popular_products) && is_array($top_popular_products)) {
+        // Get IDs of selected products
+        $product_ids = array();
+        foreach ($top_popular_products as $product) {
+            if (is_object($product) && isset($product->ID)) {
+                $product_ids[] = $product->ID;
+            } elseif (is_numeric($product)) {
+                $product_ids[] = $product;
+            }
+        }
+
+        if (!empty($product_ids)) {
+            // Use the selected products with specific ordering
+            $query->set('post__in', $product_ids);
+            $query->set('orderby', 'post__in'); // Maintain the order from ACF
+            // Don't use meta_key sorting when we have specific products
+        } else {
+            // Fall back to popularity sorting if no valid IDs
+            $query->set('meta_key', 'total_sales');
+            $query->set('orderby', 'meta_value_num');
+            $query->set('order', 'desc');
+        }
+    } else {
+        // Default sorting by popularity when no products are selected
         $query->set('meta_key', 'total_sales');
         $query->set('orderby', 'meta_value_num');
         $query->set('order', 'desc');
@@ -1980,12 +2012,45 @@ function bt_custom_popular_products_query($query)
 }
 
 add_action('elementor/query/bt_popular_products', 'bt_custom_popular_products_query');
-
 /* query id elementor Featured Products */
 function bt_custom_featured_products_query($query)
 {
-    if (isset($query)) {
-        $query->set('post_type', 'product');
+    if (!isset($query)) {
+        return;
+    }
+
+    $query->set('post_type', 'product');
+
+    // Get popular products selection from ACF
+    $featured_products = get_field('featured_products', 'options');
+
+    // Check if specific products are selected
+    if (!empty($featured_products) && is_array($featured_products)) {
+        // Get IDs of selected products
+        $product_ids = array();
+        foreach ($featured_products as $product) {
+            if (is_object($product) && isset($product->ID)) {
+                $product_ids[] = $product->ID;
+            } elseif (is_numeric($product)) {
+                $product_ids[] = $product;
+            }
+        }
+
+        if (!empty($product_ids)) {
+            // Use the selected products with specific ordering
+            $query->set('post__in', $product_ids);
+            $query->set('orderby', 'post__in'); // Maintain the order from ACF
+            // Don't use meta_key sorting when we have specific products
+        } else {
+            $query->set('tax_query', array(
+                array(
+                    'taxonomy' => 'product_visibility',
+                    'field' => 'name',
+                    'terms' => 'featured',
+                ),
+            ));
+        }
+    } else {
         $query->set('tax_query', array(
             array(
                 'taxonomy' => 'product_visibility',

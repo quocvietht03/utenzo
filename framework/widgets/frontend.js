@@ -137,7 +137,7 @@
 						context: this,
 						beforeSend: function () {
 							$liveSearchResults.addClass('active');
-						//	$liveSearchResults.addClass('loading');
+							//	$liveSearchResults.addClass('loading');
 							// Show loading skeleton for 3 product items
 							let skeletonHtml = '';
 							for (let i = 0; i < 3; i++) {
@@ -279,11 +279,11 @@
 			const $spaceBetween = parseInt($tiktokSlider.data('spacebetween')) || 0;
 			const $spaceBetweenTablet = parseInt($tiktokSlider.data('spacebetween-tablet')) || 0;
 			const $spaceBetweenMobile = parseInt($tiktokSlider.data('spacebetween-mobile')) || 0;
-			const $autoplay = $tiktokSlider.data('autoplay') === 'true';
-
+			const $autoplay = Boolean($tiktokSlider.data('autoplay'));
+			const $loop = Boolean($tiktokSlider.data('loop'));
 			const $swiper = new Swiper($tiktokSlider[0], {
 				slidesPerView: $itemMobile,
-				loop: false,
+				loop: $loop,
 				spaceBetween: $spaceBetweenMobile,
 				speed: $speed,
 				freeMode: true,
