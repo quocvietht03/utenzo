@@ -1985,7 +1985,7 @@
           .bt-title {
             font-size: 20px;
           }
-          .bt-price-mobile{
+          .bt-price-mobile {
             display: flex;
             flex-direction: row-reverse;
             justify-content: flex-end;
@@ -1997,7 +1997,7 @@
             line-height: 28px;
             margin-top: 8px;
             color: $color-primary;
-            @media(min-width: $break-md) {
+            @media (min-width: $break-md) {
               display: none;
             }
             ins {
@@ -2091,20 +2091,20 @@
       &--foot {
         border-top: 1px solid #e5e7eb;
       }
-      .bt-skeleton-item{
+      .bt-skeleton-item {
         .bt-table--col {
-          &.bt-product-remove{
-            .bt-skeleton-circle{
+          &.bt-product-remove {
+            .bt-skeleton-circle {
               border-radius: 4px;
               width: 55%;
               height: 35px;
               margin: 0 auto;
               @extend .__bt-animation-loading-card;
-              @media(max-width: $break-sm) {
+              @media (max-width: $break-sm) {
                 width: 100%;
               }
             }
-            @media(max-width: $break-xs) {
+            @media (max-width: $break-xs) {
               display: none;
             }
           }
@@ -2114,7 +2114,7 @@
               width: 120px;
               height: 120px;
               @extend .__bt-animation-loading-card;
-              @media(max-width: $break-xs) {
+              @media (max-width: $break-xs) {
                 width: 100%;
                 height: auto;
                 padding-bottom: 100%;
@@ -2146,8 +2146,8 @@
               @extend .__bt-animation-loading-card;
             }
           }
-          &.bt-product-add-to-cart{
-            .bt-skeleton-button{
+          &.bt-product-add-to-cart {
+            .bt-skeleton-button {
               width: 85%;
               height: 40px;
               @extend .__bt-animation-loading-card;
@@ -2440,6 +2440,7 @@
         cursor: pointer;
         transition: background 0.2s;
         font-size: 16px;
+        letter-spacing: 0;
       }
       .bt-category-item:hover {
         background: #f5f5f5;
@@ -3910,8 +3911,10 @@ body {
       }
       .bt-testimonial-image {
         &:hover {
-          img {
-            transform: scale(1.1, 1.1) translateZ(0);
+          .bt-cover-image {
+            img {
+              transform: scale(1.1, 1.1) translateZ(0);
+            }
           }
         }
         .bt-product-testimonial {

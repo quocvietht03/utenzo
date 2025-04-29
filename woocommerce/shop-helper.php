@@ -1160,13 +1160,16 @@ function utenzo_products_compare()
                                         <div class="bt-table--col bt-color">
                                             <?php
                                             $colors = wp_get_post_terms($id, 'pa_color', ['fields' => 'ids']);
+                                            $count = 0;
                                             foreach ($colors as $color_id) {
+                                                if ($count >= 6) break; // Only show max 6 colors
                                                 $color_value = get_field('color', 'pa_color_' . $color_id);
                                                 $color = get_term($color_id, 'pa_color');
                                                 if (!$color_value) {
                                                     $color_value = $color->slug;
                                                 }
                                                 echo '<div class="bt-item-color"><span style="background-color: ' . esc_attr($color_value) . ';"></span>' . esc_html($color->name) . '</div>';
+                                                $count++;
                                             }
                                             ?>
                                         </div>

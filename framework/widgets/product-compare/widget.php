@@ -277,13 +277,18 @@ class Widget_ProductCompare extends Widget_Base
 													<div class="bt-table--col bt-color">
 														<?php
 														$colors = wp_get_post_terms($id, 'pa_color', ['fields' => 'ids']);
+														$count = 0;
 														foreach ($colors as $color_id) {
+															if ($count >= 6) break; // Only show max 6 colors
+
 															$color_value = get_field('color', 'pa_color_' . $color_id);
 															$color = get_term($color_id, 'pa_color');
 															if (!$color_value) {
 																$color_value = $color->slug;
 															}
-															echo '<div class="bt-item-color"><span style="background-color: ' . esc_attr($color_value) . ';"></span>' . esc_html($color->name) . '</div>'; 
+															echo '<div class="bt-item-color"><span style="background-color: ' . esc_attr($color_value) . ';"></span>' . esc_html($color->name) . '</div>';
+
+															$count++;
 														}
 														?>
 													</div>
@@ -300,16 +305,16 @@ class Widget_ProductCompare extends Widget_Base
 											<div class="bt-table--col bt-add-to-cart">
 												<?php
 												$product = wc_get_product($id);
-													if ($product->is_type('simple')) {
-														?>
-															<a href="?add-to-cart=<?php echo esc_attr($id); ?>" aria-describedby="woocommerce_loop_add_to_cart_link_describedby_<?php echo esc_attr($id); ?>" data-quantity="1" class="bt-button product_type_simple add_to_cart_button ajax_add_to_cart bt-button-hover" data-product_id="<?php echo esc_attr($id); ?>" data-product_sku="" rel="nofollow"><?php echo esc_html__('Add to cart', 'utenzo') ?></a>
-														<?php
-													} else {
-														?>
-														<a href="<?php echo esc_url(get_permalink($id)); ?>" class="bt-button bt-button-hover"><?php echo esc_html__('View Product', 'utenzo') ?></a>
-													<?php
-													}
-													?>
+												if ($product->is_type('simple')) {
+												?>
+													<a href="?add-to-cart=<?php echo esc_attr($id); ?>" aria-describedby="woocommerce_loop_add_to_cart_link_describedby_<?php echo esc_attr($id); ?>" data-quantity="1" class="bt-button product_type_simple add_to_cart_button ajax_add_to_cart bt-button-hover" data-product_id="<?php echo esc_attr($id); ?>" data-product_sku="" rel="nofollow"><?php echo esc_html__('Add to cart', 'utenzo') ?></a>
+												<?php
+												} else {
+												?>
+													<a href="<?php echo esc_url(get_permalink($id)); ?>" class="bt-button bt-button-hover"><?php echo esc_html__('View Product', 'utenzo') ?></a>
+												<?php
+												}
+												?>
 											</div>
 										</div>
 								<?php
