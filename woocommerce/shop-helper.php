@@ -1066,7 +1066,7 @@ function utenzo_products_compare()
                         if ($product) {
                             $product_url = get_permalink($id);
                             $product_name = $product->get_name();
-                            $product_image = wp_get_attachment_image_src($product->get_image_id(), 'medium');
+                            $product_image = wp_get_attachment_image_src($product->get_image_id(), 'large');
                             if (!$product_image) {
                                 $product_image_url = wc_placeholder_img_src();
                             } else {

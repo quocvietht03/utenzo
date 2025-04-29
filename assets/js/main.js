@@ -370,13 +370,11 @@
 					data: param_ajax,
 					context: this,
 					beforeSend: function () {
-						//$('.bt-table--body').addClass('loading');
 					},
 					success: function (response) {
 						if (response.success) {
 							$('.bt-product-list').html(response.data['items']).fadeIn('slow');
 							$('.bt-mini-wishlist .wishlist_total').html(response.data['count']);
-							//	$('.bt-table--body').removeClass('loading');
 						} else {
 							console.log('error');
 						}

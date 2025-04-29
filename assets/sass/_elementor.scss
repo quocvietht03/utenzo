@@ -1905,7 +1905,7 @@
           font-size: 18px;
           font-weight: 500;
           line-height: 150%;
-          color: #ffffff;
+          color: #ffffff !important;
         }
       }
       &--body {
@@ -1996,6 +1996,7 @@
             font-weight: 500;
             line-height: 28px;
             margin-top: 8px;
+            color: $color-primary;
             @media(min-width: $break-md) {
               display: none;
             }
@@ -2030,6 +2031,7 @@
             font-style: normal;
             font-weight: 500;
             line-height: 28px;
+            color: $color-primary;
             ins {
               text-decoration: none;
               font-size: 20px;
