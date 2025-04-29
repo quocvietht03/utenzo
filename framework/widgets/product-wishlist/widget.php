@@ -180,6 +180,11 @@ class Widget_ProductWishlist extends Widget_Base
 														<?php echo esc_html($product->get_name()); ?>
 													</a>
 												</h3>
+												<?php
+													if ($product_price) {
+														echo '<span class="bt-price-mobile">' . $product_price . '</span>';
+													}
+												?>
 											</div>
 											<div class="bt-table--col bt-product-price">
 												<?php
@@ -192,7 +197,18 @@ class Widget_ProductWishlist extends Widget_Base
 												<span><?php echo esc_html($stock_status); ?></span>
 											</div>
 											<div class="bt-table--col bt-product-add-to-cart">
-												<a href="?add-to-cart=<?php echo esc_attr($product_id); ?>" aria-describedby="woocommerce_loop_add_to_cart_link_describedby_<?php echo esc_attr($product_id); ?>" data-quantity="1" class="button product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="<?php echo esc_attr($product_id); ?>" data-product_sku="" rel="nofollow"><?php echo esc_html__('Add to cart', 'utenzo') ?></a>
+											<?php
+												$product = wc_get_product($product_id);
+													if ($product->is_type('simple')) {
+														?>
+															<a href="?add-to-cart=<?php echo esc_attr($product_id); ?>" aria-describedby="woocommerce_loop_add_to_cart_link_describedby_<?php echo esc_attr($product_id); ?>" data-quantity="1" class="bt-button product_type_simple add_to_cart_button ajax_add_to_cart bt-button-hover" data-product_id="<?php echo esc_attr($product_id); ?>" data-product_sku="" rel="nofollow"><?php echo esc_html__('Add to cart', 'utenzo') ?></a>
+														<?php
+													} else {
+														?>
+														<a href="<?php echo esc_url(get_permalink($product_id)); ?>" class="bt-button bt-button-hover"><?php echo esc_html__('View Product', 'utenzo') ?></a>
+													<?php
+													}
+													?>
 											</div>
 										</div>
 									<?php } ?>

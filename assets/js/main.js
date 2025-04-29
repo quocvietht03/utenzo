@@ -370,13 +370,13 @@
 					data: param_ajax,
 					context: this,
 					beforeSend: function () {
-						$('.bt-table--body').addClass('loading');
+						//$('.bt-table--body').addClass('loading');
 					},
 					success: function (response) {
 						if (response.success) {
 							$('.bt-product-list').html(response.data['items']).fadeIn('slow');
 							$('.bt-mini-wishlist .wishlist_total').html(response.data['count']);
-							$('.bt-table--body').removeClass('loading');
+							//	$('.bt-table--body').removeClass('loading');
 						} else {
 							console.log('error');
 						}
@@ -411,13 +411,37 @@
 				data: param_ajax,
 				context: this,
 				beforeSend: function () {
-					$('.bt-table--body').addClass('loading');
+					//$('.bt-table--body').addClass('loading');
+					let skeletonHtml = '';
+					for (let i = 0; i < 5; i++) {
+						skeletonHtml += `
+							<div class="bt-table--row bt-product-item bt-skeleton-item">
+								<div class="bt-table--col bt-product-remove">
+									<div class="bt-skeleton-circle"></div>
+								</div>
+								<div class="bt-table--col bt-product-thumb">
+									<div class="bt-skeleton-image"></div>
+								</div>
+								<div class="bt-table--col bt-product-title">
+									<div class="bt-skeleton-text"></div>
+								</div>
+								<div class="bt-table--col bt-product-price">
+									<div class="bt-skeleton-text"></div>
+								</div>
+								<div class="bt-table--col bt-product-stock">
+									<div class="bt-skeleton-text"></div>
+								</div>
+								<div class="bt-table--col bt-product-add-to-cart">
+									<div class="bt-skeleton-button"></div>
+								</div>
+							</div>`;
+					}
+					$('.bt-product-list').html(skeletonHtml);
 				},
 				success: function (response) {
 					if (response.success) {
 						$('.bt-product-list').html(response.data['items']).fadeIn('slow');
 						$('.bt-mini-wishlist .wishlist_total').html(response.data['count']);
-						$('.bt-table--body').removeClass('loading');
 					} else {
 						console.log('error');
 					}

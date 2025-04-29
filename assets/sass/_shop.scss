@@ -1028,9 +1028,12 @@
       min-width: 145px;
       .bt-table--col {
         background: #f9fafb;
-        font-weight: 700;
+        font-weight: 600;
         text-transform: capitalize;
         font-size: 16px;
+        &.bt-head-color{
+          height: 60px;
+        }
       }
       @media (max-width: $break-xs) {
         min-width: 100px !important;
@@ -1079,6 +1082,7 @@
       height: 55px;
       display: flex;
       align-items: center;
+      font-size: 16px;
       &.bt-stock {
         p {
           background: #3dab25db;
@@ -1100,6 +1104,7 @@
       &.bt-color {
         gap: 6px 12px;
         flex-wrap: wrap;
+        height: 60px;
         .bt-item-color {
           display: flex;
           align-items: center;
@@ -1286,9 +1291,13 @@
           line-height: 1.5;
           color: #fff;
           background-color: $color-accent;
-          font-weight: 700;
+          font-weight: 600;
           white-space: nowrap;
-          border-radius: 12px;
+          border-radius: 4px;
+          &:hover {
+            color: #fff;
+            background-color: $color-primary;
+          }
           &.added {
             display: none;
           }
