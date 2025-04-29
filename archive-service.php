@@ -33,7 +33,6 @@ get_template_part('framework/templates/site', 'titlebar');
                                         <?php endforeach; ?>
                                     </ul>
                                 <?php endif; ?>
-                                <?php echo utenzo_service_button_book_now_render('Request An Estimate'); ?>
                             </div>
 
                             <!-- Small, medium, and large bubbles -->

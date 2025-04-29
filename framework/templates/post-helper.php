@@ -367,33 +367,6 @@ if (!function_exists('utenzo_post_button_render')) {
     </div>
     <?php }
 }
-/* Book Now Button */
-if (!function_exists('utenzo_service_button_book_now_render')) {
-  function utenzo_service_button_book_now_render($text)
-  {
-    $site_infor = get_field('site_information', 'options') ?: '';
-    if (!empty($site_infor) && isset($site_infor)) {
-      if (!empty($site_infor['page_book_now'])) {
-        $book_now = $site_infor['page_book_now'];
-      } else {
-        $book_now = '#';
-      }
-      if (!empty($site_infor['text_button_book_now'])) {
-        $text_book_now = $site_infor['text_button_book_now'];
-      } else {
-        $text_book_now = $text;
-      }
-    ?>
-      <div class="bt-post--button-booknow bt-button-hover">
-        <a href="<?php echo esc_url($book_now); ?>" class="bt-primary-btn bt-button">
-          <span class="bt-heading"> <?php echo esc_html($text_book_now) ?> </span>
-          <?php echo utenzo_get_icon_svg_html('icon-arrow-right') ?>
-        </a>
-      </div>
-    <?php }
-  }
-}
-
 /* Author Icon */
 if (!function_exists('utenzo_author_icon_render')) {
   function utenzo_author_icon_render()

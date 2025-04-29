@@ -87,7 +87,6 @@ if (function_exists('get_field')) {
 							<?php echo utenzo_single_post_title_render(); ?>
 							<div class="bt-post--content">
 								<?php the_content(); ?>
-								<?php echo utenzo_service_button_book_now_render('Request An Estimate'); ?>
 							</div>
 						</div>
 					</div>

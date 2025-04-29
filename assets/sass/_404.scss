@@ -4,7 +4,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 50px;
+      gap: 100px;
       &__img {
         img {
           max-width: 500px;
@@ -31,6 +31,7 @@
     @media (max-width: $break-tl) {
       padding: 30px 0 60px;
       .bt-404-error {
+        gap: 50px; 
         &__content {
           text-align: left;
           h2 {

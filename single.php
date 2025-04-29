@@ -35,7 +35,7 @@ if (function_exists('get_field')) {
 			while (have_posts()) : the_post();
 			?>
 				<div class="bt-main-post">
-					<?php get_template_part('framework/templates/post'); ?>
+					<?php get_template_part('framework/templates/post', null, array('layout' => $layout)); ?>
 				</div>
 				<div class="bt-main-actions">
 					<?php
@@ -67,14 +67,15 @@ if (function_exists('get_field')) {
 				</div>
 			</div>
 		</div>
-		<div class="bt-main-content-ss bt-main-content-layout-01">
+		<div class="bt-main-content-ss bt-main-content-sidebar">
 			<div class="bt-container">
 				<div class="bt-main-post-row">
 					<div class="bt-main-post-col">
 						<?php
 						while (have_posts()) : the_post();
 						?>
-							<div class="bt-main-post bt-layout-01">
+							<div class="bt-main-post bt-post-sidebar">
+								
 								<?php get_template_part('framework/templates/post', null, array('layout' => $layout)); ?>
 							</div>
 							<div class="bt-main-actions">

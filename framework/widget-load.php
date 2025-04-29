@@ -71,7 +71,6 @@ class ElementorWidgets
 			'service-loop-item-style-1',
 			'service-loop-item-menu',
 			'offer-box',
-			'opening-times',
 			'mini-cart',
 			'brand-slider',
 			'list-faq',
@@ -214,7 +213,6 @@ class ElementorWidgets
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\PricingItem\Widget_PricingItem());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\OfferBox\Widget_OfferBox());
 
-		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\OpeningTime\Widget_OpeningTime());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\MiniCart\Widget_MiniCart());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\BrandSlider\Widget_BrandSlider());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ListFaq\Widget_ListFaq());

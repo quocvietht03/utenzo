@@ -12,7 +12,7 @@
 	</div>
 	<?php
 	$layout = isset($args['layout']) ? $args['layout'] : 'layout-default';
-	if ($layout == 'layout-01') {
+	if ($layout == 'layout-default') {
 		echo utenzo_post_featured_render();
 	}
 	echo utenzo_post_content_render();
