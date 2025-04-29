@@ -1199,7 +1199,7 @@ img.alignright {
   padding-left: 28px;
 }
 .__bt-format-post-content ul > li:not(.blocks-gallery-item):not(:last-child), .woocommerce div.product .woocommerce-tabs #tab-additional_information ul > li:not(.blocks-gallery-item):not(:last-child), .woocommerce div.product .woocommerce-tabs #tab-description ul > li:not(.blocks-gallery-item):not(:last-child), .single-service .bt-main-content-ss .bt-post--content ul > li:not(.blocks-gallery-item):not(:last-child), .bt-main-post .bt-post--content ul > li:not(.blocks-gallery-item):not(:last-child) {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 .__bt-format-post-content ul > li:not(.blocks-gallery-item):before, .woocommerce div.product .woocommerce-tabs #tab-additional_information ul > li:not(.blocks-gallery-item):before, .woocommerce div.product .woocommerce-tabs #tab-description ul > li:not(.blocks-gallery-item):before, .single-service .bt-main-content-ss .bt-post--content ul > li:not(.blocks-gallery-item):before, .bt-main-post .bt-post--content ul > li:not(.blocks-gallery-item):before {
   content: "";
@@ -1221,6 +1221,7 @@ img.alignright {
   list-style: none;
   counter-reset: bt-awesome-counter;
   padding-left: 0;
+  margin-bottom: 16px;
 }
 .__bt-format-post-content ol li, .woocommerce div.product .woocommerce-tabs #tab-additional_information ol li, .woocommerce div.product .woocommerce-tabs #tab-description ol li, .single-service .bt-main-content-ss .bt-post--content ol li, .bt-main-post .bt-post--content ol li {
   counter-increment: bt-awesome-counter;
@@ -1228,7 +1229,7 @@ img.alignright {
   padding-left: 28px;
 }
 .__bt-format-post-content ol li:not(:last-child), .woocommerce div.product .woocommerce-tabs #tab-additional_information ol li:not(:last-child), .woocommerce div.product .woocommerce-tabs #tab-description ol li:not(:last-child), .single-service .bt-main-content-ss .bt-post--content ol li:not(:last-child), .bt-main-post .bt-post--content ol li:not(:last-child) {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 .__bt-format-post-content ol li ::before, .woocommerce div.product .woocommerce-tabs #tab-additional_information ol li ::before, .woocommerce div.product .woocommerce-tabs #tab-description ol li ::before, .single-service .bt-main-content-ss .bt-post--content ol li ::before, .bt-main-post .bt-post--content ol li ::before {
   content: counter(bt-awesome-counter) ". ";
