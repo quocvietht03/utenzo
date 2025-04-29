@@ -534,7 +534,7 @@
       &:not(:last-child) {
         margin-bottom: 12px;
       }
-      ::before {
+      &::before {
         content: counter(bt-awesome-counter) ". ";
         position: absolute;
         left: 6px;

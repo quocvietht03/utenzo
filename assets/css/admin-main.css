@@ -672,7 +672,7 @@ div[data-name=more_information] .acf-editor-wrap.delay .wp-editor-area {
 .__bt-format-post-content ol li:not(:last-child) {
   margin-bottom: 12px;
 }
-.__bt-format-post-content ol li ::before {
+.__bt-format-post-content ol li::before {
   content: counter(bt-awesome-counter) ". ";
   position: absolute;
   left: 6px;
