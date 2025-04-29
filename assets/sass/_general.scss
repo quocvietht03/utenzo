@@ -504,7 +504,7 @@
       position: relative;
       padding-left: 28px;
       &:not(:last-child) {
-        margin-bottom: 16px;
+        margin-bottom: 12px;
       }
       &:before {
         content: "";
@@ -526,14 +526,15 @@
     list-style: none;
     counter-reset: bt-awesome-counter;
     padding-left: 0;
+    margin-bottom: 16px;
     li {
       counter-increment: bt-awesome-counter;
       position: relative;
       padding-left: 28px;
       &:not(:last-child) {
-        margin-bottom: 16px;
+        margin-bottom: 12px;
       }
-      ::before {
+      &::before {
         content: counter(bt-awesome-counter) ". ";
         position: absolute;
         left: 6px;
