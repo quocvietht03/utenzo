@@ -51,6 +51,7 @@ class ElementorWidgets
 			'site-social',
 			'site-social-style-2',
 			'site-copyright',
+			'site-notification',
 			'instagram-posts',
 			'page-breadcrumb',
 			'post-grid',
@@ -179,6 +180,7 @@ class ElementorWidgets
 		// Register Widgets
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\SiteInformation\Widget_SiteInformation());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\SiteInformationStyle1\Widget_SiteInformationStyle1());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\SiteNotification\Widget_SiteNotification());
 
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\SiteSocial\Widget_SiteSocial());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\SiteSocialStyle2\Widget_SiteSocialStyle2());

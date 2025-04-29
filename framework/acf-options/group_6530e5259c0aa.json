@@ -37,11 +37,11 @@
             "layout": "block",
             "sub_fields": [
                 {
-                    "key": "field_6753ab3c1fc95",
-                    "label": "Text Button Book Now",
-                    "name": "text_button_book_now",
+                    "key": "field_681034bef4a34",
+                    "label": "Notification",
+                    "name": "site_notification",
                     "aria-label": "",
-                    "type": "text",
+                    "type": "repeater",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -50,34 +50,59 @@
                         "class": "",
                         "id": ""
                     },
-                    "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": ""
-                },
-                {
-                    "key": "field_6674ee596ad31",
-                    "label": "Page Book Now",
-                    "name": "page_book_now",
-                    "aria-label": "",
-                    "type": "page_link",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "post_type": "",
-                    "post_status": [
-                        "publish"
-                    ],
-                    "taxonomy": "",
-                    "allow_archives": 1,
-                    "multiple": 0,
-                    "allow_null": 0
+                    "layout": "table",
+                    "pagination": 0,
+                    "min": 0,
+                    "max": 0,
+                    "collapsed": "",
+                    "button_label": "Add Row",
+                    "rows_per_page": 20,
+                    "sub_fields": [
+                        {
+                            "key": "field_68103b90f4a35",
+                            "label": "Text Notification",
+                            "name": "text_notification",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "allow_in_bindings": 1,
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "parent_repeater": "field_681034bef4a34"
+                        },
+                        {
+                            "key": "field_68103c73b3331",
+                            "label": "Link Notification",
+                            "name": "link_notification",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "allow_in_bindings": 0,
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "parent_repeater": "field_681034bef4a34"
+                        }
+                    ]
                 },
                 {
                     "key": "field_6530ec25ca52a",
@@ -123,26 +148,6 @@
                     "key": "field_6545b837fa755",
                     "label": "Address",
                     "name": "site_address",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": ""
-                },
-                {
-                    "key": "field_6729cbf7bef68",
-                    "label": "Time",
-                    "name": "site_time",
                     "aria-label": "",
                     "type": "text",
                     "instructions": "",
@@ -232,51 +237,6 @@
                             "prepend": "",
                             "append": "",
                             "parent_repeater": "field_653c7d8c53031"
-                        }
-                    ]
-                },
-                {
-                    "key": "field_6688a0691e7c5",
-                    "label": "Opening Hours",
-                    "name": "opening_hours",
-                    "aria-label": "",
-                    "type": "repeater",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "layout": "table",
-                    "pagination": 0,
-                    "min": 0,
-                    "max": 0,
-                    "collapsed": "",
-                    "button_label": "Add Row",
-                    "rows_per_page": 20,
-                    "sub_fields": [
-                        {
-                            "key": "field_6688a09d1e7c7",
-                            "label": "Hours",
-                            "name": "hours",
-                            "aria-label": "",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "parent_repeater": "field_6688a0691e7c5"
                         }
                     ]
                 },
@@ -1961,5 +1921,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1745831128
+    "modified": 1745894534
 }

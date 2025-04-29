@@ -85,7 +85,7 @@
 			const $selectedCategory = $searchProduct.find('.bt-selected-category');
 			const $categoryList = $searchProduct.find('.bt-category-list');
 			const $categoryItems = $searchProduct.find('.bt-category-item');
-			const $catProductInput = $searchProduct.find('input[name="cat-product"]');
+			const $catProductInput = $searchProduct.find('input[name="product_cat"]');
 
 			$selectedCategory.on('click', function (e) {
 				e.stopPropagation();
@@ -681,7 +681,7 @@
 			}
 		}
 	};
-	function countDownHandler($scope) {
+	const countDownHandler = function ($scope) {
 		const countDown = $scope.find('.bt-countdown-js');
 		const countDownDate = new Date(countDown.data('time')).getTime();
 
@@ -710,6 +710,44 @@
 			countDown.find('.bt-countdown-secs').text(secs);
 		}, 1000);
 	}
+const NotificationSliderHandler = function ($scope) {
+    const $notificationWrapper = $scope.find('.bt-elwg-site-notification--default ');
+    const $notificationContent = $notificationWrapper.find('.js-notification-content');
+
+    if ($notificationContent.length > 0) {
+        const $sliderSettings = $notificationWrapper.data('slider-settings');
+        const sliderSpeed = $sliderSettings.speed || 1000;
+        const autoplay = $sliderSettings.autoplay || false;
+        const autoplayDelay = $sliderSettings.autoplay_delay || 3000;
+        // Initialize the notification content slider
+        const notificationContentSwiper = new Swiper($notificationContent[0], {
+            slidesPerView: 1,
+            loop: true,
+            speed: sliderSpeed,
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true
+            },
+            autoplay: autoplay ? {
+                delay: autoplayDelay,
+                disableOnInteraction: false
+            } : false,
+        });
+
+        // Sync both sliders
+        notificationContentSwiper.controller.control = notificationImagesSwiper;
+        // Pause autoplay on hover if autoplay is enabled
+        if (autoplay) {
+            $notificationContent[0].addEventListener('mouseenter', () => {
+                notificationContentSwiper.autoplay.stop();
+            });
+
+            $notificationContent[0].addEventListener('mouseleave', () => {
+                notificationContentSwiper.autoplay.start();
+            });
+        }
+    }
+};
 	// Make sure you run this code under Elementor.
 	$(window).on('elementor/frontend/init', function () {
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-location-list.default', LocationListHandler);
@@ -722,6 +760,7 @@
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-product-testimonial.default', ProductTestimonialHandler);
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-product-testimonial-slider.default', ProductTestimonialSliderHandler);
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-countdown.default', countDownHandler);
+		elementorFrontend.hooks.addAction('frontend/element_ready/bt-site-notification.default', NotificationSliderHandler);
 	});
 
 })(jQuery);

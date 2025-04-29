@@ -72,6 +72,7 @@ input:not([type="checkbox"], [type="radio"]), select, textarea {
   padding: 9px 16px;
   border-radius: 8px;
   border: 1px solid #E9E9E9;
+  font-family: $primary-font;
 }
 select {
   height: 58px;

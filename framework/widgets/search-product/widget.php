@@ -142,7 +142,7 @@ class Widget_SearchProduct extends Widget_Base
 		$settings = $this->get_settings_for_display();
 
 		// Get current category from URL
-		$current_cat = isset($_GET['cat-product']) ? sanitize_text_field($_GET['cat-product']) : '';
+		$current_cat = isset($_GET['product_cat']) ? sanitize_text_field($_GET['product_cat']) : '';
 
 ?>
 		<div class="bt-elwg-search-product">
@@ -187,7 +187,7 @@ class Widget_SearchProduct extends Widget_Base
 							</script>
 						</div>
 					</div>
-					<input type="hidden" name="cat-product" value="" />
+					<input type="hidden" name="product_cat" value="" />
 					<input type="search" class="bt-search-field <?php echo !empty($settings['enable_autocomplete']) ? ' bt-live-search' : ''; ?>" placeholder="<?php echo esc_attr($settings['placeholder_text']); ?>" value="<?php echo isset($_GET['search_keyword']) ? esc_attr($_GET['search_keyword']) : ''; ?>" name="search_keyword" />
 					<button type="submit" class="bt-search-submit">
 						<?php esc_html_e('Search', 'utenzo'); ?>

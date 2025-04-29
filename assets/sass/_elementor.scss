@@ -4235,7 +4235,7 @@ body {
         line-height: 26px;
         color: $color-primary;
         margin: 4px 0 0 0;
-        @media(max-width: $break-xs) {
+        @media (max-width: $break-xs) {
           font-size: 15px;
           line-height: 22px;
           margin: 2px 0 0 0;
@@ -4255,9 +4255,25 @@ body {
         text-decoration-skip-ink: none;
         text-underline-offset: 4px;
         text-decoration-thickness: 1px;
-        @media(max-width: $break-xs) {
+        @media (max-width: $break-xs) {
           margin: 12px 0 0 0;
         }
+      }
+    }
+  }
+}
+.bt-elwg-site-notification {
+  &--default {
+    .bt-site-notification {
+      text-align: center;
+      &--text {
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 16px; /* 133.333% */
+        letter-spacing: 0.96px;
+        text-transform: uppercase;
+        color: $color-primary;
       }
     }
   }
