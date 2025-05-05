@@ -734,8 +734,6 @@ const NotificationSliderHandler = function ($scope) {
             } : false,
         });
 
-        // Sync both sliders
-        notificationContentSwiper.controller.control = notificationImagesSwiper;
         // Pause autoplay on hover if autoplay is enabled
         if (autoplay) {
             $notificationContent[0].addEventListener('mouseenter', () => {

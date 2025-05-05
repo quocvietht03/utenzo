@@ -1383,16 +1383,18 @@
 			jQuery(this).parent().parent().addClass('bt-submenu-content');
 		});
 		/* mega menu fix hover category*/
-		$(document).on({
-			mouseenter: function () {
-				// Remove no-hover class when hovering in
-				$('.bt-megamenu-shop-category').removeClass('bt-no-hover');
-			},
-			mouseleave: function () {
-				// Add no-hover class when hovering out
-				$('.bt-megamenu-shop-category').addClass('bt-no-hover');
-			}
-		}, '.bt-megamenu-shop-category.e-active .e-n-menu-title, .bt-megamenu-shop-category.e-active .e-n-menu-content,.bt-mega-menu.bt-main > .elementor-widget-container > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > li.e-n-menu-item:first-child > .e-n-menu-title');
+		if (!$('body').hasClass('elementor-editor-active')) {
+			$(document).on({
+				mouseenter: function () {
+					// Remove no-hover class when hovering in
+					$('.bt-megamenu-shop-category').removeClass('bt-no-hover');
+				},
+				mouseleave: function () {
+					// Add no-hover class when hovering out
+					$('.bt-megamenu-shop-category').addClass('bt-no-hover');
+				}
+			}, '.bt-megamenu-shop-category.e-active .e-n-menu-title, .bt-megamenu-shop-category.e-active .e-n-menu-content,.bt-mega-menu.bt-main > .elementor-widget-container > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > li.e-n-menu-item:first-child > .e-n-menu-title');
+		}
 	}
 	function UtenzoBuyNow() {
 		$(document).on('click', '.bt-button-buy-now a', function (e) {

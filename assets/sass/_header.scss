@@ -401,7 +401,7 @@ body.admin-bar .dialog-type-lightbox {
               top: 0;
               left: 280px;
               width: calc(100% - 280px);
-              &.e-active{
+              &.e-active {
                 height: 100%;
               }
               > .elementor-element {
@@ -420,8 +420,9 @@ body.admin-bar .dialog-type-lightbox {
     }
   }
 }
-.bt-megamenu-shop-category{
-  &.bt-no-hover{
+.bt-megamenu-shop-category {
+  left: 0 !important;
+  &.bt-no-hover {
     display: none !important;
   }
 }
@@ -429,9 +430,6 @@ body.admin-bar .dialog-type-lightbox {
   a {
     -webkit-transition: none;
     transition: none;
-  }
-
-  .bt-mega-menu-pages {
   }
   &.bt-main {
     > .elementor-widget-container {
@@ -463,6 +461,95 @@ body.admin-bar .dialog-type-lightbox {
       }
     }
   }
+  .elementor-icon-list-items {
+    .elementor-icon-list-item {
+      position: relative;
+      a,
+      span {
+        width: 100%;
+      }
+      &::before {
+        background: $color-primary;
+        content: "";
+        top: 50%;
+        width: 0;
+        height: 2px;
+        display: block;
+        position: absolute;
+        margin-top: 10px;
+        transition: 0.3s all;
+      }
+      // &.e-current,
+      &:hover {
+        &::before {
+          width: 30px;
+        }
+      }
+    }
+  }
+  &.elementor-widget-n-menu {
+    > .elementor-widget-container {
+      > .e-n-menu {
+        > .e-n-menu-wrapper {
+          > .e-n-menu-heading {
+            > .e-n-menu-item {
+              &:not(.bt-submenu-content) {
+                .e-n-menu-content {
+                  .e-n-menu-heading {
+                    > .e-n-menu-item {
+                      width: 100%;
+                      display: block;
+                      > .e-n-menu-title {
+                        position: relative;
+                        a,
+                        span {
+                          width: 100%;
+                        }
+                        &::before {
+                          background: $color-primary;
+                          content: "";
+                          top: 50%;
+                          width: 0;
+                          height: 2px;
+                          display: block;
+                          position: absolute;
+                          margin-top: 13px;
+                          transition: 0.3s all;
+                        }
+                        // &.e-current,
+                        &:hover {
+                          &::before {
+                            width: 30px;
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.bt-megamenu-vertical {
+  > .elementor-widget-container {
+    > .e-n-menu {
+      > .e-n-menu-wrapper {
+        > .e-n-menu-heading {
+          > li.e-n-menu-item {
+            > .e-n-menu-title {
+              &::before {
+                opacity: 0 !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 .elementor-widget-n-menu .e-n-menu:not([data-layout="dropdown"]):not(.content-above) {
   .bt-submenu-content {
@@ -471,37 +558,45 @@ body.admin-bar .dialog-type-lightbox {
       .e-n-menu-content {
         > .e-con {
           display: block !important;
+          position: relative !important;
+          width: 100% !important;
         }
       }
     }
     .e-n-menu-content {
-      left: -8px;
+      left: 0;
       max-width: 200px;
-      > .e-con {
-        left: 0 !important;
-      }
-      .e-n-menu-wrapper {
-        .e-n-menu-heading {
-          > .e-n-menu-item {
-            width: 100%;
-            > .e-n-menu-title {
-              position: relative;
+      top: 100%;
+    }
+  }
+  .bt-mega-menu-sub {
+    left: 0 !important;
+    .e-n-menu-wrapper {
+      .e-n-menu-heading {
+        > .e-n-menu-item {
+          width: 100%;
+          display: block;
+          > .e-n-menu-title {
+            position: relative;
+            a,
+            span {
+              width: 100%;
+            }
+            &::before {
+              background: $color-primary;
+              content: "";
+              top: 50%;
+              width: 0;
+              height: 2px;
+              display: block;
+              position: absolute;
+              margin-top: 13px;
+              transition: 0.3s all;
+            }
+            // &.e-current,
+            &:hover {
               &::before {
-                background: $color-secondary;
-                content: "";
-                top: 50%;
-                width: 0;
-                height: 2px;
-                display: block;
-                position: absolute;
-                margin-top: 13px;
-                transition: 0.3s all;
-              }
-              &.e-current,
-              &:hover {
-                &::before {
-                  width: 30px;
-                }
+                width: 30px;
               }
             }
           }
