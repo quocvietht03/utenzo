@@ -307,7 +307,9 @@
                   padding-left: 8px;
                   padding-right: 8px;
                   > a {
-                    font-size: 14px;
+                    > .e-n-menu-title-text{
+                      font-size: 14px;
+                    }
                   }
                 }
               }
@@ -604,8 +606,8 @@ body.admin-bar .dialog-type-lightbox {
                 }
               }
               &:hover{
-                .e-n-menu-title {
-                  background-color: #FFFFFF33 !important;
+                > .e-n-menu-title {
+                  background-color: #FFFFFF33;
                 }
               }
             }
