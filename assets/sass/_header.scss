@@ -312,6 +312,16 @@
                     }
                   }
                 }
+                &.bt-submenu-content{
+                  > .e-n-menu-content{
+                    .bt-mega-menu-sub{
+                      padding: 20px;
+                      .e-n-menu-title{
+                        padding: 0 !important;
+                      }
+                    }
+                  }
+                }
               }
             }
           }
