@@ -63,7 +63,7 @@
                             "label": "Text Notification",
                             "name": "text_notification",
                             "aria-label": "",
-                            "type": "text",
+                            "type": "textarea",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
@@ -75,31 +75,9 @@
                             "default_value": "",
                             "maxlength": "",
                             "allow_in_bindings": 1,
+                            "rows": 2,
                             "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "parent_repeater": "field_681034bef4a34"
-                        },
-                        {
-                            "key": "field_68103c73b3331",
-                            "label": "Link Notification",
-                            "name": "link_notification",
-                            "aria-label": "",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "maxlength": "",
-                            "allow_in_bindings": 0,
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
+                            "new_lines": "",
                             "parent_repeater": "field_681034bef4a34"
                         }
                     ]
@@ -1921,5 +1899,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1745894534
+    "modified": 1746493744
 }

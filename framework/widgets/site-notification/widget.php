@@ -184,13 +184,9 @@ class Widget_SiteNotification extends Widget_Base
                             <?php foreach ($site_infor['site_notification'] as $item) : ?>
                                 <div class="swiper-slide">
                                     <div class="bt-site-notification--item">
-                                        <?php if (!empty($item['text_notification'])) : ?>
-                                            <?php if (!empty($item['link_notification'])) : ?>
-                                                <div class="bt-site-notification--text"><a href="<?php echo $item['link_notification']; ?>"><?php echo esc_html($item['text_notification']); ?></a></div>
-                                            <?php else: ?>
-                                                <div class="bt-site-notification--text"><?php echo esc_html($item['text_notification']); ?></div>
-                                            <?php endif; ?>
-                                        <?php endif; ?>
+                                        <?php if (!empty($item['text_notification'])) : 
+                                           echo  '<div class="bt-site-notification--text">'. $item['text_notification'] . '</div>';
+                                        endif; ?>
                                     </div>
                                 </div>
                             <?php endforeach; ?>

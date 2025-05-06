@@ -2744,7 +2744,7 @@ function utenzo_load_product_gallery()
     ob_start();
     if ($variation_image_id) {
         $image_url = wp_get_attachment_image_url($variation_image_id, 'full');
-        echo '<a href="' . esc_url($image_url) . '" class="bt-gallery-product--image elementor-clickable" data-elementor-lightbox-slideshow="bt-gallery-ins" data-elementor-lightbox-index="' . esc_attr($variation_image_id) . '">';
+        echo '<a href="' . esc_url($image_url) . '" class="bt-gallery-product--image elementor-clickable" data-elementor-lightbox-slideshow="bt-gallery-ins">';
         echo '<div class="bt-cover-image">';
         echo wp_get_attachment_image($variation_image_id, 'full', false, array(
             'class' => 'wp-post-image',
@@ -2759,7 +2759,7 @@ function utenzo_load_product_gallery()
     if ($gallery_images) {
         foreach ($gallery_images as $gallery_image_id) {
             $image_url = wp_get_attachment_image_url($gallery_image_id, 'full');
-            echo '<a href="' . esc_url($image_url) . '" class="bt-gallery-product--image elementor-clickable" data-elementor-lightbox-slideshow="bt-gallery-ins" data-elementor-lightbox-index="' . esc_attr($gallery_image_id) . '">';
+            echo '<a href="' . esc_url($image_url) . '" class="bt-gallery-product--image elementor-clickable" data-elementor-lightbox-slideshow="bt-gallery-ins">';
             echo '<div class="bt-cover-image">';
             echo wp_get_attachment_image($gallery_image_id, 'full', false, array(
                 'class' => 'gallery-image',

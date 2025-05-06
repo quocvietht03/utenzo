@@ -23,7 +23,7 @@ global $product;
 
                 if ($featured_image_id) {
                     $image_url = wp_get_attachment_image_url($featured_image_id, 'full');
-                    echo '<a href="' . esc_url($image_url) . '" class="bt-gallery-product--image elementor-clickable" data-elementor-lightbox-slideshow="bt-gallery-ins" data-elementor-lightbox-index="' . esc_attr($featured_image_id) . '">';
+                    echo '<a href="' . esc_url($image_url) . '" class="bt-gallery-product--image elementor-clickable" data-elementor-lightbox-slideshow="bt-gallery-ins">';
                     echo '<div class="bt-cover-image">';
                     echo wp_get_attachment_image($featured_image_id, 'full', false, array(
                         'class' => 'wp-post-image',
@@ -37,7 +37,7 @@ global $product;
                 if ($attachment_ids) {
                     foreach ($attachment_ids as $attachment_id) {
                         $image_url = wp_get_attachment_image_url($attachment_id, 'full');
-                        echo '<a href="' . esc_url($image_url) . '" class="bt-gallery-product--image elementor-clickable" data-elementor-lightbox-slideshow="bt-gallery-ins" data-elementor-lightbox-index="' . esc_attr($attachment_id) . '">';
+                        echo '<a href="' . esc_url($image_url) . '" class="bt-gallery-product--image elementor-clickable" data-elementor-lightbox-slideshow="bt-gallery-ins">';
                         echo '<div class="bt-cover-image">';
                         echo wp_get_attachment_image($attachment_id, 'full', false, array(
                             'class' => 'gallery-image',
