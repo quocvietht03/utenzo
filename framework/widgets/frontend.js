@@ -115,6 +115,10 @@
 			$(document).on('click', function () {
 				$categoryList.hide();
 			});
+			// scroll window remove class active live search results
+			$(window).scroll(function () {
+				$liveSearchResults.removeClass('active');
+			});
 			const $liveSearch = $searchProduct.find('.bt-live-search');
 			const $liveSearchResults = $searchProduct.find('.bt-live-search-results');
 			const $dataSearch = $searchProduct.find('.bt-live-search-results .bt-load-data');
@@ -710,42 +714,42 @@
 			countDown.find('.bt-countdown-secs').text(secs);
 		}, 1000);
 	}
-const NotificationSliderHandler = function ($scope) {
-    const $notificationWrapper = $scope.find('.bt-elwg-site-notification--default ');
-    const $notificationContent = $notificationWrapper.find('.js-notification-content');
+	const NotificationSliderHandler = function ($scope) {
+		const $notificationWrapper = $scope.find('.bt-elwg-site-notification--default ');
+		const $notificationContent = $notificationWrapper.find('.js-notification-content');
 
-    if ($notificationContent.length > 0) {
-        const $sliderSettings = $notificationWrapper.data('slider-settings');
-        const sliderSpeed = $sliderSettings.speed || 1000;
-        const autoplay = $sliderSettings.autoplay || false;
-        const autoplayDelay = $sliderSettings.autoplay_delay || 3000;
-        // Initialize the notification content slider
-        const notificationContentSwiper = new Swiper($notificationContent[0], {
-            slidesPerView: 1,
-            loop: true,
-            speed: sliderSpeed,
-            effect: 'fade',
-            fadeEffect: {
-                crossFade: true
-            },
-            autoplay: autoplay ? {
-                delay: autoplayDelay,
-                disableOnInteraction: false
-            } : false,
-        });
+		if ($notificationContent.length > 0) {
+			const $sliderSettings = $notificationWrapper.data('slider-settings');
+			const sliderSpeed = $sliderSettings.speed || 1000;
+			const autoplay = $sliderSettings.autoplay || false;
+			const autoplayDelay = $sliderSettings.autoplay_delay || 3000;
+			// Initialize the notification content slider
+			const notificationContentSwiper = new Swiper($notificationContent[0], {
+				slidesPerView: 1,
+				loop: true,
+				speed: sliderSpeed,
+				effect: 'fade',
+				fadeEffect: {
+					crossFade: true
+				},
+				autoplay: autoplay ? {
+					delay: autoplayDelay,
+					disableOnInteraction: false
+				} : false,
+			});
 
-        // Pause autoplay on hover if autoplay is enabled
-        if (autoplay) {
-            $notificationContent[0].addEventListener('mouseenter', () => {
-                notificationContentSwiper.autoplay.stop();
-            });
+			// Pause autoplay on hover if autoplay is enabled
+			if (autoplay) {
+				$notificationContent[0].addEventListener('mouseenter', () => {
+					notificationContentSwiper.autoplay.stop();
+				});
 
-            $notificationContent[0].addEventListener('mouseleave', () => {
-                notificationContentSwiper.autoplay.start();
-            });
-        }
-    }
-};
+				$notificationContent[0].addEventListener('mouseleave', () => {
+					notificationContentSwiper.autoplay.start();
+				});
+			}
+		}
+	};
 	// Make sure you run this code under Elementor.
 	$(window).on('elementor/frontend/init', function () {
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-location-list.default', LocationListHandler);

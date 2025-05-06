@@ -391,6 +391,18 @@ body.admin-bar .dialog-type-lightbox {
           display: flex;
           flex-direction: column;
           > .e-n-menu-item {
+            &:hover {
+              .e-n-menu-title {
+                background-color: $color-primary !important;
+                border-color: $color-primary !important;
+                .e-n-menu-title-text {
+                  color: #fff;
+                }
+                svg {
+                  fill: #fff;
+                }
+              }
+            }
             > .e-n-menu-title {
               max-width: 280px;
               width: 100%;
@@ -407,6 +419,36 @@ body.admin-bar .dialog-type-lightbox {
               > .elementor-element {
                 height: 100%;
                 border-radius: 0 0 8px 8px;
+                @media (max-width: 1250px) and (min-width: $break-tl) {
+                  padding: 22px;
+                  background-position: 100% 85%;
+                  > .e-grid {
+                    > .e-con-inner {
+                      gap: 35px 15px;
+                      .elementor-icon-list-item > a {
+                        font-size: 13px;
+                      }
+                    }
+                  }
+                  &.bt-category-sub-banner {
+                    padding: 0;
+                    > .elementor-element {
+                      &:first-child {
+                        padding: 22px 0 22px 22px;
+                        width: 55%;
+                        .elementor-icon-list-item > a {
+                          font-size: 13px;
+                        }
+                      }
+                      &:last-child {
+                        width: 45%;
+                        .elementor-heading-title {
+                          font-size: 28px;
+                        }
+                      }
+                    }
+                  }
+                }
               }
             }
             &:last-child {
@@ -450,7 +492,7 @@ body.admin-bar .dialog-type-lightbox {
                 }
               }
               @media (max-width: 1110px) and (min-width: $break-tl) {
-                .e-n-menu-title {
+                > .e-n-menu-title {
                   padding-left: 18px;
                   padding-right: 18px;
                 }
@@ -471,13 +513,17 @@ body.admin-bar .dialog-type-lightbox {
       &::before {
         background: $color-primary;
         content: "";
-        top: 50%;
         width: 0;
         height: 2px;
         display: block;
         position: absolute;
-        margin-top: 10px;
+        bottom: 6px;
         transition: 0.3s all;
+      }
+      &:last-child {
+        &::before {
+          bottom: 0;
+        }
       }
       // &.e-current,
       &:hover {
@@ -501,6 +547,7 @@ body.admin-bar .dialog-type-lightbox {
                       display: block;
                       > .e-n-menu-title {
                         position: relative;
+                        z-index: 99999999999;
                         a,
                         span {
                           width: 100%;
@@ -508,12 +555,11 @@ body.admin-bar .dialog-type-lightbox {
                         &::before {
                           background: $color-primary;
                           content: "";
-                          top: 50%;
                           width: 0;
                           height: 2px;
                           display: block;
                           position: absolute;
-                          margin-top: 13px;
+                          bottom: 0;
                           transition: 0.3s all;
                         }
                         // &.e-current,
@@ -525,6 +571,41 @@ body.admin-bar .dialog-type-lightbox {
                       }
                     }
                   }
+                }
+              }
+              @media (max-width: 1250px) and (min-width: $break-tl) {
+                .bt-mega-menu-shop {
+                  > .elementor-element {
+                    > .e-con-inner {
+                      > .elementor-element {
+                        padding: 22px;
+                        gap: 15px;
+                        > .elementor-element {
+                          &:first-child {
+                            width: 65%;
+                          }
+                          &:last-child {
+                            width: 35%;
+                            .elementor-heading-title {
+                              font-size: 29px;
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+                .bt-mega-menu-innerpage {
+                  > .e-con-inner {
+                    > .elementor-element {
+                      padding: 22px;
+                    }
+                  }
+                }
+              }
+              &:hover{
+                .e-n-menu-title {
+                  background-color: #FFFFFF33 !important;
                 }
               }
             }
@@ -585,12 +666,11 @@ body.admin-bar .dialog-type-lightbox {
             &::before {
               background: $color-primary;
               content: "";
-              top: 50%;
               width: 0;
               height: 2px;
               display: block;
               position: absolute;
-              margin-top: 13px;
+              bottom: 0;
               transition: 0.3s all;
             }
             // &.e-current,
