@@ -306,13 +306,15 @@
                 > .e-n-menu-title {
                   padding-left: 8px;
                   padding-right: 8px;
-                  .e-n-menu-title{
-                    padding: 0 !important;
-                  }
                   > a {
                     > .e-n-menu-title-text{
                       font-size: 14px;
                     }
+                  }
+                }
+                .e-n-menu-content{
+                  .e-n-menu-title{
+                    padding: 0 !important;
                   }
                 }
                 &.bt-submenu-content{

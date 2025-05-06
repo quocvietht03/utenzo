@@ -4393,6 +4393,11 @@ body {
         letter-spacing: 0.96px;
         text-transform: uppercase;
         color: $color-primary;
+        a{
+          color: $color-accent;
+          font-weight: 700;
+          display: inline-block;
+        }
       }
     }
   }
