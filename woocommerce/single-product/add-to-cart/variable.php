@@ -64,9 +64,9 @@ do_action('woocommerce_before_add_to_cart_form'); ?>
 		</table>
 		<div class="bt-attributes-wrap">
 			<?php
-			foreach ($attributes as $attribute_name => $options) : 
-					$data_attribute = strtolower($attribute_name);
-					?>
+			foreach ($attributes as $attribute_name => $options) :
+				$data_attribute = strtolower($attribute_name);
+			?>
 				<div class="bt-attributes--item" data-attribute-name="<?php echo esc_attr($data_attribute); ?>">
 					<div class="bt-attributes--name">
 						<div class="bt-name"><?php echo wc_attribute_label($attribute_name) . ':'; ?></div>
@@ -74,13 +74,13 @@ do_action('woocommerce_before_add_to_cart_form'); ?>
 					</div>
 					<?php if ($attribute_name == 'pa_color') { ?>
 						<div class="bt-attributes--value bt-value-color">
-							<?php foreach ($options as $option) : 
+							<?php foreach ($options as $option) :
 								$term_id = get_term_by('slug', $option, $attribute_name)->term_id;
-								$color = get_field('color', 'pa_color_' . $term_id); 
+								$color = get_field('color', 'pa_color_' . $term_id);
 								if (!$color) {
 									$color = $option;
 								}
-								?>
+							?>
 								<div class="bt-js-item bt-item-color" data-value="<?php echo esc_attr($option); ?>">
 									<div class="bt-color">
 										<span style="background-color: <?php echo esc_attr($color); ?>;">
@@ -96,9 +96,9 @@ do_action('woocommerce_before_add_to_cart_form'); ?>
 					<?php } else { ?>
 						<div class="bt-attributes--value">
 							<?php foreach ($options as $option) : ?>
-								<?php 
-									$term = get_term_by('slug', $option, $attribute_name);
-									$display_name = $term ? $term->name : $option;
+								<?php
+								$term = get_term_by('slug', $option, $attribute_name);
+								$display_name = $term ? $term->name : $option;
 								?>
 								<span class="bt-js-item bt-item-value" data-value="<?php echo esc_attr($option); ?>"><?php echo esc_html($display_name); ?></span>
 							<?php endforeach; ?>
@@ -110,28 +110,26 @@ do_action('woocommerce_before_add_to_cart_form'); ?>
 		<div class="reset_variations_alert screen-reader-text" role="alert" aria-live="polite" aria-relevant="all"></div>
 		<?php do_action('woocommerce_after_variations_table'); ?>
 
-		<div class="single_variation_wrap">
-			<?php
-			/**
-			 * Hook: woocommerce_before_single_variation.
-			 */
-			do_action('woocommerce_before_single_variation');
+		<?php
+		/**
+		 * Hook: woocommerce_before_single_variation.
+		 */
+		do_action('woocommerce_before_single_variation');
 
-			/**
-			 * Hook: woocommerce_single_variation. Used to output the cart button and placeholder for variation data.
-			 *
-			 * @since 2.4.0
-			 * @hooked woocommerce_single_variation - 10 Empty div for variation data.
-			 * @hooked woocommerce_single_variation_add_to_cart_button - 20 Qty and cart button.
-			 */
-			do_action('woocommerce_single_variation');
+		/**
+		 * Hook: woocommerce_single_variation. Used to output the cart button and placeholder for variation data.
+		 *
+		 * @since 2.4.0
+		 * @hooked woocommerce_single_variation - 10 Empty div for variation data.
+		 * @hooked woocommerce_single_variation_add_to_cart_button - 20 Qty and cart button.
+		 */
+		do_action('woocommerce_single_variation');
 
-			/**
-			 * Hook: woocommerce_after_single_variation.
-			 */
-			do_action('woocommerce_after_single_variation');
-			?>
-		</div>
+		/**
+		 * Hook: woocommerce_after_single_variation.
+		 */
+		do_action('woocommerce_after_single_variation');
+		?>
 	<?php endif; ?>
 
 	<?php do_action('woocommerce_after_variations_form'); ?>

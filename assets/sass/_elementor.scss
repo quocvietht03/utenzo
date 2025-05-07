@@ -2551,6 +2551,7 @@
             .woocommerce-Price-amount {
               color: $color-primary;
               font-weight: 600;
+              font-size: 16px;
             }
             ins {
               text-decoration: none;
@@ -2565,6 +2566,7 @@
           .bt-product-add-to-cart {
             width: calc(30% - 20px);
             a {
+              font-size: 16px;
               display: flex;
               background: $color-accent;
               border-radius: 4px;

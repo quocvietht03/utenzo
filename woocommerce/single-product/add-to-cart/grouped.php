@@ -117,13 +117,13 @@ do_action('woocommerce_before_add_to_cart_form');
 	<input type="hidden" name="add-to-cart" value="<?php echo esc_attr($product->get_id()); ?>" />
 
 	<?php if ($quantites_required && $show_add_to_cart_button) : ?>
-
+		<div class="js-add-to-cart-scroll" data-sticky-active="false">
 		<?php do_action('woocommerce_before_add_to_cart_button'); ?>
 
 		<button type="submit" class="single_add_to_cart_button button alt<?php echo esc_attr(wc_wp_theme_get_element_class_name('button') ? ' ' . wc_wp_theme_get_element_class_name('button') : ''); ?>"><?php echo esc_html($product->single_add_to_cart_text()); ?></button>
 
 		<?php do_action('woocommerce_after_add_to_cart_button'); ?>
-
+		</div>
 	<?php endif; ?>
 </form>
 

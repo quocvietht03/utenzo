@@ -248,6 +248,29 @@
 				}
 			});
 		}
+		// Check if the form reviews product
+		if ($('#commentform').length) {
+			jQuery('#commentform').validate({
+				rules: {
+					author: {
+						required: true,
+						minlength: 2
+					},
+					email: {
+						required: true,
+						email: true
+					},
+					comment: {
+						required: true,
+						minlength: 20
+					}
+				},
+				errorElement: "div",
+				errorPlacement: function (error, element) {
+					element.after(error);
+				}
+			});
+		}
 	}
 	/* Product Toast */
 	function UtenzoshowToast(message) {
@@ -1442,14 +1465,19 @@
 			});
 		});
 	}
-	function UtenzoScrollReview() {
+	function UtenzoReviewPopup() {
 		$(document).on('click', '.bt-action-review', function (e) {
 			e.preventDefault();
-			var reviewForm = $('#review_form_wrapper');
-			if (reviewForm.length) {
-				$('html, body').animate({
-					scrollTop: reviewForm.offset().top - 100
-				}, 500);
+			$('.bt-form-review-popup').addClass('active');
+		});
+
+		$(document).on('click', '.bt-form-review-popup .bt-review-overlay, .bt-form-review-popup .bt-review-close', function () {
+			$('.bt-form-review-popup').removeClass('active');
+		});
+
+		$(document).on('keydown', function (e) {
+			if (e.key === 'Escape') {
+				$('.bt-form-review-popup').removeClass('active');
 			}
 		});
 	}
@@ -1812,6 +1840,28 @@
 			}
 		});
 	}
+	// js Scroll Add To Cart Single Product
+	function UtenzoScrollAddToCart() {
+		if (!$('body').hasClass('single-product')) {
+			return;
+		}
+		const $variationWrap = $('.js-add-to-cart-scroll');
+		const $targetElement = $('.bt-more-information');
+
+		if (!$variationWrap.length || !$targetElement.length) return;
+
+		// Get element positions and dimensions
+		const variationWrapTop = $variationWrap.offset().top;
+		const targetElementTop = $targetElement.offset().top;
+
+		// Since target element is below, check if variation wrap is above target
+		const distance = targetElementTop - (variationWrapTop + $variationWrap.outerHeight());
+		// Set sticky state based on distance
+		let isSticky = distance > 10;
+
+		// Update sticky state attribute
+		$variationWrap.attr('data-sticky-active', isSticky);
+	}
 	jQuery(document).ready(function ($) {
 		UtenzoSubmenuAuto();
 		UtenzoToggleMenuMobile();
@@ -1832,7 +1882,7 @@
 		UtenzoSelect2Appointment();
 		UtenzoMegaMenu();
 		UtenzoBuyNow();
-		UtenzoScrollReview();
+		UtenzoReviewPopup();
 		UtenzoHookGravityFormEvents();
 		UtenzoValidationFormBooking();
 		UtenzoBookingCoupon();
@@ -1846,6 +1896,7 @@
 		UtenzoCountdownProductSale();
 		UtenzoCustomizeProductToggle();
 		UtenzoCustomizeGroupedProduct();
+		UtenzoScrollAddToCart();
 	});
 	$(document.body).on('added_to_cart', function (event, fragments, cart_hash, $button) {
 		// Only show toast if not in Elementor editor
@@ -1860,5 +1911,6 @@
 		UtenzoFreeShippingMessage();
 	});
 	jQuery(window).on('scroll', function () {
+		UtenzoScrollAddToCart();
 	});
 })(jQuery);

@@ -71,7 +71,7 @@ if (!function_exists('utenzo_enqueue_scripts')) {
 			wp_enqueue_script('wc-cart-fragments');
 			wp_enqueue_script('wc-add-to-cart-variation');
 		}
-		if (is_singular('post') && comments_open()) {
+		if (is_singular('post') && comments_open() || is_singular('product')) {
 			wp_enqueue_script('jquery-validate', get_template_directory_uri() . '/assets/libs/jquery-validate/jquery.validate.min.js', array('jquery'), '', true);
 		}
 		wp_enqueue_script('select2', get_template_directory_uri() . '/assets/libs/select2/select2.min.js', array('jquery'), '', true);

@@ -41,6 +41,7 @@ global $product;
 
 			</div>
 			<?php do_action('utenzo_woocommerce_template_single_meta');
+			do_action('utenzo_woocommerce_template_upsell_products');
 			do_action('utenzo_woocommerce_template_single_safe_checkout');
 			?>
 		</div>

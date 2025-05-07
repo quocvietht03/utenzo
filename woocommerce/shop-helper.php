@@ -26,6 +26,10 @@ add_filter('woocommerce_product_description_heading', '__return_null');
 add_action('utenzo_woocommerce_template_single_meta', 'utenzo_woocommerce_single_product_meta', 40);
 add_action('utenzo_woocommerce_template_related_products', 'woocommerce_output_related_products', 20);
 remove_action('woocommerce_cart_collaterals', 'woocommerce_cross_sell_display');
+
+remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_upsell_display', 15 );
+
+add_action('utenzo_woocommerce_template_upsell_products', 'woocommerce_upsell_display', 20);
 function register_product_taxonomy()
 {
     $labels = array(
