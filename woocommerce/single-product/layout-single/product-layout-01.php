@@ -4,7 +4,7 @@ defined('ABSPATH') || exit;
 global $product;
 ?>
 <div id="product-<?php the_ID(); ?>" <?php wc_product_class('', $product); ?>>
-	<div class="bt-product-inner">
+	<div class="bt-product-inner bt-single-product">
 		<?php
 		/**
 		 * Hook: woocommerce_before_single_product_summary.
@@ -15,7 +15,7 @@ global $product;
 		do_action('woocommerce_before_single_product_summary');
 		?>
 
-		<div class="summary entry-summary">
+		<div class="summary entry-summary ">
 			<div class="woocommerce-product-rating-sold">
 				<?php
 				do_action('utenzo_woocommerce_shop_loop_item_label');

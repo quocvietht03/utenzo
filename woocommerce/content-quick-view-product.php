@@ -21,12 +21,12 @@ defined('ABSPATH') || exit;
 global $product;
 ?>
 <div id="product-<?php echo $product->get_id(); ?>" <?php wc_product_class('', $product); ?>>
-	<div class="bt-product-inner">
+	<div class="bt-product-inner bt-quickview-product">
 		<?php
 		do_action('woocommerce_before_single_product_summary');
 		?>
 
-		<div class="summary entry-summary">
+		<div class="summary entry-summary ">
 			<div class="woocommerce-product-rating-sold">
 				<?php
 				do_action('utenzo_woocommerce_shop_loop_item_label');

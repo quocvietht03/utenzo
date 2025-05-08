@@ -60,9 +60,30 @@ do_action('woocommerce_before_add_to_cart_form');
 				switch ($column_id) {
 
 					case 'label':
+						// Get the lowest priced variation ID if product is variable
+						$product_id = $grouped_product_child->get_id();
+						if ($grouped_product_child->is_type('variable')) {
+							$variations = $grouped_product_child->get_available_variations();
+							$lowest_price = PHP_FLOAT_MAX;
+							$lowest_variation_id = 0;
+							
+							foreach ($variations as $variation) {
+								$variation_obj = wc_get_product($variation['variation_id']);
+								$price = $variation_obj->get_price();
+								if ($price < $lowest_price) {
+									$lowest_price = $price;
+									$lowest_variation_id = $variation['variation_id'];
+								}
+							}
+							
+							if ($lowest_variation_id > 0) {
+								$product_id = $lowest_variation_id;
+							}
+						}
+
 						$value = '<div class="product-wrapper">';
 						$value .= '<div class="checkbox-wrapper">';
-						$value .= '<input type="checkbox" id="checkbox-' . esc_attr($grouped_product_child->get_id()) . '" name="product_id[]" value="' . $grouped_product_child->get_id() . '"></input>';
+						$value .= '<input type="checkbox" id="checkbox-' . esc_attr($product_id) . '" name="product_id[]" value="' . $product_id . '"></input>';
 						$value .= '</div>';
 						$thumbnail = wp_get_attachment_image($grouped_product_child->get_image_id(), 'thumbnail');
 						$value .= '<div class="product-thumbnail">' . $thumbnail . '</div>';
@@ -78,11 +99,29 @@ do_action('woocommerce_before_add_to_cart_form');
 					case 'quantity':
 						ob_start();
 						do_action('woocommerce_before_add_to_cart_quantity');
-
+						$product_id = $grouped_product_child->get_id();
+						if ($grouped_product_child->is_type('variable')) {
+							$variations = $grouped_product_child->get_available_variations();
+							$lowest_price = PHP_FLOAT_MAX;
+							$lowest_variation_id = 0;
+							
+							foreach ($variations as $variation) {
+								$variation_obj = wc_get_product($variation['variation_id']);
+								$price = $variation_obj->get_price();
+								if ($price < $lowest_price) {
+									$lowest_price = $price;
+									$lowest_variation_id = $variation['variation_id'];
+								}
+							}
+							
+							if ($lowest_variation_id > 0) {
+								$product_id = $lowest_variation_id;
+							}
+						}
 						woocommerce_quantity_input(
 							array(
-								'input_name'  => 'quantity[' . $grouped_product_child->get_id() . ']',
-								'input_value' => isset($_POST['quantity'][$grouped_product_child->get_id()]) ? wc_stock_amount(wc_clean(wp_unslash($_POST['quantity'][$grouped_product_child->get_id()]))) : '0', // phpcs:ignore WordPress.Security.NonceVerification.Missing
+								'input_name'  => 'quantity[' . $product_id . ']',
+								'input_value' => isset($_POST['quantity'][$product_id]) ? wc_stock_amount(wc_clean(wp_unslash($_POST['quantity'][$product_id]))) : '0', // phpcs:ignore WordPress.Security.NonceVerification.Missing
 								'min_value'   => apply_filters('woocommerce_quantity_input_min', 0, $grouped_product_child),
 								'max_value'   => apply_filters('woocommerce_quantity_input_max', $grouped_product_child->get_max_purchase_quantity(), $grouped_product_child),
 								'placeholder' => '0',

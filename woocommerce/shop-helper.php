@@ -2748,7 +2748,7 @@ function utenzo_load_product_gallery()
     ob_start();
     if ($variation_image_id) {
         $image_url = wp_get_attachment_image_url($variation_image_id, 'full');
-        echo '<a href="' . esc_url($image_url) . '" class="bt-gallery-product--image elementor-clickable" data-elementor-lightbox-slideshow="bt-gallery-ins">';
+        echo '<a href="' . esc_url($image_url) . '" class="bt-gallery-product--image elementor-clickable show" data-elementor-lightbox-slideshow="bt-gallery-ins">';
         echo '<div class="bt-cover-image">';
         echo wp_get_attachment_image($variation_image_id, 'full', false, array(
             'class' => 'wp-post-image',
@@ -2761,9 +2761,10 @@ function utenzo_load_product_gallery()
 
     // Add gallery images
     if ($gallery_images) {
-        foreach ($gallery_images as $gallery_image_id) {
+        foreach ($gallery_images as $index => $gallery_image_id) {
             $image_url = wp_get_attachment_image_url($gallery_image_id, 'full');
-            echo '<a href="' . esc_url($image_url) . '" class="bt-gallery-product--image elementor-clickable" data-elementor-lightbox-slideshow="bt-gallery-ins">';
+            $show_class = $index < 3 ? ' show' : '';
+            echo '<a href="' . esc_url($image_url) . '" class="bt-gallery-product--image elementor-clickable' . $show_class . '" data-elementor-lightbox-slideshow="bt-gallery-ins">';
             echo '<div class="bt-cover-image">';
             echo wp_get_attachment_image($gallery_image_id, 'full', false, array(
                 'class' => 'gallery-image',
@@ -2774,8 +2775,23 @@ function utenzo_load_product_gallery()
             echo '</a>';
         }
     }
+    $itemgallery = count($gallery_images);
     $output['gallery-layout02'] = ob_get_clean();
+    $output['itemgallery'] = $itemgallery;
     wp_send_json_success($output);
 }
 add_action('wp_ajax_utenzo_load_product_gallery', 'utenzo_load_product_gallery');
 add_action('wp_ajax_nopriv_utenzo_load_product_gallery', 'utenzo_load_product_gallery');
+
+// ajax get price variation
+function utenzo_get_variation_price(){
+    $variation_id = isset($_POST['variation_id'])? intval($_POST['variation_id']) : 0;
+    if ($variation_id) {
+        $variation = wc_get_product($variation_id);
+        $price_html = $variation->get_price_html();
+        $output['price'] = $price_html;
+        wp_send_json_success($output);
+    }      
+}
+add_action('wp_ajax_utenzo_get_variation_price', 'utenzo_get_variation_price');
+add_action('wp_ajax_nopriv_utenzo_get_variation_price', 'utenzo_get_variation_price');

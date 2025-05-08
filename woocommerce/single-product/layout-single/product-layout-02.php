@@ -23,7 +23,7 @@ global $product;
 
                 if ($featured_image_id) {
                     $image_url = wp_get_attachment_image_url($featured_image_id, 'full');
-                    echo '<a href="' . esc_url($image_url) . '" class="bt-gallery-product--image elementor-clickable" data-elementor-lightbox-slideshow="bt-gallery-ins">';
+                    echo '<a href="' . esc_url($image_url) . '" class="bt-gallery-product--image elementor-clickable show" data-elementor-lightbox-slideshow="bt-gallery-ins">';
                     echo '<div class="bt-cover-image">';
                     echo wp_get_attachment_image($featured_image_id, 'full', false, array(
                         'class' => 'wp-post-image',
@@ -35,9 +35,10 @@ global $product;
                 }
 
                 if ($attachment_ids) {
-                    foreach ($attachment_ids as $attachment_id) {
+                    foreach ($attachment_ids as $index => $attachment_id) {
                         $image_url = wp_get_attachment_image_url($attachment_id, 'full');
-                        echo '<a href="' . esc_url($image_url) . '" class="bt-gallery-product--image elementor-clickable" data-elementor-lightbox-slideshow="bt-gallery-ins">';
+                        $show_class = $index < 3 ? ' show' : '';
+                        echo '<a href="' . esc_url($image_url) . '" class="bt-gallery-product--image elementor-clickable' . $show_class . '" data-elementor-lightbox-slideshow="bt-gallery-ins">';
                         echo '<div class="bt-cover-image">';
                         echo wp_get_attachment_image($attachment_id, 'full', false, array(
                             'class' => 'gallery-image',
@@ -48,8 +49,14 @@ global $product;
                         echo '</a>';
                     }
                 }
+                $itemgallery = count($attachment_ids);
                 ?>
             </div>
+            <?php
+            if ($itemgallery > 3) {
+                echo '<button class="bt-show-more">' . esc_html__('Show More', 'utenzo') . '</button>';
+            }
+            ?>
         </div>
         <div class="summary entry-summary">
             <div class="woocommerce-product-rating-sold">
@@ -77,6 +84,7 @@ global $product;
                 ?>
             </div>
             <?php do_action('utenzo_woocommerce_template_single_meta');
+            do_action('utenzo_woocommerce_template_upsell_products');
             do_action('utenzo_woocommerce_template_single_safe_checkout');
             do_action('utenzo_woocommerce_template_single_toggle');
             ?>
