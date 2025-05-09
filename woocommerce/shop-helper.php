@@ -27,7 +27,7 @@ add_action('utenzo_woocommerce_template_single_meta', 'utenzo_woocommerce_single
 add_action('utenzo_woocommerce_template_related_products', 'woocommerce_output_related_products', 20);
 remove_action('woocommerce_cart_collaterals', 'woocommerce_cross_sell_display');
 
-remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_upsell_display', 15 );
+remove_action('woocommerce_after_single_product_summary', 'woocommerce_upsell_display', 15);
 
 add_action('utenzo_woocommerce_template_upsell_products', 'woocommerce_upsell_display', 20);
 function register_product_taxonomy()
@@ -2784,14 +2784,128 @@ add_action('wp_ajax_utenzo_load_product_gallery', 'utenzo_load_product_gallery')
 add_action('wp_ajax_nopriv_utenzo_load_product_gallery', 'utenzo_load_product_gallery');
 
 // ajax get price variation
-function utenzo_get_variation_price(){
-    $variation_id = isset($_POST['variation_id'])? intval($_POST['variation_id']) : 0;
+function utenzo_get_variation_price()
+{
+    $variation_id = isset($_POST['variation_id']) ? intval($_POST['variation_id']) : '';
     if ($variation_id) {
         $variation = wc_get_product($variation_id);
         $price_html = $variation->get_price_html();
         $output['price'] = $price_html;
         wp_send_json_success($output);
-    }      
+    }
 }
 add_action('wp_ajax_utenzo_get_variation_price', 'utenzo_get_variation_price');
 add_action('wp_ajax_nopriv_utenzo_get_variation_price', 'utenzo_get_variation_price');
+
+// ajax load product toast
+function utenzo_load_product_toast()
+{
+    // Verify product_id is set
+    if (!isset($_POST['idproduct'])) {
+        wp_send_json_error('Product ID not provided');
+        return;
+    }
+
+    // Sanitize inputs
+    $product_id = absint($_POST['idproduct']);
+    $status = sanitize_text_field(isset($_POST['status']) ? $_POST['status'] : 'add');
+    $tools = sanitize_text_field(isset($_POST['tools']) ? $_POST['tools'] : 'wishlist');
+
+    // Verify product exists
+    $product = wc_get_product($product_id);
+    if (!$product) {
+        wp_send_json_error('Invalid product ID');
+        return;
+    }
+    // Get wishlist URL
+    $wishlist_url = home_url('/products-wishlist/');
+    if (function_exists('get_field')) {
+        $wishlist = get_field('wishlist', 'options');
+        if (!empty($wishlist['page_wishlist'])) {
+            $wishlist_url = get_permalink($wishlist['page_wishlist']);
+        }
+    }
+
+    // Get compare URL
+    $compare_url = home_url('/products-compare/');
+    if (function_exists('get_field')) {
+        $compare = get_field('compare', 'options');
+        if (!empty($compare['page_compare'])) {
+            $compare_url = get_permalink($compare['page_compare']);
+        }
+    }
+
+    // Get cart URL
+    $cart_url = home_url('/cart/');
+    if (function_exists('wc_get_page_id')) {
+        $cart_page_id = wc_get_page_id('cart');
+        if ($cart_page_id > 0) {
+            $cart_url = get_permalink($cart_page_id);
+        }
+    }
+    // Get checkout URL
+    $checkout_url = home_url('/checkout/');
+    if (function_exists('wc_get_page_id')) {
+        $checkout_page_id = wc_get_page_id('checkout');
+        if ($checkout_page_id > 0) {
+            $checkout_url = get_permalink($checkout_page_id);
+        }
+    }
+    ob_start();
+?>
+    <div class="bt-product-toast">
+        <div class="bt-product-toast--close">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M9.41183 8L15.6952 1.71665C15.7905 1.62455 15.8666 1.51437 15.9189 1.39255C15.9713 1.27074 15.9988 1.13972 16 1.00714C16.0011 0.874567 15.9759 0.743089 15.9256 0.620381C15.8754 0.497673 15.8013 0.386193 15.7076 0.292444C15.6138 0.198695 15.5023 0.124556 15.3796 0.0743523C15.2569 0.0241486 15.1254 -0.00111435 14.9929 3.76988e-05C14.8603 0.00118975 14.7293 0.0287337 14.6074 0.0810623C14.4856 0.133391 14.3755 0.209456 14.2833 0.30482L8 6.58817L1.71665 0.30482C1.52834 0.122941 1.27612 0.0223015 1.01433 0.0245764C0.752534 0.0268514 0.502106 0.131859 0.316983 0.316983C0.131859 0.502107 0.0268514 0.752534 0.0245764 1.01433C0.0223015 1.27612 0.122941 1.52834 0.30482 1.71665L6.58817 8L0.30482 14.2833C0.209456 14.3755 0.133391 14.4856 0.0810623 14.6074C0.0287337 14.7293 0.00118975 14.8603 3.76988e-05 14.9929C-0.00111435 15.1254 0.0241486 15.2569 0.0743523 15.3796C0.124556 15.5023 0.198695 15.6138 0.292444 15.7076C0.386193 15.8013 0.497673 15.8754 0.620381 15.9256C0.743089 15.9759 0.874567 16.0011 1.00714 16C1.13972 15.9988 1.27074 15.9713 1.39255 15.9189C1.51437 15.8666 1.62455 15.7905 1.71665 15.6952L8 9.41183L14.2833 15.6952C14.4226 15.8358 14.6006 15.9317 14.7945 15.9708C14.9885 16.0098 15.1898 15.9902 15.3726 15.9145C15.5554 15.8388 15.7115 15.7104 15.8211 15.5456C15.9306 15.3808 15.9886 15.1871 15.9877 14.9893C15.9878 14.8581 15.9619 14.7283 15.9117 14.6072C15.8615 14.4861 15.7879 14.376 15.6952 14.2833L9.41183 8Z" fill="#0C2C48" />
+            </svg>
+        </div>
+        <div class="bt-product-toast--content">
+            <a href="<?php echo esc_url(get_permalink($product_id)); ?>" class="bt-product-toast--image">
+                <?php echo $product->get_image('large'); ?>
+            </a>
+            <div class="bt-product-toast--info">
+                <p class="bt-product-toast--title">
+                    <a href="<?php echo esc_url(get_permalink($product_id)); ?>">
+                        <?php echo esc_html($product->get_name()); ?>
+                    </a>
+                    <?php
+                    $message = '';
+                    if ($tools === 'wishlist') {
+                        $message = $status === 'add'
+                            ? esc_html__('has been added to your wishlist.', 'utenzo')
+                            : esc_html__('has been removed from your wishlist.', 'utenzo');
+                    } elseif ($tools === 'compare') {
+                        $message = $status === 'add'
+                            ? esc_html__('has been added to your compare.', 'utenzo')
+                            : esc_html__('has been removed from your compare.', 'utenzo');
+                    } else {
+                        $message = $status === 'add'
+                            ? esc_html__('has been added to your cart.', 'utenzo')
+                            : esc_html__('has been removed from your cart.', 'utenzo');
+                    }
+                    echo $message;
+                    ?>
+                </p>
+            </div>
+        </div>
+        <div class="bt-product-toast--button<?php echo ($tools === 'cart') ? ' bt-button-cart' : ''; ?>">
+            <?php
+            if ($tools === 'wishlist') {
+                echo '<a href="' . esc_url($wishlist_url) . '" class="bt-btn bt-button-hover">' . esc_html__('View Wishlist', 'utenzo') . '</a>';
+            } else if ($tools === 'compare') {
+                echo '<a href="' . esc_url($compare_url) . '" class="bt-btn bt-button-hover">' . esc_html__('View Compare', 'utenzo') . '</a>';
+            } else {
+                echo '<a href="' . esc_url($cart_url) . '" class="bt-btn bt-button-hover">' . esc_html__('View Cart', 'utenzo') . '</a>';
+                echo '<a href="' . esc_url($checkout_url) . '" class="bt-btn bt-button-hover">' . esc_html__('Checkout', 'utenzo') . '</a>';
+            }
+            ?>
+        </div>
+    </div>
+<?php
+    $output = array(
+        'toast' => ob_get_clean()
+    );
+    wp_send_json_success($output);
+}
+add_action('wp_ajax_utenzo_load_product_toast', 'utenzo_load_product_toast');
+add_action('wp_ajax_nopriv_utenzo_load_product_toast', 'utenzo_load_product_toast');

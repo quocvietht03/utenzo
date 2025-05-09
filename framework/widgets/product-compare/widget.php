@@ -326,7 +326,15 @@ class Widget_ProductCompare extends Widget_Base
 									for ($i = 0; $i < $ex_items; $i++) {
 								?>
 										<div class="bt-table--row bt-product-add-compare">
-											<div class="bt-table--col bt-thumb"></div>
+											<div class="bt-table--col bt-thumb">
+												<div class="bt-cover-image">
+													<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" fill="currentColor">
+														<path d="M256 512a25 25 0 0 1-25-25V25a25 25 0 0 1 50 0v462a25 25 0 0 1-25 25z"></path>
+														<path d="M487 281H25a25 25 0 0 1 0-50h462a25 25 0 0 1 0 50z"></path>
+													</svg>
+													<span> <?php echo __('Add Product To Compare', 'utenzo'); ?></span>
+												</div>
+											</div>
 											<div class="bt-table--col bt-name"></div>
 											<?php if (!empty($fields_show_compare)) {
 												if (in_array('short_desc', $fields_show_compare)) { ?>

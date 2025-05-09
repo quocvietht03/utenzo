@@ -1124,15 +1124,57 @@
                 },
                 {
                     "key": "field_67f72e862aa34",
-                    "label": "Product Toast",
-                    "name": "product_toast",
+                    "label": "Wishlist Toast",
+                    "name": "wishlist_toast",
                     "aria-label": "",
                     "type": "true_false",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "",
+                        "width": "33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 1,
+                    "allow_in_bindings": 1,
+                    "ui_on_text": "",
+                    "ui_off_text": "",
+                    "ui": 1
+                },
+                {
+                    "key": "field_681d820cd4acf",
+                    "label": "Compare Toast",
+                    "name": "compare_toast",
+                    "aria-label": "",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 1,
+                    "allow_in_bindings": 1,
+                    "ui_on_text": "",
+                    "ui_off_text": "",
+                    "ui": 1
+                },
+                {
+                    "key": "field_681d8217d4ad0",
+                    "label": "Cart Toast",
+                    "name": "cart_toast",
+                    "aria-label": "",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "33",
                         "class": "",
                         "id": ""
                     },
@@ -1899,5 +1941,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1746493744
+    "modified": 1746764502
 }

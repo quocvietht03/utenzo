@@ -750,6 +750,42 @@
 			}
 		}
 	};
+	// mini cart
+	const MiniCartHandler = function ($scope) {
+		const $miniCart = $scope.find('.bt-elwg-mini-cart--default');
+		const $sidebar = $('.bt-mini-cart-sidebar');
+
+		// Toggle mini cart
+		$miniCart.find('.js-cart-sidebar').on('click', function (e) {
+			e.preventDefault();
+			$sidebar.addClass('active');
+			$('body').css({
+				'overflow': 'hidden',
+				'padding-right': `15px` // Prevent layout shift
+			});
+		});
+
+		// Close mini cart when clicking overlay or close button
+		$miniCart.find('.bt-mini-cart-sidebar-overlay, .bt-mini-cart-close').on('click', function () {
+			closeMiniCart();
+		});
+
+		// Close mini cart when pressing ESC key
+		$(document).keyup(function (e) {
+			if (e.key === "Escape") {
+				closeMiniCart();
+			}
+		});
+
+		// Helper function to close mini cart
+		function closeMiniCart() {
+			$sidebar.removeClass('active');
+			$('body').css({
+				'overflow': 'auto', // Restore body scroll
+				'padding-right': '0' // Reset padding-right
+			});
+		}
+	}
 	// Make sure you run this code under Elementor.
 	$(window).on('elementor/frontend/init', function () {
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-location-list.default', LocationListHandler);
@@ -763,6 +799,7 @@
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-product-testimonial-slider.default', ProductTestimonialSliderHandler);
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-countdown.default', countDownHandler);
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-site-notification.default', NotificationSliderHandler);
+		elementorFrontend.hooks.addAction('frontend/element_ready/bt-mini-cart.default', MiniCartHandler);
 	});
 
 })(jQuery);

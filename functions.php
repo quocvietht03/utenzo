@@ -99,23 +99,6 @@ if (!function_exists('utenzo_enqueue_scripts')) {
 				wp_add_inline_script('utenzo-main', $custom_script);
 			}
 		}
-		// Get wishlist URL
-		$wishlist_url = home_url('/products-wishlist/');
-		if (function_exists('get_field')) {
-			$wishlist = get_field('wishlist', 'options');
-			if (!empty($wishlist['page_wishlist'])) {
-				$wishlist_url = get_permalink($wishlist['page_wishlist']);
-			}
-		}
-
-		// Get compare URL
-		$compare_url = home_url('/products-compare/');
-		if (function_exists('get_field')) {
-			$compare = get_field('compare', 'options');
-			if (!empty($compare['page_compare'])) {
-				$compare_url = get_permalink($compare['page_compare']);
-			}
-		}
 
 		// Get shop URL
 		$shop_url = home_url('/shop/');
@@ -125,25 +108,27 @@ if (!function_exists('utenzo_enqueue_scripts')) {
 				$shop_url = get_permalink($shop_page_id);
 			}
 		}
+		$wishlist_toast = $compare_toast = $cart_toast = '';
 
-		// Get cart URL
-		$cart_url = home_url('/cart/');
-		if (function_exists('wc_get_page_id')) {
-			$cart_page_id = wc_get_page_id('cart');
-			if ($cart_page_id > 0) {
-				$cart_url = get_permalink($cart_page_id);
+		if (function_exists('get_field')) {
+			$archive_shop = get_field('archive_shop', 'options');
+
+			if (is_array($archive_shop)) {
+				$wishlist_toast = isset($archive_shop['wishlist_toast']) ? $archive_shop['wishlist_toast'] : '';
+				$compare_toast = isset($archive_shop['compare_toast']) ? $archive_shop['compare_toast'] : '';
+				$cart_toast = isset($archive_shop['cart_toast']) ? $archive_shop['cart_toast'] : '';
 			}
 		}
-
 		/* Options to script */
 		$js_options = array(
 			'ajax_url' => admin_url('admin-ajax.php'),
-			'page_wishlist' => $wishlist_url,
-			'page_compare' => $compare_url,
 			'shop' => $shop_url,
-			'cart' => $cart_url,
+			'wishlist_toast' => $wishlist_toast,
+			'compare_toast' => $compare_toast,
+			'cart_toast' => $cart_toast,
 			'user_info' => wp_get_current_user(),
 		);
+
 		wp_localize_script('utenzo-main', 'AJ_Options', $js_options);
 		wp_enqueue_script('utenzo-main');
 	}
@@ -202,10 +187,6 @@ if (function_exists('get_field')) {
 	{
 		$effect_load_heading = get_field('effect_load_heading', 'options');
 		$button_hover = get_field('effect_button_hover', 'options');
-		$archive_shop = get_field('archive_shop', 'options');
-		if (isset($archive_shop['product_toast']) && $archive_shop['product_toast']) {
-			$classes[] = 'bt-product-toast-enable';
-		}
 		if ($effect_load_heading) {
 			$classes[] = 'bt-effect-heading-enable';
 		}

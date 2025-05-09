@@ -486,31 +486,84 @@
 		}
 	}
 	/* Product Toast */
-	function UtenzoshowToast(message) {
-		if ($('.bt-product-toast-enable').length > 0) {
-			if ($(window).width() > 1024) { // Only run for screens wider than 1024px
-				const toast = $('<div class="bt-toast"></div>').html(message);
-				$('body').append(toast);
-				toast.animate({ opacity: 1 }, 500);
-				let hideToastTimeout = setTimeout(function () {
-					toast.animate({ opacity: 0 }, 500, function () {
-						setTimeout(() => $(this).remove(), 1000);
-					});
-				}, 2000); // Show for 2 seconds before starting to fade out
+	function LoadUtenzoProductToast() {
+		if (AJ_Options.wishlist_toast || AJ_Options.compare_toast || AJ_Options.cart_toast) {
+			$('body').append('<div class="bt-toast"></div>');
+		}
+	}
+	function UtenzoshowToast(idproduct, tools = 'wishlist', status = 'add') {
+		if ($(window).width() > 1024) { // Only run for screens wider than 1024px
+			// ajax load product toast
+			var param_ajax = {
+				action: 'utenzo_load_product_toast',
+				idproduct: idproduct,
+				status: status,
+				tools: tools
+			};
+			$.ajax({
+				type: 'POST',
+				dataType: 'json',
+				url: AJ_Options.ajax_url,
+				data: param_ajax,
+				beforeSend: function () {
+				},
+				success: function (response) {
+					if (response.success) {
+						// Append and show new toast
+						$('.bt-toast').append(response.data['toast']);
+						const $newToast = $('.bt-toast .bt-product-toast').last();
 
-				toast.hover(
-					function () {
-						clearTimeout(hideToastTimeout); // Stop hiding on hover
-					},
-					function () {
-						hideToastTimeout = setTimeout(function () {
-							toast.animate({ opacity: 0 }, 500, function () {
-								setTimeout(() => $(this).remove(), 1000);
-							});
-						}, 1000); // Resume hiding after hover
+						setTimeout(() => {
+							$newToast.addClass('show');
+						}, 500);
+						// Handle close button click
+						$newToast.find('.bt-product-toast--close').on('click', function () {
+							removeToast($newToast);
+						});
+						let toastTimeout;
+
+						function startRemovalTimer($toast) {
+							toastTimeout = setTimeout(() => {
+								removeToast($toast);
+							}, 5000);
+						}
+
+						// Handle hover events
+						$newToast.hover(
+							function () {
+								// On mouse enter, clear the timeout
+								clearTimeout(toastTimeout);
+							},
+							function () {
+								// On mouse leave, start a new timeout
+								startRemovalTimer($(this));
+							}
+						);
+
+						// Start initial removal timer
+						startRemovalTimer($newToast);
+
+						function removeToast($toast) {
+							$toast.addClass('remove-visibility');
+
+							// Remove toast element after animation
+							setTimeout(() => {
+								$toast.addClass('remove-height');
+								setTimeout(() => {
+									$toast.remove();
+								}, 500);
+							}, 500);
+						}
 					}
-				);
-			}
+				},
+				error: function (xhr, status, error) {
+					console.error('Ajax request failed:', {
+						status: status,
+						error: error,
+						response: xhr.responseText
+					});
+				}
+			});
 		}
 	}
 	/* Product wishlist */
@@ -533,12 +586,14 @@
 						$('.bt-product-wishlist-btn[data-id="' + post_id + '"]').removeClass('loading');
 						$('.bt-product-wishlist-btn[data-id="' + post_id + '"] .tooltip').text("Remove Wishlist");
 					}, 500);
-					UtenzoshowToast('Product added to wishlist! View your <a href="' + AJ_Options.page_wishlist + '">Wishlist</a>.');
+					if (AJ_Options.wishlist_toast) {
+						UtenzoshowToast(post_id, 'wishlist', 'add');
+					}
+
 				} else {
 					var wishlist_arr = wishlist_local.split(',');
 
 					if (wishlist_arr.includes(post_id)) {
-						//window.location.href = AJ_Options.page_wishlist;
 						var index = wishlist_arr.indexOf(post_id);
 						if (index > -1) {
 							wishlist_arr.splice(index, 1);
@@ -551,7 +606,9 @@
 							$('.bt-product-wishlist-btn[data-id="' + post_id + '"]').removeClass('loading');
 							$('.bt-product-wishlist-btn[data-id="' + post_id + '"] .tooltip').text("Add To Wishlist");
 						}, 500);
-						UtenzoshowToast('Product removed from Your Wishlist!');
+						if (AJ_Options.wishlist_toast) {
+							UtenzoshowToast(post_id, 'wishlist', 'remove');
+						}
 					} else {
 						window.localStorage.setItem('productwishlistlocal', wishlist_local + ',' + post_id);
 						wishlist_local = window.localStorage.getItem('productwishlistlocal');
@@ -564,7 +621,9 @@
 							$('.bt-product-wishlist-btn[data-id="' + post_id + '"]').removeClass('loading');
 							$('.bt-product-wishlist-btn[data-id="' + post_id + '"] .tooltip').text("Remove Wishlist");
 						}, 500);
-						UtenzoshowToast('Product added to wishlist! View your <a href="' + AJ_Options.page_wishlist + '">Wishlist</a>.');
+						if (AJ_Options.wishlist_toast) {
+							UtenzoshowToast(post_id, 'wishlist', 'add');
+						}
 					}
 				}
 			});
@@ -587,7 +646,9 @@
 				$('.bt-productwishlistlocal').val(wishlist_str);
 				window.localStorage.setItem('productwishlistlocal', wishlist_str);
 				UtenzoShareLocalStorage(wishlist_str);
-				UtenzoshowToast('Product removed from Your Wishlist!');
+				if (AJ_Options.wishlist_toast) {
+					UtenzoshowToast(post_id, 'wishlist', 'remove');
+				}
 				$('.bt-products-wishlist-form').submit();
 			});
 
@@ -774,7 +835,9 @@
 					compare_local = window.localStorage.getItem('productcomparelocal');
 					$(this).addClass('loading');
 					$(this).removeClass('no-added');
-					UtenzoshowToast('Product added to Compare! View your <a href="' + AJ_Options.page_compare + '">Compare</a>.');
+					if (AJ_Options.compare_toast) {
+						UtenzoshowToast(post_id, 'compare', 'add');
+					}
 				} else {
 					var compare_arr = compare_local.split(',');
 					if (!compare_arr.includes(post_id)) {
@@ -782,7 +845,9 @@
 						compare_local = window.localStorage.getItem('productcomparelocal');
 						$(this).addClass('loading');
 						$(this).removeClass('no-added');
-						UtenzoshowToast('Product added to Compare! View your <a href="' + AJ_Options.page_compare + '">Compare</a>.');
+						if (AJ_Options.compare_toast) {
+							UtenzoshowToast(post_id, 'compare', 'add');
+						}
 					}
 				}
 				var param_ajax = {
@@ -866,10 +931,12 @@
 			}
 			$('.bt-product-compare-btn[data-id="' + product_id + '"]').addClass('no-added');
 			$('.bt-product-compare-btn[data-id="' + product_id + '"]').removeClass('added');
-			if (!compare_local || compare_local === '') {
-				removeComparePopup();
-				$('.bt-compare-body').removeClass('loading');
-				return;
+			if (!$('.bt-popup-compare').hasClass('bt-compare-elwwg')) {
+				if (!compare_local || compare_local === '') {
+					removeComparePopup();
+					$('.bt-compare-body').removeClass('loading');
+					return;
+				}
 			}
 			var param_ajax = {
 				action: 'utenzo_products_compare',
@@ -1604,14 +1671,6 @@
 			}
 		}
 	}
-	function UtenzoSelect2Appointment() {
-		if ($('.rnb-cart').length > 0) {
-			$('.rnb-cart .rnb-select-box').select2({
-				dropdownParent: $('.rnb-cart'),
-				minimumResultsForSearch: Infinity
-			});
-		}
-	}
 
 	function UtenzoMegaMenu() {
 		/* mega menu add class custom */
@@ -2099,17 +2158,6 @@
 			return;
 		}
 		if ($('.bt-gallery-products').length > 0) {
-
-			// // Show initial items
-			// $items.slice(0, visibleCount).addClass('show');
-
-			// // Hide button if not enough items
-			// if (visibleCount >= $items.length) {
-			// 	$button.hide();
-			// }
-
-			// Button click handler
-			let visibleCount = 4; // Initial items to show
 			const increment = 2;  // Items to show on each click
 
 			$(document).on('click', '.bt-show-more', function (e) {
@@ -2131,6 +2179,7 @@
 		UtenzoToggleSubMenuMobile();
 		UtenzoShop();
 		UtenzoCommentValidation();
+		LoadUtenzoProductToast();
 		UtenzoProductCompare();
 		UtenzoProductCompareLoad();
 		UtenzoProductWishlist();
@@ -2142,7 +2191,6 @@
 		UtenzoUpdateMiniCart();
 		UtenzoProgressCart();
 		UtenzoCountdownCart();
-		UtenzoSelect2Appointment();
 		UtenzoMegaMenu();
 		UtenzoBuyNow();
 		UtenzoReviewPopup();
@@ -2164,10 +2212,22 @@
 	});
 	$(document.body).on('added_to_cart', function (event, fragments, cart_hash, $button) {
 		// Only show toast if not in Elementor editor
+//		UtenzoProgressCart();
+UtenzoFreeShippingMessage();
 		if (!$('body').hasClass('elementor-editor-active')) {
-			UtenzoshowToast('Product added to cart! <span>View your <a href="' + AJ_Options.cart + '">Cart</a>.</span>');
+			// Get product ID from button that triggered the event
+			var productId = $button.data('product_id');
+			if (productId) {
+				if (AJ_Options.cart_toast) {
+					UtenzoshowToast(productId, 'cart', 'add');
+				}
+			}
 		}
 	});
+	$(document.body).on('removed_from_cart', function() {
+		UtenzoFreeShippingMessage();
+	});
+	
 	jQuery(window).on('resize', function () {
 		UtenzoSubmenuAuto();
 	});

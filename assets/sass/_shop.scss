@@ -1429,6 +1429,11 @@
           width: calc(50% - 15px);
           @media (min-width: $break-lg) {
             min-height: 716px;
+            .woocommerce-product-gallery__slider-nav{
+              .slick-track{
+                margin-left: -4px;
+              }
+            }
           }
         }
         div.summary {
@@ -2159,8 +2164,33 @@
   .woocommerce-notices-wrapper {
     .woocommerce-message {
       border-top-color: $color-secondary;
+      font-size: 16px;
+      line-height: 26px;
+      display: grid;
+      gap: 10px;
+      font-weight: 400;
+      grid-template-columns: 85% 15%;
+      @media(max-width: $break-md) {
+        grid-template-columns: 1fr;
+        a{
+          margin: 0 !important;
+        }
+      }
       &::before {
         color: $color-accent;
+      }
+      &::after {
+        display: none;
+      }
+      a {
+        width: 130px;
+        text-align: center;
+        align-items: center;
+        display: block;
+        margin: 0 0 0 auto;
+        padding: 10px;
+        box-sizing: border-box;
+        height: 45px;
       }
     }
   }
@@ -3107,8 +3137,8 @@
         display: flex;
         flex-direction: column;
         gap: 20px;
-       position: absolute;
-        top: 0; 
+        position: absolute;
+        top: 0;
         z-index: 1;
         width: 100%;
         @media (min-width: $break-md) {
@@ -6042,6 +6072,12 @@
 }
 
 .woocommerce-checkout {
+  .select2-container{
+    width: auto;
+    .select2-dropdown{
+      border: none;
+    } 
+  }
   .woocommerce-form-coupon-toggle,
   .woocommerce-form-login-toggle {
     .woocommerce-info {
@@ -6211,7 +6247,7 @@
   form.woocommerce-checkout {
     margin-top: 40px;
   }
-  .woocommerce form {
+  .woocommerce form { 
     #customer_details {
       display: flex;
       flex-wrap: wrap;
