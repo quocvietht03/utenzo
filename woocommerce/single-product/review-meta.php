@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The template to display the reviewers meta data (name, verified owner, review date)
  *
@@ -15,16 +16,16 @@
  * @version 3.4.0
  */
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 
 global $comment;
-$verified = wc_review_is_from_verified_owner( $comment->comment_ID );
+$verified = wc_review_is_from_verified_owner($comment->comment_ID);
 
-if ( '0' === $comment->comment_approved ) { ?>
+if ('0' === $comment->comment_approved) { ?>
 
 	<p class="meta">
 		<em class="woocommerce-review__awaiting-approval">
-			<?php esc_html_e( 'Your review is awaiting approval', 'utenzo' ); ?>
+			<?php esc_html_e('Your review is awaiting approval', 'utenzo'); ?>
 		</em>
 	</p>
 
@@ -33,19 +34,25 @@ if ( '0' === $comment->comment_approved ) { ?>
 	<div class="meta">
 		<strong class="woocommerce-review__author"><?php comment_author(); ?> </strong>
 		<?php
-		if ( 'yes' === get_option( 'woocommerce_review_rating_verification_label' ) && $verified ) {
-			echo '<em class="woocommerce-review__verified verified">(' . esc_attr__( 'verified owner', 'utenzo' ) . ')</em> ';
+		if ('yes' === get_option('woocommerce_review_rating_verification_label') && $verified) {
+			echo '<em class="woocommerce-review__verified verified">(' . esc_attr__('verified owner', 'utenzo') . ')</em> ';
 		}
-        
-        ?><span class="woocommerce-review__dash">&ndash;</span><?php
+		$rating = intval(get_comment_meta($comment->comment_ID, 'rating', true));
 
-        if ( post_type_supports( 'product', 'comments' ) ) {
-			wc_get_template( 'single-product/review-rating.php' );
+		if ($rating && wc_review_ratings_enabled()) {
+			echo '<span class="woocommerce-review__dash">&ndash;</span> ';
+		}
+		?>
+
+		<?php
+
+		if (post_type_supports('product', 'comments')) {
+			wc_get_template('single-product/review-rating.php');
 		}
 		?>
 	</div>
 
-    <time class="woocommerce-review__published-date" datetime="<?php echo esc_attr( get_comment_date( 'c' ) ); ?>"><?php echo esc_html( get_comment_date( wc_date_format() ) ); ?></time>
+	<time class="woocommerce-review__published-date" datetime="<?php echo esc_attr(get_comment_date('c')); ?>"><?php echo esc_html(get_comment_date(wc_date_format())); ?></time>
 
-	<?php
+<?php
 }

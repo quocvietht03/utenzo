@@ -32,7 +32,16 @@ if (! defined('ABSPATH')) {
 		 *
 		 * @hooked woocommerce_review_display_gravatar - 10
 		 */
-		do_action('woocommerce_review_before', $comment);
+		if (function_exists('get_field')) {
+            $avatar = get_field('avatar', 'user_' . $comment->user_id);
+          } else {
+            $avatar = array();
+          }
+		  if (!empty($avatar)) {
+            echo '<img src="' . esc_url($avatar['url']) . '" alt="' . esc_attr($avatar['title']) . '" class="avatar avatar-60 photo" />';
+          }else{
+			do_action('woocommerce_review_before', $comment);
+		  }
 		?>
 
 		<div class="comment-text">

@@ -4654,6 +4654,7 @@
                     background: transparent !important;
                     float: inherit !important;
                     padding: 0 !important;
+                    object-fit: cover;
                     @media (max-width: $break-xs) {
                       width: 45px !important;
                       height: 45px !important;
