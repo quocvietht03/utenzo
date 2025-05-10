@@ -1625,12 +1625,10 @@
 			},
 			success: function (response) {
 				if (response.success) {
-					if (response.data['is_appointment']) {
-						$(".bt-progress-content").addClass('is_appointment');
-						$(".cart-collaterals").addClass('is_appointment');
-					} else {
-						$(".bt-progress-content").removeClass('is_appointment');
-						$(".cart-collaterals").removeClass('is_appointment');
+					if (!response.data['cart']) {
+						$(".bt-progress-content").addClass("bt-hide");
+					} else{
+						$(".bt-progress-content").removeClass("bt-hide");
 					}
 					$(".bt-progress-bar").css("width", response.data['percentage'] + "%");
 					$('#bt-free-shipping-message').html(response.data['message']);
@@ -2215,7 +2213,10 @@
 		UtenzoFreeShippingMessage();
 		if (!$('body').hasClass('elementor-editor-active')) {
 			// Get product ID from button that triggered the event
-			var productId = $button.data('product_id');
+			var productId = null;
+			if ($button && $button.data('product_id')) {
+				productId = $button.data('product_id');
+			} 
 			if (productId) {
 				if (AJ_Options.cart_toast) {
 					UtenzoshowToast(productId, 'cart', 'add');

@@ -176,7 +176,6 @@ class Widget_MiniCart extends Widget_Base
 	{
 		$settings = $this->get_settings_for_display();
 		$icon_cart = $settings['cart_mini_icon']['url'];
-
 ?>
 		<div class="bt-elwg-mini-cart--default">
 			<div class="bt-mini-cart">
@@ -226,7 +225,7 @@ class Widget_MiniCart extends Widget_Base
 							}
 							if ($free_shipping_threshold > 0) {
 							?>
-								<div class="bt-progress-content <?php echo esc_attr(utenzo_is_appointment_in_cart() ? 'is_appointment' : ''); ?>">
+								<div class="bt-progress-content">
 									<?php echo '<div id="bt-free-shipping-message">' . $message . '</div>'; ?>
 									<div class="bt-progress-container-cart">
 										<div class="bt-progress-bar" data-width="<?php echo esc_attr($percentage) ?>">

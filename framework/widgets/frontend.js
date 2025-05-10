@@ -352,6 +352,80 @@
 			});
 		}
 	};
+	function UtenzoshowToast(idproduct, tools = 'cart', status = 'add') {
+		if ($(window).width() > 1024) { // Only run for screens wider than 1024px
+			// ajax load product toast
+			var param_ajax = {
+				action: 'utenzo_load_product_toast',
+				idproduct: idproduct,
+				status: status,
+				tools: tools
+			};
+			$.ajax({
+				type: 'POST',
+				dataType: 'json',
+				url: AJ_Options.ajax_url,
+				data: param_ajax,
+				beforeSend: function () {
+				},
+				success: function (response) {
+					if (response.success) {
+						// Append and show new toast
+						$('.bt-toast').append(response.data['toast']);
+						const $newToast = $('.bt-toast .bt-product-toast').last();
+						setTimeout(() => {
+							$newToast.addClass('show');
+						}, 100);
+						// Handle close button click
+						$newToast.find('.bt-product-toast--close').on('click', function () {
+							removeToast($newToast);
+						});
+						let toastTimeout;
+
+						function startRemovalTimer($toast) {
+							toastTimeout = setTimeout(() => {
+								removeToast($toast);
+							}, 3000);
+						}
+
+						// Handle hover events
+						$newToast.hover(
+							function () {
+								// On mouse enter, clear the timeout
+								clearTimeout(toastTimeout);
+							},
+							function () {
+								// On mouse leave, start a new timeout
+								startRemovalTimer($(this));
+							}
+						);
+
+						// Start initial removal timer
+						startRemovalTimer($newToast);
+
+						function removeToast($toast) {
+							$toast.addClass('remove-visibility');
+
+							// Remove toast element after animation
+							setTimeout(() => {
+								$toast.addClass('remove-height');
+								setTimeout(() => {
+									$toast.remove();
+								}, 300);
+							}, 300);
+						}
+					}
+				},
+				error: function (xhr, status, error) {
+					console.error('Ajax request failed:', {
+						status: status,
+						error: error,
+						response: xhr.responseText
+					});
+				}
+			});
+		}
+	}
 	const HotspotProductHandler = function ($scope) {
 		const $HotspotProduct = $scope.find('.bt-elwg-hotspot-product--default');
 		if ($HotspotProduct.length > 0) {
@@ -543,6 +617,15 @@
 					return;
 				}
 				const productIds = $this.find('.bt-btn-price').data('ids');
+				// Loop through each product ID and show toast notification
+				if (Array.isArray(productIds)) {
+					productIds.forEach(productId => {
+						setTimeout(() => {
+							UtenzoshowToast(productId, 'cart', 'add');
+						}, productIds.indexOf(productId) * 300); // Add 300ms delay between each toast
+					});
+				}
+				UtenzoshowToast
 				if (productIds.length > 0) {
 					$.ajax({
 						type: 'POST',
