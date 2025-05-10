@@ -225,7 +225,7 @@ class Widget_MiniCart extends Widget_Base
 							}
 							if ($free_shipping_threshold > 0) {
 							?>
-								<div class="bt-progress-content">
+								<div class="bt-progress-content <?php echo (WC()->cart->is_empty()) ? 'bt-hide' : ''; ?>">
 									<?php echo '<div id="bt-free-shipping-message">' . $message . '</div>'; ?>
 									<div class="bt-progress-container-cart">
 										<div class="bt-progress-bar" data-width="<?php echo esc_attr($percentage) ?>">

@@ -1625,11 +1625,6 @@
 			},
 			success: function (response) {
 				if (response.success) {
-					if (!response.data['cart']) {
-						$(".bt-progress-content").addClass("bt-hide");
-					} else{
-						$(".bt-progress-content").removeClass("bt-hide");
-					}
 					$(".bt-progress-bar").css("width", response.data['percentage'] + "%");
 					$('#bt-free-shipping-message').html(response.data['message']);
 
@@ -2216,7 +2211,7 @@
 			var productId = null;
 			if ($button && $button.data('product_id')) {
 				productId = $button.data('product_id');
-			} 
+			}
 			if (productId) {
 				if (AJ_Options.cart_toast) {
 					UtenzoshowToast(productId, 'cart', 'add');
@@ -2224,7 +2219,7 @@
 			}
 		}
 	});
-	$(document.body).on('removed_from_cart', function () {
+	$(document).on('removed_from_cart', function () {
 		UtenzoFreeShippingMessage();
 	});
 
@@ -2233,6 +2228,15 @@
 	});
 	$(document.body).on('updated_cart_totals', function () {
 		UtenzoFreeShippingMessage();
+	});
+	/* Check if cart is empty */
+	$(document.body).on('wc_fragments_loaded wc_fragments_refreshed', function () {
+		const cartCount = parseInt($('.bt-mini-cart .cart_total').text());
+		if (cartCount === 0) {
+			$(".bt-mini-cart-sidebar .bt-progress-content").addClass("bt-hide");
+		} else {
+			$(".bt-mini-cart-sidebar .bt-progress-content").removeClass("bt-hide");
+		}
 	});
 	jQuery(window).on('scroll', function () {
 		UtenzoScrollAddToCart();

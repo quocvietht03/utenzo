@@ -1483,11 +1483,6 @@ function utenzo_get_free_shipping()
     $free_shipping_threshold = utenzo_get_free_shipping_minimum_amount();
     $cart_total = WC()->cart->get_cart_contents_total();
     $currency_symbol = get_woocommerce_currency_symbol();
-    if (WC()->cart->is_empty()) {
-        $output['cart'] = false;
-    } else {
-        $output['cart'] = true;
-    }
     if ($cart_total < $free_shipping_threshold) {
         $amount_left = $free_shipping_threshold - $cart_total;
         $output['percentage'] = ($cart_total / $free_shipping_threshold) * 100;
