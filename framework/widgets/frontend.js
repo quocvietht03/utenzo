@@ -753,7 +753,7 @@
 	// mini cart
 	const MiniCartHandler = function ($scope) {
 		const $miniCart = $scope.find('.bt-elwg-mini-cart--default');
-		const $sidebar = $('.bt-mini-cart-sidebar');
+		const $sidebar = $miniCart.find('.bt-mini-cart-sidebar');
 
 		// Toggle mini cart
 		$miniCart.find('.js-cart-sidebar').on('click', function (e) {

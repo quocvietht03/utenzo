@@ -512,10 +512,9 @@
 						// Append and show new toast
 						$('.bt-toast').append(response.data['toast']);
 						const $newToast = $('.bt-toast .bt-product-toast').last();
-
 						setTimeout(() => {
 							$newToast.addClass('show');
-						}, 500);
+						}, 100);
 						// Handle close button click
 						$newToast.find('.bt-product-toast--close').on('click', function () {
 							removeToast($newToast);
@@ -525,7 +524,7 @@
 						function startRemovalTimer($toast) {
 							toastTimeout = setTimeout(() => {
 								removeToast($toast);
-							}, 5000);
+							}, 3000);
 						}
 
 						// Handle hover events
@@ -551,8 +550,8 @@
 								$toast.addClass('remove-height');
 								setTimeout(() => {
 									$toast.remove();
-								}, 500);
-							}, 500);
+								}, 300);
+							}, 300);
 						}
 					}
 				},
@@ -2212,8 +2211,8 @@
 	});
 	$(document.body).on('added_to_cart', function (event, fragments, cart_hash, $button) {
 		// Only show toast if not in Elementor editor
-//		UtenzoProgressCart();
-UtenzoFreeShippingMessage();
+		//		UtenzoProgressCart();
+		UtenzoFreeShippingMessage();
 		if (!$('body').hasClass('elementor-editor-active')) {
 			// Get product ID from button that triggered the event
 			var productId = $button.data('product_id');
@@ -2224,10 +2223,10 @@ UtenzoFreeShippingMessage();
 			}
 		}
 	});
-	$(document.body).on('removed_from_cart', function() {
+	$(document.body).on('removed_from_cart', function () {
 		UtenzoFreeShippingMessage();
 	});
-	
+
 	jQuery(window).on('resize', function () {
 		UtenzoSubmenuAuto();
 	});
