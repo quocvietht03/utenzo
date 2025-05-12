@@ -1529,6 +1529,8 @@
     }
     form.tnp-subscription {
       margin: 24px 0 0 0;
+      width: 100%;
+      max-width: 100%;
       label {
         display: none;
       }
@@ -1538,6 +1540,7 @@
         height: 45px;
         padding-left: 16px;
         padding-right: 16px;
+        font-size: 16px;
         @media(max-width:$break-xs){
           height: 42px;
           font-size: 15px;
