@@ -842,9 +842,10 @@
 		$miniCart.find('.js-cart-sidebar').on('click', function (e) {
 			e.preventDefault();
 			$sidebar.addClass('active');
+			const scrollbarWidth = window.innerWidth - $(window).width();
 			$('body').css({
 				'overflow': 'hidden',
-				'padding-right': `15px` // Prevent layout shift
+				'padding-right': scrollbarWidth + 'px' // Prevent layout shift
 			});
 		});
 

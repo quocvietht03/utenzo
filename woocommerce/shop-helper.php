@@ -124,15 +124,6 @@ function bt_woocommerce_template_loop_product_thumbnail()
     }
 }
 
-add_action('woocommerce_add_to_cart', 'utenzo_redirect_form_appointment', 20, 0);
-
-function utenzo_redirect_form_appointment()
-{
-    if (isset($_POST['pickup_date']) && $_POST['pickup_date'] != '') {
-        WC()->session->set('redirect_after_add_to_cart', true);
-    }
-}
-
 add_action('woocommerce_cart_updated', 'utenzo_redirect_after_add_to_cart');
 
 function utenzo_redirect_after_add_to_cart()
@@ -1857,66 +1848,6 @@ if (!function_exists('utenzo_product_share_render')) {
 
         return ob_get_clean();
     }
-}
-
-function utenzo_free_shipping_appointment($rates, $package)
-{
-    if (!function_exists('get_field')) {
-        return $rates;
-    }
-    $site_infor = get_field('site_information', 'options') ?: '';
-    $appointment_id = '';
-    if (!empty($site_infor['page_book_now'])) {
-        $appointment_id = url_to_postid($site_infor['page_book_now']);
-    }
-    if (empty($appointment_id)) {
-        return $rates;
-    }
-    $has_appointment = false;
-    foreach (WC()->cart->get_cart() as $cart_item) {
-        if ((int) $cart_item['product_id'] === (int) $appointment_id) {
-            $has_appointment = true;
-            break;
-        }
-    }
-    if ($has_appointment) {
-        foreach ($rates as $rate_id => $rate) {
-            $rates[$rate_id]->cost = 0;
-            $rates[$rate_id]->label = __('Free Shipping', 'utenzo');
-            if (!empty($rates[$rate_id]->taxes)) {
-                foreach ($rates[$rate_id]->taxes as $tax_id => $tax) {
-                    $rates[$rate_id]->taxes[$tax_id] = 0;
-                }
-            }
-        }
-    }
-
-    return $rates;
-}
-
-add_filter('woocommerce_package_rates', 'utenzo_free_shipping_appointment', 10, 2);
-
-function utenzo_is_appointment_in_cart()
-{
-    if (!function_exists('get_field')) {
-        return false;
-    }
-    $site_infor = get_field('site_information', 'options') ?: '';
-    $appointment_id = '';
-    if (!empty($site_infor['page_book_now'])) {
-        $appointment_id = url_to_postid($site_infor['page_book_now']);
-    }
-    if (empty($appointment_id)) {
-        return false;
-    }
-
-    foreach (WC()->cart->get_cart() as $cart_item) {
-        if ((int) $cart_item['product_id'] === (int) $appointment_id) {
-            return true;
-        }
-    }
-
-    return false;
 }
 
 add_action('wp_ajax_utenzo_remove_section', 'utenzo_remove_section');

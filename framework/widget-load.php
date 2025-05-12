@@ -59,7 +59,6 @@ class ElementorWidgets
 			'post-loop-item-style-1',
 			'post-loop-item-style-2',
 			'post-loop-item-style-3',
-			'testimonial-loop-item',
 			'product-loop-item',
 			'product-loop-item-style-1',
 			'product-wishlist',
@@ -67,10 +66,6 @@ class ElementorWidgets
 			'highlighted-heading',
 			'highlighted-heading-style-1',
 			'pricing-item',
-			'services-list',
-			'service-loop-item',
-			'service-loop-item-style-1',
-			'service-loop-item-menu',
 			'offer-box',
 			'mini-cart',
 			'brand-slider',
@@ -193,13 +188,6 @@ class ElementorWidgets
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\PostLoopItemStyle1\Widget_PostLoopItemStyle1());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\PostLoopItemStyle2\Widget_PostLoopItemStyle2());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\PostLoopItemStyle3\Widget_PostLoopItemStyle3());
-
-		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\TestimonialLoopItem\Widget_TestimonialLoopItem());
-
-		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ServicesList\Widget_ServicesList());
-		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ServiceLoopItem\Widget_ServiceLoopItem());
-		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ServiceLoopItemStyle1\Widget_ServiceLoopItemStyle1());
-		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ServiceLoopItemMenu\Widget_ServiceLoopItemMenu());
 
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ProductLoopItem\Widget_ProductLoopItem());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ProductLoopItemStyle1\Widget_ProductLoopItemStyle1());

@@ -155,9 +155,6 @@ define('CLEANIRA_IMG_DIR', get_template_directory_uri() . '/assets/images/');
 require_once get_template_directory() . '/install/plugin-required.php';
 require_once get_template_directory() . '/install/import-pack/import-functions.php';
 
-/* CPT Load */
-require_once get_template_directory() . '/framework/cpt-service.php';
-require_once get_template_directory() . '/framework/cpt-testimonial.php';
 /* ACF Options */
 require_once get_template_directory() . '/framework/acf-options.php';
 

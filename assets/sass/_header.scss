@@ -289,9 +289,6 @@
 .elementor-location-header {
   position: relative;
   .elementor-element {
-    &.elementor-sticky__spacer{
-      display: none!important;
-    }
     &.bt-nav-header-style2 {
       @media (max-width: 1300px) and (min-width: $break-tl) {
         > .e-con-inner {

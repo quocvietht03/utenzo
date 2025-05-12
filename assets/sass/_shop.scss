@@ -586,9 +586,8 @@
   /* filter Dropdown no sidebar */
   &.bt-template-nosidebar-dropdown {
     .bt-products-dropdown {
-      //    display: none;
       position: absolute;
-      z-index: 9999;
+      z-index: 11;
       top: 42px;
       background: #fff;
       width: calc(100% + 60px);
@@ -4638,13 +4637,11 @@
             }
             .commentlist {
               padding: 0;
-              > li {
+              li {
+                margin: 0 0 24px 0;
                 &:last-child {
                   margin-bottom: 0;
                 }
-              }
-              li {
-                margin: 0 0 24px 0;
                 .comment_container {
                   img.avatar {
                     width: 60px !important;
@@ -4730,7 +4727,7 @@
             }
           }
           #review_form_wrapper {
-            margin-top: 12px;
+            margin-top: 24px;
             .comment-form {
               display: flex;
               flex-wrap: wrap;
@@ -4972,6 +4969,7 @@
               z-index: -1;
               visibility: hidden;
               opacity: 0;
+              margin: 0;
               &.active {
                 display: flex;
                 z-index: 999;
@@ -5384,6 +5382,9 @@
   margin: 0;
 }
 .woocommerce-cart {
+  .elementor-location-header{
+    z-index: 999999;
+  }
   .wc-empty-cart-message {
     display: none;
   }
@@ -5483,11 +5484,7 @@
           color: #f03e3e;
         }
       }
-      .bt-progress-content {
-        &.is_appointment {
-          display: none;
-        }
-      }
+
       #bt-free-shipping-message {
         .bt-buy-more {
           font-size: 16px;
@@ -5542,18 +5539,6 @@
     }
     .cart-collaterals {
       width: 380px;
-      &.is_appointment {
-        .woocommerce-shipping-methods {
-          li {
-            input {
-              display: none;
-            }
-            &:nth-child(2) {
-              display: none;
-            }
-          }
-        }
-      }
       @media (max-width: $break-tl) and (min-width: $break-md) {
         width: 290px;
       }

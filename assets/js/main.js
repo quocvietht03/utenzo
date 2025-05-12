@@ -1776,53 +1776,6 @@
 			UtenzoAddSelect2GravityForm();
 		});
 	}
-	function UtenzoValidationFormBooking() {
-		if ($('.bt-site-appointment').length > 0) {
-			var pickuptime = $('.pick-up-time-picker'),
-				dropofftime = $('.drop-off-time-picker');
-			pickuptime.addClass('bt-disabled');
-			dropofftime.addClass('bt-disabled');
-			$('.pick-up-date-picker input').on('change', function () {
-				pickuptime.removeClass('bt-disabled');
-				dropofftime.removeClass('bt-disabled');
-			});
-			$('#cal-submit-btn').on('click', function () {
-				pickuptime.removeClass('bt-disabled');
-				dropofftime.removeClass('bt-disabled');
-			});
-			$('.redq_add_to_cart_button').on('click', function () {
-				$('.redq_add_to_cart_button').css('pointer-events', 'none');
-			});
-		}
-	}
-	function UtenzoBookingCoupon() {
-		if ($('.bt-cart-content').length > 0) {
-			var coupon = $('.bt-cart-content').data('coupon');
-			if (coupon) {
-				$('.woocommerce-cart-form .coupon input[name="coupon_code"]').val(coupon);
-				setTimeout(function () {
-					$('.woocommerce-cart-form .coupon button').trigger('click');
-					var param_ajax = {
-						action: 'utenzo_remove_section',
-					};
-					$.ajax({
-						type: 'POST',
-						dataType: 'json',
-						url: AJ_Options.ajax_url,
-						data: param_ajax,
-						beforeSend: function () {
-						},
-						success: function (response) {
-
-						},
-						error: function (jqXHR, textStatus, errorThrown) {
-							console.log('The following error occured: ' + textStatus, errorThrown);
-						}
-					});
-				}, 500);
-			}
-		}
-	}
 	function UtenzoProductButtonStatus() {
 		var productCompare = localStorage.getItem('productcomparelocal');
 		var productCompareArray = productCompare ? productCompare.split(',') : [];
@@ -2165,6 +2118,59 @@
 			});
 		}
 	}
+	/* popup newsletter */
+	function UtenzoPopupNewsletter() {
+		// Check if newsletter popup exists
+		if ($('#bt-newsletter-popup').length > 0) {
+			if ($('.bt-thankyou-newsletter').length) {
+				// Check if URL has confirmed parameter
+				const urlParams = new URLSearchParams(window.location.search);
+				if (urlParams.get('nm') === 'confirmed') {
+					localStorage.setItem('newsletterpopup', 'true');
+				}
+				return;
+			}
+			const newsletter_local = window.localStorage.getItem('newsletterpopup');
+
+			if (!newsletter_local) {
+				const popup = $('#bt-newsletter-popup');
+				let hasShown = false;
+
+				// Show popup when scrolling down 300px
+				$(window).scroll(function () {
+					if (!hasShown && $(this).scrollTop() > 300) {
+						hasShown = true;
+						const scrollbarWidth = window.innerWidth - $(window).width();
+
+						popup.fadeIn();
+						$('body').css({
+							'overflow': 'hidden',
+							'padding-right': scrollbarWidth + 'px' // Prevent layout shift
+						});
+					}
+				});
+
+				// Helper function to close popup
+				const closePopup = () => {
+					popup.fadeOut();
+					localStorage.setItem('newsletterpopup', 'true');
+					$('body').css({
+						'overflow': 'auto',
+						'padding-right': '0'
+					});
+				};
+
+				// Close popup events
+				$(document).on('click', '#bt-newsletter-popup .bt-close-popup', closePopup);
+				$(document).on('click', '#bt-newsletter-popup .bt-newsletter-overlay', closePopup);
+				$(document).on('keydown', function (e) {
+					if (e.key === 'Escape') {
+						closePopup();
+					}
+				});
+			}
+		}
+	}
 	jQuery(document).ready(function ($) {
 		UtenzoSubmenuAuto();
 		UtenzoToggleMenuMobile();
@@ -2187,8 +2193,6 @@
 		UtenzoBuyNow();
 		UtenzoReviewPopup();
 		UtenzoHookGravityFormEvents();
-		UtenzoValidationFormBooking();
-		UtenzoBookingCoupon();
 		UtenzoProductButtonStatus();
 		UtenzoCopyrightCurrentYear();
 		UtenzoCompareContentScroll();
@@ -2201,10 +2205,10 @@
 		UtenzoCustomizeGroupedProduct();
 		UtenzoScrollAddToCart();
 		UtenzoGalleryProductShowMore();
+		UtenzoPopupNewsletter();
 	});
 	$(document.body).on('added_to_cart', function (event, fragments, cart_hash, $button) {
 		// Only show toast if not in Elementor editor
-		//		UtenzoProgressCart();
 		UtenzoFreeShippingMessage();
 		if (!$('body').hasClass('elementor-editor-active')) {
 			// Get product ID from button that triggered the event
