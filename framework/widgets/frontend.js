@@ -441,20 +441,38 @@
 				const halfHeight = infoHeight / 2 - (window.innerWidth <= 600 ? 6 : 10);
 				const maxPoint = Math.max(pointLeft, pointTop, pointRight, pointBottom);
 				if (maxPoint === pointRight) {
-					if (halfHeight < pointTop && halfHeight < pointBottom) {
-						return 'rightcenter';
-					} else if (infoHeight < pointTop) {
-						return 'righttop';
+					if (infoWidth > pointRight) {
+						const maxHigh = Math.max(pointTop, pointBottom);
+						if (maxHigh === pointTop) {
+							return 'topcenter';
+						} else {
+							return 'bottomcenter';
+						}
 					} else {
-						return 'rightbottom';
+						if (halfHeight < pointTop && halfHeight < pointBottom) {
+							return 'rightcenter';
+						} else if (infoHeight < pointTop) {
+							return 'righttop';
+						} else {
+							return 'rightbottom';
+						}
 					}
 				} else if (maxPoint === pointLeft) {
-					if (halfHeight < pointTop && halfHeight < pointBottom) {
-						return 'leftcenter';
-					} else if (infoHeight < pointTop) {
-						return 'lefttop';
+					if (infoWidth > pointLeft) {
+						const maxHigh = Math.max(pointTop, pointBottom);
+						if (maxHigh === pointTop) {
+							return 'topcenter';
+						} else {
+							return 'bottomcenter';
+						}
 					} else {
-						return 'leftbottom';
+						if (halfHeight < pointTop && halfHeight < pointBottom) {
+							return 'leftcenter';
+						} else if (infoHeight < pointTop) {
+							return 'lefttop';
+						} else {
+							return 'leftbottom';
+						}
 					}
 				} else if (maxPoint === pointTop) {
 					if (halfWidth < pointLeft && halfWidth < pointRight) {
@@ -477,9 +495,7 @@
 			function hotspotPoint() {
 				$HotspotProduct.find('.bt-hotspot-point').each(function () {
 					const $point = $(this);
-					//console.log($point);
 					const $positionPoin = getPositionPoint($point);
-					//	console.log($positionPoin);
 					const $info = $point.find('.bt-hotspot-product-info');
 					const containerWidth = $point.parent().width();
 					let smallOffset = 5;

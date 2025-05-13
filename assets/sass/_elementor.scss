@@ -9,8 +9,8 @@
   }
 }
 .bt-popup-search {
-  &.elementor-popup-modal{
-    .dialog-message{
+  &.elementor-popup-modal {
+    .dialog-message {
       overflow: initial;
     }
   }
@@ -555,7 +555,6 @@
   }
 }
 
-
 .bt-elwg-highlighted-heading {
   display: flex;
   justify-content: start;
@@ -877,7 +876,7 @@
           padding: 15px 15px 0 15px;
           width: 100%;
           background: #d4e7f6;
-          &.bt-hide{
+          &.bt-hide {
             display: none !important;
           }
           #bt-free-shipping-message {
@@ -990,7 +989,7 @@
             }
           }
         }
-        .widget_shopping_cart_content{
+        .widget_shopping_cart_content {
           height: 100%;
         }
         .bt-cart-empty {
@@ -1003,7 +1002,7 @@
             width: 100px;
             height: 100px;
           }
-          p{
+          p {
             color: $color-primary;
             font-size: 16px;
             font-style: normal;
@@ -2528,7 +2527,9 @@
       border: 1px solid #e9e9e9;
       max-width: 600px;
       position: relative;
-
+      @media (max-width: $break-sm) {
+        max-width: 100%;
+      }
       input {
         width: 100%;
         border: none;
@@ -3231,12 +3232,7 @@
         }
       }
       @media (max-width: $break-sm) {
-        bottom: -60px;
-        top: auto;
-        justify-content: center;
-        left: 50%;
-        right: auto;
-        transform: translateX(-50%);
+        gap: 5px;
         .bt-nav {
           padding: 10px;
           svg {
@@ -3805,13 +3801,14 @@ body {
               color: #fff;
             }
           }
-          @media (max-width: $break-xs) {
+          @media (max-width: $break-sm) {
             top: -77px;
+            gap: 4px;
             .bt-nav {
-              padding: 8px;
+              padding: 9px;
               svg {
-                width: 16px !important;
-                height: 16px !important;
+                width: 20px !important;
+                height: 20px !important;
               }
             }
           }
@@ -3876,6 +3873,7 @@ body {
           }
           @media (max-width: $break-sm) {
             margin-top: -52px;
+            gap: 5px;
             .bt-nav {
               padding: 9px;
               svg {
