@@ -9,6 +9,11 @@
   }
 }
 .bt-popup-search {
+  &.elementor-popup-modal{
+    .dialog-message{
+      overflow: initial;
+    }
+  }
   &.elementor-popup-modal {
     .dialog-widget-content {
       position: initial;

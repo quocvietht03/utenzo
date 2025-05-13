@@ -1681,6 +1681,16 @@
 					$('.bt-megamenu-shop-category').addClass('bt-no-hover');
 				}
 			}, '.bt-megamenu-shop-category.e-active .e-n-menu-title, .bt-megamenu-shop-category.e-active .e-n-menu-content,.bt-mega-menu.bt-main > .elementor-widget-container > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > li.e-n-menu-item:first-child > .e-n-menu-title');
+
+            $('.bt-mega-menu > .elementor-widget-container > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-heading > li.e-n-menu-item').on('mousemove', function(e) {
+                const target = $(e.target);
+				console.log(target);
+                if (target.closest('.bt-mega-menu-shop-content').length > 0) {
+                    $('.bt-mega-menu-shop').css('display', 'block');
+                } else if (target.closest('.bt-mega-menu-shop').length > 0) {
+					$('.bt-mega-menu-shop').css('display', 'none');
+                }
+            });
 		}
 	}
 	function UtenzoBuyNow() {

@@ -350,18 +350,41 @@ body.admin-bar .dialog-type-lightbox {
 }
 .bt-menu-mobile-popup {
   position: fixed !important;
-  .elementor-nav-menu {
-    a.has-submenu {
-      display: flex;
-      justify-content: space-between;
-      i,
-      svg {
-        transition: all 0.3s;
+  &.elementor-popup-modal{
+    .dialog-message{
+      &::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+        border-radius: 10px;
+        background-color: #f1f1f1;
       }
-      &.highlighted .sub-arrow {
+      &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-color: #a2a3ab;
+        cursor: pointer;
+      }
+      &::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background-color: #f1f1f1;
+      }
+    }
+  }
+  .elementor-nav-menu {
+    a{  
+      line-height: 1.3 !important;
+      background: transparent!important;
+      &.has-submenu {
+        display: flex;
+        justify-content: space-between;
         i,
         svg {
-          transform: rotate(180deg);
+          transition: all 0.3s;
+        }
+        &.highlighted .sub-arrow {
+          i,
+          svg {
+            transform: rotate(180deg);
+          }
         }
       }
     }
@@ -371,7 +394,7 @@ body.admin-bar .dialog-type-lightbox {
       }
       a.elementor-sub-item {
         position: relative;
-        padding-left: 50px;
+        padding-left: 40px;
         font-family: $text-font !important;
         font-size: 16px !important;
         font-weight: 500 !important;
@@ -380,9 +403,9 @@ body.admin-bar .dialog-type-lightbox {
         &:before {
           content: "";
           position: absolute;
-          top: 25px;
-          left: 20px;
-          width: 18px;
+          top: 21px;
+          left: 15px;
+          width: 12px;
           height: 1px;
           background: $color-primary;
         }
@@ -443,7 +466,7 @@ body.admin-bar .dialog-type-lightbox {
                     > .e-con-inner {
                       gap: 35px 15px;
                       .elementor-icon-list-item > a {
-                        font-size: 13px;
+                        font-size: 14px;
                       }
                     }
                   }
@@ -454,7 +477,7 @@ body.admin-bar .dialog-type-lightbox {
                         padding: 22px 0 22px 22px;
                         width: 55%;
                         .elementor-icon-list-item > a {
-                          font-size: 13px;
+                          font-size: 14px;
                         }
                       }
                       &:last-child {
@@ -492,7 +515,7 @@ body.admin-bar .dialog-type-lightbox {
   }
   &.bt-main {
     > .elementor-widget-container {
-      > .e-n-menu {
+      > .e-n-menu { 
         > .e-n-menu-wrapper {
           > .e-n-menu-heading {
             > li.e-n-menu-item {
@@ -503,6 +526,7 @@ body.admin-bar .dialog-type-lightbox {
                   display: flex;
                   justify-content: space-between;
                   background: $color-primary;
+                  padding-right: 17px;
                   &:hover {
                     background: $color-primary !important;
                   }
@@ -510,8 +534,8 @@ body.admin-bar .dialog-type-lightbox {
               }
               @media (max-width: 1110px) and (min-width: $break-tl) {
                 > .e-n-menu-title {
-                  padding-left: 18px;
-                  padding-right: 18px;
+                  padding-left: 17px;
+                  padding-right: 17px;
                 }
               }
             }
@@ -526,6 +550,10 @@ body.admin-bar .dialog-type-lightbox {
       a,
       span {
         width: 100%;
+        @media (max-width: 1250px) and (min-width: $break-tl) {
+          font-size: 14px;
+          line-height: 1.4;
+        }
       }
       &::before {
         background: $color-primary;
@@ -565,6 +593,11 @@ body.admin-bar .dialog-type-lightbox {
                       > .e-n-menu-title {
                         position: relative;
                         z-index: 99999999999;
+                        padding-right: 17px;
+                        @media (max-width: 1110px) and (min-width: $break-tl) {
+                            padding-left: 17px;
+                            padding-right: 17px;
+                        }
                         a,
                         span {
                           width: 100%;
