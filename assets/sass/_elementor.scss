@@ -2878,9 +2878,24 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 30px;
+      &--item {
+        &:hover {
+          .bt-product-category--thumb {
+            .bt-cover-image {
+             img {
+              transform: scale(1.1, 1.1) translateZ(0);
+             }
+           }
+          }
+        }
+      }
       &--thumb {
         .bt-cover-image {
           border-radius: 7px;
+          img {
+            transform: scale(1, 1) translateZ(0);
+            transition: all 2s cubic-bezier(0, 0, 0.44, 1.18);
+          }
         }
       }
       &--inner {
@@ -3043,6 +3058,17 @@
           }
         }
       }
+      &--item {
+        &:hover {
+          .bt-product-category--thumb {
+            .bt-cover-image {
+             img {
+              transform: scale(1.1, 1.1) translateZ(0);
+             }
+           }
+          }
+        }
+      }
       &--thumb {
         .bt-cover-image {
           border-radius: 4px;
@@ -3051,11 +3077,6 @@
           img {
             transform: scale(1, 1) translateZ(0);
             transition: all 2s cubic-bezier(0, 0, 0.44, 1.18);
-          }
-          &:hover {
-            img {
-              transform: scale(1.1, 1.1) translateZ(0);
-            }
           }
         }
       }

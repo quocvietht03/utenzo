@@ -11,7 +11,7 @@
   @media (max-width: $break-md) {
     padding: 60px 0;
   }
-  &.bt-main-content-ss {
+  .single-post & {
     @media (max-width: $break-sm) {
       padding: 30px 0 60px 0;
     }
@@ -728,7 +728,7 @@
     width: calc(32% - 30px);
   }
   @media (max-width: $break-lg) {
-    gap: 30px;
+    gap: 40px 30px;
     .bt-main-post-col {
       width: calc(68% - 15px);
     }
