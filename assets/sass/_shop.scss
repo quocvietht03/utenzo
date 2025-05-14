@@ -1363,9 +1363,9 @@
     transition: transform 0.2s ease;
     transform: scale(0);
     box-shadow: 0px 10px 25px 0px rgba(43, 52, 74, 0.12);
+    width: 100%;
     @media (min-width: 1300px) {
       max-width: 1235px;
-      width: 100%;
     }
     @media (max-width: $break-xs) {
       max-height: 80%;
@@ -1395,9 +1395,9 @@
     background-color: white;
     border-radius: 10px;
     position: relative;
+    width: 100%;
     @media (min-width: 1170px) {
       min-width: 1045px;
-      width: 100%;
     }
     @extend .__scrollbar_style-x;
     .woocommerce-product-gallery {
@@ -1444,6 +1444,17 @@
             font-size: 30px;
             line-height: 1.4;
           }
+          .bt-product-icon-btn{
+            .bt-product-wishlist-btn{
+              .tooltip{
+                right: -12px;
+                &::after{
+                  left: 58%;
+                }
+              }
+            }
+          }
+          
         }
 
         @media (max-width: $break-md) and (min-width: 767px) {
@@ -2212,6 +2223,10 @@
           font-weight: 400;
           line-height: 22px;
           color: $color-primary;
+          a{
+            max-width: fit-content;
+            width: 100%;
+          }
           .bt-deli {
             display: flex;
             color: #a0a0a0;
@@ -4063,6 +4078,10 @@
               padding-right: 17px;
               border-right: 1px solid #e9e9e9;
               margin-right: 17px;
+              @media(max-width: $break-xs) {
+                padding-right: 12px;
+                margin-right: 12px;
+              }
               @media (max-width: 370px) {
                 padding-right: 6px;
                 margin-right: 6px;
@@ -4454,6 +4473,12 @@
           td {
             border: none;
           }
+          th{
+              @media(max-width:$break-xs){
+                width: 100px;
+                vertical-align: top;
+              }
+          }
           tr {
             &:nth-child(even) {
               background-color: #f9fafb; // White for even rows
@@ -4744,6 +4769,9 @@
               .comment-notes {
                 color: #3dab25;
                 font-weight: 600;
+                font-size: 16px;
+                font-weight: 500;
+                line-height: 26px;
               }
               &-rating {
                 order: 0;

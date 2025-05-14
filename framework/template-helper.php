@@ -217,12 +217,9 @@ if (!function_exists('utenzo_page_breadcrumb')) {
 					if (!empty($terms) && !is_wp_error($terms)) {
 						//the_terms(get_the_ID(), 'product_cat', '', ', ');
 						$shop_page_url = get_permalink(wc_get_page_id('shop'));
-						$term_links = array();
-						foreach ($terms as $term) {
-							$category_url = $shop_page_url . '?product_cat=' . $term->slug;
-							$term_links[] = '<a href="' . esc_url($category_url) . '">' . esc_html($term->name) . '</a>';
-						}
-						echo implode(', ', $term_links);
+						$first_term = reset($terms); // Get first term
+						$category_url = $shop_page_url . '?product_cat=' . $first_term->slug;
+						echo '<a href="' . esc_url($category_url) . '">' . esc_html($first_term->name) . '</a>';
 						echo ' <span class="bt-deli">' . $delimiter . '</span> ' . '<span class="current">' . get_the_title() . '</span>';
 					} else {
 						echo '<span class="current">' . get_the_title() . '</span>';
