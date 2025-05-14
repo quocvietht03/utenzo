@@ -1449,10 +1449,10 @@
     min-height: 500px;
     overflow: hidden;
     background: transparent;
-    @media(max-width: 880px) {
+    @media (max-width: 880px) {
       max-width: calc(100% - 30px);
     }
-    @media(max-width:$break-sm){
+    @media (max-width: $break-sm) {
       min-height: auto;
     }
   }
@@ -1469,7 +1469,7 @@
       top: 0;
       left: 0;
     }
-    @media(max-width:$break-sm){
+    @media (max-width: $break-sm) {
       display: none;
     }
   }
@@ -1482,7 +1482,7 @@
     justify-content: center;
     background: #fff;
     box-sizing: border-box;
-    @media(max-width:$break-sm){
+    @media (max-width: $break-sm) {
       width: 100%;
       padding: 30px 15px;
     }
@@ -1491,7 +1491,7 @@
       font-weight: 600;
       margin: 0 0 4px 0;
       line-height: 1.3;
-      @media(max-width:$break-xs){
+      @media (max-width: $break-xs) {
         font-size: 25px;
         max-width: 90%;
       }
@@ -1502,7 +1502,7 @@
       margin: 0;
       line-height: 1.3;
       color: $color-text;
-      @media(max-width:$break-xs){
+      @media (max-width: $break-xs) {
         font-size: 14px;
       }
     }
@@ -1513,7 +1513,7 @@
       line-height: 1.5;
       color: $color-text;
       margin-top: 15px;
-      @media(max-width:$break-xs){
+      @media (max-width: $break-xs) {
         font-size: 14px;
         margin-top: 5px;
       }
@@ -1523,7 +1523,7 @@
         text-underline-offset: 2px;
         text-decoration-thickness: 1px;
       }
-      p{
+      p {
         margin: 0;
       }
     }
@@ -1534,14 +1534,14 @@
       label {
         display: none;
       }
-      input{
+      input {
         font-family: $accent-font;
         color: $color-text;
         height: 45px;
         padding-left: 16px;
         padding-right: 16px;
         font-size: 16px;
-        @media(max-width:$break-xs){
+        @media (max-width: $break-xs) {
           height: 42px;
           font-size: 15px;
         }
@@ -1556,7 +1556,7 @@
         line-height: 22px;
         background: $color-primary;
         border-radius: 8px;
-        @media(max-width:$break-xs){
+        @media (max-width: $break-xs) {
           font-size: 15px;
         }
         &:hover {
@@ -1598,6 +1598,21 @@
       &:hover {
         background: #0056b3;
       }
+    }
+  }
+}
+// icon close popup elementor
+.elementor-popup-modal {
+  .dialog-close-button.dialog-lightbox-close-button {
+    content: "";
+    display: inline-block;
+    width: 21px;
+    height: 21px;
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMiIgdmlld0JveD0iMCAwIDEyIDEyIiBmaWxsPSJub25lIj4KICA8cGF0aCBkPSJNOS42NDA1MiA5LjEwOTY1QzkuNjc1MzYgOS4xNDQ0OSA5LjcwMyA5LjE4NTg2IDkuNzIxODYgOS4yMzEzOEM5Ljc0MDcxIDkuMjc2OSA5Ljc1MDQyIDkuMzI1NjkgOS43NTA0MiA5LjM3NDk2QzkuNzUwNDIgOS40MjQyNCA5Ljc0MDcxIDkuNDczMDMgOS43MjE4NiA5LjUxODU1QzkuNzAzIDkuNTY0MDcgOS42NzUzNiA5LjYwNTQ0IDkuNjQwNTIgOS42NDAyOEM5LjYwNTY4IDkuNjc1MTIgOS41NjQzMiA5LjcwMjc2IDkuNTE4NzkgOS43MjE2MUM5LjQ3MzI3IDkuNzQwNDcgOS40MjQ0OCA5Ljc1MDE3IDkuMzc1MjEgOS43NTAxN0M5LjMyNTk0IDkuNzUwMTcgOS4yNzcxNCA5Ljc0MDQ3IDkuMjMxNjIgOS43MjE2MUM5LjE4NjEgOS43MDI3NiA5LjE0NDc0IDkuNjc1MTIgOS4xMDk5IDkuNjQwMjhMNi4wMDAyMSA2LjUzMDEyTDIuODkwNTIgOS42NDAyOEMyLjgyMDE2IDkuNzEwNjQgMi43MjQ3MiA5Ljc1MDE3IDIuNjI1MjEgOS43NTAxN0MyLjUyNTcgOS43NTAxNyAyLjQzMDI2IDkuNzEwNjQgMi4zNTk5IDkuNjQwMjhDMi4yODk1MyA5LjU2OTkxIDIuMjUgOS40NzQ0OCAyLjI1IDkuMzc0OTZDMi4yNSA5LjI3NTQ1IDIuMjg5NTMgOS4xODAwMiAyLjM1OTkgOS4xMDk2NUw1LjQ3MDA1IDUuOTk5OTZMMi4zNTk5IDIuODkwMjhDMi4yODk1MyAyLjgxOTkxIDIuMjUgMi43MjQ0OCAyLjI1IDIuNjI0OTZDMi4yNSAyLjUyNTQ1IDIuMjg5NTMgMi40MzAwMiAyLjM1OTkgMi4zNTk2NUMyLjQzMDI2IDIuMjg5MjkgMi41MjU3IDIuMjQ5NzYgMi42MjUyMSAyLjI0OTc2QzIuNzI0NzIgMi4yNDk3NiAyLjgyMDE2IDIuMjg5MjkgMi44OTA1MiAyLjM1OTY1TDYuMDAwMjEgNS40Njk4MUw5LjEwOTkgMi4zNTk2NUM5LjE4MDI2IDIuMjg5MjkgOS4yNzU3IDIuMjQ5NzYgOS4zNzUyMSAyLjI0OTc2QzkuNDc0NzIgMi4yNDk3NiA5LjU3MDE2IDIuMjg5MjkgOS42NDA1MiAyLjM1OTY1QzkuNzEwODkgMi40MzAwMiA5Ljc1MDQyIDIuNTI1NDUgOS43NTA0MiAyLjYyNDk2QzkuNzUwNDIgMi43MjQ0OCA5LjcxMDg5IDIuODE5OTEgOS42NDA1MiAyLjkwMjhMNi41MzAzNiA1Ljk5OTk2TDkuNjQwNTIgOS4xMDk2NVoiIGZpbGw9IiMyMTIxMjEiLz4KPC9zdmc+");
+    background-size: cover;
+    background-repeat: no-repeat;
+    svg{
+      display: none;
     }
   }
 }

@@ -58,6 +58,9 @@
       font-weight: 600;
       line-height: 42px;
       text-align: left;
+      @media(max-width: $break-sm) {
+        font-size: 28px;
+      }
     }
     .gform_required_legend {
       display: none;

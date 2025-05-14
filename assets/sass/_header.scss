@@ -307,21 +307,21 @@
                   padding-left: 8px;
                   padding-right: 8px;
                   > a {
-                    > .e-n-menu-title-text{
+                    > .e-n-menu-title-text {
                       font-size: 14px;
                     }
                   }
                 }
-                .e-n-menu-content{
-                  .e-n-menu-title{
+                .e-n-menu-content {
+                  .e-n-menu-title {
                     padding: 0 !important;
                   }
                 }
-                &.bt-submenu-content{
-                  > .e-n-menu-content{
-                    .bt-mega-menu-sub{
+                &.bt-submenu-content {
+                  > .e-n-menu-content {
+                    .bt-mega-menu-sub {
                       padding: 20px;
-                      .e-n-menu-title{
+                      .e-n-menu-title {
                         padding: 0 !important;
                       }
                     }
@@ -350,8 +350,8 @@ body.admin-bar .dialog-type-lightbox {
 }
 .bt-menu-mobile-popup {
   position: fixed !important;
-  &.elementor-popup-modal{
-    .dialog-message{
+  &.elementor-popup-modal {
+    .dialog-message {
       &::-webkit-scrollbar {
         width: 6px;
         height: 6px;
@@ -370,9 +370,9 @@ body.admin-bar .dialog-type-lightbox {
     }
   }
   .elementor-nav-menu {
-    a{  
+    a {
       line-height: 1.3 !important;
-      background: transparent!important;
+      background: transparent !important;
       &.has-submenu {
         display: flex;
         justify-content: space-between;
@@ -515,7 +515,7 @@ body.admin-bar .dialog-type-lightbox {
   }
   &.bt-main {
     > .elementor-widget-container {
-      > .e-n-menu { 
+      > .e-n-menu {
         > .e-n-menu-wrapper {
           > .e-n-menu-heading {
             > li.e-n-menu-item {
@@ -586,6 +586,19 @@ body.admin-bar .dialog-type-lightbox {
             > .e-n-menu-item {
               &:not(.bt-submenu-content) {
                 .e-n-menu-content {
+                  .bt-megamenu-shop-category {
+                    .e-n-menu-heading {
+                      > .e-n-menu-item {
+                        > .e-n-menu-title {
+                          padding-right: 17px;
+                          @media (max-width: 1110px) and (min-width: $break-tl) {
+                            padding-left: 17px;
+                            padding-right: 17px;
+                          }
+                        }
+                      }
+                    }
+                  }
                   .e-n-menu-heading {
                     > .e-n-menu-item {
                       width: 100%;
@@ -593,11 +606,6 @@ body.admin-bar .dialog-type-lightbox {
                       > .e-n-menu-title {
                         position: relative;
                         z-index: 99999999999;
-                        padding-right: 17px;
-                        @media (max-width: 1110px) and (min-width: $break-tl) {
-                            padding-left: 17px;
-                            padding-right: 17px;
-                        }
                         a,
                         span {
                           width: 100%;
@@ -624,7 +632,7 @@ body.admin-bar .dialog-type-lightbox {
                 }
               }
               @media (max-width: 1250px) and (min-width: $break-tl) {
-                .bt-mega-menu-submega{
+                .bt-mega-menu-submega {
                   > .elementor-element {
                     > .e-con-inner {
                       > .elementor-element {
@@ -653,9 +661,9 @@ body.admin-bar .dialog-type-lightbox {
                   }
                 }
               }
-              &:hover{
+              &:hover {
                 > .e-n-menu-title {
-                  background-color: #FFFFFF33;
+                  background-color: #ffffff33;
                 }
               }
             }
