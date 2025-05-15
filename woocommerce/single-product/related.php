@@ -33,7 +33,7 @@ if ( $related_products || !empty($recently_viewed_products) ) :
 		<div class="bt-related-tab-heading">
 			<div class="bt-tab-nav">
 				<?php if ($related_products && !empty($related_posts['heading'])) : ?>
-					<h2 class="bt-main-text bt-tab-title active related" data-tab="related"><?php echo $related_posts['heading']; ?></h2>
+					<h2 class="bt-main-text bt-tab-title active related" data-tab="related"><?php echo esc_html($related_posts['heading']); ?></h2>
 				<?php endif; ?>
 				<h2 class="bt-main-text bt-tab-title recently-viewed" data-tab="recently-viewed"><?php echo esc_html__('Recently Viewed', 'utenzo'); ?></h2>
 			</div>

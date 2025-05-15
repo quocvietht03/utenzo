@@ -24,7 +24,7 @@ if ($upsells) : ?>
 
 	<section class="up-sells upsells products">
 		<?php
-		$heading = apply_filters('woocommerce_product_upsells_products_heading', __('You may also like&hellip;', 'woocommerce'));
+		$heading = apply_filters('woocommerce_product_upsells_products_heading', __('You may also like&hellip;', 'utenzo'));
 
 		if ($heading) :
 		?>
@@ -61,9 +61,7 @@ if ($upsells) : ?>
 						<div class="bt-product--infor">
 							<div class="bt-product--info">
 								<?php if ($product->get_price_html()) : ?>
-									<div class="bt-product--price">
-										<?php echo $product->get_price_html(); ?>
-									</div>
+									<?php echo '<div class="bt-product--price">' . $product->get_price_html() . '</div>'; ?>
 								<?php endif; ?>
 								<?php if ($product->get_average_rating()) :
 									do_action('utenzo_woocommerce_template_loop_rating');

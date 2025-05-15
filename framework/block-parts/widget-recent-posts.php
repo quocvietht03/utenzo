@@ -25,7 +25,7 @@ $recent_posts = wp_get_recent_posts(array(
 			<div class="bt-post--infor">
 				<div class="bt-post--meta">
 					<div class="bt-post--publish">
-					<?php echo get_the_date(get_option('date_format'), $post_item['ID']); ?>
+						<?php echo get_the_date(get_option('date_format'), $post_item['ID']); ?>
 					</div>
 					<?php if (!empty($category) && is_array($category)) {
 						$first_category = reset($category); ?>
@@ -38,7 +38,7 @@ $recent_posts = wp_get_recent_posts(array(
 				</div>
 				<h3 class="bt-post--title">
 					<a href="<?php echo get_permalink($post_item['ID']) ?>">
-						<?php echo $post_item['post_title']; ?>
+						<?php echo esc_html($post_item['post_title']); ?>
 					</a>
 				</h3>
 			</div>

@@ -607,11 +607,11 @@ class Widget_ProductTestimonialSlider extends Widget_Base
                                             if ($product) : ?>
                                                 <a href="<?php echo esc_url($product->get_permalink()); ?>" class="product-info">
                                                     <div class="product-img">
-                                                        <?php echo $product->get_image(); ?>
+                                                    <?php echo wp_kses_post($product->get_image()); ?>
                                                     </div>
                                                     <div class="product-content">
                                                         <h3 class="product-title"><?php echo esc_html($product->get_name()); ?></h3>
-                                                        <div class="product-price"><?php echo $product->get_price_html(); ?></div>
+                                                        <?php echo '<div class="product-price">' . $product->get_price_html() . '</div>'; ?>
                                                     </div>
                                                 </a>
                                             <?php endif; ?>

@@ -1428,8 +1428,8 @@
           width: calc(50% - 15px);
           @media (min-width: $break-lg) {
             min-height: 716px;
-            .woocommerce-product-gallery__slider-nav{
-              .slick-track{
+            .woocommerce-product-gallery__slider-nav {
+              .slick-track {
                 margin-left: -4px;
               }
             }
@@ -1444,17 +1444,16 @@
             font-size: 30px;
             line-height: 1.4;
           }
-          .bt-product-icon-btn{
-            .bt-product-wishlist-btn{
-              .tooltip{
+          .bt-product-icon-btn {
+            .bt-product-wishlist-btn {
+              .tooltip {
                 right: -12px;
-                &::after{
+                &::after {
                   left: 58%;
                 }
               }
             }
           }
-          
         }
 
         @media (max-width: $break-md) and (min-width: 767px) {
@@ -1797,7 +1796,7 @@
           color: #fff;
           text-align: center;
           font-family: $accent-font;
-          font-size: 16px;
+          font-size: 14px;
           font-style: normal;
           font-weight: 600;
           line-height: 26px;
@@ -1937,6 +1936,24 @@
     border-radius: 8px;
     background: #f6f6f6;
     padding: 20px;
+    @media (max-width: 1140px) and (min-width: $break-tl) {
+      .elementor-widget-loop-grid & {
+        padding: 5px;
+        border-radius: 4px;
+        .woocommerce-loop-product__infor {
+          padding: 20px 10px 10px;
+        }
+      }
+    }
+    @media (max-width: 1140px) and (min-width: 1024px) {
+      .elementor-widget-loop-carousel & {
+        padding: 5px;
+        border-radius: 4px;
+        .woocommerce-loop-product__infor {
+          padding: 20px 10px 10px;
+        }
+      }
+    }
   }
   .woocommerce-loop-product .bt-product-rating .star-rating {
     word-break: normal;
@@ -2180,9 +2197,9 @@
       gap: 10px;
       font-weight: 400;
       grid-template-columns: 85% 15%;
-      @media(max-width: $break-md) {
+      @media (max-width: $break-md) {
         grid-template-columns: 1fr;
-        a{
+        a {
           margin: 0 !important;
         }
       }
@@ -2223,7 +2240,7 @@
           font-weight: 400;
           line-height: 22px;
           color: $color-primary;
-          a{
+          a {
             max-width: fit-content;
             width: 100%;
           }
@@ -2776,7 +2793,7 @@
                   color: #fff;
                   text-align: center;
                   font-family: $accent-font;
-                  font-size: 16px;
+                  font-size: 14px;
                   font-style: normal;
                   font-weight: 600;
                   line-height: 26px;
@@ -4078,7 +4095,7 @@
               padding-right: 17px;
               border-right: 1px solid #e9e9e9;
               margin-right: 17px;
-              @media(max-width: $break-xs) {
+              @media (max-width: $break-xs) {
                 padding-right: 12px;
                 margin-right: 12px;
               }
@@ -4445,9 +4462,6 @@
         @media (max-width: $break-lg) {
           padding: 20px;
         }
-        @media (max-width: $break-sm) {
-          margin: 30px 0;
-        }
       }
 
       #tab-additional_information {
@@ -4473,11 +4487,11 @@
           td {
             border: none;
           }
-          th{
-              @media(max-width:$break-xs){
-                width: 100px;
-                vertical-align: top;
-              }
+          th {
+            @media (max-width: $break-xs) {
+              width: 100px;
+              vertical-align: top;
+            }
           }
           tr {
             &:nth-child(even) {
@@ -5410,7 +5424,7 @@
   margin: 0;
 }
 .woocommerce-cart {
-  .elementor-location-header{
+  .elementor-location-header {
     z-index: 999999;
   }
   .wc-empty-cart-message {
@@ -6087,11 +6101,11 @@
 }
 
 .woocommerce-checkout {
-  .select2-container{
+  .select2-container {
     width: auto;
-    .select2-dropdown{
+    .select2-dropdown {
       border: none;
-    } 
+    }
   }
   .woocommerce-form-coupon-toggle,
   .woocommerce-form-login-toggle {
@@ -6262,7 +6276,7 @@
   form.woocommerce-checkout {
     margin-top: 40px;
   }
-  .woocommerce form { 
+  .woocommerce form {
     #customer_details {
       display: flex;
       flex-wrap: wrap;

@@ -33,8 +33,8 @@ add_action('utenzo_woocommerce_template_upsell_products', 'woocommerce_upsell_di
 function register_product_taxonomy()
 {
     $labels = array(
-        'name' => _x('Materials', 'utenzo'),
-        'singular_name' => _x('Material', 'utenzo'),
+        'name' => _x('Materials', 'taxonomy general name', 'utenzo'),
+        'singular_name' => _x('Material', 'taxonomy singular name', 'utenzo'),
         'search_items' => __('Search Materials', 'utenzo'),
         'all_items' => __('All Materials', 'utenzo'),
         'parent_item' => __('Parent Material', 'utenzo'),
@@ -120,7 +120,7 @@ function bt_woocommerce_template_loop_product_thumbnail()
 
         echo '</div>';
     } else {
-        echo '<img src="' . esc_url(wc_placeholder_img_src()) . '" alt="' . esc_attr__('Placeholder', 'woocommerce') . '" class="woocommerce-loop-product__image" />';
+        echo '<img src="' . esc_url(wc_placeholder_img_src()) . '" alt="' . esc_attr__('Placeholder', 'utenzo') . '" class="woocommerce-loop-product__image" />';
     }
 }
 
@@ -377,36 +377,6 @@ function utenzo_save_review_title($comment_id)
 
 add_action('comment_post', 'utenzo_save_review_title');
 add_action('edit_comment', 'utenzo_save_review_title');
-
-/* add tax brand product */
-function utenzo_create_brand_taxonomy()
-{
-    $args = array(
-        'hierarchical' => true,
-        'labels' => array(
-            'name' => __('Brands', 'utenzo'),
-            'singular_name' => __('Brand', 'utenzo'),
-            'search_items' => __('Search Brands', 'utenzo'),
-            'all_items' => __('All Brands', 'utenzo'),
-            'parent_item' => __('Parent Brand', 'utenzo'),
-            'parent_item_colon' => __('Parent Brand:', 'utenzo'),
-            'edit_item' => __('Edit Brand', 'utenzo'),
-            'update_item' => __('Update Brand', 'utenzo'),
-            'add_new_item' => __('Add New Brand', 'utenzo'),
-            'new_item_name' => __('New Brand Name', 'utenzo'),
-            'menu_name' => __('Brands', 'utenzo'),
-        ),
-        'rewrite' => array(
-            'slug' => 'product-brand',
-            'with_front' => false,
-            'hierarchical' => true,
-        ),
-    );
-
-    register_taxonomy('product_brand', 'product', $args);
-}
-
-add_action('init', 'utenzo_create_brand_taxonomy', 0);
 
 /* auto update mini cart */
 add_filter('woocommerce_add_to_cart_fragments', 'woocommerce_icon_add_to_cart_fragment');
@@ -1133,7 +1103,7 @@ function utenzo_products_compare()
                                     <?php } ?>
                                     <?php if (in_array('stock_status', $fields_show_compare)) { ?>
                                         <div class="bt-table--col bt-stock">
-                                            <?php echo $stock_status_custom; ?>
+                                            <?php echo wp_kses_post($stock_status_custom); ?>
                                         </div>
                                     <?php } ?>
                                     <?php if (in_array('sku', $fields_show_compare)) { ?>
@@ -2243,7 +2213,7 @@ function utenzo_woocommerce_single_product_countdown()
         <div class="bt-countdown-product-sale">
             <span class="bt-heading"><?php echo esc_html__('Hurry Up! Offer ends in:', 'utenzo'); ?></span>
             <div class="bt-countdown bt-countdown-product-js"
-                data-idproduct="<?php echo $product->get_id(); ?>"
+                data-idproduct="<?php echo esc_attr($product->get_id()); ?>"
                 data-time="<?php echo esc_attr($time); ?>">
 
                 <div class="bt-countdown--item">
@@ -2286,7 +2256,7 @@ function utenzo_woocommerce_single_product_countdown()
                 <span class="bt-heading"><?php echo esc_html__('Sold It:', 'utenzo'); ?></span>
                 <div class="bt-product-stock">
                     <div class="bt-progress">
-                        <div class="bt-progress-bar" data-width="<?php echo $percentage; ?>"></div>
+                        <div class="bt-progress-bar" data-width="<?php echo esc_attr($percentage); ?>"></div>
                     </div>
                     <span class="bt-quantity_sold">
                         <?php printf(esc_html__('%d%% Sold', 'utenzo'), $percentage); ?> -
@@ -2454,14 +2424,14 @@ function utenzo_woocommerce_single_product_toggle()
         <?php foreach ($product_tabs as $key => $product_tab) : ?>
             <div class="bt-item">
                 <div class="bt-item-inner">
-                    <div class="bt-item-title <?php echo ($key == 'description') ? 'active' : ''; ?>">
+                    <div class="bt-item-title <?php echo esc_attr($key === 'description' ? 'active' : ''); ?>">
                         <h3> <?php echo wp_kses_post(apply_filters('woocommerce_product_' . $key . '_tab_title', $product_tab['title'], $key)); ?> </h3>
                         <svg xmlns="http://www.w3.org/2000/svg" class="plus" width="18" height="18" viewBox="0 0 160 160">
                             <rect class="vertical-line" x="70" width="15" height="160" rx="7" ry="7" />
                             <rect class="horizontal-line" y="70" width="160" height="15" rx="7" ry="7" />
                         </svg>
                     </div>
-                    <div class="bt-item-content" <?php echo ($key == 'description') ? 'style="display:block"' : ''; ?> id="tab-<?php echo esc_attr($key); ?>">
+                    <div class="bt-item-content" <?php echo esc_attr($key === 'description' ? 'style="display:block"' : ''); ?> id="tab-<?php echo esc_attr($key); ?>">
                         <?php
                         if (isset($product_tab['callback'])) {
                             call_user_func($product_tab['callback'], $key, $product_tab);
@@ -2787,7 +2757,7 @@ function utenzo_load_product_toast()
         </div>
         <div class="bt-product-toast--content">
             <a href="<?php echo esc_url(get_permalink($product_id)); ?>" class="bt-product-toast--image">
-                <?php echo $product->get_image('large'); ?>
+                <?php echo wp_kses_post($product->get_image('medium')); ?>
             </a>
             <div class="bt-product-toast--info">
                 <p class="bt-product-toast--title">
@@ -2809,12 +2779,12 @@ function utenzo_load_product_toast()
                             ? esc_html__('has been added to your cart.', 'utenzo')
                             : esc_html__('has been removed from your cart.', 'utenzo');
                     }
-                    echo $message;
+                    echo wp_kses_post($message);
                     ?>
                 </p>
             </div>
         </div>
-        <div class="bt-product-toast--button<?php echo ($tools === 'cart') ? ' bt-button-cart' : ''; ?>">
+        <div class="bt-product-toast--button<?php echo esc_attr($tools === 'cart' ? ' bt-button-cart' : ''); ?>">
             <?php
             if ($tools === 'wishlist') {
                 echo '<a href="' . esc_url($wishlist_url) . '" class="bt-btn bt-button-hover">' . esc_html__('View Wishlist', 'utenzo') . '</a>';

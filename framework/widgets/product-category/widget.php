@@ -382,7 +382,7 @@ class Widget_ProductCategory extends Widget_Base
 			$count_cat = count($categories);
 			?>
 			<div class="bt-elwg-product-category--<?php echo esc_attr($settings['layout']); ?>">
-				<div class="bt-product-category <?php echo ($count_cat < 4) ? 'bt-item-padding' : ''; ?>">
+				<div class="bt-product-category<?php echo esc_attr($count_cat < 4 ? ' bt-item-padding' : ''); ?>">
 					<?php
 					foreach ($categories as $category) {
 						get_template_part('framework/templates/product-cat', 'style', array(

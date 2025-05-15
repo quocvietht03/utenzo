@@ -255,7 +255,7 @@ class Widget_ProductCompare extends Widget_Base
 												<?php } ?>
 												<?php if (in_array('stock_status', $fields_show_compare)) { ?>
 													<div class="bt-table--col bt-stock">
-														<?php echo $stock_status_custom; ?>
+														<?php echo wp_kses_post($stock_status_custom); ?>
 													</div>
 												<?php } ?>
 												<?php if (in_array('sku', $fields_show_compare)) { ?>

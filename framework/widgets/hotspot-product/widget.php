@@ -346,7 +346,7 @@ class Widget_HotspotProduct extends Widget_Base
         $settings = $this->get_settings_for_display();
         $attachment = wp_get_attachment_image_src($settings['hotspot_image']['id'], $settings['thumbnail_size']);
 ?>
-        <div class="bt-elwg-hotspot-product--default <?php echo ($settings['show_slider'] !== 'yes') ? 'bt-no-slider' : ''; ?>">
+        <div class="bt-elwg-hotspot-product--default <?php echo esc_attr(($settings['show_slider'] !== 'yes') ? 'bt-no-slider' : ''); ?>">
             <div class="bt-hotspot-product bt-tooltip-<?php echo esc_attr($settings['tooltip_layout']); ?>">
                 <div class="bt-hotspot-product--image">
                     <?php if (!empty($settings['hotspot_image']['url'])) : ?>
@@ -375,7 +375,7 @@ class Widget_HotspotProduct extends Widget_Base
                                             <a class="bt-hotspot-product-thumbnail" href="<?php echo esc_url($product->get_permalink()); ?>"><?php echo get_the_post_thumbnail($item['id_product'], 'medium'); ?></a>
                                             <div class="bt-product-content">
                                                 <h4><a href="<?php echo esc_url($product->get_permalink()); ?>"><?php echo esc_html($product->get_name()); ?></a></h4>
-                                                <p class="bt-price"><?php echo $product->get_price_html(); ?></p>
+                                                <?php echo '<p class="bt-price">' . $product->get_price_html() . '</p>'; ?>
                                                 <a class="btn bt-product-quick-view-btn" href="#" data-id="<?php echo esc_attr($item['id_product']); ?>">
                                                     <?php esc_html_e('Quick View', 'utenzo'); ?>
                                                 </a>

@@ -68,9 +68,7 @@ class Widget_ProductLoopItemStyle1 extends Widget_Base
 					<div class="bt-product--infor">
 						<div class="bt-product--info">
 							<?php if ($product->get_price_html()) : ?>
-								<div class="bt-product--price">
-									<?php echo $product->get_price_html(); ?>
-								</div>
+								<?php echo '<div class="bt-product--price">' . $product->get_price_html() . '</div>'; ?>
 							<?php endif; ?>
 							<?php if ($product->get_average_rating()) :
 								do_action('utenzo_woocommerce_template_loop_rating');

@@ -10,7 +10,7 @@ get_header();
 			<div class="bt-404-error">
 				<h2><?php echo esc_html_e('404', 'utenzo'); ?></h2>
 				<h3><?php esc_html_e("Oops! That page can't be found.", "utenzo"); ?></h3>
-				<p><?php esc_attr_e("We're really sorry but we can't seem to find the page you were looking for.", "utenzo") ?></p>
+				<p><?php esc_html_e("We're really sorry but we can't seem to find the page you were looking for.", "utenzo") ?></p>
 				<a href="<?php echo esc_url(home_url()); ?>" class="bt-primary-btn bt-button bt-button-hover">
 					<?php echo esc_html_e('Back To Homepage', 'utenzo'); ?>
 					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">

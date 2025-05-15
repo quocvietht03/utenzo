@@ -300,7 +300,7 @@ class Widget_ProductBrand extends Widget_Base
 						$shop_page_url = get_permalink(wc_get_page_id('shop'));
 						$brand_url = $shop_page_url . '?product_brand=' . $brand->slug;
 						$is_svg = false;
-						
+
 						// Check if the image is SVG
 						if ($image && pathinfo($image, PATHINFO_EXTENSION) === 'svg') {
 							$is_svg = true;
@@ -310,10 +310,10 @@ class Widget_ProductBrand extends Widget_Base
 							<a href="<?php echo esc_url($brand_url); ?>" class="bt-product-brand--link">
 								<?php if ($image) : ?>
 									<div class="bt-product-brand--image">
-										<?php if ($is_svg) : 
+										<?php if ($is_svg) :
 											// Output SVG content
 											$svg_content = file_get_contents($image);
-											echo $svg_content;
+											echo '<div class="bt-svg">' . $svg_content . '</div>';
 										else : ?>
 											<img src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr($brand->name); ?>">
 										<?php endif; ?>

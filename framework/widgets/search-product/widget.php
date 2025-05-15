@@ -147,7 +147,7 @@ class Widget_SearchProduct extends Widget_Base
 ?>
 		<div class="bt-elwg-search-product">
 			<div class="bt-search">
-				<form role="search" method="get" class="bt-search--form" action="<?php echo esc_url(home_url('/shop')); ?>">
+				<form method="get" class="bt-search--form" action="<?php echo esc_url(home_url('/shop')); ?>">
 					<div class="bt-search--category">
 						<div class="bt-category-dropdown">
 							<div class="bt-selected-category">

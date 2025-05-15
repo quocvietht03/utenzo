@@ -6,6 +6,9 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  @media(max-width: $break-sm) {
+    padding: 40px 0;
+  }
   .bt-titlebar-overlay {
     position: absolute;
     left: 0;
@@ -61,8 +64,9 @@
       position: relative;
       z-index: 3;
       @media (max-width: $break-sm) {
-        margin: 10px 0 0;
+        margin: 8px 0 0;
         line-height: 1.2em;
+        font-size: 30px;
       }
     }
   }

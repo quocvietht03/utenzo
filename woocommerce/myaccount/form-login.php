@@ -127,14 +127,14 @@ if ('yes' !== get_option('woocommerce_enable_myaccount_registration')) : ?>
 					<h2><?php echo esc_html__('Already have an account?', 'utenzo') ?></h2>
 					<p><?php echo esc_html__('Welcome back. Sign in to access your personalized experience, saved preferences, and more. We are thrilled to have you with us again!', 'utenzo') ?></p>
 
-					<a href="<?php echo esc_url(wc_get_page_permalink('myaccount')); ?>" class="bt-button-hover bt-button"><?php echo esc_attr__('Login', 'utenzo') ?></a>
+					<a href="<?php echo esc_url(wc_get_page_permalink('myaccount')); ?>" class="bt-button-hover bt-button"><?php echo esc_html__('Login', 'utenzo') ?></a>
 				<?php
 				} else {
 				?>
 					<h2><?php echo esc_html__('New Customer', 'utenzo') ?></h2>
 					<p><?php echo esc_html__('Be part of our growing family of new customers! Join us today and unlock a world of exclusive benefits, offers, and personalized experiences.', 'utenzo') ?></p>
 
-					<a href="<?php echo esc_url(wc_get_page_permalink('myaccount')); ?>/?register=true" class="bt-button-hover bt-button"><?php echo esc_attr__('Register', 'utenzo') ?></a>
+					<a href="<?php echo esc_url(wc_get_page_permalink('myaccount')); ?>/?register=true" class="bt-button-hover bt-button"><?php echo esc_html__('Register', 'utenzo') ?></a>
 				<?php
 				}
 				?>
