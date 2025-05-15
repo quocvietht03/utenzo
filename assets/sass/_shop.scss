@@ -167,7 +167,7 @@
         .bt-field-list {
           flex-wrap: wrap;
           flex-direction: unset;
-          gap: 7px;
+          gap: 10px 5px;
           .bt-field-item {
             display: inline-block;
             a {
@@ -5561,6 +5561,7 @@
             position: absolute;
             top: -15px;
             color: $color-accent;
+            right: -8px;
           }
         }
       }

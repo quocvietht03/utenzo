@@ -580,7 +580,7 @@
 			const $Hotspotwrap = $Hotspotslider.find('.bt-hotspot-slider--inner');
 			const $swiper = new Swiper($Hotspotwrap[0], {
 				slidesPerView: 1,
-				loop: false,
+				loop: $sliderSettings.loop || false,
 				spaceBetween: $sliderSettings.spaceBetween.mobile,
 				speed: $sliderSettings.speed,
 				freeMode: true,

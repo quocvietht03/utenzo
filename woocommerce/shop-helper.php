@@ -72,7 +72,8 @@ function utenzo_woocommerce_single_product_meta()
         echo '<li class="sku"><span>SKU:</span> ' . esc_html($sku) . '</li>';
     }
 
-    $author_id = $product->get_post_data()->post_author;
+    $post = get_post($product->get_id());
+    $author_id = $post->post_author;
     $author = get_the_author_meta('display_name', $author_id);
     if ($author) {
         echo '<li class="vendor"><span>Vendor:</span> ' . esc_html($author) . '</li>';
@@ -85,7 +86,6 @@ function utenzo_woocommerce_single_product_meta()
     if ($categories) {
         echo '<li class="categories"><span>Categories:</span> ' . wp_kses_post($categories) . '</li>';
     }
-
     echo '</ul>';
 }
 

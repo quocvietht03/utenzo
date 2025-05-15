@@ -261,6 +261,19 @@ class Widget_HotspotProduct extends Widget_Base
             ]
         );
         $this->add_control(
+            'slider_loop',
+            [
+                'label' => __('Infinite Loop', 'utenzo'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Yes', 'utenzo'),
+                'label_off' => __('No', 'utenzo'),
+                'default' => 'yes',
+                'condition' => [
+                    'show_slider' => 'yes',
+                ],
+            ]
+        );
+        $this->add_control(
             'slider_speed',
             [
                 'label' => __('Slider Speed', 'utenzo'),
@@ -381,6 +394,7 @@ class Widget_HotspotProduct extends Widget_Base
                         $slider_settings = [
                             'autoplay' => isset($settings['slider_autoplay']) && $settings['slider_autoplay'] === 'yes',
                             'speed' => isset($settings['slider_speed']) ? $settings['slider_speed'] : 500,
+                            'loop' => isset($settings['slider_loop']) && $settings['slider_loop'] === 'yes',
                             'spaceBetween' => [
                                 'desktop' => isset($settings['slider_spacebetween']) ? $settings['slider_spacebetween'] : 30,
                                 'tablet' => isset($settings['slider_spacebetween_tablet']) ? $settings['slider_spacebetween_tablet'] : 20,
