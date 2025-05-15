@@ -62,17 +62,17 @@ class Widget_SiteInformation extends Widget_Base
 			]
 		);
 		$this->add_control(
-			'title_email',
+			'title_address',
 			[
-				'label' => esc_html__('Title Email', 'utenzo'),
+				'label' => esc_html__('Title Address', 'utenzo'),
 				'type' => Controls_Manager::TEXT,
 				'label_block' => true,
 			]
 		);
 		$this->add_control(
-			'title_address',
+			'title_email',
 			[
-				'label' => esc_html__('Title Address', 'utenzo'),
+				'label' => esc_html__('Title Email', 'utenzo'),
 				'type' => Controls_Manager::TEXT,
 				'label_block' => true,
 			]

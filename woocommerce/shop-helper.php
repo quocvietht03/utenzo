@@ -1836,7 +1836,7 @@ function utenzo_search_live()
 {
     $search_term = isset($_POST['search_term']) ? sanitize_text_field($_POST['search_term']) : '';
     $category_slug = isset($_POST['category_slug']) ? sanitize_text_field($_POST['category_slug']) : '';
-
+    
     $args = array(
         'post_type' => 'product',
         'posts_per_page' => -1,
@@ -1847,19 +1847,23 @@ function utenzo_search_live()
     if (!empty($category_slug)) {
         $args['tax_query'][] = array(
             'taxonomy' => 'product_cat',
-            'field' => 'slug',
+            'field' => 'slug', 
             'terms' => $category_slug
         );
     }
 
     $query = new WP_Query($args);
     ob_start();
+    
     if ($query->have_posts()) {
         while ($query->have_posts()) {
             $query->the_post();
             $product = wc_get_product(get_the_ID());
+            if (!$product) {
+                continue;
+            }
             $product_price = $product->get_price_html();
-        ?>
+            ?>
             <div class="bt-product-item">
                 <div class="bt-product-thumb">
                     <a href="<?php echo esc_url(get_permalink()); ?>" class="bt-thumb">
@@ -1871,23 +1875,25 @@ function utenzo_search_live()
                                 <?php echo esc_html($product->get_name()); ?>
                             </a>
                         </h3>
-                        <?php
-                        if ($product_price) {
-                            echo '<span>' . $product_price . '</span>';
-                        }
-                        ?>
+                        <?php if ($product_price) : ?>
+                            <span><?php echo wp_kses_post($product_price); ?></span>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="bt-product-add-to-cart">
-                    <a href="?add-to-cart=<?php echo esc_attr(get_the_ID()); ?>" aria-describedby="woocommerce_loop_add_to_cart_link_describedby_<?php echo esc_attr(get_the_ID()); ?>" data-quantity="1" class="button product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="<?php echo esc_attr(get_the_ID()); ?>" data-product_sku="" rel="nofollow"><?php echo esc_html__('Add to cart', 'utenzo') ?></a>
+                    <?php if ($product->is_type('simple')) { ?>
+                        <a href="?add-to-cart=<?php echo esc_attr(get_the_ID()); ?>" aria-describedby="woocommerce_loop_add_to_cart_link_describedby_<?php echo esc_attr(get_the_ID()); ?>" data-quantity="1" class="button product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="<?php echo esc_attr(get_the_ID()); ?>" data-product_sku="" rel="nofollow"><?php echo esc_html__('Add to cart', 'utenzo') ?></a>
+                    <?php }else { ?>
+                        <a href="<?php echo esc_url(get_permalink(get_the_ID())); ?>" class="bt-button bt-button-hover"><?php echo esc_html__('View Product', 'utenzo') ?></a>
+                    <?php } ?>
                 </div>
             </div>
-        <?php
+            <?php
         }
         wp_reset_postdata();
         $output['items'] = ob_get_clean();
     } else {
-        $output['items'] = '<div class="bt-no-results">' . __('No products found! ', 'utenzo') . '</div>';
+        $output['items'] = '<div class="bt-no-results">' . esc_html__('No products found!', 'utenzo') . '</div>';
     }
 
     wp_send_json_success($output);
@@ -2256,7 +2262,7 @@ function utenzo_woocommerce_single_product_countdown()
                 <span class="bt-heading"><?php echo esc_html__('Sold It:', 'utenzo'); ?></span>
                 <div class="bt-product-stock">
                     <div class="bt-progress">
-                        <div class="bt-progress-bar" data-width="<?php echo esc_attr($percentage); ?>"></div>
+                        <div class="bt-progress-bar-sold" data-width="<?php echo esc_attr($percentage); ?>"></div>
                     </div>
                     <span class="bt-quantity_sold">
                         <?php printf(esc_html__('%d%% Sold', 'utenzo'), $percentage); ?> -

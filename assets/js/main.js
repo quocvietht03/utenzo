@@ -1612,6 +1612,18 @@
 				}
 			}, 30);
 		}
+		if ($('.bt-product-percentage-sold').length > 0) {
+			let progressWidth = $(".bt-progress-bar-sold").data("width");
+			let currentWidth = 0;
+			var interval = setInterval(function () {
+				if (currentWidth >= progressWidth) {
+					clearInterval(interval);
+				} else {
+					currentWidth++;
+					$(".bt-progress-bar-sold").css("width", currentWidth + "%");
+				}
+			}, 30);
+		}
 	}
 	function UtenzoFreeShippingMessage() {
 		$.ajax({
@@ -2087,21 +2099,37 @@
 		}
 		const $variationWrap = $('.js-add-to-cart-scroll');
 		const $targetElement = $('.bt-more-information');
-
+	
 		if (!$variationWrap.length || !$targetElement.length) return;
-
+	
 		// Get element positions and dimensions
 		const variationWrapTop = $variationWrap.offset().top;
 		const targetElementTop = $targetElement.offset().top;
-
-		// Since target element is below, check if variation wrap is above target
-		const distance = targetElementTop - (variationWrapTop + $variationWrap.outerHeight());
-		// Set sticky state based on distance
-		let isSticky = distance > 10;
-
-		// Update sticky state attribute
-		$variationWrap.attr('data-sticky-active', isSticky);
+		const variationWrapHeight = $variationWrap.outerHeight();
+		const scrollTop = $(window).scrollTop();
+	
+		// Get current sticky state
+		const currentState = $variationWrap.attr('data-sticky-active') === 'true';
+		
+		// Check if we've scrolled past the target element
+		if (scrollTop > targetElementTop) {
+			if (currentState) {
+				$variationWrap.attr('data-sticky-active', false);
+			}
+			return;
+		}
+	
+		// Calculate distance between variation wrap and target
+		const distance = targetElementTop - (variationWrapTop + variationWrapHeight);
+		
+		if (distance > 150) {
+			$variationWrap.attr('data-sticky-active', true);
+		}
+		if(distance == 10) {
+			$variationWrap.attr('data-sticky-active', false);
+		}
 	}
+	
 	function UtenzoGalleryProductShowMore() {
 		if (!$('body').hasClass('single-product')) {
 			return;

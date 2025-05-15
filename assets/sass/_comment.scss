@@ -109,10 +109,13 @@
     margin-top: 24px;
     .bt-avatar {
       width: 60px;
+      height: 60px;
       line-height: 0;
       img {
         width: 100%;
         border-radius: 50%;
+        height: 100%;
+        object-fit: cover;
       }
     }
   }

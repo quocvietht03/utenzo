@@ -78,7 +78,7 @@ global $product;
             <div class="bt-product-excerpt-add-to-cart">
                 <?php
                 do_action('utenzo_woocommerce_template_single_excerpt');
-                do_action('utenzo_woocommerce_template_single_countdown');
+                do_action('utenzo_woocommerce_template_single_countdown'); 
                 do_action('utenzo_woocommerce_template_single_add_to_cart');
                 do_action('utenzo_woocommerce_template_single_more_information');
                 ?>
