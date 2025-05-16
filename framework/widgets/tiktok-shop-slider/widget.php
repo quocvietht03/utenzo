@@ -255,7 +255,6 @@ class Widget_TikTokShopSlider extends Widget_Base
                 'type' => Controls_Manager::SWITCHER,
                 'label_on' => __('Yes', 'utenzo'),
                 'label_off' => __('No', 'utenzo'),
-                'default' => 'yes',
             ]
         );
         $this->end_controls_section();
@@ -367,7 +366,7 @@ class Widget_TikTokShopSlider extends Widget_Base
                     ],
                 ],
                 'default' => [
-                    'size' => 40,
+                    'size' => 24,
                 ],
                 'selectors' => [
                     '{{WRAPPER}} .bt-nav svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',

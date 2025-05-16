@@ -1082,7 +1082,7 @@
 
 	}
 	/* load Show filter Tag */
-	function LoadFilterTagProduct() {
+	function UtenzoLoadFilterTagProduct() {
 		if ($('body').hasClass('archive') && $('body').hasClass('post-type-archive-product')) {
 			const url = new URL(window.location.href);
 			const params = new URLSearchParams(url.search);
@@ -1457,7 +1457,7 @@
 				window.history.replaceState(null, null, window.location.pathname);
 				$(this).find('.bt-reset-filter-product-btn').addClass('disable');
 			}
-			LoadFilterTagProduct();
+			UtenzoLoadFilterTagProduct();
 			// console.log(param_ajax);
 
 			$.ajax({
@@ -1609,18 +1609,6 @@
 				} else {
 					currentWidth++;
 					$(".bt-progress-bar").css("width", currentWidth + "%");
-				}
-			}, 30);
-		}
-		if ($('.bt-product-percentage-sold').length > 0) {
-			let progressWidth = $(".bt-progress-bar-sold").data("width");
-			let currentWidth = 0;
-			var interval = setInterval(function () {
-				if (currentWidth >= progressWidth) {
-					clearInterval(interval);
-				} else {
-					currentWidth++;
-					$(".bt-progress-bar-sold").css("width", currentWidth + "%");
 				}
 			}, 30);
 		}
@@ -1969,14 +1957,14 @@
 				countDown.find('.bt-countdown-secs').text(secs);
 			}, 1000);
 			// progress bar countdown product sale
-			let targetWidth = $(".bt-progress-bar").data("width");
+			let progressWidth = $(".bt-progress-bar-sold").data("width");
 			let currentWidth = 0;
 			var interval = setInterval(function () {
-				if (currentWidth >= targetWidth) {
+				if (currentWidth >= progressWidth) {
 					clearInterval(interval);
 				} else {
 					currentWidth++;
-					$(".bt-progress-bar").css("width", currentWidth + "%");
+					$(".bt-progress-bar-sold").css("width", currentWidth + "%");
 				}
 			}, 30);
 		}
@@ -2099,18 +2087,18 @@
 		}
 		const $variationWrap = $('.js-add-to-cart-scroll');
 		const $targetElement = $('.bt-more-information');
-	
+
 		if (!$variationWrap.length || !$targetElement.length) return;
-	
+
 		// Get element positions and dimensions
 		const variationWrapTop = $variationWrap.offset().top;
 		const targetElementTop = $targetElement.offset().top;
 		const variationWrapHeight = $variationWrap.outerHeight();
 		const scrollTop = $(window).scrollTop();
-	
+
 		// Get current sticky state
 		const currentState = $variationWrap.attr('data-sticky-active') === 'true';
-		
+
 		// Check if we've scrolled past the target element
 		if (scrollTop > targetElementTop) {
 			if (currentState) {
@@ -2118,18 +2106,18 @@
 			}
 			return;
 		}
-	
+
 		// Calculate distance between variation wrap and target
 		const distance = targetElementTop - (variationWrapTop + variationWrapHeight);
-		
+
 		if (distance > 150) {
 			$variationWrap.attr('data-sticky-active', true);
 		}
-		if(distance == 10) {
+		if (distance == 10) {
 			$variationWrap.attr('data-sticky-active', false);
 		}
 	}
-	
+
 	function UtenzoGalleryProductShowMore() {
 		if (!$('body').hasClass('single-product')) {
 			return;
@@ -2229,7 +2217,7 @@
 		UtenzoCopyrightCurrentYear();
 		UtenzoCompareContentScroll();
 		UtenzoBackToTop();
-		LoadFilterTagProduct();
+		UtenzoLoadFilterTagProduct();
 		UtenzoAddToRecentlyViewed();
 		UtenzoLoadRecentlyViewedProducts();
 		UtenzoCountdownProductSale();

@@ -433,7 +433,7 @@
     }
   }
 }
-.__bt-post-style-3 {
+.__bt-post-style-4 {
   .bt-post {
     &--inner {
       position: relative;
@@ -552,7 +552,7 @@
     }
   }
 }
-.__bt-post-style-4 {
+.__bt-post-style-3 {
   .bt-post {
     &--inner {
       display: flex;
@@ -1319,7 +1319,7 @@
     @media (max-width: $break-sm) {
       grid-template-columns: repeat(1, 1fr);
     }
-    @extend .__bt-post-style-3;
+    @extend .__bt-post-style-4;
     .bt-post {
       &--inner {
         padding: 0;
