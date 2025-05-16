@@ -646,6 +646,11 @@
   /* filter Dropdown no sidebar */
   &.bt-template-nosidebar-dropdown {
     overflow: hidden;
+    position: relative;
+    z-index: 1;
+    @media(max-width: $break-tl) {
+      z-index: 99999;
+    }
     .bt-products-dropdown {
       position: absolute;
       z-index: 11;
