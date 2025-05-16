@@ -651,6 +651,7 @@
     transition: all 0.4s;
     @media(max-width: $break-tl) {
       &.active{
+        overflow: visible;
         z-index: 99999;
       }
     }
