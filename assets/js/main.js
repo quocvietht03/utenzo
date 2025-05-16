@@ -598,6 +598,9 @@
 							wishlist_arr.splice(index, 1);
 						}
 						window.localStorage.setItem('productwishlistlocal', wishlist_arr);
+						wishlist_local = window.localStorage.getItem('productwishlistlocal');
+						var wishlist_count = wishlist_local ? wishlist_local.split(',').length : 0;
+						$('.bt-mini-wishlist .wishlist_total').html(wishlist_count);
 						$(this).addClass('loading');
 						$(this).removeClass('added');
 						setTimeout(function () {
