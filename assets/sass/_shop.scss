@@ -648,8 +648,11 @@
     overflow: hidden;
     position: relative;
     z-index: 1;
+    transition: all 0.4s;
     @media(max-width: $break-tl) {
-      z-index: 99999;
+      &.active{
+        z-index: 99999;
+      }
     }
     .bt-products-dropdown {
       position: absolute;

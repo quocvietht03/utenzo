@@ -1521,11 +1521,12 @@
 				const $mainContent = $(this).parents('.bt-main-content');
 				$mainContent.find('.bt-products-sidebar').addClass('active');
 				$mainContent.find('.bt-products-dropdown').toggleClass('active');
+				$mainContent.find('.bt-template-nosidebar-dropdown').addClass('active');
 			});
 			$('.bt-popup-overlay, .bt-form-button .bt-close-btn, .bt-form-button-results .bt-product-results-btn').on('click', function (e) {
 				e.preventDefault();
 				const $mainContent = $(this).parents('.bt-main-content');
-				$mainContent.find('.bt-products-sidebar, .bt-products-dropdown').removeClass('active');
+				$mainContent.find('.bt-products-sidebar, .bt-products-dropdown, .bt-template-nosidebar-dropdown').removeClass('active');
 			});
 		}
 	}
