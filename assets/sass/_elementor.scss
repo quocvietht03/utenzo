@@ -740,8 +740,10 @@
         padding-top: 20px;
         padding-bottom: 240px;
         height: calc(100% - 63px);
-        overflow: auto;
-        @extend .__scrollbar_style;
+        .widget_shopping_cart_content {
+          height: 100%;
+          @extend .__scrollbar_style;
+        }
         .woocommerce-mini-cart {
           margin: 0;
           list-style: none;
@@ -956,9 +958,7 @@
             }
           }
         }
-        .widget_shopping_cart_content {
-          height: 100%;
-        }
+       
         .bt-cart-empty {
           display: flex;
           align-items: center;
