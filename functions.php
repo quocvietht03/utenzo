@@ -99,7 +99,8 @@ if (!function_exists('utenzo_enqueue_scripts')) {
 				wp_add_inline_script('utenzo-main', $custom_script);
 			}
 		}
-
+		// Get cart URL
+		$cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : '';
 		// Get shop URL
 		$shop_url = home_url('/shop/');
 		if (function_exists('wc_get_page_id')) {
@@ -123,6 +124,7 @@ if (!function_exists('utenzo_enqueue_scripts')) {
 		$js_options = array(
 			'ajax_url' => admin_url('admin-ajax.php'),
 			'shop' => $shop_url,
+			'cart' => $cart_url,
 			'wishlist_toast' => $wishlist_toast,
 			'compare_toast' => $compare_toast,
 			'cart_toast' => $cart_toast,

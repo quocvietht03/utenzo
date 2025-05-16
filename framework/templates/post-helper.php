@@ -557,7 +557,7 @@ if (!function_exists('utenzo_related_posts')) {
                 <p class="bt-sub"><?php echo esc_html($related_posts['description']); ?></p>
               <?php endif; ?>
             </div>
-            <div class="bt-related-posts--list bt-image-effect">
+            <div class="bt-related-posts--list">
               <?php
               while ($list_posts->have_posts()) : $list_posts->the_post();
                 get_template_part('framework/templates/post', 'style', array('image-size' => "large"));

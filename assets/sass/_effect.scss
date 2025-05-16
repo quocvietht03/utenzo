@@ -8,23 +8,6 @@
 	}
 }
 
-@keyframes effectScaleAnimation {
-	0% {
-		transform: translate(-50%, -50%) scale(1);
-		opacity: 0;
-	}
-
-	50% {
-		transform: translate(-50%, -50%) scale(1.04);
-		opacity: 1;
-	}
-
-	100% {
-		transform: translate(-50%, -50%) scale(1.08);
-		opacity: 0;
-	}
-}
-
 @keyframes effectRotateAnimation {
 	0% {
 		transform: translateX(-50%) rotate(0deg);
@@ -97,53 +80,6 @@
 	}
 }
 
-.bt-img-zoom-enable {
-	.bt-image-zoom-effect {
-		> .elementor-widget-container {
-			overflow: hidden;
-		}
-		img {
-			@media (min-width: $break-lg) {
-				animation: effectImageZoom 50s infinite;
-				transition: all 3s cubic-bezier(0.11, 0.52, 0.53, 0.79) 0s;
-			}
-		}
-	}
-}
-
-.bt-img-zoom-enable {
-	.bt-image-effect {
-		.bt-post {
-			.bt-cover-image img {
-				transform: scale(1);
-				transition: all 3s cubic-bezier(0.11, 0.52, 0.53, 0.79) 0s;
-			}
-
-			&:hover {
-				.bt-cover-image img {
-					transform: scale(1.1);
-				}
-			}
-		}
-	}
-
-	.bt-pricing-item {
-		.bt-cover-image img {
-			transform: scale(1);
-			transition: all 3s cubic-bezier(0.11, 0.52, 0.53, 0.79) 0s;
-		}
-
-		&:hover {
-			.bt-cover-image img {
-				transform: scale(1.1);
-			}
-		}
-	}
-}
-
-.bt-effect-overflow {
-	overflow-x: clip !important;
-}
 
 @keyframes effectMoveHorizontal {
 	0% {
@@ -311,7 +247,7 @@
 		}
 	}
 }
-
+/* button hover */
 .bt-button-hover-enable {
 	.bt-button-hover {
 		transition: all 0.3s ease;
@@ -357,6 +293,7 @@
 	background-size: 200% 100%;
 	animation: shimmer 1.5s infinite linear;
 }
+/* heading animation */
 @keyframes fadeInRight {
 	from {
 		opacity: 0;

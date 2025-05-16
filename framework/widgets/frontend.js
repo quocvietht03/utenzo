@@ -590,7 +590,7 @@
 			$buttonAddToCart.on('click', '.bt-add-to-cart-btn', function (e) {
 				e.preventDefault();
 				const $this = $(this);
-				if ($this.hasClass('bt-view-card')) {
+				if ($this.hasClass('bt-view-cart')) {
 					window.location.href = AJ_Options.cart;
 					return;
 				}
@@ -619,10 +619,9 @@
 							$this.removeClass('loading');
 							if (response.success) {
 								// Update cart count and trigger cart refresh
-								$('.bt-cart-count').text(response.data.cart_count);
-								$(document.body).trigger('added_to_cart');
+								$(document.body).trigger('updated_wc_div');
 								$this.html('View Cart');
-								$this.addClass('bt-view-card');
+								$this.addClass('bt-view-cart');
 							}
 						},
 						error: function (jqXHR, textStatus, errorThrown) {

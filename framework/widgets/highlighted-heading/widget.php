@@ -197,17 +197,6 @@ class Widget_HighlightedHeading extends Widget_Base
 		);
 
 
-		$this->add_control(
-			'show_animation',
-			[
-				'label'    => __('Animation', 'utenzo'),
-				'type'     => Controls_Manager::SWITCHER,
-				'label_on' => __('Show', 'utenzo'),
-				'label_off' => __('Hide', 'utenzo'),
-				'default'  => '',
-			]
-		);
-
 		$this->end_controls_section();
 	}
 
@@ -225,10 +214,9 @@ class Widget_HighlightedHeading extends Widget_Base
 		$before_text = isset($settings['before_text']) ? $settings['before_text'] : '';
 		$after_text  = isset($settings['after_text']) ? $settings['after_text'] : '';
 		$hl_text     = isset($settings['highlighted_text']) ? $settings['highlighted_text'] : '';
-		$animation   = (isset($settings['show_animation']) && $settings['show_animation'] == 'yes') ? 'animationed' : '';
 ?>
 
-		<div class="bt-elwg-highlighted-heading <?php echo esc_attr($animation) ?>">
+		<div class="bt-elwg-highlighted-heading">
 			<?php echo "<$html_tag>"; ?>
 
 			<?php if (!empty($link)) : ?>

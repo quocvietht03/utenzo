@@ -1624,7 +1624,6 @@
 				if (response.success) {
 					$(".bt-progress-bar").css("width", response.data['percentage'] + "%");
 					$('#bt-free-shipping-message').html(response.data['message']);
-
 				}
 			},
 		});

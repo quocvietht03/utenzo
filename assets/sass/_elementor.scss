@@ -578,14 +578,6 @@
       cursor: pointer;
     }
   }
-
-  &.animationed {
-    .__text-highlighted {
-      img {
-        animation: effectScaleAnimation 2s ease-in-out infinite;
-      }
-    }
-  }
 }
 
 .dialog-lightbox-widget {
@@ -1323,26 +1315,6 @@
   }
 }
 
-
-.bt-opening-times--default {
-  .bt-opening-times--label {
-    color: $color-text;
-    font-family: $text-font;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 166.667%;
-  }
-  .bt-opening-times--list {
-    margin-top: 4px;
-    .bt-hour {
-      color: $color-primary;
-      font-family: $text-font;
-      font-size: 14px;
-      font-weight: 400;
-      line-height: 22px;
-    }
-  }
-}
 /* list Faq */
 .bt-elwg-list-faq {
   &--default {

@@ -189,7 +189,7 @@ class Widget_MiniCart extends Widget_Base
 					<?php } ?>
 					<span class="cart_total"><?php echo WC()->cart->get_cart_contents_count(); ?></span></a>
 			</div>
-			<?php if ('yes' === $settings['enable_sidebar_cart']) : ?>
+			<?php if ('yes' === $settings['enable_sidebar_cart'] && !is_cart()) : ?>
 				<div class="bt-mini-cart-sidebar">
 					<div class="bt-mini-cart-sidebar-overlay"></div>
 					<div class="bt-mini-cart-sidebar-content">

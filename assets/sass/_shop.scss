@@ -29,7 +29,7 @@
           }
         }
         &.disable {
-          background: $color-background;
+          background: #e9e9e9;
           pointer-events: none;
           svg {
             fill: $color-primary;
@@ -42,7 +42,7 @@
       a {
         width: 40px;
         height: 40px;
-        background: $color-background;
+        background: #e9e9e9;
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -58,6 +58,66 @@
     margin-top: 32px;
     border-top: 1px solid #e9e9e9;
     padding-top: 20px;
+    &.bt-field-type-radio {
+      display: flex;
+      flex-wrap: wrap;
+      .item-radio {
+        width: 100%;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        &:not(:last-child) {
+          margin-bottom: 12px;
+        }
+        &:has(input:checked) {
+          label {
+            font-weight: 700;
+            color: $color-accent;
+          }
+          span {
+            font-weight: 700;
+            color: $color-accent;
+          }
+        }
+
+        input[type="radio"] {
+          position: absolute;
+          background: transparent;
+          padding: 0;
+          width: 22px;
+          height: 22px;
+          left: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          margin: 0;
+          z-index: 9;
+          opacity: 0;
+          width: 100%;
+          height: 100%;
+          cursor: pointer;
+        }
+
+        label {
+          margin: 0;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 26px;
+          text-transform: capitalize;
+          color: $color-text;
+          cursor: pointer;
+        }
+        .bt-count {
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 26px;
+          text-transform: capitalize;
+          color: $color-text;
+        }
+      }
+    }
     &.bt-field-product_cat {
       border-top: none;
       padding-top: 0;
@@ -585,6 +645,7 @@
   }
   /* filter Dropdown no sidebar */
   &.bt-template-nosidebar-dropdown {
+    overflow: hidden;
     .bt-products-dropdown {
       position: absolute;
       z-index: 11;
@@ -604,6 +665,7 @@
         transform: translateY(0);
         opacity: 1;
         visibility: visible;
+        z-index: 9999;
       }
       .bt-product-sidebar {
         @extend .__bt-product-filter-form;
@@ -718,6 +780,10 @@
                   margin-top: 0;
                   padding-top: 0;
                   position: relative;
+                }
+                &.bt-field-product_cat {
+                  border-top: none;
+                  padding-top: 0;
                 }
               }
             }
@@ -1189,7 +1255,7 @@
           width: 250px;
           padding: 0;
           border-radius: 10px;
-          background: $color-background;
+          background: #e9e9e9;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -1615,7 +1681,7 @@
       .wc-cover-image {
         @extend .bt-cover-image;
         padding-bottom: 100%;
-        background: $color-background;
+        background: #e9e9e9;
         border-radius: 8px;
         img {
           transition:
@@ -4141,7 +4207,7 @@
               align-items: center;
               gap: 10px;
               border-radius: 10px;
-              background: $color-background;
+              background: #e9e9e9;
               margin: 0;
               bottom: calc(100% + 11px);
               transform: translate(-50%, 10px);
@@ -4163,7 +4229,7 @@
                 left: 43%;
                 border-width: 9px;
                 border-style: solid;
-                border-color: $color-background transparent transparent transparent;
+                border-color: #e9e9e9 transparent transparent transparent;
               }
               a {
                 display: flex;
