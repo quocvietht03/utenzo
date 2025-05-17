@@ -6187,6 +6187,9 @@
 }
 
 .woocommerce-checkout {
+  .elementor-location-header {
+    z-index: 999999;
+  }
   .select2-container {
     width: auto;
     .select2-dropdown {

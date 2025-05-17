@@ -1836,7 +1836,7 @@ function utenzo_search_live()
 {
     $search_term = isset($_POST['search_term']) ? sanitize_text_field($_POST['search_term']) : '';
     $category_slug = isset($_POST['category_slug']) ? sanitize_text_field($_POST['category_slug']) : '';
-    
+
     $args = array(
         'post_type' => 'product',
         'posts_per_page' => -1,
@@ -1847,14 +1847,14 @@ function utenzo_search_live()
     if (!empty($category_slug)) {
         $args['tax_query'][] = array(
             'taxonomy' => 'product_cat',
-            'field' => 'slug', 
+            'field' => 'slug',
             'terms' => $category_slug
         );
     }
 
     $query = new WP_Query($args);
     ob_start();
-    
+
     if ($query->have_posts()) {
         while ($query->have_posts()) {
             $query->the_post();
@@ -1863,7 +1863,7 @@ function utenzo_search_live()
                 continue;
             }
             $product_price = $product->get_price_html();
-            ?>
+        ?>
             <div class="bt-product-item">
                 <div class="bt-product-thumb">
                     <a href="<?php echo esc_url(get_permalink()); ?>" class="bt-thumb">
@@ -1883,12 +1883,12 @@ function utenzo_search_live()
                 <div class="bt-product-add-to-cart">
                     <?php if ($product->is_type('simple')) { ?>
                         <a href="?add-to-cart=<?php echo esc_attr(get_the_ID()); ?>" aria-describedby="woocommerce_loop_add_to_cart_link_describedby_<?php echo esc_attr(get_the_ID()); ?>" data-quantity="1" class="button product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="<?php echo esc_attr(get_the_ID()); ?>" data-product_sku="" rel="nofollow"><?php echo esc_html__('Add to cart', 'utenzo') ?></a>
-                    <?php }else { ?>
+                    <?php } else { ?>
                         <a href="<?php echo esc_url(get_permalink(get_the_ID())); ?>" class="bt-button bt-button-hover"><?php echo esc_html__('View Product', 'utenzo') ?></a>
                     <?php } ?>
                 </div>
             </div>
-            <?php
+        <?php
         }
         wp_reset_postdata();
         $output['items'] = ob_get_clean();
@@ -2437,13 +2437,13 @@ function utenzo_woocommerce_single_product_toggle()
                             <rect class="horizontal-line" y="70" width="160" height="15" rx="7" ry="7" />
                         </svg>
                     </div>
-                    <div class="bt-item-content" <?php echo esc_attr($key === 'description' ? 'style="display:block"' : ''); ?> id="tab-<?php echo esc_attr($key); ?>">
-                        <?php
-                        if (isset($product_tab['callback'])) {
-                            call_user_func($product_tab['callback'], $key, $product_tab);
-                        }
-                        ?>
-                    </div>
+                    <?php
+                    echo '<div class="bt-item-content"' . (($key === 'description') ? ' style="display:block;"' : '') . ' id="tab-' . esc_attr($key) . '">';
+                    if (isset($product_tab['callback'])) {
+                        call_user_func($product_tab['callback'], $key, $product_tab);
+                    }
+                    echo '</div>';
+                    ?>
                 </div>
             </div>
         <?php endforeach; ?>

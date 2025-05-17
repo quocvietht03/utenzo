@@ -96,35 +96,6 @@
 			});
 		}
 		if ($('.variations_form').length > 0) {
-			$("form.variations_form").on("change", "input, select", function () {
-
-				var variation_id = $("input.variation_id").val();
-				if (variation_id) {
-					var param_ajax = {
-						action: 'utenzo_get_variation_price',
-						variation_id: variation_id
-					};
-
-					$.ajax({
-						type: 'POST',
-						dataType: 'json',
-						url: AJ_Options.ajax_url,
-						data: param_ajax,
-						success: function (response) {
-							if (response.success) {
-								var price = response.data['price'];
-								var priceAddCart = '<span class="price-add-cart"> - ' + price + '</span>';
-								if (price) {
-									$(".single_add_to_cart_button").html("Add to cart" + priceAddCart);
-								}
-							}
-						},
-						error: function (xhr, status, error) {
-							console.log('Error getting variation price:', error);
-						}
-					});
-				}
-			});
 			$('.bt-attributes-wrap .bt-js-item').on('click', function () {
 				var valueItem = $(this).data('value');
 				var attributesItem = $(this).closest('.bt-attributes--item');
@@ -222,6 +193,25 @@
 						error: function (xhr, status, error) {
 							console.log('Error loading gallery:', error);
 							$('.woocommerce-product-gallery').removeClass('loading');
+						}
+					});
+					$.ajax({
+						type: 'POST',
+						dataType: 'json', 
+						url: AJ_Options.ajax_url,
+						data: {
+							action: 'utenzo_get_variation_price',
+							variation_id: variationId
+						},
+						success: function(response) {
+							if (response.success && response.data.price) {
+								// Update add to cart button with price
+								var priceAddCart = '<span class="price-add-cart"> - ' + response.data.price + '</span>';
+								$(".single_add_to_cart_button").html("Add to cart" + priceAddCart);
+							}
+						},
+						error: function(xhr, status, error) {
+							console.log('Error getting variation price:', error);
 						}
 					});
 				} else {
