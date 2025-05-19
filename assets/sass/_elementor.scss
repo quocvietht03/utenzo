@@ -2624,6 +2624,7 @@
         background-color: #ffffff;
         border-radius: 50% 50% 50% 50%;
         cursor: pointer;
+        display: flex;
         svg {
           width: 24px;
           height: 24px;
@@ -3178,6 +3179,7 @@ body {
             color: $color-primary;
             border-radius: 50% 50% 50% 50%;
             cursor: pointer;
+            display: flex;
             svg {
               width: 24px;
               height: 24px;
@@ -3248,6 +3250,7 @@ body {
             color: $color-primary;
             border-radius: 50% 50% 50% 50%;
             cursor: pointer;
+            display: flex;
             svg {
               width: 24px;
               height: 24px;
@@ -3592,6 +3595,7 @@ body {
           position: absolute;
           top: 50%;
           z-index: 1;
+          display: flex;
           &.bt-button-prev {
             transform: translate(-55%, -50%);
             left: 0;

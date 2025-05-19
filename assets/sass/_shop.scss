@@ -1505,6 +1505,7 @@
         }
         div.images {
           width: calc(50% - 15px);
+          overflow: hidden;
           .woocommerce-product-gallery__wrapper {
             &.bt-active-nav-gallery {
               @media (min-width: $break-lg) {
