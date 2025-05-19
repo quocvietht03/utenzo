@@ -3231,7 +3231,7 @@
                     content: "";
                     right: 1px;
                     left: 0;
-                    bottom: 0;
+                    bottom: 1px;
                     top: 0;
                     display: flex;
                     border-radius: 4px;
@@ -3254,7 +3254,7 @@
               > div {
                 border-radius: 4px;
                 img {
-                  height: 100%;
+                  height: calc(100% - 1px);
                   width: calc(100% - 1px);
                 }
                 @media (max-width: $break-xs) {

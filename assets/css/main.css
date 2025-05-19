@@ -8653,7 +8653,7 @@ body.admin-bar .dialog-type-lightbox.bt-menu-mobile-popup .elementor-location-po
   content: "";
   right: 1px;
   left: 0;
-  bottom: 0;
+  bottom: 1px;
   top: 0;
   display: flex;
   border-radius: 4px;
@@ -8677,7 +8677,7 @@ body.admin-bar .dialog-type-lightbox.bt-menu-mobile-popup .elementor-location-po
   border-radius: 4px;
 }
 .woocommerce div.product div.images .woocommerce-product-gallery__slider-nav .slick-slide > div > div img {
-  height: 100%;
+  height: calc(100% - 1px);
   width: calc(100% - 1px);
 }
 @media (max-width: 519.98px) {
