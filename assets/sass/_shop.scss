@@ -3256,9 +3256,13 @@
                 img {
                   height: calc(100% - 1px);
                   width: calc(100% - 1px);
+                  border-radius: 4px;
                 }
                 @media (max-width: $break-xs) {
                   border-radius: 2px;
+                  img {
+                    border-radius: 2px;
+                  }
                 }
               }
             }

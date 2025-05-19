@@ -2073,43 +2073,6 @@
 			}
 		});
 	}
-	// js Scroll Add To Cart Single Product
-	function UtenzoScrollAddToCart() {
-		if (!$('body').hasClass('single-product')) {
-			return;
-		}
-		const $variationWrap = $('.js-add-to-cart-scroll');
-		const $targetElement = $('.bt-more-information');
-
-		if (!$variationWrap.length || !$targetElement.length) return;
-
-		// Get element positions and dimensions
-		const variationWrapTop = $variationWrap.offset().top;
-		const targetElementTop = $targetElement.offset().top;
-		const variationWrapHeight = $variationWrap.outerHeight();
-		const scrollTop = $(window).scrollTop();
-
-		// Get current sticky state
-		const currentState = $variationWrap.attr('data-sticky-active') === 'true';
-
-		// Check if we've scrolled past the target element
-		if (scrollTop > targetElementTop) {
-			if (currentState) {
-				$variationWrap.attr('data-sticky-active', false);
-			}
-			return;
-		}
-
-		// Calculate distance between variation wrap and target
-		const distance = targetElementTop - (variationWrapTop + variationWrapHeight);
-
-		if (distance > 150) {
-			$variationWrap.attr('data-sticky-active', true);
-		}
-		if (distance == 10) {
-			$variationWrap.attr('data-sticky-active', false);
-		}
-	}
 
 	function UtenzoGalleryProductShowMore() {
 		if (!$('body').hasClass('single-product')) {
@@ -2216,7 +2179,6 @@
 		UtenzoCountdownProductSale();
 		UtenzoCustomizeProductToggle();
 		UtenzoCustomizeGroupedProduct();
-		UtenzoScrollAddToCart();
 		UtenzoGalleryProductShowMore();
 		UtenzoPopupNewsletter();
 	});
@@ -2256,6 +2218,6 @@
 		}
 	});
 	jQuery(window).on('scroll', function () {
-		UtenzoScrollAddToCart();
+
 	});
 })(jQuery);
