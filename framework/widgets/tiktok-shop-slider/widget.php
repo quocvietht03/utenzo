@@ -552,7 +552,7 @@ class Widget_TikTokShopSlider extends Widget_Base
                 }
                 echo '<div class="bt-product-info">'
                     . '<span class="bt-product-name">' . $product_name . '</span>'
-                    . '<span class="bt-product-price">' . $product_price . '</span>'
+                    . '<span class="bt-product-price' . (!$product->is_type('simple') ? ' bt-type-variable' : '') . '">' . $product_price . '</span>'
                     . '</div>'
                     . '</a>';
             }

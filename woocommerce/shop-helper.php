@@ -979,7 +979,6 @@ function utenzo_products_compare()
             $fields_show_compare = array('price', 'rating', 'stock_status', 'weight', 'dimensions', 'color', 'size');
         }
     ?>
-        <div class="bt-compare-close"></div>
         <div class="bt-table-title">
             <h2><?php esc_html_e('Compare products', 'utenzo') ?></h2>
         </div>
@@ -1330,7 +1329,7 @@ function utenzo_products_wishlist()
                         }
                         ?>
                     </div>
-                    <div class="bt-table--col bt-product-price">
+                    <div class="bt-table--col bt-product-price<?php echo !$product->is_type('simple') ? ' bt-type-variable' : ''; ?>">
                         <?php
                         if ($product_price) {
                             echo '<span>' . $product_price . '</span>';
@@ -1389,7 +1388,6 @@ function utenzo_products_quick_view()
 
     ob_start();
     ?>
-    <div class="bt-quick-view-close"></div>
     <div class="bt-quickview-title">
         <h2><?php esc_html_e('Quick View', 'utenzo') ?></h2>
     </div>

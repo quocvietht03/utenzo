@@ -812,7 +812,7 @@
 			});
 		}
 		if ($('.bt-product-compare-btn').length > 0) {
-			$('body').append('<div class="bt-popup-compare"><div class="bt-compare-overlay"></div><div class="bt-compare-body"><div class="bt-loading-wave"></div><div class="bt-compare-load"></div></div></div>').fadeIn('slow');
+			$('body').append('<div class="bt-popup-compare"><div class="bt-compare-overlay"></div><div class="bt-compare-close"></div><div class="bt-compare-body"><div class="bt-loading-wave"></div><div class="bt-compare-load"></div></div></div>').fadeIn('slow');
 
 			$(document).on('click', '.bt-product-compare-btn', function (e) {
 				e.preventDefault();
@@ -1004,7 +1004,7 @@
 	/* Product Quick View */
 	function UtenzoProductQuickView() {
 		if ($('.bt-product-quick-view-btn').length > 0) {
-			$('body').append('<div class="bt-popup-quick-view"><div class="bt-quick-view-overlay"></div><div class="bt-quick-view-body"><div class="bt-quick-view-load"></div></div></div>');
+			$('body').append('<div class="bt-popup-quick-view"><div class="bt-quick-view-overlay"></div><div class="bt-quick-view-close"></div><div class="bt-quick-view-body"><div class="bt-quick-view-load"></div></div></div>');
 			function showQuickViewPopup() {
 				$('.bt-popup-quick-view').addClass('active');
 				$('.bt-quick-view-body').addClass('show');
