@@ -589,18 +589,27 @@
         }
         .admin-bar & {
           top: 32px;
-          height: calc(100dvh - 32px);
+          height: calc(100vh - 32px);
           .bt-product-filter-form {
-            max-height: calc(100dvh - 32px);
+            max-height: calc(100vh - 32px);
+          }
+          @media(max-width: $break-sm){
+            height: calc(100dvh - 32px);
+            .bt-product-filter-form {
+              max-height: calc(100dvh - 32px);
+            }
           }
         }
         .bt-product-filter-form {
           overflow-y: auto;
           overflow-y: auto;
-          max-height: 100dvh;
+          max-height: 100vh;
           padding: 24px 24px 120px;
           box-sizing: border-box;
           @extend .__scrollbar_style;
+          @media(max-width: $break-sm){
+            max-height: 100dvh;
+          }
           .bt-form-button-results {
             position: absolute;
             bottom: 0;
@@ -767,16 +776,25 @@
           }
           .admin-bar & {
             top: 32px;
-            height: calc(100dvh - 32px);
+            height: calc(100vh - 32px);
             .bt-product-filter-form {
-              max-height: calc(100dvh - 32px);
+              max-height: calc(100vh - 32px);
+            }
+            @media(max-width: $break-sm){
+              height: calc(100dvh - 32px);
+             .bt-product-filter-form {
+                max-height: calc(100dvh - 32px);
+              }
             }
           }
           .bt-product-filter-form {
             overflow-y: auto;
-            max-height: 100dvh;
+            max-height: 100vh;
             padding: 24px 24px 120px;
             box-sizing: border-box;
+            @media(max-width: $break-sm){
+              max-height: 100dvh;
+            }
             .bt-product-filter-fields {
               display: block;
               .bt-form-field {
@@ -2402,6 +2420,7 @@
           a {
             max-width: fit-content;
             width: 100%;
+            white-space: nowrap;
           }
           .bt-deli {
             display: flex;

@@ -1264,6 +1264,7 @@
         line-height: 22px;
         background: $color-primary;
         border-radius: 8px;
+        padding: 0 16px;
         @media (max-width: $break-xs) {
           font-size: 15px;
         }
@@ -1281,6 +1282,9 @@
     top: 15px;
     cursor: pointer;
     font-size: 24px;
+    width: 16px;
+    height: 16px;
+    display: flex;
   }
 
   .newsletter-form {
