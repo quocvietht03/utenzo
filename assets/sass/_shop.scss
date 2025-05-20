@@ -3199,7 +3199,7 @@
         }
 
         // Height 730px - 766px
-        @media (max-height: 766px) and (min-height: 730px) {
+        @media (max-height: 766px) and (min-height: 728px) {
           gap: 90px;
           div {
             &.images {
@@ -3218,8 +3218,8 @@
             }
           }
         }
-           // Height 650px - 730px
-        @media (max-height: 730px) and (min-height: 650px) {
+           // Height 650px - 728px
+        @media (max-height: 727px) and (min-height: 650px) {
           gap: 90px;
           div {
             &.images {
@@ -5721,7 +5721,7 @@
             }
           }
         }
-        @media (max-height: 766px) and (min-height: 730px) {
+        @media (max-height: 766px) and (min-height: 728px) {
           div.images {
             .woocommerce-product-gallery__image {
               padding-bottom: 78%;
