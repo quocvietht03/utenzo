@@ -3165,27 +3165,77 @@
         display: none;
       }
       @media (max-width: 1470px) and (min-width: $break-lg) {
+        // Height 800px - 960px
         @media (max-height: 960px) and (min-height: 800px) {
-          div.images {
-            width: calc(40% - 30px);
-          }
-          div.summary {
-            width: calc(60% - 30px);
+          div {
+            &.images {
+              width: calc(40% - 30px);
+            }
+            &.summary {
+              width: calc(60% - 30px);
+            }
           }
         }
+
+        // Height 766px - 799px
         @media (max-height: 799px) and (min-height: 766px) {
           gap: 90px;
-          div.images {
-            width: calc(50% - 60px);
-            .woocommerce-product-gallery__image {
-              padding-bottom: 86%;
+          div {
+            &.images {
+              width: calc(50% - 60px);
+              .woocommerce-product-gallery {
+                &__image {
+                  padding-bottom: 86%;
+                }
+                &__slider-nav {
+                  margin: 12px 0 0;
+                }
+              }
             }
-            .woocommerce-product-gallery__slider-nav {
-              margin: 12px 0 0 0;
+            &.summary {
+              width: calc(50% - 30px);
             }
           }
-          div.summary {
-            width: calc(50% - 30px);
+        }
+
+        // Height 730px - 766px
+        @media (max-height: 766px) and (min-height: 730px) {
+          gap: 90px;
+          div {
+            &.images {
+              width: calc(50% - 60px);
+              .woocommerce-product-gallery {
+                &__image {
+                  padding-bottom: 81%;
+                }
+                &__slider-nav {
+                  margin: 12px 0 0;
+                }
+              }
+            }
+            &.summary {
+              width: calc(50% - 30px);
+            }
+          }
+        }
+           // Height 650px - 730px
+        @media (max-height: 730px) and (min-height: 650px) {
+          gap: 90px;
+          div {
+            &.images {
+              width: calc(50% - 60px);
+              .woocommerce-product-gallery {
+                &__image {
+                  padding-bottom: 70%;
+                }
+                &__slider-nav {
+                  margin: 12px 0 0;
+                }
+              }
+            }
+            &.summary {
+              width: calc(50% - 30px);
+            }
           }
         }
       }
@@ -5668,6 +5718,13 @@
           div.images {
             .woocommerce-product-gallery__image {
               padding-bottom: 83%;
+            }
+          }
+        }
+        @media (max-height: 766px) and (min-height: 730px) {
+          div.images {
+            .woocommerce-product-gallery__image {
+              padding-bottom: 78%;
             }
           }
         }
