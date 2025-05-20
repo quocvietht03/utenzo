@@ -57,7 +57,7 @@ class Widget_SearchProduct extends Widget_Base
 
 	protected function register_query_section_controls()
 	{
-		
+
 		$this->start_controls_section(
 			'section_query',
 			[
@@ -191,6 +191,9 @@ class Widget_SearchProduct extends Widget_Base
 					<input type="search" class="bt-search-field <?php echo !empty($settings['enable_autocomplete']) ? ' bt-live-search' : ''; ?>" placeholder="<?php echo esc_attr($settings['placeholder_text']); ?>" value="<?php echo isset($_GET['search_keyword']) ? esc_attr($_GET['search_keyword']) : ''; ?>" name="search_keyword" />
 					<button type="submit" class="bt-search-submit">
 						<?php esc_html_e('Search', 'utenzo'); ?>
+						<svg class="search-icon" viewBox="0 0 24 24" width="24" height="24">
+							<path d="M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z"></path>
+						</svg>
 					</button>
 					<div class="bt-live-search-results">
 						<span class="bt-loading-wave"></span>

@@ -318,7 +318,7 @@
 .__bt-button-style {
   display: inline-block;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 150%;
   text-align: center;
   color: #ffffff;
@@ -678,7 +678,7 @@
     height: 40px;
     font-family: $primary-font;
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 24px;
     color: $color-primary;
     background: transparent;
@@ -740,7 +740,7 @@
     display: inline-block;
     font-family: $primary-font;
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 150%;
     color: $color-primary;
     margin-right: 9.88px;
@@ -758,7 +758,7 @@
     &--head {
       font-family: $primary-font;
       font-size: 26px;
-      font-weight: 700;
+      font-weight: 600;
       line-height: 150%;
       color: $color-primary;
       margin: 0 0 20px;
@@ -793,7 +793,7 @@
       gap: 8px;
       font-family: $primary-font;
       font-size: 16px;
-      font-weight: 700;
+      font-weight: 600;
       line-height: 150%;
       text-decoration: underline;
       color: $color-accent;
@@ -886,7 +886,7 @@
   border-radius: 4px;
   background-color: $color-accent;
   font-family: $primary-font;
-  font-weight: 700;
+  font-weight: 600;
   white-space: nowrap;
   &:hover {
     color: #fff;
@@ -1326,7 +1326,7 @@
     }
   }
 }
-.dialog-lightbox-widget {
+.elementor-lightbox {
   .dialog-close-button.dialog-lightbox-close-button {
     width: 21px;
     height: 21px;

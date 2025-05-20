@@ -430,13 +430,23 @@ class Widget_OurStore extends Widget_Base
                                     <h3 class="bt-store--name"><?php echo esc_html($store['name']); ?></h3>
                                 <?php endif; ?>
                                 <?php if (!empty($store['address'])) : ?>
-                                    <div class="bt-store--location"><?php echo esc_html($store['address']); ?></div>
+                                    <div class="bt-store--location"><?php echo esc_html__('Address:', 'utenzo') . ' ' . esc_html($store['address']); ?></div>
                                 <?php endif; ?>
                                 <?php if (!empty($store['phone'])) : ?>
-                                    <div class="bt-store--phone"><?php echo esc_html($store['phone']); ?></div>
+                                    <div class="bt-store--phone">
+                                        <?php echo esc_html__('Phone:', 'utenzo'); ?>
+                                        <a href="tel:<?php echo esc_attr(str_replace(' ', '', $store['phone'])); ?>">
+                                            <?php echo esc_html($store['phone']); ?>
+                                        </a>
+                                    </div>
                                 <?php endif; ?>
                                 <?php if (!empty($store['email'])) : ?>
-                                    <div class="bt-store--email"><?php echo esc_html($store['email']); ?></div>
+                                    <div class="bt-store--email">
+                                        <?php echo esc_html__('Email:', 'utenzo'); ?>
+                                        <a href="mailto:<?php echo esc_attr($store['email']); ?>">
+                                            <?php echo esc_html($store['email']); ?>
+                                        </a>
+                                    </div>
                                 <?php endif; ?>
                                 <?php if (!empty($store['direction_url']['url']) && !empty($store['direction_text'])) : ?>
                                     <a href="<?php echo esc_url($store['direction_url']['url']); ?>" class="bt-store--direction" <?php echo esc_attr($store['direction_url']['is_external'] ? 'target="_blank"' : ''); ?>>
