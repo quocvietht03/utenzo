@@ -328,6 +328,17 @@
         }
       }
     }
+    &.bt-header-main-sticky {
+      > .e-con-inner {
+        transition: padding 0.3s ease;
+      }
+      &.elementor-sticky--effects {
+        > .e-con-inner {
+          padding-top: 12px;
+          padding-bottom: 12px;
+        }
+      }
+    }
   }
 }
 body.admin-bar .dialog-type-lightbox {
