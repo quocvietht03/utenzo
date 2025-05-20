@@ -538,13 +538,13 @@ class Widget_TikTokShopSlider extends Widget_Base
                     }
                 }
             }
-            var_dump($key . ' -' . $next_key);
+          //  var_dump($key . ' -' . $next_key);
             $slider_settings['breakpoints'][$breakpoint->get_value()] = [
                 'slidesPerView' => !empty($settings["slider_item_{$next_key}"]) ? (int)$settings["slider_item_{$next_key}"] : (int)$settings['slider_item'],
                 'spaceBetween' => !empty($settings["slider_spacebetween_{$next_key}"]) ? (int)$settings["slider_spacebetween_{$next_key}"] : (int)$settings['slider_spacebetween']
             ];
         }
-          var_dump($slider_settings);
+  //        var_dump($slider_settings);
         // Start slider container
         echo '<div class="bt-elwg-tiktok-shop-slider--default swiper" data-slider-settings="' . esc_attr(json_encode($slider_settings)) . '">';
 
