@@ -237,24 +237,19 @@
 	}
 	var TiktokShopSliderHandler = function ($scope, $) {
 		const $tiktokSlider = $scope.find('.bt-elwg-tiktok-shop-slider--default');
+		// Get Elementor breakpoints
+		const $sliderSettings = $tiktokSlider.data('slider-settings');
+		console.log($sliderSettings.breakpoints);
 		if ($tiktokSlider.length > 0) {
-			const $item = parseInt($tiktokSlider.data('item')) || 1;
-			const $itemTablet = parseInt($tiktokSlider.data('item-tablet')) || 1;
-			const $itemMobile = parseInt($tiktokSlider.data('item-mobile')) || 1;
-			const $speed = parseInt($tiktokSlider.data('speed')) || 1000;
-			const $spaceBetween = parseInt($tiktokSlider.data('spacebetween')) || 0;
-			const $spaceBetweenTablet = parseInt($tiktokSlider.data('spacebetween-tablet')) || 0;
-			const $spaceBetweenMobile = parseInt($tiktokSlider.data('spacebetween-mobile')) || 0;
-			const $autoplay = Boolean($tiktokSlider.data('autoplay'));
-			const $loop = Boolean($tiktokSlider.data('loop'));
+
 			const $swiper = new Swiper($tiktokSlider[0], {
-				slidesPerView: $itemMobile,
-				loop: $loop,
-				spaceBetween: $spaceBetweenMobile,
-				speed: $speed,
+				slidesPerView: $sliderSettings.slidesPerView,
+				loop: $sliderSettings.loop,
+				spaceBetween: $sliderSettings.spaceBetween,
+				speed: $sliderSettings.speed,
 				freeMode: true,
 				allowTouchMove: true,
-				autoplay: $autoplay ? {
+				autoplay: $sliderSettings.autoplay ? {
 					delay: 3000,
 					disableOnInteraction: false
 				} : false,
@@ -262,19 +257,11 @@
 					nextEl: $tiktokSlider.find('.bt-button-next')[0],
 					prevEl: $tiktokSlider.find('.bt-button-prev')[0],
 				},
-				breakpoints: {
-					1024: {
-						slidesPerView: $item,
-						spaceBetween: $spaceBetween
-					},
-					768: {
-						slidesPerView: $itemTablet,
-						spaceBetween: $spaceBetweenTablet
-					},
-				},
+				handleElementorBreakpoints: true,
+				breakpoints: $sliderSettings.breakpoints,
 			});
 
-			if ($autoplay) {
+			if ($sliderSettings.autoplay) {
 				$tiktokSlider[0].addEventListener('mouseenter', () => {
 					$swiper.autoplay.stop();
 				});
@@ -555,6 +542,7 @@
 					nextEl: $Hotspotslider.find('.bt-button-next')[0],
 					prevEl: $Hotspotslider.find('.bt-button-prev')[0],
 				},
+
 				breakpoints: {
 					1490: {
 						slidesPerView: 3,

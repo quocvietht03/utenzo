@@ -11,6 +11,8 @@ use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
+use Elementor\Plugin;
+
 
 class Widget_TikTokShopSlider extends Widget_Base
 {
@@ -220,7 +222,18 @@ class Widget_TikTokShopSlider extends Widget_Base
             [
                 'label' => __('Slider Item', 'utenzo'),
                 'type' => Controls_Manager::NUMBER,
-                'default' => 6,
+                'default' => 5,
+            ]
+        );
+        $this->add_responsive_control(
+            'slider_spacebetween',
+            [
+                'label' => __('Slider SpaceBetween', 'utenzo'),
+                'type' => Controls_Manager::NUMBER,
+                'default' => 10,
+                'min' => 0,
+                'max' => 100,
+                'step' => 1,
             ]
         );
         $this->add_control(
@@ -233,21 +246,7 @@ class Widget_TikTokShopSlider extends Widget_Base
                 'step' => 100,
             ]
         );
-        $this->add_responsive_control(
-            'slider_spacebetween',
-            [
-                'label' => __('Slider SpaceBetween', 'utenzo'),
-                'type' => Controls_Manager::NUMBER,
-                'default' => 10,
-                'min' => 0,
-                'max' => 100,
-                'step' => 1,
-                'devices' => ['desktop', 'tablet', 'mobile'],
-                'desktop_default' => 30,
-                'tablet_default' => 20,
-                'mobile_default' => 20,
-            ]
-        );
+
         $this->add_control(
             'slider_arrows',
             [
@@ -484,39 +483,39 @@ class Widget_TikTokShopSlider extends Widget_Base
 
         // Early return if no items
         if (empty($settings['list'])) return;
-
         // Extract slider settings
-        $is_auto = $settings['slider_autoplay'] === 'yes';
+        $breakpoints = Plugin::$instance->breakpoints->get_active_breakpoints();
+
         $slider_settings = [
-            'desktop' => [
-                'item' => $settings['slider_item'] ?? $settings['slider_item'],
-                'space' => $settings['slider_spacebetween'] ?? $settings['slider_spacebetween']
-            ],
-            'tablet' => [
-                'item' => $settings['slider_item_tablet'] ?? 4,
-                'space' => $settings['slider_spacebetween_tablet'] ?? 20
-            ],
-            'mobile' => [
-                'item' => $settings['slider_item_mobile'] ?? 2,
-                'space' => $settings['slider_spacebetween_mobile'] ?? 10
-            ]
+            'autoplay' => $settings['slider_autoplay'] === 'yes',
+            'loop' => $settings['slider_loop'] === 'yes',
+            'speed' => (int)$settings['slider_speed'],
+            'slidesPerView' => !empty($settings['slider_item_mobile']) ? (int)$settings['slider_item_mobile'] : 1,
+            'spaceBetween' => !empty($settings['slider_spacebetween_mobile']) ? (int)$settings['slider_spacebetween_mobile'] : 20,
+            'breakpoints' => []
         ];
 
-        // Prepare slider attributes
-        $slider_attrs = [
-            'class' => 'bt-elwg-tiktok-shop-slider--default swiper',
-            'data-item' => $slider_settings['desktop']['item'],
-            'data-item-tablet' => $slider_settings['tablet']['item'],
-            'data-item-mobile' => $slider_settings['mobile']['item'],
-            'data-speed' => $settings['slider_speed'],
-            'data-spacebetween' => $slider_settings['desktop']['space'],
-            'data-spacebetween-tablet' => $slider_settings['tablet']['space'],
-            'data-spacebetween-mobile' => $slider_settings['mobile']['space'],
-            'data-autoplay' => $is_auto ? 'true' : 'false',
-            'data-loop' => $settings['slider_loop'] === 'yes' ? 'true' : 'false'
-        ];
+        // Add responsive breakpoints
+        foreach ($breakpoints as $key => $breakpoint) {
+            // Get the next higher breakpoint key
+            $next_key = match ($key) {
+                'mobile' => 'mobile_extra',
+                'mobile_extra' => 'tablet',
+                'tablet' => 'tablet_extra',
+                'tablet_extra' => 'laptop',
+                'laptop' => 'desktop',
+                'desktop' => 'widescreen',
+                default => $key
+            };
+
+            $slider_settings['breakpoints'][$breakpoint->get_value()] = [
+                'slidesPerView' => !empty($settings["slider_item_{$next_key}"]) ? (int)$settings["slider_item_{$next_key}"] : (int)$settings['slider_item'],
+                'spaceBetween' => !empty($settings["slider_spacebetween_{$next_key}"]) ? (int)$settings["slider_spacebetween_{$next_key}"] : (int)$settings['slider_spacebetween']
+            ];
+        }
         // Start slider container
-        echo '<div ' . $this->render_attributes($slider_attrs) . '>';
+        echo '<div class="bt-elwg-tiktok-shop-slider--default swiper" data-slider-settings="' . esc_attr(json_encode($slider_settings)) . '">';
+
         echo '<ul class="bt-tiktok-shop-slider swiper-wrapper">';
 
         // Loop through items
