@@ -319,9 +319,45 @@ class Widget_HotspotProduct extends Widget_Base
             ]
         );
         $this->add_control(
+            'slider_arrows_hidden_mobile',
+            [
+                'label' => __('Hidden Arrow Mobile', 'utenzo'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Yes', 'utenzo'),
+                'label_off' => __('No', 'utenzo'),
+                'default' => 'no',
+                'condition' => [
+                    'slider_arrows' => 'yes',
+                ],
+            ]
+        );
+        $this->add_control(
+            'slider_dots',
+            [
+                'label' => __('Show Dots', 'utenzo'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Yes', 'utenzo'),
+                'label_off' => __('No', 'utenzo'),
+                'default' => 'no',
+            ]
+        );
+        $this->add_control(
+            'slider_dots_only_mobile',
+            [
+                'label' => __('Mobile-Only Pagination', 'utenzo'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Yes', 'utenzo'),
+                'label_off' => __('No', 'utenzo'),
+                'default' => 'no',
+                'condition' => [
+                    'slider_dots' => 'yes',
+                ],
+            ]
+        );
+        $this->add_control(
             'show_add_to_cart',
             [
-                'label' => __('Show Add to Cart', 'utenzo'),
+                'label' => __('Show Set to Cart', 'utenzo'),
                 'type' => Controls_Manager::SWITCHER,
                 'label_on' => __('Yes', 'utenzo'),
                 'label_off' => __('No', 'utenzo'),
@@ -334,7 +370,196 @@ class Widget_HotspotProduct extends Widget_Base
         $this->end_controls_section();
     }
 
-    protected function register_style_section_controls() {}
+    protected function register_style_section_controls()
+    {
+        $this->start_controls_section(
+            'section_style_slider_content',
+            [
+                'label' => __('Slider Content', 'utenzo'),
+                'tab' => Controls_Manager::TAB_STYLE,
+                'condition' => [
+                    'show_slider' => 'yes',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'heading_style',
+            [
+                'label' => __('Heading', 'utenzo'),
+                'type' => Controls_Manager::HEADING,
+            ]
+        );
+
+        $this->add_control(
+            'heading_color',
+            [
+                'label' => __('Color', 'utenzo'),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .bt-hotspot-slider--heading' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name' => 'heading_typography',
+                'selector' => '{{WRAPPER}} .bt-hotspot-slider--heading',
+            ]
+        );
+
+        $this->add_control(
+            'description_style',
+            [
+                'label' => __('Description', 'utenzo'),
+                'type' => Controls_Manager::HEADING,
+                'separator' => 'before',
+            ]
+        );
+
+        $this->add_control(
+            'description_color',
+            [
+                'label' => __('Color', 'utenzo'),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .bt-hotspot-slider--description' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name' => 'description_typography',
+                'selector' => '{{WRAPPER}} .bt-hotspot-slider--description',
+            ]
+        );
+
+        $this->end_controls_section();
+        $this->start_controls_section(
+            'section_style_dots',
+            [
+                'label' => esc_html__('Navigation Dots', 'utenzo'),
+                'tab' => Controls_Manager::TAB_STYLE,
+                'condition' => [
+                    'slider_dots' => 'yes',
+                ],
+            ]
+        );
+        $this->add_control(
+            'dots_spacing',
+            [
+                'label' => __('Spacing Dots', 'utenzo'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'range' => [
+                    'px' => [
+                        'min' => 1,
+                        'max' => 30,
+                    ],
+                ],
+                'default' => [
+                    'size' => 5,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .swiper-pagination-bullet' => 'margin: 0 {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+        $this->add_control(
+            'dots_size',
+            [
+                'label' => __('Size', 'utenzo'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'range' => [
+                    'px' => [
+                        'min' => 5,
+                        'max' => 50,
+                    ],
+                ],
+                'default' => [
+                    'size' => 10,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .swiper-pagination-bullet' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->start_controls_tabs('dots_colors_tabs');
+
+        // Normal state
+        $this->start_controls_tab(
+            'dots_colors_normal',
+            [
+                'label' => __('Normal', 'utenzo'),
+            ]
+        );
+
+        $this->add_control(
+            'dots_color',
+            [
+                'label' => __('Color', 'utenzo'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '#0C2C48',
+                'selectors' => [
+                    '{{WRAPPER}} .swiper-pagination-bullet' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_tab();
+
+        // Hover state
+        $this->start_controls_tab(
+            'dots_colors_hover',
+            [
+                'label' => __('Hover', 'utenzo'),
+            ]
+        );
+
+        $this->add_control(
+            'dots_color_hover',
+            [
+                'label' => __('Color', 'utenzo'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '#000000',
+                'selectors' => [
+                    '{{WRAPPER}} .swiper-pagination-bullet:hover' => 'background-color: {{VALUE}};opacity: 1;',
+                ],
+            ]
+        );
+
+        $this->end_controls_tab();
+
+        $this->end_controls_tabs();
+        $this->add_control(
+            'dots_spacing_slider',
+            [
+                'label' => __('Spacing', 'utenzo'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'range' => [
+                    'px' => [
+                        'min' => 1,
+                        'max' => 100,
+                    ],
+                ],
+                'default' => [
+                    'size' => 50,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .swiper' => 'padding-bottom: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+    }
 
     protected function register_controls()
     {
@@ -401,6 +626,13 @@ class Widget_HotspotProduct extends Widget_Base
                                 'mobile' => isset($settings['slider_spacebetween_mobile']) ? $settings['slider_spacebetween_mobile'] : 10
                             ],
                         ];
+                        $classes = ['bt-hotspot-slider--inner', 'swiper'];
+                        if ($settings['slider_arrows_hidden_mobile'] === 'yes') {
+                            $classes[] = 'bt-hidden-arrow-mobile';
+                        }
+                        if ($settings['slider_dots_only_mobile'] === 'yes') {
+                            $classes[] = 'bt-only-dot-mobile';
+                        }
                         ?>
                         <div class="bt-hotspot-slider" data-slider-settings='<?php echo json_encode($slider_settings); ?>'>
                             <?php if (!empty($settings['slider_heading'])) : ?>
@@ -409,7 +641,7 @@ class Widget_HotspotProduct extends Widget_Base
                             <?php if (!empty($settings['slider_description'])) : ?>
                                 <p class="bt-hotspot-slider--description"><?php echo esc_html($settings['slider_description']); ?></p>
                             <?php endif; ?>
-                            <div class="bt-hotspot-slider--inner swiper">
+                            <div class="<?php echo esc_attr(implode(' ', $classes)); ?>">
                                 <div class="bt-hotspot-slider--wrap swiper-wrapper">
                                     <?php foreach ($settings['hotspot_items'] as $item) : ?>
                                         <?php
@@ -440,7 +672,13 @@ class Widget_HotspotProduct extends Widget_Base
                                             </svg>
                                         </div>
                                     </div>
-                                <?php endif; ?>
+                                <?php endif;
+                                // pagination
+                                if ($settings['slider_dots'] === 'yes') {
+                                    echo '<div class="bt-swiper-pagination swiper-pagination"></div>';
+                                }
+                                ?>
+
                             </div>
                             <?php if ($settings['show_add_to_cart'] === 'yes') : ?>
                                 <div class="bt-add-to-cart-wrapper">

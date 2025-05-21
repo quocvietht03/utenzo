@@ -11,6 +11,7 @@ use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_BBorder;
 use Elementor\Group_Control_Box_Shadow;
+use Elementor\Plugin;
 
 class Widget_ProductTestimonialSlider extends Widget_Base
 {
@@ -190,12 +191,25 @@ class Widget_ProductTestimonialSlider extends Widget_Base
                 ],
             ]
         );
+        $this->add_control(
+            'slider_loop',
+            [
+                'label' => __('Infinite Loop', 'utenzo'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Yes', 'utenzo'),
+                'label_off' => __('No', 'utenzo'),
+                'default' => 'yes',
+                'description' => __('Enable continuous loop mode', 'utenzo'),
+            ]
+        );
         $this->add_responsive_control(
-            'slider_items',
+            'slider_item',
             [
                 'label' => __('Items Slide', 'utenzo'),
                 'type' => Controls_Manager::NUMBER,
                 'default' => 2,
+                'tablet_default' => 1,
+                'mobile_default' => 1,
                 'min' => 1,
                 'max' => 5,
                 'step' => 1,
@@ -203,11 +217,13 @@ class Widget_ProductTestimonialSlider extends Widget_Base
             ]
         );
         $this->add_responsive_control(
-            'slider_space_between',
+            'slider_spacebetween',
             [
                 'label' => __('Space Between', 'utenzo'),
                 'type' => Controls_Manager::NUMBER,
                 'default' => 30,
+                'tablet_default' => 20,
+                'mobile_default' => 10,
                 'min' => 0,
                 'max' => 100,
                 'step' => 1,
@@ -233,6 +249,18 @@ class Widget_ProductTestimonialSlider extends Widget_Base
                 'label_on' => __('Yes', 'utenzo'),
                 'label_off' => __('No', 'utenzo'),
                 'default' => 'yes',
+                'description' => __('Display on Desktop Only', 'utenzo'),
+            ]
+        );
+        $this->add_control(
+            'slider_dots',
+            [
+                'label' => __('Show Dots', 'utenzo'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Yes', 'utenzo'),
+                'label_off' => __('No', 'utenzo'),
+                'default' => 'no',
+                'description' => __('Display on Tablet and Mobile Devices', 'utenzo'),
             ]
         );
         $this->end_controls_section();
@@ -527,6 +555,126 @@ class Widget_ProductTestimonialSlider extends Widget_Base
         );
 
         $this->end_controls_section();
+        $this->start_controls_section(
+            'section_style_dots',
+            [
+                'label' => esc_html__('Navigation Dots', 'utenzo'),
+                'tab' => Controls_Manager::TAB_STYLE,
+                'condition' => [
+                    'slider_dots' => 'yes',
+                ],
+            ]
+        );
+        $this->add_control(
+            'dots_spacing',
+            [
+                'label' => __('Spacing Dots', 'utenzo'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'range' => [
+                    'px' => [
+                        'min' => 1,
+                        'max' => 30,
+                    ],
+                ],
+                'default' => [
+                    'size' => 5,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .swiper-pagination-bullet' => 'margin: 0 {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+        $this->add_control(
+            'dots_size',
+            [
+                'label' => __('Size', 'utenzo'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'range' => [
+                    'px' => [
+                        'min' => 5,
+                        'max' => 50,
+                    ],
+                ],
+                'default' => [
+                    'size' => 10,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .swiper-pagination-bullet' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->start_controls_tabs('dots_colors_tabs');
+
+        // Normal state
+        $this->start_controls_tab(
+            'dots_colors_normal',
+            [
+                'label' => __('Normal', 'utenzo'),
+            ]
+        );
+
+        $this->add_control(
+            'dots_color',
+            [
+                'label' => __('Color', 'utenzo'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '#0C2C48',
+                'selectors' => [
+                    '{{WRAPPER}} .swiper-pagination-bullet' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_tab();
+
+        // Hover state
+        $this->start_controls_tab(
+            'dots_colors_hover',
+            [
+                'label' => __('Hover', 'utenzo'),
+            ]
+        );
+
+        $this->add_control(
+            'dots_color_hover',
+            [
+                'label' => __('Color', 'utenzo'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '#000000',
+                'selectors' => [
+                    '{{WRAPPER}} .swiper-pagination-bullet:hover' => 'background-color: {{VALUE}};opacity: 1;',
+                ],
+            ]
+        );
+
+        $this->end_controls_tab();
+
+        $this->end_controls_tabs();
+        $this->add_control(
+            'dots_spacing_slider',
+            [
+                'label' => __('Spacing', 'utenzo'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'range' => [
+                    'px' => [
+                        'min' => 1,
+                        'max' => 100,
+                    ],
+                ],
+                'default' => [
+                    'size' => 50,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .swiper' => 'padding-bottom: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
     }
 
     protected function register_controls()
@@ -541,18 +689,60 @@ class Widget_ProductTestimonialSlider extends Widget_Base
             'autoplay' => isset($settings['slider_autoplay']) && $settings['slider_autoplay'] === 'yes',
             'speed' => isset($settings['slider_speed']) ? $settings['slider_speed'] : 500,
             'autoplay_delay' => isset($settings['slider_autoplay_delay']) ? $settings['slider_autoplay_delay'] : 3000,
-            'space_between' => isset($settings['slider_space_between']) ? $settings['slider_space_between'] : 30,
-            'space_between_mobile' => isset($settings['slider_space_between_mobile']) ? $settings['slider_space_between_mobile'] : 10,
-            'space_between_tablet' => isset($settings['slider_space_between_tablet']) ? $settings['slider_space_between_tablet'] : 20,
-            'items_desktop' => isset($settings['slider_items']) ? $settings['slider_items'] : 2,
-            'items_mobile' => isset($settings['slider_items_mobile']) ? $settings['slider_items_mobile'] : 1,
-            'items_tablet' => isset($settings['slider_items_tablet']) ? $settings['slider_items_tablet'] : 1,
+            'loop' => isset($settings['slider_loop']) && $settings['slider_loop'] === 'yes',
+            'slidesPerView' => isset($settings['slider_item_mobile']) ? (int)$settings['slider_item_mobile'] : 1,
+            'spaceBetween' => isset($settings['slider_spacebetween_mobile']) ? (int)$settings['slider_spacebetween_mobile'] : 10,
         ];
+        // Add responsive breakpoints
+        $breakpoints = Plugin::$instance->breakpoints->get_active_breakpoints();
+        foreach ($breakpoints as $key => $breakpoint) {
+            // Get the next higher breakpoint key
+            $next_key = $key;
+            $breakpoint_keys = array_keys($breakpoints);
+            $current_index = array_search($key, $breakpoint_keys);
 
+            if ($current_index !== false) {
+                $preferred_next = match ($key) {
+                    'mobile' => 'mobile_extra',
+                    'mobile_extra' => 'tablet',
+                    'tablet' => 'tablet_extra',
+                    'tablet_extra' => 'laptop',
+                    'laptop' => 'desktop',
+                    default => $key
+                };
+
+                // If preferred next breakpoint exists, use it
+                if (isset($breakpoints[$preferred_next])) {
+                    $next_key = $preferred_next;
+                }
+                // Otherwise find next available breakpoint
+                else {
+                    $found_next = false;
+                    for ($i = $current_index + 1; $i < count($breakpoint_keys); $i++) {
+                        if (isset($breakpoints[$breakpoint_keys[$i]]) && $breakpoint_keys[$i] !== 'widescreen') {
+                            $next_key = $breakpoint_keys[$i];
+                            $found_next = true;
+                            break;
+                        }
+                    }
+                    if (!$found_next) {
+                        $next_key = 'desktop';
+                    }
+                }
+            }
+
+            $slider_settings['breakpoints'][$breakpoint->get_value()] = ($next_key == 'desktop') ? [
+                'slidesPerView' => !empty($settings['slider_item']) ? (int)$settings['slider_item'] : 5,
+                'spaceBetween' => !empty($settings['slider_spacebetween']) ? (int)$settings['slider_spacebetween'] : 20
+            ] : [
+                'slidesPerView' => !empty($settings["slider_item_{$next_key}"]) ? (int)$settings["slider_item_{$next_key}"] : (int)$settings['slider_item'],
+                'spaceBetween' => !empty($settings["slider_spacebetween_{$next_key}"]) ? (int)$settings["slider_spacebetween_{$next_key}"] : (int)$settings['slider_spacebetween']
+            ];
+        }
 ?>
         <div class="bt-elwg-product-testimonial--style-1 js-data-testimonial-slider" data-slider-settings='<?php echo json_encode($slider_settings); ?>'>
             <div class="bt-product-testimonial ">
-                <div class="swiper bt-product-testimonial--content js-testimonial-slider">
+                <div class="bt-product-testimonial--content js-testimonial-slider swiper">
                     <div class="swiper-wrapper">
                         <?php if (!empty($settings['testimonial_items'])) : ?>
                             <?php foreach ($settings['testimonial_items'] as $item) : ?>
@@ -562,7 +752,7 @@ class Widget_ProductTestimonialSlider extends Widget_Base
                                             <div class="bt-cover-image">
                                                 <?php
                                                 if (!empty($item['testimonial_image']['url'])) :
-                                                    $attachment = wp_get_attachment_image_src($item['testimonial_image']['id'],'large');
+                                                    $attachment = wp_get_attachment_image_src($item['testimonial_image']['id'], 'large');
                                                     $image_url = $attachment ? $attachment[0] : $item['testimonial_image']['url'];
                                                 ?>
                                                     <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($item['testimonial_author']); ?>">
@@ -607,7 +797,7 @@ class Widget_ProductTestimonialSlider extends Widget_Base
                                             if ($product) : ?>
                                                 <a href="<?php echo esc_url($product->get_permalink()); ?>" class="product-info">
                                                     <div class="product-img">
-                                                    <?php echo wp_kses_post($product->get_image()); ?>
+                                                        <?php echo wp_kses_post($product->get_image()); ?>
                                                     </div>
                                                     <div class="product-content">
                                                         <h3 class="product-title"><?php echo esc_html($product->get_name()); ?></h3>
@@ -622,7 +812,6 @@ class Widget_ProductTestimonialSlider extends Widget_Base
                         <?php endif; ?>
 
                     </div>
-
                 </div>
                 <?php if ($settings['slider_arrows'] === 'yes') : ?>
                     <div class="bt-swiper-navigation">
@@ -633,8 +822,13 @@ class Widget_ProductTestimonialSlider extends Widget_Base
                                 <path d="M17.0306 12.531L9.53055 20.031C9.46087 20.1007 9.37815 20.156 9.2871 20.1937C9.19606 20.2314 9.09847 20.2508 8.99993 20.2508C8.90138 20.2508 8.8038 20.2314 8.71276 20.1937C8.62171 20.156 8.53899 20.1007 8.4693 20.031C8.39962 19.9614 8.34435 19.8786 8.30663 19.7876C8.26892 19.6965 8.24951 19.599 8.24951 19.5004C8.24951 19.4019 8.26892 19.3043 8.30663 19.2132C8.34435 19.1222 8.39962 19.0395 8.4693 18.9698L15.4396 12.0004L8.4693 5.03104C8.32857 4.89031 8.24951 4.69944 8.24951 4.50042C8.24951 4.30139 8.32857 4.11052 8.4693 3.96979C8.61003 3.82906 8.80091 3.75 8.99993 3.75C9.19895 3.75 9.38982 3.82906 9.53055 3.96979L17.0306 11.4698C17.1003 11.5394 17.1556 11.6222 17.1933 11.7132C17.2311 11.8043 17.2505 11.9019 17.2505 12.0004C17.2505 12.099 17.2311 12.1966 17.1933 12.2876C17.1556 12.3787 17.1003 12.4614 17.0306 12.531Z" fill="currentColor" />
                             </svg></div>
                     </div>
-                <?php endif; ?>
-                <div class="bt-swiper-pagination"></div>
+                <?php endif;
+                // pagination
+                if ($settings['slider_dots'] === 'yes') {
+                    echo '<div class="bt-swiper-pagination swiper-pagination"></div>';
+                }
+
+                ?>
             </div>
         </div>
 <?php

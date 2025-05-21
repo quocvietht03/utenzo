@@ -234,7 +234,7 @@ class Widget_TikTokShopSlider extends Widget_Base
             [
                 'label' => __('Slider SpaceBetween', 'utenzo'),
                 'type' => Controls_Manager::NUMBER,
-                'default' => 10,
+                'default' => 20,
                 'tablet_default' => 20,
                 'mobile_default' => 10,
                 'min' => 0,
@@ -253,7 +253,6 @@ class Widget_TikTokShopSlider extends Widget_Base
                 'step' => 100,
             ]
         );
-
         $this->add_control(
             'slider_arrows',
             [
@@ -261,6 +260,42 @@ class Widget_TikTokShopSlider extends Widget_Base
                 'type' => Controls_Manager::SWITCHER,
                 'label_on' => __('Yes', 'utenzo'),
                 'label_off' => __('No', 'utenzo'),
+            ]
+        );
+        $this->add_control(
+            'slider_arrows_hidden_mobile',
+            [
+                'label' => __('Hidden Arrow Mobile', 'utenzo'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Yes', 'utenzo'),
+                'label_off' => __('No', 'utenzo'),
+                'default' => 'no',
+                'condition' => [
+                    'slider_arrows' => 'yes',
+                ],
+            ]
+        );
+        $this->add_control(
+            'slider_dots',
+            [
+                'label' => __('Show Dots', 'utenzo'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Yes', 'utenzo'),
+                'label_off' => __('No', 'utenzo'),
+                'default' => 'no',
+            ]
+        );
+        $this->add_control(
+            'slider_dots_only_mobile',
+            [
+                'label' => __('Mobile-Only Pagination', 'utenzo'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Yes', 'utenzo'),
+                'label_off' => __('No', 'utenzo'),
+                'default' => 'no',
+                'condition' => [
+                    'slider_dots' => 'yes',
+                ],
             ]
         );
         $this->end_controls_section();
@@ -347,6 +382,7 @@ class Widget_TikTokShopSlider extends Widget_Base
         );
 
         $this->end_controls_section();
+
 
         $this->start_controls_section(
             'section_style_arrows',
@@ -457,7 +493,125 @@ class Widget_TikTokShopSlider extends Widget_Base
                 ],
             ]
         );
+        $this->end_controls_section();
+        $this->start_controls_section(
+            'section_style_dots',
+            [
+                'label' => esc_html__('Navigation Dots', 'utenzo'),
+                'tab' => Controls_Manager::TAB_STYLE,
+                'condition' => [
+                    'slider_dots' => 'yes',
+                ],
+            ]
+        );
+        $this->add_control(
+            'dots_spacing',
+            [
+                'label' => __('Spacing Dots', 'utenzo'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'range' => [
+                    'px' => [
+                        'min' => 1,
+                        'max' => 30,
+                    ],
+                ],
+                'default' => [
+                    'size' => 5,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .swiper-pagination-bullet' => 'margin: 0 {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+        $this->add_control(
+            'dots_size',
+            [
+                'label' => __('Size', 'utenzo'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'range' => [
+                    'px' => [
+                        'min' => 5,
+                        'max' => 50,
+                    ],
+                ],
+                'default' => [
+                    'size' => 10,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .swiper-pagination-bullet' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
 
+        $this->start_controls_tabs('dots_colors_tabs');
+
+        // Normal state
+        $this->start_controls_tab(
+            'dots_colors_normal',
+            [
+                'label' => __('Normal', 'utenzo'),
+            ]
+        );
+
+        $this->add_control(
+            'dots_color',
+            [
+                'label' => __('Color', 'utenzo'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '#0C2C48',
+                'selectors' => [
+                    '{{WRAPPER}} .swiper-pagination-bullet' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_tab();
+
+        // Hover state
+        $this->start_controls_tab(
+            'dots_colors_hover',
+            [
+                'label' => __('Hover', 'utenzo'),
+            ]
+        );
+
+        $this->add_control(
+            'dots_color_hover',
+            [
+                'label' => __('Color', 'utenzo'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '#000000',
+                'selectors' => [
+                    '{{WRAPPER}} .swiper-pagination-bullet:hover' => 'background-color: {{VALUE}};opacity: 1;',
+                ],
+            ]
+        );
+
+        $this->end_controls_tab();
+
+        $this->end_controls_tabs();
+        $this->add_control(
+            'dots_spacing_slider',
+            [
+                'label' => __('Spacing', 'utenzo'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'range' => [
+                    'px' => [
+                        'min' => 1,
+                        'max' => 100,
+                    ],
+                ],
+                'default' => [
+                    'size' => 50,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .swiper' => 'padding-bottom: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
 
         $this->end_controls_section();
     }
@@ -490,8 +644,7 @@ class Widget_TikTokShopSlider extends Widget_Base
 
         // Early return if no items
         if (empty($settings['list'])) return;
-        // Extract slider settings
-        $breakpoints = Plugin::$instance->breakpoints->get_active_breakpoints();
+
 
         $slider_settings = [
             'autoplay' => $settings['slider_autoplay'] === 'yes',
@@ -503,7 +656,7 @@ class Widget_TikTokShopSlider extends Widget_Base
         ];
 
         // Add responsive breakpoints
-
+        $breakpoints = Plugin::$instance->breakpoints->get_active_breakpoints();
         foreach ($breakpoints as $key => $breakpoint) {
             // Get the next higher breakpoint key
             $next_key = $key;
@@ -539,7 +692,6 @@ class Widget_TikTokShopSlider extends Widget_Base
                     }
                 }
             }
-            var_dump($key . ' -' . $next_key);
 
             $slider_settings['breakpoints'][$breakpoint->get_value()] = ($next_key == 'desktop') ? [
                 'slidesPerView' => !empty($settings['slider_item']) ? (int)$settings['slider_item'] : 5,
@@ -549,9 +701,15 @@ class Widget_TikTokShopSlider extends Widget_Base
                 'spaceBetween' => !empty($settings["slider_spacebetween_{$next_key}"]) ? (int)$settings["slider_spacebetween_{$next_key}"] : (int)$settings['slider_spacebetween']
             ];
         }
-        //   var_dump($slider_settings);
         // Start slider container
-        echo '<div class="bt-elwg-tiktok-shop-slider--default swiper" data-slider-settings="' . esc_attr(json_encode($slider_settings)) . '">';
+        $classes = ['bt-elwg-tiktok-shop-slider--default', 'swiper'];
+        if ($settings['slider_arrows_hidden_mobile'] === 'yes') {
+            $classes[] = 'bt-hidden-arrow-mobile';
+        }
+        if ($settings['slider_dots_only_mobile'] === 'yes') {
+            $classes[] = 'bt-only-dot-mobile';
+        }
+        echo '<div class="' . esc_attr(implode(' ', $classes)) . '" data-slider-settings="' . esc_attr(json_encode($slider_settings)) . '">';
 
         echo '<ul class="bt-tiktok-shop-slider swiper-wrapper">';
 
@@ -560,7 +718,8 @@ class Widget_TikTokShopSlider extends Widget_Base
 
             $image_url = $this->get_image_url($item['tiktok_image'], $settings['thumbnail_size']);
             $product = wc_get_product($item['id_product']);
-
+            $has_video = ($item['video_type'] === 'upload' && !empty($item['video_upload']['url'])) ||
+                ($item['video_type'] === 'iframe' && !empty($item['video_iframe']));
             echo '<li class="bt-tiktok-shop--item swiper-slide">';
             echo '<div class="bt-tiktok-shop--wrap">';
 
@@ -570,11 +729,13 @@ class Widget_TikTokShopSlider extends Widget_Base
                 echo '<img src="' . esc_url($image_url) . '" alt="' . esc_attr($product ? $product->get_name() : __('TikTok Shop Product', 'utenzo')) . '">';
             }
             echo '</div>';
-            echo '<a class="bt-play-video" href="#bt_play_video_' . $index . '" aria-label="' . esc_attr__('Play video', 'utenzo') . '">';
-            echo '<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">';
-            echo '<path d="M6.75 3.78441V20.3069C6.75245 20.4388 6.78962 20.5676 6.85776 20.6805C6.9259 20.7934 7.0226 20.8864 7.13812 20.95C7.25364 21.0136 7.38388 21.0456 7.51572 21.0428C7.64756 21.04 7.77634 21.0025 7.88906 20.9341L21.3966 12.6728C21.5045 12.6075 21.5937 12.5155 21.6556 12.4056C21.7175 12.2958 21.7501 12.1718 21.7501 12.0457C21.7501 11.9195 21.7175 11.7956 21.6556 11.6857C21.5937 11.5758 21.5045 11.4838 21.3966 11.4185L7.88906 3.15722C7.77634 3.08879 7.64756 3.05129 7.51572 3.04851C7.38388 3.04572 7.25364 3.07774 7.13812 3.14135C7.0226 3.20495 6.9259 3.29789 6.85776 3.41079C6.78962 3.52369 6.75245 3.65256 6.75 3.78441Z" fill="currentColor"></path>';
-            echo '</svg>';
-            echo '</a>';
+            if ($has_video) {
+                echo '<a class="bt-play-video js-open-popup" href="#bt_play_video_' . $index . '" aria-label="' . esc_attr__('Play video', 'utenzo') . '">';
+                echo '<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">';
+                echo '<path d="M6.75 3.78441V20.3069C6.75245 20.4388 6.78962 20.5676 6.85776 20.6805C6.9259 20.7934 7.0226 20.8864 7.13812 20.95C7.25364 21.0136 7.38388 21.0456 7.51572 21.0428C7.64756 21.04 7.77634 21.0025 7.88906 20.9341L21.3966 12.6728C21.5045 12.6075 21.5937 12.5155 21.6556 12.4056C21.7175 12.2958 21.7501 12.1718 21.7501 12.0457C21.7501 11.9195 21.7175 11.7956 21.6556 11.6857C21.5937 11.5758 21.5045 11.4838 21.3966 11.4185L7.88906 3.15722C7.77634 3.08879 7.64756 3.05129 7.51572 3.04851C7.38388 3.04572 7.25364 3.07774 7.13812 3.14135C7.0226 3.20495 6.9259 3.29789 6.85776 3.41079C6.78962 3.52369 6.75245 3.65256 6.75 3.78441Z" fill="currentColor"></path>';
+                echo '</svg>';
+                echo '</a>';
+            }
 
             // Product info
             if ($product) {
@@ -594,20 +755,22 @@ class Widget_TikTokShopSlider extends Widget_Base
             }
 
             echo '</div>';
-            echo '<div id="bt_play_video_' . $index . '" class="bt-video-popup mfp-hide bt-video-type-' . esc_attr($item['video_type']) . '">';
+
 
             if ($item['video_type'] === 'upload' && !empty($item['video_upload']['url'])) {
+                echo '<div id="bt_play_video_' . $index . '" class="bt-video-popup mfp-hide bt-video-type-' . esc_attr($item['video_type']) . '">';
                 echo '<div class="bt-video-wrap"><video controls>';
                 echo '<source src="' . esc_url($item['video_upload']['url']) . '" type="video/mp4">';
                 echo esc_html__('Your browser does not support the video tag.', 'utenzo');
                 echo '</video></div>';
+                echo '</div>';
             } elseif ($item['video_type'] === 'iframe' && !empty($item['video_iframe'])) {
+                echo '<div id="bt_play_video_' . $index . '" class="bt-video-popup mfp-hide bt-video-type-' . esc_attr($item['video_type']) . '">';
                 echo '<div class="bt-video-wrap">
                   <iframe src="https://www.tiktok.com/embed/v2/' . esc_attr($item['video_iframe']) . '"></iframe>
                     </div>';
+                echo '</div>';
             }
-
-            echo '</div>';
             echo '</li>';
         }
         // End slider container
@@ -629,6 +792,10 @@ class Widget_TikTokShopSlider extends Widget_Base
             echo '</svg>';
             echo '</div>';
             echo '</div>';
+        }
+        // pagination
+        if ($settings['slider_dots'] === 'yes') {
+            echo '<div class="bt-swiper-pagination swiper-pagination"></div>';
         }
         echo '</div>';
     }

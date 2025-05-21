@@ -239,7 +239,7 @@
 		const $tiktokSlider = $scope.find('.bt-elwg-tiktok-shop-slider--default');
 		// Get Elementor breakpoints
 		const $sliderSettings = $tiktokSlider.data('slider-settings');
-		console.log($sliderSettings.breakpoints);
+		//	console.log($sliderSettings.breakpoints);
 		if ($tiktokSlider.length > 0) {
 
 			const $swiper = new Swiper($tiktokSlider[0], {
@@ -249,6 +249,14 @@
 				speed: $sliderSettings.speed,
 				freeMode: true,
 				allowTouchMove: true,
+				pagination: {
+					el: $tiktokSlider.find('.bt-swiper-pagination')[0],
+					clickable: true,
+					type: 'bullets',
+					renderBullet: function (index, className) {
+						return '<span class="' + className + '"></span>';
+					},
+				},
 				autoplay: $sliderSettings.autoplay ? {
 					delay: 3000,
 					disableOnInteraction: false
@@ -257,7 +265,6 @@
 					nextEl: $tiktokSlider.find('.bt-button-next')[0],
 					prevEl: $tiktokSlider.find('.bt-button-prev')[0],
 				},
-				handleElementorBreakpoints: true,
 				breakpoints: $sliderSettings.breakpoints,
 			});
 
@@ -270,7 +277,7 @@
 				});
 			}
 			// tiktok popup video
-			$tiktokSlider.find('.bt-play-video').magnificPopup({
+			$tiktokSlider.find('.js-open-popup').magnificPopup({
 				type: 'inline',
 				preloader: false,
 				removalDelay: 300,
@@ -534,6 +541,14 @@
 				speed: $sliderSettings.speed,
 				freeMode: true,
 				allowTouchMove: true,
+				pagination: {
+					el: $Hotspotslider.find('.bt-swiper-pagination')[0],
+					clickable: true,
+					type: 'bullets',
+					renderBullet: function (index, className) {
+						return '<span class="' + className + '"></span>';
+					},
+				},
 				autoplay: $sliderSettings.autoplay ? {
 					delay: 3000,
 					disableOnInteraction: false
@@ -549,7 +564,7 @@
 						spaceBetween: $sliderSettings.spaceBetween.desktop
 					},
 					1024: {
-						slidesPerView: 2,
+						slidesPerView: 3,
 						spaceBetween: $sliderSettings.spaceBetween.desktop
 					},
 					767: {
@@ -681,24 +696,15 @@
 		const $ProductTestimonialSlider = $scope.find('.js-data-testimonial-slider');
 		if ($ProductTestimonialSlider.length > 0) {
 			const $sliderSettings = $ProductTestimonialSlider.data('slider-settings') || {};
-			const sliderSpeed = $sliderSettings.speed || 500;
-			const autoplay = $sliderSettings.autoplay || false;
-			const autoplayDelay = $sliderSettings.autoplay_delay || 3000;
-			const spaceBetween = $sliderSettings.space_between || 30;
-			const spaceBetweenMobile = $sliderSettings.space_between_mobile || 10;
-			const spaceBetweenTablet = $sliderSettings.space_between_tablet || 20;
-			const itemsDesktop = $sliderSettings.items_desktop || 1;
-			const itemsMobile = $sliderSettings.items_mobile || 1;
-			const itemsTablet = $sliderSettings.items_tablet || 2;
-
+			console.log($sliderSettings);
 			// Initialize the testimonial slider
 			const testimonialSlider = new Swiper($ProductTestimonialSlider.find('.js-testimonial-slider')[0], {
-				slidesPerView: itemsMobile,
-				spaceBetween: spaceBetweenMobile,
-				loop: true,
-				speed: sliderSpeed,
-				autoplay: autoplay ? {
-					delay: autoplayDelay,
+				slidesPerView: $sliderSettings.slidesPerView,
+				spaceBetween: $sliderSettings.spaceBetween,
+				loop: $sliderSettings.loop,
+				speed: $sliderSettings.speed,
+				autoplay: $sliderSettings.autoplay ? {
+					delay: $sliderSettings.autoplay_delay,
 					disableOnInteraction: false
 				} : false,
 				navigation: {
@@ -708,17 +714,12 @@
 				pagination: {
 					el: $scope.find('.bt-swiper-pagination')[0],
 					clickable: true,
-				},
-				breakpoints: {
-					768: {
-						slidesPerView: itemsTablet,
-						spaceBetween: spaceBetweenTablet
+					type: 'bullets',
+					renderBullet: function (index, className) {
+						return '<span class="' + className + '"></span>';
 					},
-					1024: {
-						slidesPerView: itemsDesktop,
-						spaceBetween: spaceBetween
-					}
-				}
+				},
+				breakpoints: $sliderSettings.breakpoints,
 			});
 
 			// Pause autoplay on hover if autoplay is enabled

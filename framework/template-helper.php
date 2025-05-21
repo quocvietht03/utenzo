@@ -455,3 +455,62 @@ if (!function_exists('utenzo_popup_newslleter_form')) {
 	}
 	add_action('wp_footer', 'utenzo_popup_newslleter_form');
 }
+
+/* Hook add Field Loop Caroucel Elementor */
+add_action('elementor/element/loop-carousel/section_carousel_pagination/before_section_end', function ($element) {
+	$element->add_control(
+		'enable_pagination_mobile',
+		[
+			'type' => \Elementor\Controls_Manager::SWITCHER,
+			'label' => esc_html__('Mobile-Only Pagination', 'utenzo'),
+			'default' => 'no',
+			'label_on' => esc_html__('Yes', 'utenzo'),
+			'label_off' => esc_html__('No', 'utenzo'),
+			'return_value' => 'yes',
+			'separator' => 'before'
+		]
+	);
+});
+add_action('elementor/element/loop-carousel/section_navigation_settings/before_section_end', function ($element) {
+	$element->add_control(
+		'enable_hidden_arrow_mobile',
+		[
+			'type' => \Elementor\Controls_Manager::SWITCHER,
+			'label' => esc_html__('Hidden Arrow Mobile', 'utenzo'),
+			'default' => 'no',
+			'label_on' => esc_html__('Yes', 'utenzo'),
+			'label_off' => esc_html__('No', 'utenzo'),
+			'return_value' => 'yes',
+			'separator' => 'before'
+		]
+	);
+});
+
+// Hook for frontend render
+function utenzo_widget_loop_carousel_custom($widget_content, $widget)
+{
+	if ('loop-carousel' === $widget->get_name()) {
+		$settings = $widget->get_settings();
+		$enable_pagination_mobile = isset($settings['enable_pagination_mobile']) ? $settings['enable_pagination_mobile'] : '';
+
+		if ($enable_pagination_mobile == 'yes') {
+			// Add class for both frontend
+			$widget->add_render_attribute('_wrapper', 'class', 'bt-enable-pagination-mobile');
+			// Add editor class
+			if (\Elementor\Plugin::$instance->editor->is_edit_mode() && strpos($widget_content, 'swiper-pagination') !== false) {
+				$widget_content = str_replace('swiper-pagination', 'swiper-pagination bt-show-pagination-mobile', $widget_content);
+			}
+		}
+		$enable_hidden_arrow_mobile = isset($settings['enable_hidden_arrow_mobile']) ? $settings['enable_hidden_arrow_mobile'] : '';
+		if ($enable_hidden_arrow_mobile == 'yes') {
+			// Add class for both frontend
+			$widget->add_render_attribute('_wrapper', 'class', 'bt-enable-hidden-arrow-mobile');
+			// Add editor class
+			if (\Elementor\Plugin::$instance->editor->is_edit_mode() && strpos($widget_content, 'elementor-swiper-button') !== false) {
+				$widget_content = str_replace('elementor-swiper-button', 'bt-hinden-arrow-mobile elementor-swiper-button', $widget_content);
+			}
+		}
+	}
+	return $widget_content;
+}
+add_filter('elementor/widget/render_content', 'utenzo_widget_loop_carousel_custom', 10, 2);
