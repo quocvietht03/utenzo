@@ -247,8 +247,6 @@
 				loop: $sliderSettings.loop,
 				spaceBetween: $sliderSettings.spaceBetween,
 				speed: $sliderSettings.speed,
-				freeMode: true,
-				allowTouchMove: true,
 				pagination: {
 					el: $tiktokSlider.find('.bt-swiper-pagination')[0],
 					clickable: true,
@@ -539,8 +537,6 @@
 				loop: $sliderSettings.loop || false,
 				spaceBetween: $sliderSettings.spaceBetween.mobile,
 				speed: $sliderSettings.speed,
-				freeMode: true,
-				allowTouchMove: true,
 				pagination: {
 					el: $Hotspotslider.find('.bt-swiper-pagination')[0],
 					clickable: true,

@@ -6212,7 +6212,13 @@
           }
         }
       }
+      @media(max-width:$break-sm){
+        &.shop_table_responsive{
+          
+        }
+      }
     }
+
   }
   .cart-collaterals {
     .cross-sells {
