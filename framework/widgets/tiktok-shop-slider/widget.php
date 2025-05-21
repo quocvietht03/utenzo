@@ -528,19 +528,19 @@ class Widget_TikTokShopSlider extends Widget_Base
                 else {
                     $found_next = false;
                     for ($i = $current_index + 1; $i < count($breakpoint_keys); $i++) {
-                        if (isset($breakpoints[$breakpoint_keys[$i]])) {
-                            if ($breakpoint_keys[$i] == 'widescreen') {
-                                $next_key = 'desktop';
-                            } else {
-                                $next_key = $breakpoint_keys[$i];
-                            }
-
+                        if (isset($breakpoints[$breakpoint_keys[$i]]) && $breakpoint_keys[$i] !== 'widescreen') {
+                            $next_key = $breakpoint_keys[$i];
                             $found_next = true;
                             break;
                         }
                     }
+                    if (!$found_next) {
+                        $next_key = 'desktop';
+                    }
                 }
             }
+            var_dump($key . ' -' . $next_key);
+
             $slider_settings['breakpoints'][$breakpoint->get_value()] = ($next_key == 'desktop') ? [
                 'slidesPerView' => !empty($settings['slider_item']) ? (int)$settings['slider_item'] : 5,
                 'spaceBetween' => !empty($settings['slider_spacebetween']) ? (int)$settings['slider_spacebetween'] : 20
@@ -549,6 +549,7 @@ class Widget_TikTokShopSlider extends Widget_Base
                 'spaceBetween' => !empty($settings["slider_spacebetween_{$next_key}"]) ? (int)$settings["slider_spacebetween_{$next_key}"] : (int)$settings['slider_spacebetween']
             ];
         }
+        //   var_dump($slider_settings);
         // Start slider container
         echo '<div class="bt-elwg-tiktok-shop-slider--default swiper" data-slider-settings="' . esc_attr(json_encode($slider_settings)) . '">';
 
