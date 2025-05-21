@@ -223,6 +223,10 @@ class Widget_TikTokShopSlider extends Widget_Base
                 'label' => __('Slider Item', 'utenzo'),
                 'type' => Controls_Manager::NUMBER,
                 'default' => 5,
+                'tablet_default' => 3,
+                'mobile_default' => 1,
+                'min' => 1,
+                'max' => 10,
             ]
         );
         $this->add_responsive_control(
@@ -231,9 +235,12 @@ class Widget_TikTokShopSlider extends Widget_Base
                 'label' => __('Slider SpaceBetween', 'utenzo'),
                 'type' => Controls_Manager::NUMBER,
                 'default' => 10,
+                'tablet_default' => 20,
+                'mobile_default' => 10,
                 'min' => 0,
                 'max' => 100,
                 'step' => 1,
+                'description' => __('Space between slides in pixels', 'utenzo'),
             ]
         );
         $this->add_control(
@@ -496,7 +503,7 @@ class Widget_TikTokShopSlider extends Widget_Base
         ];
 
         // Add responsive breakpoints
-        
+
         foreach ($breakpoints as $key => $breakpoint) {
             // Get the next higher breakpoint key
             $next_key = $key;
@@ -522,29 +529,26 @@ class Widget_TikTokShopSlider extends Widget_Base
                     $found_next = false;
                     for ($i = $current_index + 1; $i < count($breakpoint_keys); $i++) {
                         if (isset($breakpoints[$breakpoint_keys[$i]])) {
-                            if($breakpoint_keys[$i] == 'widescreen'){
+                            if ($breakpoint_keys[$i] == 'widescreen') {
                                 $next_key = 'desktop';
-                            }else{
+                            } else {
                                 $next_key = $breakpoint_keys[$i];
                             }
-                           
+
                             $found_next = true;
                             break;
                         }
                     }
-                    // If no higher breakpoint found, use default
-                    if (!$found_next) {
-                     
-                    }
                 }
             }
-          //  var_dump($key . ' -' . $next_key);
-            $slider_settings['breakpoints'][$breakpoint->get_value()] = [
+            $slider_settings['breakpoints'][$breakpoint->get_value()] = ($next_key == 'desktop') ? [
+                'slidesPerView' => !empty($settings['slider_item']) ? (int)$settings['slider_item'] : 5,
+                'spaceBetween' => !empty($settings['slider_spacebetween']) ? (int)$settings['slider_spacebetween'] : 20
+            ] : [
                 'slidesPerView' => !empty($settings["slider_item_{$next_key}"]) ? (int)$settings["slider_item_{$next_key}"] : (int)$settings['slider_item'],
                 'spaceBetween' => !empty($settings["slider_spacebetween_{$next_key}"]) ? (int)$settings["slider_spacebetween_{$next_key}"] : (int)$settings['slider_spacebetween']
             ];
         }
-  //        var_dump($slider_settings);
         // Start slider container
         echo '<div class="bt-elwg-tiktok-shop-slider--default swiper" data-slider-settings="' . esc_attr(json_encode($slider_settings)) . '">';
 
