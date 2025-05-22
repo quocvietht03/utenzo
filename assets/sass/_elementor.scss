@@ -2895,7 +2895,7 @@ body {
             height: auto;
             display: block;
             max-width: unset;
-            @media(max-width: 1660px) {
+            @media(max-width: 1700) {
               width: 120%;
               margin-left: -10%;
             }
@@ -2903,9 +2903,9 @@ body {
               width: 140%;
               margin-left: -20%;
             }
-            @media(max-width: 1130px) {
-              width: 150%;
-              margin-left: -25%;
+            @media(max-width: 1320px) {
+              width: 156%;
+              margin-left: -28%;
             }
           }
         }

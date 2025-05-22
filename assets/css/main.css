@@ -15767,7 +15767,7 @@ body.admin-bar .mfp-wrap {
   display: block;
   max-width: unset;
 }
-@media (max-width: 1660px) {
+@media (max-width: 1700) {
   .bt-elwg-hotspot-product--default .bt-hotspot-product--image .bt-hotspot-image img {
     width: 120%;
     margin-left: -10%;
@@ -15779,10 +15779,10 @@ body.admin-bar .mfp-wrap {
     margin-left: -20%;
   }
 }
-@media (max-width: 1130px) {
+@media (max-width: 1320px) {
   .bt-elwg-hotspot-product--default .bt-hotspot-product--image .bt-hotspot-image img {
-    width: 150%;
-    margin-left: -25%;
+    width: 156%;
+    margin-left: -28%;
   }
 }
 .bt-elwg-hotspot-product--default .bt-hotspot-product--image .bt-hotspot-points {
