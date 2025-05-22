@@ -2895,7 +2895,7 @@ body {
             height: auto;
             display: block;
             max-width: unset;
-            @media(max-width: 1700) {
+            @media(max-width: 1700px) {
               width: 120%;
               margin-left: -10%;
             }

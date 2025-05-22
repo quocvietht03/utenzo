@@ -15767,7 +15767,7 @@ body.admin-bar .mfp-wrap {
   display: block;
   max-width: unset;
 }
-@media (max-width: 1700) {
+@media (max-width: 1700px) {
   .bt-elwg-hotspot-product--default .bt-hotspot-product--image .bt-hotspot-image img {
     width: 120%;
     margin-left: -10%;
