@@ -134,7 +134,9 @@
     gap: 10px;
     height: 58px;
     background: transparent;
-
+    @media(max-width: 360px) {
+      gap: 5px;
+    }
     .select2-selection {
       &__arrow {
         width: 20px;

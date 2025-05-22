@@ -398,4 +398,17 @@
       }
     }
   }
+  @media(max-width:360px){
+    .comment-respond {
+      .comment-reply-title {
+        font-size: 22px;
+      }
+      .comment-form{
+        input[type=submit]{
+          font-size: 14px;
+          line-height: 1.3;
+        }
+      }
+    }
+  }
 }

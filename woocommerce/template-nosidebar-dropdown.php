@@ -129,7 +129,7 @@ get_template_part('framework/templates/site', 'titlebar');
 						</div>
 					</div>
 					<div class="bt-products-dropdown">
-						<?php get_template_part('woocommerce/sidebar', 'product'); ?>
+						<?php get_template_part('woocommerce/sidebar', 'product', array('total_products' => $total_products)); ?>
 					</div>
 					<div class="bt-product-layout <?php echo esc_attr($column_product == 4 ? 'column-4' : ''); ?>" data-view="<?php echo esc_attr(isset($_GET['view_type']) && $_GET['view_type'] !== '' ? $_GET['view_type'] : ''); ?>">
 						<span class="bt-loading-wave"></span>

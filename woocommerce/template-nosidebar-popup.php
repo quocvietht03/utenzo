@@ -25,7 +25,7 @@ get_template_part('framework/templates/site', 'titlebar');
 		<div class="bt-main-products-ss bt-template-nosidebar-popup">
 			<div class="bt-container">
 				<div class="bt-products-sidebar">
-					<?php get_template_part('woocommerce/sidebar', 'product'); ?>
+					<?php get_template_part('woocommerce/sidebar', 'product', array('total_products' => $total_products)); ?>
 				</div>
 				<div class="bt-main-products-inner">
 					<div class="bt-products-topbar">
