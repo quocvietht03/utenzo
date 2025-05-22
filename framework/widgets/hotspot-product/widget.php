@@ -105,6 +105,9 @@ class Widget_HotspotProduct extends Widget_Base
                         'max' => 200,
                     ],
                 ],
+                'default' => [
+                    'unit' => '%',
+                ],
                 'selectors' => [
                     '{{WRAPPER}} .bt-hotspot-image img' => 'width: {{SIZE}}{{UNIT}}; margin-left:calc(-1 * ({{SIZE}}{{UNIT}} - 100%) / 2);',
                 ],
