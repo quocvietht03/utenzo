@@ -5977,12 +5977,7 @@
           border-right: 0;
         }
       }
-      &.shop_table_responsive tr td::before {
-        font-family: $primary-font;
-        font-size: 14px;
-        font-weight: 600;
-        letter-spacing: 1px;
-      }
+    
       thead {
         color: $color-primary;
         th {
@@ -6214,7 +6209,11 @@
       }
       @media(max-width:$break-sm){
         &.shop_table_responsive{
-          
+            tr td::before {
+            font-family: $primary-font;
+            font-size: 14px;
+            font-weight: 600;
+          }
         }
       }
     }
