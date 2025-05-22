@@ -93,6 +93,23 @@ class Widget_HotspotProduct extends Widget_Base
                 'exclude' => ['custom'],
             ]
         );
+        $this->add_responsive_control(
+            'image_width',
+            [
+                'label' => __('Image Width', 'utenzo'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['%'],
+                'range' => [
+                    '%' => [
+                        'min' => 100,
+                        'max' => 200,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .bt-hotspot-image img' => 'width: {{SIZE}}{{UNIT}}; margin-left:calc(-1 * ({{SIZE}}{{UNIT}} - 100%) / 2);',
+                ],
+            ]
+        );
         $this->add_control(
             'tooltip_layout',
             [

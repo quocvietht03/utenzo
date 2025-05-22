@@ -2832,10 +2832,6 @@ body {
       align-items: center;
       flex-wrap: wrap;
       background: #f6f6f6;
-      @media (max-width: 1340px) {
-        align-items: flex-start;
-        justify-content: center;
-      }
       &.bt-tooltip-style1 {
         .bt-hotspot-points {
           .bt-hotspot-point {
@@ -2892,17 +2888,25 @@ body {
       &--image {
         width: 50%;
         position: relative;
-        @media (max-width: 1489px) {
-          width: 60%;
-        }
-        @media (max-width: 1340px) {
-          width: 52%;
-        }
         .bt-hotspot-image {
+          overflow: hidden;
           img {
             width: 100%;
             height: auto;
             display: block;
+            max-width: unset;
+            @media(max-width: 1660px) {
+              width: 120%;
+              margin-left: -10%;
+            }
+            @media(max-width: 1419px) {
+              width: 140%;
+              margin-left: -20%;
+            }
+            @media(max-width: 1130px) {
+              width: 150%;
+              margin-left: -25%;
+            }
           }
         }
         .bt-hotspot-points {
@@ -3095,17 +3099,10 @@ body {
         width: 50%;
         position: relative;
         overflow: hidden;
-        max-width: 890px;
         margin: 0;
         padding: 20px 15px 20px 80px;
         @media (max-width: 1700px) and (min-width: $break-tl) {
           padding: 30px 15px 30px 20px;
-        }
-        @media (max-width: 1489px) {
-          width: 40%;
-        }
-        @media (max-width: 1340px) {
-          width: 48%;
         }
         @media (max-width: $break-tl) {
           padding: 40px 15px 40px 15px;
@@ -3146,11 +3143,10 @@ body {
             margin-top: 40px;
             overflow: visible;
             @media (max-width: $break-lg) {
-              margin-top: 25px;
+              margin-top: 30px;
             }
             @media (max-width: $break-sm) {
               padding-top: 55px;
-              margin-top: 15px;
             }
             .bt-slider-item {
               @extend .__bt-loop-product-style;
@@ -3178,7 +3174,7 @@ body {
                   .bt-icon-btn {
                     border-radius: 50%;
                   }
-                  @media (max-width: 1600px) and (min-width: 1490px) {
+                  @media (max-width: 1600px) and (min-width: 1420px) {
                     .bt-icon-btn {
                       width: 30px;
                       height: 30px;
