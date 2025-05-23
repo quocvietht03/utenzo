@@ -28,7 +28,7 @@ function utenzo_get_icon_svg_html($icon_file_name)
 {
 
 	if (!empty($icon_file_name)) {
-		$file_path = CLEANIRA_IMG_DIR . $icon_file_name . '.svg';
+		$file_path =  get_template_directory_uri() . '/assets/images/' . $icon_file_name . '.svg';
 		$file = file_get_contents($file_path);
 		if ($file !== false) {
 			return $file;
@@ -124,16 +124,12 @@ if (!function_exists('utenzo_enqueue_scripts')) {
 if (!function_exists('utenzo_enqueue_admin_scripts')) {
 	function utenzo_enqueue_admin_scripts()
 	{
+		wp_enqueue_style('utenzo-fonts', get_template_directory_uri() . '/assets/css/fonts.css',  array(), false);
 		wp_enqueue_script('utenzo-admin-main', get_template_directory_uri() . '/assets/js/admin-main.js', array('jquery'), '', true);
 		wp_enqueue_style('utenzo-admin-main', get_template_directory_uri() . '/assets/css/admin-main.css', array(), false);
 	}
 	add_action('admin_enqueue_scripts', 'utenzo_enqueue_admin_scripts');
 }
-
-/**
- * Define theme path
- */
-define('CLEANIRA_IMG_DIR', get_template_directory_uri() . '/assets/images/');
 
 /**
  * Theme install
