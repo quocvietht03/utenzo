@@ -2,35 +2,35 @@
     font-family: "Urbanist";
     src:
       local("Urbanist-Bold"),
-      url("../fonts/Urbanist-Bold.ttf") format("truetype"),;
+      url("Urbanist-Bold.ttf") format("truetype"),;
     font-weight: 700;
   }
   @font-face {
     font-family: "Urbanist";
     src:
       local("Urbanist-Semibold"),
-      url("../fonts/Urbanist-Semibold.ttf") format("truetype"),;
+      url("Urbanist-Semibold.ttf") format("truetype"),;
     font-weight: 600;
   }
   @font-face {
     font-family: "Urbanist";
     src:
       local("Urbanist-Medium"),
-      url("../fonts/Urbanist-Medium.ttf") format("truetype"),;
+      url("Urbanist-Medium.ttf") format("truetype"),;
     font-weight: 500;
   }
   @font-face {
     font-family: "Urbanist";
     src:
       local("Urbanist-Regular"),
-      url("../fonts/Urbanist-Regular.ttf") format("truetype"),;
+      url("Urbanist-Regular.ttf") format("truetype"),;
     font-weight: 400;
   }
   @font-face {
     font-family: "Urbanist";
     src:
       local("Urbanist-Italic"),
-      url("../fonts/Urbanist-Italic.ttf") format("truetype"),;
+      url("Urbanist-Italic.ttf") format("truetype"),;
     font-weight: 400;
     font-style: italic;
   }
