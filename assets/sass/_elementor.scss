@@ -3202,6 +3202,7 @@ body {
             line-height: 26px;
             text-transform: uppercase;
             position: relative;
+            min-width: 240px;
             &:hover {
               background-color: $color-primary;
             }
@@ -3238,10 +3239,9 @@ body {
               text-decoration-line: line-through;
               margin-left: 2px;
             }
-            @media (max-width: $break-xs) {
+            @media (max-width: 499.98px) {
               width: 100%;
               padding: 12px;
-              text-align: center;
             }
           }
         }
@@ -3680,7 +3680,7 @@ body {
             gap: 8px;
             align-items: baseline;
             .woocommerce-Price-amount {
-              font-size: 20px;
+              font-size: 18px;
               font-style: normal;
               font-weight: 600;
               line-height: 28px;
