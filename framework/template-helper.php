@@ -384,15 +384,10 @@ if (!function_exists('utenzo_back_to_top')) {
 	{
 	?>
 		<a href="#" class="bt-back-to-top">
-			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-				<g clip-path="url(#clip0_2071_1114)">
-					<path d="M3 11.25L12 2.25L21 11.25H16.5V19.5C16.5 19.6989 16.421 19.8897 16.2803 20.0303C16.1397 20.171 15.9489 20.25 15.75 20.25H8.25C8.05109 20.25 7.86032 20.171 7.71967 20.0303C7.57902 19.8897 7.5 19.6989 7.5 19.5V11.25H3Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+			<svg width="512" height="512" x="0" y="0" viewBox="0 0 128 128" xml:space="preserve">
+				<g>
+					<path d="M64 104a3.988 3.988 0 0 1-2.828-1.172l-40-40c-1.563-1.563-1.563-4.094 0-5.656s4.094-1.563 5.656 0L64 94.344l37.172-37.172c1.563-1.563 4.094-1.563 5.656 0s1.563 4.094 0 5.656l-40 40A3.988 3.988 0 0 1 64 104zm2.828-33.172 40-40c1.563-1.563 1.563-4.094 0-5.656s-4.094-1.563-5.656 0L64 62.344 26.828 25.172c-1.563-1.563-4.094-1.563-5.656 0s-1.563 4.094 0 5.656l40 40C61.953 71.609 62.977 72 64 72s2.047-.391 2.828-1.172z" fill="#ffffff" opacity="1" data-original="#000000" class=""></path>
 				</g>
-				<defs>
-					<clipPath id="clip0_2071_1114">
-						<rect width="24" height="24" fill="white" />
-					</clipPath>
-				</defs>
 			</svg>
 		</a>
 		<?php
