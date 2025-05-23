@@ -555,19 +555,19 @@
 				},
 
 				breakpoints: {
-					1420: {
+					1560: {
 						slidesPerView: 3,
 						spaceBetween: $sliderSettings.spaceBetween.desktop
 					},
-					1024: {
-						slidesPerView: 3,
+					1025: {
+						slidesPerView: 2,
 						spaceBetween: $sliderSettings.spaceBetween.desktop
 					},
 					767: {
 						slidesPerView: 3,
 						spaceBetween: $sliderSettings.spaceBetween.tablet
 					},
-					600: {
+					500: {
 						slidesPerView: 2,
 						spaceBetween: $sliderSettings.spaceBetween.tablet
 					},
