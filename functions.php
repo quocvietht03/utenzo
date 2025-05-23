@@ -40,26 +40,12 @@ function utenzo_get_icon_svg_html($icon_file_name)
 	}
 }
 
-/* Register Default Fonts */
-if (!function_exists('utenzo_fonts_url')) {
-	function utenzo_fonts_url()
-	{
-		global $utenzo_options;
-		$base_font = 'Urbanist';
-		$head_font = 'Urbanist';
-
-		$font_url = '';
-		if ('off' !== _x('on', 'Google font: on or off', 'utenzo')) {
-			$font_url = add_query_arg('family', urlencode($base_font . ':400,400i,600,700|' . $head_font . ':400,400i,500,600,700'), "//fonts.googleapis.com/css");
-		}
-		return $font_url;
-	}
-}
 /* Enqueue Script */
 if (!function_exists('utenzo_enqueue_scripts')) {
 	function utenzo_enqueue_scripts()
 	{
-		global $utenzo_options;
+		wp_enqueue_style('utenzo-fonts', get_template_directory_uri() . '/assets/css/fonts.css',  array(), false);
+
 		if (is_archive('product')) {
 			wp_enqueue_script('nouislider-script', get_template_directory_uri() . '/assets/libs/nouislider/nouislider.min.js', array('jquery'), '', true);
 			wp_enqueue_style('nouislider-style', get_template_directory_uri() . '/assets/libs/nouislider/nouislider.min.css', array(), false);
@@ -77,8 +63,6 @@ if (!function_exists('utenzo_enqueue_scripts')) {
 		wp_enqueue_script('select2', get_template_directory_uri() . '/assets/libs/select2/select2.min.js', array('jquery'), '', true);
 		wp_enqueue_style('select2', get_template_directory_uri() . '/assets/libs/select2/select2.min.css', array(), false);
 
-		/* Fonts */
-		// wp_enqueue_style('utenzo-fonts', utenzo_fonts_url(), false);
 		wp_enqueue_style('utenzo-main', get_template_directory_uri() . '/assets/css/main.css',  array(), false);
 		wp_enqueue_style('utenzo-style', get_template_directory_uri() . '/style.css',  array(), false);
 		wp_enqueue_script('utenzo-main', get_template_directory_uri() . '/assets/js/main.js', array('jquery'), '', true);
@@ -134,7 +118,7 @@ if (!function_exists('utenzo_enqueue_scripts')) {
 		wp_localize_script('utenzo-main', 'AJ_Options', $js_options);
 		wp_enqueue_script('utenzo-main');
 	}
-	add_action('wp_enqueue_scripts', 'utenzo_enqueue_scripts');
+	add_action('wp_enqueue_scripts', 'utenzo_enqueue_scripts', 3);
 }
 /* Add Stylesheet And Script Backend */
 if (!function_exists('utenzo_enqueue_admin_scripts')) {
