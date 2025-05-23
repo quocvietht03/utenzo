@@ -9,7 +9,7 @@
     font-family: "Urbanist";
     src:
       local("Urbanist-Semibold"),
-      url("Urbanist-Semibold.ttf") format("truetype"),;
+      url("Urbanist-SemiBold.ttf") format("truetype"),;
     font-weight: 600;
   }
   @font-face {
