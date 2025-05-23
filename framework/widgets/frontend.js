@@ -380,6 +380,21 @@
 			});
 		}
 	}
+	function UtenzoFreeShippingMessage() {
+		$.ajax({
+			url: AJ_Options.ajax_url,
+			type: 'POST',
+			data: {
+				action: 'utenzo_get_free_shipping',
+			},
+			success: function (response) {
+				if (response.success) {
+					$(".bt-progress-bar").css("width", response.data['percentage'] + "%");
+					$('#bt-free-shipping-message').html(response.data['message']);
+				}
+			},
+		});
+	}
 	const HotspotProductHandler = function ($scope) {
 		const $HotspotProduct = $scope.find('.bt-elwg-hotspot-product--default');
 		if ($HotspotProduct.length > 0) {
@@ -619,6 +634,7 @@
 							if (response.success) {
 								// Update cart count and trigger cart refresh
 								$(document.body).trigger('updated_wc_div');
+								UtenzoFreeShippingMessage();
 								$this.html('View Cart');
 								$this.addClass('bt-view-cart');
 							}
