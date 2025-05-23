@@ -2191,7 +2191,7 @@
           font-size: 20px;
           font-style: normal;
           font-weight: 600;
-          line-height: 28px;
+          line-height: 1.5;
           color: $color-primary;
         }
         ins {
@@ -2203,16 +2203,14 @@
             font-size: 16px;
             font-style: normal;
             font-weight: 400;
-            line-height: 26px;
+            line-height: 1.5;
             color: #a0a0a0;
           }
         }
         @media (max-width: $break-xs) {
           gap: 4px;
-          line-height: 22px;
           .woocommerce-Price-amount {
             font-size: 16px;
-            line-height: 22px;
           }
         }
       }

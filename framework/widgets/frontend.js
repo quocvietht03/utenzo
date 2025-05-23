@@ -560,7 +560,7 @@
 						spaceBetween: $sliderSettings.spaceBetween.desktop
 					},
 					1024: {
-						slidesPerView: 2,
+						slidesPerView: 3,
 						spaceBetween: $sliderSettings.spaceBetween.desktop
 					},
 					767: {
