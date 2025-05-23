@@ -214,7 +214,7 @@ class ElementorWidgets
 	{
 
 		// Register widget styles
-		add_action('elementor/frontend/after_register_styles', [$this, 'widget_styles'], 9);
+		add_action('elementor/frontend/after_register_styles', [$this, 'widget_styles']);
 
 		// Register widget scripts
 		add_action('elementor/frontend/after_register_scripts', [$this, 'widget_scripts']);

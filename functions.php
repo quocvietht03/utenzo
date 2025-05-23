@@ -118,7 +118,7 @@ if (!function_exists('utenzo_enqueue_scripts')) {
 		wp_localize_script('utenzo-main', 'AJ_Options', $js_options);
 		wp_enqueue_script('utenzo-main');
 	}
-	add_action('wp_enqueue_scripts', 'utenzo_enqueue_scripts', 3);
+	add_action('wp_enqueue_scripts', 'utenzo_enqueue_scripts');
 }
 /* Add Stylesheet And Script Backend */
 if (!function_exists('utenzo_enqueue_admin_scripts')) {
