@@ -36,11 +36,6 @@ $plugin_includes = array(
     'name'     => __( 'WooCommerce', 'utenzo' ),
     'slug'     => 'woocommerce',
   ),
-  array(
-    'name'     => __( 'WooCommerce Booking & Rental System', 'utenzo' ),
-    'slug'     => 'woocommerce-rental-and-booking',
-    'source'   => IMPORT_REMOTE_SERVER_PLUGIN_DOWNLOAD . 'woocommerce-rental-and-booking.zip',
-  ),
 
 );
 

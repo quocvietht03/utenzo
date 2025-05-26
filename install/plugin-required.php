@@ -97,13 +97,6 @@ function utenzo_register_required_plugins() {
 		'slug'          => 'woocommerce',
 		'required'      => false,
     ),
-	array(
-		'name'          => __( 'WooCommerce Booking & Rental System', 'utenzo' ),
-		'slug'          => 'woocommerce-rental-and-booking',
-		'source'        => $pathfile . 'woocommerce-rental-and-booking.zip',
-		'required'      => true,
-	),
-	
 
   );
 
