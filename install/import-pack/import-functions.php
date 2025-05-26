@@ -202,7 +202,7 @@ if( ! function_exists( 'utenzo_import_pack_step_import_package_successful' ) ) {
                 <div class="desc"><?php echo "{$step['description']}" ?></div>
                 <div class="buttons-action">
                     <a href="javascript:" class="button button-close"><?php _e( 'Close', 'utenzo' ); ?></a>
-                    <a href="<?php echo site_url(); ?>" class="button button-primary"><?php _e( 'Go Home', 'utenzo' ); ?></a>
+                    <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="button button-primary"><?php _e( 'Go Home', 'utenzo' ); ?></a>
                 </div>
             </div>
         </div>

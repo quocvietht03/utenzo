@@ -63,30 +63,6 @@ if (! function_exists('utenzo_setup')) {
 }
 add_action('after_setup_theme', 'utenzo_setup');
 
-/* Custom Site Title */
-if (! function_exists('utenzo_wp_title')) {
-	function utenzo_wp_title($title, $sep)
-	{
-		global $paged, $page;
-		if (is_feed()) {
-			return $title;
-		}
-		// Add the site name.
-		$title .= get_bloginfo('name');
-		// Add the site description for the home/front page.
-		$site_description = get_bloginfo('description', 'display');
-		if ($site_description && (is_home() || is_front_page())) {
-			$title = "$title $sep $site_description";
-		}
-		// Add a page number if necessary.
-		if ($paged >= 2 || $page >= 2) {
-			$title = sprintf(esc_html__('Page %s', 'utenzo'), max($paged, $page)) . " $sep $title";
-		}
-		return $title;
-	}
-	add_filter('wp_title', 'utenzo_wp_title', 10, 2);
-}
-
 /* Logo */
 if (!function_exists('utenzo_logo')) {
 	function utenzo_logo($url = '', $height = 30)
