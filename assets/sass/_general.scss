@@ -427,7 +427,7 @@
   b {
     color: $color-primary;
   }
-  a {
+  a:not(.wp-block-button__link, .wp-block-file__button) {
     font-weight: 600;
     color: $color-primary;
   }
@@ -489,6 +489,13 @@
         font-weight: 600;
         color: $color-primary;
       }
+    }
+  }
+  .wp-block-button {
+    &__link {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.5;
     }
   }
   .wp-block-image {
@@ -615,7 +622,7 @@
     margin: 0 0 24px;
     padding: 0;
     li {
-      margin-bottom: 0;
+      margin-bottom: 0 !important;
       padding-left: 0;
       &:before {
         display: none;
