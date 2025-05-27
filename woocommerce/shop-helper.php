@@ -470,7 +470,7 @@ function utenzo_product_field_radio_html($slug = '', $field_title = '', $field_v
 
     $field_title_default = !empty($field_title) ? $field_title : 'Choose';
 
-    if (!empty($terms)) {
+    if (!empty($terms) && !is_wp_error($terms)) {
     ?>
         <div class="bt-form-field bt-field-type-radio <?php echo 'bt-field-' . $slug; ?>" data-name="<?php echo esc_attr($slug); ?>">
             <div class="bt-field-title"><?php echo esc_html($field_title_default) ?></div>
@@ -505,7 +505,7 @@ function utenzo_product_field_multiple_html($slug = '', $field_title = '', $fiel
         'hide_empty' => true
     ));
 
-    if (!empty($terms)) {
+    if (!empty($terms) && !is_wp_error($terms)) {
     ?>
         <div class="bt-form-field bt-field-type-multi" data-name="<?php echo esc_attr($slug); ?>">
             <?php
@@ -547,7 +547,7 @@ function utenzo_product_field_multiple_color_html($slug = '', $field_title = '',
         'hide_empty' => true
     ));
 
-    if (!empty($terms)) {
+    if (!empty($terms) && !is_wp_error($terms)) {
     ?>
         <div class="bt-form-field bt-field-type-multi bt-field-color" data-name="<?php echo esc_attr($slug); ?>">
             <?php

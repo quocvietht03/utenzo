@@ -276,7 +276,16 @@
       display: flex;
     }
   }
+  .woocommerce-js & {
+    .bt-primary-menu .bt-page-menu-wrap > ul {
+      flex-wrap: wrap;
+       > li > a {
+        min-height: 42px;
+       }
+    }
+  }
 }
+
 @keyframes slideDown {
   from {
     transform: translateY(-100%);
