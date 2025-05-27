@@ -244,12 +244,17 @@ function utenzo_woocommerce_related_products_args($args)
     return $args;
 }
 
-if (function_exists('get_field')) {
-    $enable_related_product = get_field('enable_related_product', 'options');
-    if (!$enable_related_product) {
-        remove_action('woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20);
+/* Remove After Single Product Summary */
+function utenzo_remove_after_single_product_summary() {
+    if (function_exists('get_field')) {
+        $enable_related_product = get_field('enable_related_product', 'options');
+        
+        if (!$enable_related_product) {
+            remove_action('woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20);
+        }
     }
 }
+add_action('init', 'utenzo_remove_after_single_product_summary');
 
 /* Sold Product */
 function utenzo_woocommerce_item_sold($product_id)
