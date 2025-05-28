@@ -136,8 +136,8 @@ if (!empty($rating_counts)) {
     <?php if (get_option('woocommerce_review_rating_verification_required') === 'no' || wc_customer_bought_product('', get_current_user_id(), $product->get_id())): ?>
         <div id="review_form_wrapper" <?php if ($product->get_average_rating() > 0) { ?> class="bt-form-review-popup" <?php } ?>>
             <div class="bt-review-overlay"></div>
+            <div class="bt-review-close"></div>
             <div id="review_form">
-                <div class="bt-review-close"></div>
                 <?php
                 $commenter = wp_get_current_commenter();
                 $comment_form = array(
