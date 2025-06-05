@@ -663,10 +663,6 @@
 				slidesPerView: 1,
 				loop: true,
 				speed: sliderSpeed,
-				effect: 'fade',
-				fadeEffect: {
-					crossFade: true
-				},
 				autoplay: autoplay ? {
 					delay: autoplayDelay,
 					disableOnInteraction: false
