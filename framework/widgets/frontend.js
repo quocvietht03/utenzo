@@ -700,7 +700,7 @@
 			}
 		}
 	};
-	const ProductTestimonialSliderHandler = function ($scope) {
+	const TestimonialSliderHandler = function ($scope) {
 		const $ProductTestimonialSlider = $scope.find('.js-data-testimonial-slider');
 		if ($ProductTestimonialSlider.length > 0) {
 			const $sliderSettings = $ProductTestimonialSlider.data('slider-settings') || {};
@@ -742,6 +742,49 @@
 			}
 		}
 	};
+	const ProductTestimonialSliderHandler = function ($scope) {
+		const $ProductTestimonialSlider = $scope.find('.js-data-product-testimonial-slider');
+		if ($ProductTestimonialSlider.length > 0) {
+			const $sliderSettings = $ProductTestimonialSlider.data('slider-settings') || {};
+			console.log($sliderSettings);
+			// Initialize the testimonial slider
+			const testimonialSlider = new Swiper($ProductTestimonialSlider.find('.js-testimonial-slider')[0], {
+				slidesPerView: $sliderSettings.slidesPerView,
+				spaceBetween: $sliderSettings.spaceBetween,
+				loop: $sliderSettings.loop,
+				speed: $sliderSettings.speed,
+				autoplay: $sliderSettings.autoplay ? {
+					delay: $sliderSettings.autoplay_delay,
+					disableOnInteraction: false
+				} : false,
+				navigation: {
+					nextEl: $scope.find('.bt-button-next')[0],
+					prevEl: $scope.find('.bt-button-prev')[0],
+				},
+				pagination: {
+					el: $scope.find('.bt-swiper-pagination')[0],
+					clickable: true,
+					type: 'bullets',
+					renderBullet: function (index, className) {
+						return '<span class="' + className + '"></span>';
+					},
+				},
+				breakpoints: $sliderSettings.breakpoints,
+			});
+
+			// Pause autoplay on hover if autoplay is enabled
+			if (autoplay) {
+				$ProductTestimonialSlider.find('.js-testimonial-slider')[0].addEventListener('mouseenter', () => {
+					testimonialSlider.autoplay.stop();
+				});
+
+				$ProductTestimonialSlider.find('.js-testimonial-slider')[0].addEventListener('mouseleave', () => {
+					testimonialSlider.autoplay.start();
+				});
+			}
+		}
+	};
+
 	const countDownHandler = function ($scope) {
 		const countDown = $scope.find('.bt-countdown-js');
 		const countDownDate = new Date(countDown.data('time')).getTime();
@@ -844,6 +887,127 @@
 			});
 		}
 	}
+	// product item
+	const ProductItemHandler = function ($scope) {
+		const $productItem = $scope.find('.bt-elwg-product-item--default');
+		if ($productItem.length > 0) {
+			// Check if product has variations
+			const $variationForm = $productItem.find('.variations_form');
+
+			if ($variationForm.length > 0) {
+				// Product has variations
+				const $variationSelects = $variationForm.find('.variations select');
+				// Find and activate first color variation if it exists
+				const $variationItemColor = $variationForm.find('.bt-value-color .bt-js-item').first();
+				if ($variationItemColor.length) {
+					$variationItemColor.trigger('click');
+				}
+				// Loop through each select element
+				$variationSelects.each(function () {
+					const $select = $(this);
+					// Get first non-disabled option that's not empty
+					const firstOption = $select.find('option:not(.disabled):not([value=""])').first().val();
+					if (firstOption) {
+						// Set first available option as selected
+						$select.val(firstOption).trigger('change');
+
+					} else {
+						// If no valid options found, reset to empty
+						$select.val('').trigger('change');
+					}
+				});
+
+				$productItem.find("form.variations_form").on("change", "input, select", function () {
+					var variation_id = $variationForm.find("input.variation_id").val();
+					if (variation_id) {
+						var param_ajax = {
+							action: 'utenzo_get_variation_price',
+							variation_id: variation_id
+						};
+
+						$.ajax({
+							type: 'POST',
+							dataType: 'json',
+							url: AJ_Options.ajax_url,
+							data: param_ajax,
+							success: function (response) {
+								if (response.success) {
+									var price = response.data['price'];
+									if (price) {
+										$productItem.find(".bt-product-item--price").html(price);
+									}
+								}
+							},
+							error: function (xhr, status, error) {
+								console.log('Error getting variation price:', error);
+							}
+						});
+					}
+				});
+				$productItem.find('.bt-attributes-wrap .bt-js-item').on('click', function () {
+					var valueItem = $(this).data('value');
+					var attributesItem = $(this).closest('.bt-attributes--item');
+					var attributeName = attributesItem.data('attribute-name');
+					attributesItem.find('.bt-js-item').removeClass('active'); // Remove active class only from items in the same attribute group
+					$(this).addClass('active'); // Add active class to clicked item
+					var nameItem = (attributeName == 'pa_color') ? $(this).find('label').text() : $(this).text();
+					attributesItem.find('.bt-result').text(nameItem);
+					$productItem.find(' select#' + attributeName).val(valueItem).trigger('change');
+					/* button buy now */
+					var variationId = $productItem.find('input.variation_id').val();
+					if (variationId) {
+						// Load gallery
+						var param_ajax = {
+							action: 'utenzo_load_product_variation',
+							variation_id: variationId
+						};
+
+						$.ajax({
+							type: 'POST',
+							dataType: 'json',
+							url: AJ_Options.ajax_url,
+							data: param_ajax,
+							beforeSend: function () {
+								$productItem.find('.bt-product-item--images').addClass('loading');
+							},
+							success: function (response) {
+								if (response.success) {
+									setTimeout(function () {
+										$productItem.find('.bt-product-item--images').removeClass('loading');
+										$productItem.find('.bt-product-item--thumb').html(response.data['image-variation']);
+									}, 300);
+								}
+							},
+							error: function (xhr, status, error) {
+								console.log('Error loading gallery:', error);
+								$productItem.find('.bt-product-item--images').removeClass('loading');
+							}
+						});
+					}
+					$productItem.find('.bt-attributes-wrap .bt-js-item').each(function () {
+						var valueItem = $(this).data('value');
+						var attributesItem = $(this).closest('.bt-attributes--item');
+						var attributeName = attributesItem.data('attribute-name');
+						var options = $productItem.find(' select#' + attributeName + ' option');
+						var optionExists = false;
+						options.each(function () {
+							if ($(this).val() == valueItem) {
+								optionExists = true;
+								return false; // break the loop
+							}
+						});
+						if (!optionExists) {
+							$(this).addClass('disabled');
+						} else {
+							$(this).removeClass('disabled');
+						}
+					});
+				});
+
+			}
+
+		}
+	}
 	// Make sure you run this code under Elementor.
 	$(window).on('elementor/frontend/init', function () {
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-location-list.default', LocationListHandler);
@@ -853,10 +1017,13 @@
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-tiktok-shop-slider.default', TiktokShopSliderHandler);
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-hotspot-product.default', HotspotProductHandler);
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-product-testimonial.default', ProductTestimonialHandler);
+		elementorFrontend.hooks.addAction('frontend/element_ready/bt-testimonial-slider.default', TestimonialSliderHandler);
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-product-testimonial-slider.default', ProductTestimonialSliderHandler);
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-countdown.default', countDownHandler);
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-site-notification.default', NotificationSliderHandler);
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-mini-cart.default', MiniCartHandler);
+		elementorFrontend.hooks.addAction('frontend/element_ready/bt-product-item.default', ProductItemHandler);
+		
 	});
 
 })(jQuery);

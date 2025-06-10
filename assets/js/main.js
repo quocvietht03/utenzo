@@ -197,20 +197,20 @@
 					});
 					$.ajax({
 						type: 'POST',
-						dataType: 'json', 
+						dataType: 'json',
 						url: AJ_Options.ajax_url,
 						data: {
 							action: 'utenzo_get_variation_price',
 							variation_id: variationId
 						},
-						success: function(response) {
+						success: function (response) {
 							if (response.success && response.data.price) {
 								// Update add to cart button with price
 								var priceAddCart = '<span class="price-add-cart"> - ' + response.data.price + '</span>';
 								$(".single_add_to_cart_button").html("Add to cart" + priceAddCart);
 							}
 						},
-						error: function(xhr, status, error) {
+						error: function (xhr, status, error) {
 							console.log('Error getting variation price:', error);
 						}
 					});
@@ -258,6 +258,11 @@
 				focusOnSelect: true,
 				asNavFor: '.bt-quickview-product .woocommerce-product-gallery__slider'
 			});
+		}
+		// check button add to cart 
+		if ($('.bt-quickview-product .grouped_form').length > 0) {
+			const $addToCartBtn = $('.bt-quickview-product .grouped_form .single_add_to_cart_button');
+			$addToCartBtn.addClass('disabled');
 		}
 		if ($('.quantity input').length > 0) {
 			/* Plus Qty */
@@ -2064,10 +2069,12 @@
 					.attr('data-grouped', productGrouped.join(','))
 					.removeClass('disabled');
 				$addToCartBtn.removeClass('disabled');
+				$('.bt-quickview-product .grouped_form .single_add_to_cart_button').removeClass('disabled');
 				$('.bt-total-price ').addClass('active');
 			} else {
 				$buyNowBtn.addClass('disabled');
 				$addToCartBtn.addClass('disabled');
+				$('.bt-quickview-product .grouped_form .single_add_to_cart_button').addClass('disabled');
 				$('.bt-total-price ').removeClass('active');
 
 			}
