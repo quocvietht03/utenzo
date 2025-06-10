@@ -288,7 +288,6 @@ class Widget_ProductItem extends Widget_Base
 			?>
 					<div class="bt-product-item--item">
 						<div class="bt-product-item--images">
-							<div class="bt-loading-img"></div>
 							<?php if ($product_image_id) : ?>
 								<a href="<?php echo esc_url($product_link); ?>" class="bt-product-item--thumb">
 									<?php

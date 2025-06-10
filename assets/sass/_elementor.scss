@@ -4259,27 +4259,6 @@ body {
   .bt-product-item {
     &--images {
       position: relative;
-      .bt-loading-img {
-        height: 100%;
-        width: 100%;
-        box-sizing: border-box;
-        display: flex;
-        position: absolute;
-        top: 0;
-        left: 0;
-        opacity: 0;
-        z-index: -1;
-        @extend .__bt-animation-loading-card;
-      }
-      &.loading {
-        > * {
-          opacity: 0;
-        }
-        .bt-loading-img {
-          opacity: 1;
-          z-index: 9;
-        }
-      }
     }
     &--thumb {
       overflow: hidden;

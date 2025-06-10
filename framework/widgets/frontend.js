@@ -704,7 +704,6 @@
 		const $ProductTestimonialSlider = $scope.find('.js-data-testimonial-slider');
 		if ($ProductTestimonialSlider.length > 0) {
 			const $sliderSettings = $ProductTestimonialSlider.data('slider-settings') || {};
-			console.log($sliderSettings);
 			// Initialize the testimonial slider
 			const testimonialSlider = new Swiper($ProductTestimonialSlider.find('.js-testimonial-slider')[0], {
 				slidesPerView: $sliderSettings.slidesPerView,
@@ -731,7 +730,7 @@
 			});
 
 			// Pause autoplay on hover if autoplay is enabled
-			if (autoplay) {
+			if ($sliderSettings.autoplay) {
 				$ProductTestimonialSlider.find('.js-testimonial-slider')[0].addEventListener('mouseenter', () => {
 					testimonialSlider.autoplay.stop();
 				});
@@ -746,7 +745,6 @@
 		const $ProductTestimonialSlider = $scope.find('.js-data-product-testimonial-slider');
 		if ($ProductTestimonialSlider.length > 0) {
 			const $sliderSettings = $ProductTestimonialSlider.data('slider-settings') || {};
-			console.log($sliderSettings);
 			// Initialize the testimonial slider
 			const testimonialSlider = new Swiper($ProductTestimonialSlider.find('.js-testimonial-slider')[0], {
 				slidesPerView: $sliderSettings.slidesPerView,
@@ -773,7 +771,7 @@
 			});
 
 			// Pause autoplay on hover if autoplay is enabled
-			if (autoplay) {
+			if ($sliderSettings.autoplay) {
 				$ProductTestimonialSlider.find('.js-testimonial-slider')[0].addEventListener('mouseenter', () => {
 					testimonialSlider.autoplay.stop();
 				});
@@ -964,19 +962,14 @@
 							url: AJ_Options.ajax_url,
 							data: param_ajax,
 							beforeSend: function () {
-								$productItem.find('.bt-product-item--images').addClass('loading');
 							},
 							success: function (response) {
 								if (response.success) {
-									setTimeout(function () {
-										$productItem.find('.bt-product-item--images').removeClass('loading');
-										$productItem.find('.bt-product-item--thumb').html(response.data['image-variation']);
-									}, 300);
+									$productItem.find('.bt-product-item--thumb').html(response.data['image-variation']);
 								}
 							},
 							error: function (xhr, status, error) {
 								console.log('Error loading gallery:', error);
-								$productItem.find('.bt-product-item--images').removeClass('loading');
 							}
 						});
 					}
