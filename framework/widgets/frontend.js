@@ -1023,7 +1023,6 @@
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-site-notification.default', NotificationSliderHandler);
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-mini-cart.default', MiniCartHandler);
 		elementorFrontend.hooks.addAction('frontend/element_ready/bt-product-item.default', ProductItemHandler);
-		
 	});
 
 })(jQuery);

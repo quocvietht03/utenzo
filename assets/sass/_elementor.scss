@@ -4489,7 +4489,7 @@ body {
       .woocommerce-variation-price,
       .stock,
       .bt-button-buy-now {
-        display: none;
+        display: none !important;
       }
 
       .bt-attributes-wrap {

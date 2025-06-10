@@ -376,14 +376,18 @@ class Widget_ProductCategoryStyle1 extends Widget_Base
 								<div class="bt-product-category--thumb">
 									<?php
 									if ($settings['image_style'] === 'transparent') {
-										echo '<div class="bt-cover-image bt-transparent">';
+										
 										$transparent_image = get_field('thumbnail_transparent', 'product_cat_' . $category->term_id);
 										$thumbnail_id = !empty($transparent_image) ? $transparent_image['id'] : null;
 
 										if ($thumbnail_id) {
+											echo '<div class="bt-cover-image bt-transparent">';
 											echo wp_get_attachment_image($thumbnail_id, $settings['thumbnail_size'], false);
+											echo '</div>';
+										}else{
+											echo '<div class="bt-cover-image"></div>';
 										}
-										echo '</div>';
+										
 									} else {
 										echo '<div class="bt-cover-image">';
 										$thumbnail_id = get_term_meta($category->term_id, 'thumbnail_id', true);

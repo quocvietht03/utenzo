@@ -17643,7 +17643,7 @@ body.admin-bar .mfp-wrap {
 .bt-elwg-product-item--default .bt-product-item--variations .woocommerce-variation-price,
 .bt-elwg-product-item--default .bt-product-item--variations .stock,
 .bt-elwg-product-item--default .bt-product-item--variations .bt-button-buy-now {
-  display: none;
+  display: none !important;
 }
 .bt-elwg-product-item--default .bt-product-item--variations .bt-attributes-wrap {
   display: flex;
