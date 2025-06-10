@@ -897,11 +897,7 @@
 			if ($variationForm.length > 0) {
 				// Product has variations
 				const $variationSelects = $variationForm.find('.variations select');
-				// Find and activate first color variation if it exists
-				const $variationItemColor = $variationForm.find('.bt-value-color .bt-js-item').first();
-				if ($variationItemColor.length) {
-					$variationItemColor.trigger('click');
-				}
+
 				// Loop through each select element
 				$variationSelects.each(function () {
 					const $select = $(this);
@@ -1003,7 +999,11 @@
 						}
 					});
 				});
-
+				// Find and activate first color variation if it exists
+				const $variationItemColor = $variationForm.find('.bt-value-color .bt-js-item').first();
+				if ($variationItemColor.length) {
+					$variationItemColor.trigger('click');
+				}
 			}
 
 		}
