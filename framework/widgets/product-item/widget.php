@@ -323,7 +323,14 @@ class Widget_ProductItem extends Widget_Base
 															$unique_colors[$color] = true;
 															$active_class = ($key === 0) ? ' active' : '';
 															echo '<div class="bt-color ' . esc_attr($color) . $active_class . '">';
-															echo wp_get_attachment_image($variation['image_id'], $thumbnail_size);
+
+															// Add skip-lazy class to all images except the first one
+															if ($key === 0) {
+																echo wp_get_attachment_image($variation['image_id'], $thumbnail_size);
+															} else {
+																echo wp_get_attachment_image($variation['image_id'], $thumbnail_size, false, array('class' => 'skip-lazy'));
+															}
+
 															echo '</div>';
 														}
 													}
