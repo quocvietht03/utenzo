@@ -114,7 +114,7 @@
 						action: 'utenzo_load_product_gallery',
 						variation_id: variationId
 					};
-					
+
 					$.ajax({
 						type: 'POST',
 						dataType: 'json',
@@ -583,7 +583,7 @@
 						$('.bt-product-wishlist-btn[data-id="' + post_id + '"]').addClass('added');
 						$('.bt-product-wishlist-btn[data-id="' + post_id + '"]').removeClass('loading');
 						$('.bt-product-wishlist-btn[data-id="' + post_id + '"] .tooltip').text("Remove Wishlist");
-					}, 500);
+					}, 200);
 					if (AJ_Options.wishlist_toast) {
 						UtenzoshowToast(post_id, 'wishlist', 'add');
 					}
@@ -606,7 +606,7 @@
 							$('.bt-product-wishlist-btn[data-id="' + post_id + '"]').addClass('no-added');
 							$('.bt-product-wishlist-btn[data-id="' + post_id + '"]').removeClass('loading');
 							$('.bt-product-wishlist-btn[data-id="' + post_id + '"] .tooltip').text("Add To Wishlist");
-						}, 500);
+						}, 200);
 						if (AJ_Options.wishlist_toast) {
 							UtenzoshowToast(post_id, 'wishlist', 'remove');
 						}
@@ -621,7 +621,7 @@
 							$('.bt-product-wishlist-btn[data-id="' + post_id + '"]').addClass('added');
 							$('.bt-product-wishlist-btn[data-id="' + post_id + '"]').removeClass('loading');
 							$('.bt-product-wishlist-btn[data-id="' + post_id + '"] .tooltip').text("Remove Wishlist");
-						}, 500);
+						}, 200);
 						if (AJ_Options.wishlist_toast) {
 							UtenzoshowToast(post_id, 'wishlist', 'add');
 						}
@@ -647,7 +647,13 @@
 				$('.bt-productwishlistlocal').val(wishlist_str);
 				window.localStorage.setItem('productwishlistlocal', wishlist_str);
 				UtenzoShareLocalStorage(wishlist_str);
-				$('.bt-products-wishlist-form').submit();
+
+				$(this).closest('.bt-product-item').remove();
+				let currentCount = $('.bt-product-item').length;
+				$('.bt-mini-wishlist .wishlist_total').html(currentCount);
+				if (currentCount == 0) {
+					$('.bt-products-wishlist-form').submit();
+				}
 			});
 
 			// Ajax wishlist
@@ -936,42 +942,15 @@
 					return;
 				}
 			}
-			var param_ajax = {
-				action: 'utenzo_products_compare',
-				compare_data: compare_local,
-			};
-			$.ajax({
-				type: 'POST',
-				dataType: 'json',
-				url: AJ_Options.ajax_url,
-				data: param_ajax,
-				beforeSend: function () {
-					$('.bt-compare-body').addClass('loading');
-				},
-				success: function (response) {
-					if (response.success) {
-						//console.log(response.data['count']);
-						if (response.data['count'] && response.data['count'] > 0) {
-							$('.bt-popup-compare .bt-compare-load').html(response.data['product']).fadeIn('slow');
-							$('.bt-compare-body').removeClass('loading');
-							UtenzoCompareContentScroll();
-						} else {
-							if (!$('.bt-popup-compare').hasClass('bt-compare-elwwg')) {
-								removeComparePopup();
-								$('.bt-compare-body').removeClass('loading');
-							} else {
-								$('.bt-popup-compare .bt-compare-load').html(response.data['product']).fadeIn('slow');
-								$('.bt-compare-body').removeClass('loading');
-							}
-						}
-					} else {
-						console.log('error');
-					}
-				},
-				error: function (jqXHR, textStatus, errorThrown) {
-					console.log('The following error occured: ' + textStatus, errorThrown);
-				}
-			});
+			$(this).closest('.bt-table--row').remove();
+			let itemCompareCount = $('.bt-table-compare .bt-table--row').length;
+			if (itemCompareCount == 5) {
+				$('.bt-table-compare .bt-table--row.bt-product-add-compare').first().addClass('active');
+			} else if (itemCompareCount == 4) {
+				$('.bt-table-compare .bt-table--row.bt-product-add-compare').slice(0, 2).addClass('active');
+			} else if (itemCompareCount == 3) {
+				$('.bt-table-compare .bt-table--row.bt-product-add-compare').slice(0, 3).addClass('active');
+			}
 		});
 	}
 	/* Product Compare Load */

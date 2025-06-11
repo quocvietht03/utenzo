@@ -1179,10 +1179,10 @@ function utenzo_products_compare()
                     }
                     ?>
                     <?php
-                    if ($ex_items > 0) {
-                        for ($i = 0; $i < $ex_items; $i++) {
+               //     if ($ex_items > 0) {
+                        for ($i = 0; $i < 3; $i++) {
                     ?>
-                            <div class="bt-table--row bt-product-add-compare">
+                            <div class="bt-table--row bt-product-add-compare<?php echo ($i < $ex_items) ? ' active' : ''; ?>">
                                 <div class="bt-table--col bt-thumb">
                                     <div class="bt-cover-image">
                                         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" fill="currentColor">
@@ -1229,7 +1229,7 @@ function utenzo_products_compare()
                             </div>
                     <?php
                         }
-                    }
+                //    }
                     ?>
                 </div>
             </div>
@@ -1287,7 +1287,7 @@ function utenzo_products_compare()
                 if ($ex_items > 0) {
                     for ($i = 0; $i < $ex_items; $i++) {
                 ?>
-                        <div class="bt-table--row bt-product-add-compare">
+                        <div class="bt-table--row bt-load-before bt-product-add-compare">
                             <div class="bt-table--col bt-thumb">
                                 <div class="bt-cover-image">
                                     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" fill="currentColor">
