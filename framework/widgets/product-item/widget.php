@@ -67,6 +67,18 @@ class Widget_ProductItem extends Widget_Base
 			]
 		);
 		$this->add_control(
+			'layout',
+			[
+				'label' => __('Layout', 'utenzo'),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'default',
+				'options' => [
+					'default' => __('Default', 'utenzo'),
+					'ajax' => __('Ajax', 'utenzo'),
+				],
+			]
+		);
+		$this->add_control(
 			'products',
 			[
 				'label' => __('Select Products', 'utenzo'),
@@ -285,19 +297,37 @@ class Widget_ProductItem extends Widget_Base
 					$product_link = get_permalink($product_id);
 					$product_image = get_the_post_thumbnail($product_id, $thumbnail_size);
 					$product_image_id = $product->get_image_id();
+					$variations = $product->get_available_variations();
 			?>
 					<div class="bt-product-item--item">
 						<div class="bt-product-item--images">
 							<?php if ($product_image_id) : ?>
-								<a href="<?php echo esc_url($product_link); ?>" class="bt-product-item--thumb">
+								<a href="<?php echo esc_url($product_link); ?>" class="bt-product-item--thumb<?php echo ($settings['layout'] != 'ajax') ? ' bt-thumb-load-default' : ''; ?>">
 									<?php
 									if ($product->is_type('variable')) {
-										$variations = $product->get_available_variations();
-										if (!empty($variations)) {
-											$first_variation = $variations[0];
-											if (!empty($first_variation['image_id'])) {
-												$product_image_id = $first_variation['image_id'];
-												echo wp_get_attachment_image($product_image_id, $thumbnail_size);
+										if ($settings['layout'] === 'ajax') {
+											if (!empty($variations)) {
+												$first_variation = $variations[0];
+												if (!empty($first_variation['image_id'])) {
+													$product_image_id = $first_variation['image_id'];
+													echo wp_get_attachment_image($product_image_id, $thumbnail_size);
+												}
+											}
+										} else {
+											if (!empty($variations)) {
+												$unique_colors = array();
+												foreach ($variations as $key => $variation) {
+													if (!empty($variation['attributes']['attribute_pa_color'])) {
+														$color = $variation['attributes']['attribute_pa_color'];
+														if (!isset($unique_colors[$color]) && !empty($variation['image_id'])) {
+															$unique_colors[$color] = true;
+															$active_class = ($key === 0) ? ' active' : '';
+															echo '<div class="bt-color ' . esc_attr($color) . $active_class . '">';
+															echo wp_get_attachment_image($variation['image_id'], $thumbnail_size);
+															echo '</div>';
+														}
+													}
+												}
 											}
 										}
 									} else {
@@ -329,16 +359,43 @@ class Widget_ProductItem extends Widget_Base
 								<div class="bt-product-item--price">
 									<?php
 									if ($product->is_type('variable')) {
-										$variations = $product->get_available_variations();
-										if (!empty($variations)) {
-											$first_variation = $variations[0];
-											$regular_price = $first_variation['display_regular_price'];
-											$sale_price = $first_variation['display_price'];
+										if ($settings['layout'] === 'ajax') {
+											if (!empty($variations)) {
+												$first_variation = $variations[0];
+												$regular_price = $first_variation['display_regular_price'];
+												$sale_price = $first_variation['display_price'];
 
-											if ($sale_price < $regular_price) {
-												echo '<del>' . wc_price($regular_price) . '</del> ' . wc_price($sale_price) ;
-											} else {
-												echo wc_price($regular_price) ;
+												if ($sale_price < $regular_price) {
+													echo '<del>' . wc_price($regular_price) . '</del> ' . wc_price($sale_price);
+												} else {
+													echo wc_price($regular_price);
+												}
+											}
+										} else {
+											$unique_colors = array();
+											foreach ($variations as $key => $variation) {
+												if (!empty($variation['attributes']['attribute_pa_color'])) {
+													$color = $variation['attributes']['attribute_pa_color'];
+													if (!isset($unique_colors[$color]) && !empty($variation['image_id'])) {
+														$unique_colors[$color] = true;
+														$active_class = ($key === 0) ? ' active' : '';
+														// Get price info for this variation
+														$regular_price = $variation['display_regular_price'];
+														$sale_price = $variation['display_price'];
+
+														echo '<div class="bt-price ' . esc_attr($color) . $active_class . '">';
+														// Display price
+														echo '<div class="bt-variation-price">';
+														if ($sale_price < $regular_price) {
+															echo '<del>' . wc_price($regular_price) . '</del> ' . wc_price($sale_price);
+														} else {
+															echo wc_price($regular_price);
+														}
+														echo '</div>';
+
+														echo '</div>';
+													}
+												}
 											}
 										}
 									} else {
@@ -348,9 +405,44 @@ class Widget_ProductItem extends Widget_Base
 								</div>
 							</div>
 							<?php if ($product->is_type('variable')) { ?>
-								<div class="bt-product-item--variations">
+								<div class="bt-product-item--variations<?php echo (!empty($unique_colors) && count($unique_colors) > 3) ? ' bt-variations-more' : ''; ?>">
 									<?php
-									do_action('utenzo_woocommerce_template_single_add_to_cart');
+									if ($settings['layout'] === 'ajax') {
+										do_action('utenzo_woocommerce_template_single_add_to_cart');
+									} else {
+										$unique_colors = array();
+										echo '<div class="bt-attributes-wrap bt-attributes-default">';
+										// Get unique colors from variations with slug and ID
+										echo '<div class="bt-attributes--value bt-value-color">';
+										$is_first = true;
+										foreach ($variations as $variation) {
+											if (!empty($variation['attributes']['attribute_pa_color'])) {
+												$color_slug = $variation['attributes']['attribute_pa_color'];
+												$color_term = get_term_by('slug', $color_slug, 'pa_color');
+
+												if ($color_term && !isset($unique_colors[$color_slug])) {
+													$unique_colors[$color_slug] = array(
+														'id' => $color_term->term_id,
+														'slug' => $color_slug
+													);
+													$color = get_field('color', 'pa_color_' . $color_term->term_id);
+													if (!$color) {
+														$color = $color_slug;
+													}
+													$active_class = $is_first ? ' active' : '';
+													echo '<div class="bt-item-color' . $active_class . '" data-value="' . esc_attr($color_slug) . '">';
+													echo "<div class='bt-color'>";
+													echo '<span style="background-color: ' . esc_attr($color) . ';"></span>';
+													echo '</div>';
+													echo '<label>' . esc_html($color_term->name) . '</label>';
+													echo '</div>';
+													$is_first = false;
+												}
+											}
+										}
+										echo '</div>';
+										echo '</div>';
+									}
 									?>
 								</div>
 							<?php } ?>

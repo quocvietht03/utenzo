@@ -114,7 +114,7 @@
 						action: 'utenzo_load_product_gallery',
 						variation_id: variationId
 					};
-
+					
 					$.ajax({
 						type: 'POST',
 						dataType: 'json',
@@ -143,7 +143,7 @@
 								$('.woocommerce-product-gallery__wrapper').html('');
 								$('.woocommerce-product-gallery').prepend(skeletonHtml);
 							}
-
+							$('.bt-attributes-wrap .bt-js-item').addClass('disable');
 						},
 						success: function (response) {
 							if (response.success) {
@@ -188,11 +188,13 @@
 										}, 500);
 									}, 300);
 								}
+								$('.bt-attributes-wrap .bt-js-item').removeClass('disable');
 							}
 						},
 						error: function (xhr, status, error) {
 							console.log('Error loading gallery:', error);
 							$('.woocommerce-product-gallery').removeClass('loading');
+							$('.bt-attributes-wrap .bt-js-item').removeClass('disable');
 						}
 					});
 					$.ajax({
@@ -356,7 +358,7 @@
 								$('.bt-quickview-product .woocommerce-product-gallery__wrapper').html('');
 								$('.bt-quickview-product .woocommerce-product-gallery').prepend(skeletonHtml);
 							}
-
+							$('.bt-quickview-product .bt-attributes-wrap .bt-js-item').addClass('disable');
 						},
 						success: function (response) {
 							if (response.success) {
@@ -401,11 +403,13 @@
 										}, 500);
 									}, 300);
 								}
+								$('.bt-quickview-product .bt-attributes-wrap .bt-js-item').removeClass('disable');
 							}
 						},
 						error: function (xhr, status, error) {
 							console.log('Error loading gallery:', error);
 							$('.bt-quickview-product .woocommerce-product-gallery').removeClass('loading');
+							$('.bt-quickview-product .bt-attributes-wrap .bt-js-item').removeClass('disable');
 						}
 					});
 				} else {

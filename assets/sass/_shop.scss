@@ -4198,6 +4198,10 @@
               -ms-user-select: none;
               cursor: pointer;
             }
+            &.disable {
+              pointer-events: none;
+              opacity: 0.5;
+            }
           }
         }
         .bt-button-buy-now {

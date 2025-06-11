@@ -889,10 +889,20 @@
 	const ProductItemHandler = function ($scope) {
 		const $productItem = $scope.find('.bt-elwg-product-item--default');
 		if ($productItem.length > 0) {
+			// layout default
+			$productItem.find('.bt-attributes-default .bt-item-color').on('click', function () {
+				const colorValue = $(this).data('value');
+				$productItem.find('.bt-attributes-default .bt-item-color').removeClass('active');
+				$(this).addClass('active');
+				$productItem.find('.bt-thumb-load-default .bt-color').removeClass('active');
+				$productItem.find('.bt-thumb-load-default .bt-color.' + colorValue).addClass('active');
+				$productItem.find('.bt-product-item--price .bt-price').removeClass('active');
+				$productItem.find('.bt-product-item--price .bt-price.' + colorValue).addClass('active');
+			});
 			// Check if product has variations
 			const $variationForm = $productItem.find('.variations_form');
-
 			if ($variationForm.length > 0) {
+
 				// Product has variations
 				const $variationSelects = $variationForm.find('.variations select');
 
@@ -962,14 +972,17 @@
 							url: AJ_Options.ajax_url,
 							data: param_ajax,
 							beforeSend: function () {
+								$productItem.find('.bt-attributes-wrap .bt-js-item').addClass('disable');
 							},
 							success: function (response) {
 								if (response.success) {
 									$productItem.find('.bt-product-item--thumb').html(response.data['image-variation']);
+									$productItem.find('.bt-attributes-wrap .bt-js-item').removeClass('disable');
 								}
 							},
 							error: function (xhr, status, error) {
 								console.log('Error loading gallery:', error);
+								$productItem.find('.bt-attributes-wrap .bt-js-item').removeClass('disable');
 							}
 						});
 					}
