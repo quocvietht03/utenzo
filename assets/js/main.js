@@ -971,14 +971,13 @@
 				url: AJ_Options.ajax_url,
 				data: param_ajax,
 				beforeSend: function () {
-
+					$('.bt-compare-body').addClass('loading');
 				},
 				success: function (response) {
 					if (response.success) {
-						setTimeout(function () {
-							$('.bt-popup-compare .bt-compare-load').html(response.data['product']).fadeIn('slow');
-							UtenzoCompareContentScroll();
-						}, 100);
+						$('.bt-popup-compare .bt-compare-load').html(response.data['product']).fadeIn('slow');
+						UtenzoCompareContentScroll();
+						$('.bt-compare-body').removeClass('loading');
 					} else {
 						console.log('error');
 					}
