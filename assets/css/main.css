@@ -17444,10 +17444,10 @@ body.admin-bar .mfp-wrap {
   margin: 0;
 }
 .bt-elwg-product-item--default .bt-product-item--thumb.bt-thumb-load-default img {
-  display: none;
+  opacity: 0;
 }
 .bt-elwg-product-item--default .bt-product-item--thumb.bt-thumb-load-default .active img {
-  display: block;
+  opacity: 1;
 }
 .bt-elwg-product-item--default .bt-product-item--item {
   position: relative;
