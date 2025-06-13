@@ -279,9 +279,9 @@
   .woocommerce-js & {
     .bt-primary-menu .bt-page-menu-wrap > ul {
       flex-wrap: wrap;
-       > li > a {
+      > li > a {
         min-height: 42px;
-       }
+      }
     }
   }
 }
@@ -348,7 +348,7 @@
         }
       }
     }
-    &.bt-header-style1-sticky{
+    &.bt-header-style1-sticky {
       > .e-con-inner {
         transition: padding 0.3s ease;
       }
@@ -356,6 +356,77 @@
         > .e-con-inner {
           padding-top: 15px;
           padding-bottom: 15px;
+        }
+      }
+    }
+    &.bt-nav-header-minimal {
+      .elementor-widget-n-menu {
+        .e-n-menu-wrapper {
+          > ul {
+            > li {
+              > .e-n-menu-title {
+                transition: padding 0.3s ease;
+              }
+            }
+          }
+        }
+      }
+      &.elementor-sticky--effects {
+        box-shadow: 0px 10px 25px 0px rgba(43, 52, 74, 0.12);
+        > .e-con-inner {
+          > .elementor-widget-n-menu.bt-mega-menu {
+            > .elementor-widget-container {
+              > .e-n-menu {
+                > .e-n-menu-wrapper {
+                  > ul.e-n-menu-heading {
+                    > li.e-n-menu-item {
+                      > .e-n-menu-title {
+                        padding-top: 12px;
+                        padding-bottom: 12px;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      @media (max-width: 1300px) and (min-width: $break-tl) {
+        > .e-con-inner {
+          --widgets-spacing-column: 15px;
+          > .elementor-element {
+            &:last-child {
+              --widgets-spacing-column: 12px;
+            }
+          }
+        }
+        .elementor-widget-n-menu {
+          .e-n-menu-wrapper {
+            > ul {
+              > li {
+                > .e-n-menu-title {
+                  padding-left: 14px;
+                  padding-right: 14px;
+                }
+                .e-n-menu-content {
+                  .e-n-menu-title {
+                    padding: 0 !important;
+                  }
+                }
+                &.bt-submenu-content {
+                  > .e-n-menu-content {
+                    .bt-mega-menu-sub {
+                      padding: 20px;
+                      .e-n-menu-title {
+                        padding: 0 !important;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }

@@ -174,16 +174,21 @@ function utenzo_woocommerce_percentage_sale($html, $post, $product)
     } elseif ($product->is_type('grouped')) {
         $percentages = array();
 
-        foreach ($product->get_children() as $child_id) {
-            $child = wc_get_product($child_id);
-            if (!empty($child->get_sale_price())) {
-                $regular_price = $child->get_regular_price();
-                $sale_price = $child->get_sale_price();
-                $percentages[] = round(100 - ($sale_price / $regular_price * 100));
+        $children = $product->get_children();
+        if (!empty($children)) {
+            foreach ($children as $child_id) {
+                $child = wc_get_product($child_id);
+                if ($child && $child->get_sale_price()) {
+                    $regular_price = (float)$child->get_regular_price();
+                    $sale_price = (float)$child->get_sale_price();
+                    if ($regular_price > 0) {
+                        $percentages[] = round(100 - ($sale_price / $regular_price * 100));
+                    }
+                }
             }
         }
 
-        $percentage = max($percentages) . '%';
+        $percentage = !empty($percentages) ? max($percentages) . '%' : '0%';
     } else {
         $regular_price = (float) $product->get_regular_price();
         $sale_price = (float) $product->get_sale_price();
@@ -245,10 +250,11 @@ function utenzo_woocommerce_related_products_args($args)
 }
 
 /* Remove After Single Product Summary */
-function utenzo_remove_after_single_product_summary() {
+function utenzo_remove_after_single_product_summary()
+{
     if (function_exists('get_field')) {
         $enable_related_product = get_field('enable_related_product', 'options');
-        
+
         if (!$enable_related_product) {
             remove_action('woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20);
         }
@@ -976,13 +982,14 @@ function utenzo_products_compare()
     }
     $ex_items = count($product_ids) < 3 ? 3 - count($product_ids) : 0;
     ob_start();
+    $compare_settings = get_field('compare', 'options');
+    if (!empty($compare_settings['fields_to_show_compare'])) {
+        $fields_show_compare = $compare_settings['fields_to_show_compare'];
+    } else {
+        $fields_show_compare = array('price', 'rating', 'stock_status', 'weight', 'dimensions', 'color', 'size');
+    }
     if (!empty($product_ids)) {
-        $compare_settings = get_field('compare', 'options');
-        if (!empty($compare_settings['fields_to_show_compare'])) {
-            $fields_show_compare = $compare_settings['fields_to_show_compare'];
-        } else {
-            $fields_show_compare = array('price', 'rating', 'stock_status', 'weight', 'dimensions', 'color', 'size');
-        }
+
     ?>
         <div class="bt-table-title">
             <h2><?php esc_html_e('Compare products', 'utenzo') ?></h2>
@@ -1172,10 +1179,10 @@ function utenzo_products_compare()
                     }
                     ?>
                     <?php
-                    if ($ex_items > 0) {
-                        for ($i = 0; $i < $ex_items; $i++) {
+               //     if ($ex_items > 0) {
+                        for ($i = 0; $i < 3; $i++) {
                     ?>
-                            <div class="bt-table--row bt-product-add-compare">
+                            <div class="bt-table--row bt-product-add-compare<?php echo ($i < $ex_items) ? ' active' : ''; ?>">
                                 <div class="bt-table--col bt-thumb">
                                     <div class="bt-cover-image">
                                         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" fill="currentColor">
@@ -1222,7 +1229,7 @@ function utenzo_products_compare()
                             </div>
                     <?php
                         }
-                    }
+                //    }
                     ?>
                 </div>
             </div>
@@ -1237,12 +1244,42 @@ function utenzo_products_compare()
         </div>
         <div class="bt-table-compare">
             <div class="bt-table--head">
-                <div class="bt-table--col"><?php esc_html_e('Thumbnail', 'utenzo') ?></div>
-                <div class="bt-table--col"><?php esc_html_e('Product Name', 'utenzo') ?></div>
-                <div class="bt-table--col"><?php esc_html_e('Price', 'utenzo') ?></div>
-                <div class="bt-table--col"><?php esc_html_e('Stock status', 'utenzo') ?></div>
-                <div class="bt-table--col"><?php esc_html_e('Rating', 'utenzo') ?></div>
-                <div class="bt-table--col"><?php esc_html_e('Brand', 'utenzo') ?></div>
+                <?php
+                if (!empty($fields_show_compare)) {
+                    echo '<div class="bt-table--col">' . esc_html__('Thumbnail', 'utenzo') . '</div>';
+                    echo '<div class="bt-table--col">' . esc_html__('Product Name', 'utenzo') . '</div>';
+                    if (in_array('short_desc', $fields_show_compare)) {
+                        echo '<div class="bt-table--col">' . esc_html__('Short Description', 'utenzo') . '</div>';
+                    }
+                    if (in_array('price', $fields_show_compare)) {
+                        echo '<div class="bt-table--col">' . esc_html__('Price', 'utenzo') . '</div>';
+                    }
+                    if (in_array('rating', $fields_show_compare)) {
+                        echo '<div class="bt-table--col">' . esc_html__('Rating', 'utenzo') . '</div>';
+                    }
+                    if (in_array('brand', $fields_show_compare)) {
+                        echo '<div class="bt-table--col">' . esc_html__('Brand', 'utenzo') . '</div>';
+                    }
+                    if (in_array('stock_status', $fields_show_compare)) {
+                        echo '<div class="bt-table--col">' . esc_html__('Availability', 'utenzo') . '</div>';
+                    }
+                    if (in_array('sku', $fields_show_compare)) {
+                        echo '<div class="bt-table--col">' . esc_html__('SKU', 'utenzo') . '</div>';
+                    }
+                    if (in_array('weight', $fields_show_compare)) {
+                        echo '<div class="bt-table--col">' . esc_html__('Weight', 'utenzo') . '</div>';
+                    }
+                    if (in_array('dimensions', $fields_show_compare)) {
+                        echo '<div class="bt-table--col">' . esc_html__('Dimensions', 'utenzo') . '</div>';
+                    }
+                    if (in_array('color', $fields_show_compare)) {
+                        echo '<div class="bt-table--col bt-head-color">' . esc_html__('color', 'utenzo') . '</div>';
+                    }
+                    if (in_array('size', $fields_show_compare)) {
+                        echo '<div class="bt-table--col">' . esc_html__('Size', 'utenzo') . '</div>';
+                    }
+                }
+                ?>
                 <div class="bt-table--col"></div>
             </div>
             <div class="bt-table--body">
@@ -1250,7 +1287,7 @@ function utenzo_products_compare()
                 if ($ex_items > 0) {
                     for ($i = 0; $i < $ex_items; $i++) {
                 ?>
-                        <div class="bt-table--row bt-product-add-compare">
+                        <div class="bt-table--row bt-load-before bt-product-add-compare">
                             <div class="bt-table--col bt-thumb">
                                 <div class="bt-cover-image">
                                     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" fill="currentColor">
@@ -1260,21 +1297,40 @@ function utenzo_products_compare()
                                     <span> <?php echo __('Add Product To Compare', 'utenzo'); ?></span>
                                 </div>
                             </div>
-                            <div class="bt-table--col bt-name">
-
-                            </div>
-                            <div class="bt-table--col bt-price">
-
-                            </div>
-                            <div class="bt-table--col bt-stock">
-                            </div>
-                            <div class="bt-table--col bt-rating">
-                            </div>
-                            <div class="bt-table--col bt-brand">
-                            </div>
-                            <div class="bt-table--col bt-add-to-cart">
-
-                            </div>
+                            <div class="bt-table--col bt-name"></div>
+                            <?php if (!empty($fields_show_compare)) {
+                                if (in_array('short_desc', $fields_show_compare)) { ?>
+                                    <div class="bt-table--col bt-description"></div>
+                                <?php } ?>
+                                <?php if (in_array('price', $fields_show_compare)) { ?>
+                                    <div class="bt-table--col bt-price"></div>
+                                <?php } ?>
+                                <?php if (in_array('rating', $fields_show_compare)) { ?>
+                                    <div class="bt-table--col bt-rating woocommerce"></div>
+                                <?php } ?>
+                                <?php if (in_array('brand', $fields_show_compare)) { ?>
+                                    <div class="bt-table--col bt-brand"></div>
+                                <?php } ?>
+                                <?php if (in_array('stock_status', $fields_show_compare)) { ?>
+                                    <div class="bt-table--col bt-stock"></div>
+                                <?php } ?>
+                                <?php if (in_array('sku', $fields_show_compare)) { ?>
+                                    <div class="bt-table--col bt-sku"></div>
+                                <?php } ?>
+                                <?php if (in_array('weight', $fields_show_compare)) { ?>
+                                    <div class="bt-table--col bt-weight"></div>
+                                <?php } ?>
+                                <?php if (in_array('dimensions', $fields_show_compare)) { ?>
+                                    <div class="bt-table--col bt-dimensions"></div>
+                                <?php } ?>
+                                <?php if (in_array('color', $fields_show_compare)) { ?>
+                                    <div class="bt-table--col bt-color"></div>
+                                <?php } ?>
+                                <?php if (in_array('size', $fields_show_compare)) { ?>
+                                    <div class="bt-table--col bt-size"></div>
+                                <?php } ?>
+                            <?php } ?>
+                            <div class="bt-table--col"></div>
                         </div>
                 <?php
                     }
@@ -2527,7 +2583,7 @@ function add_variation_gallery_field($loop, $variation_data, $variation)
         <input type="hidden" name="variation_gallery[<?php echo esc_attr($loop); ?>]" class="variation-gallery-ids" value="<?php echo esc_attr($variation_gallery); ?>" />
         <button type="button" class="button add-variation-gallery-image"><?php esc_html_e('Add Gallery Images', 'utenzo'); ?></button>
     </div>
-<?php
+    <?php
 }
 
 // Save variation gallery data
@@ -2541,16 +2597,6 @@ function save_variation_gallery($variation_id, $loop)
 }
 
 // ajax load product gallery variation
-function utenzo_load_product_gallery111()
-{
-    // Get variation ID from AJAX request
-    $variation_id = isset($_POST['variation_id']) ? intval($_POST['variation_id']) : 0;
-
-    if ($variation_id) {
-        $variation_gallery = get_post_meta($variation_id, '_variation_gallery', true);
-        $gallery_images = $variation_gallery ? explode(',', $variation_gallery) : array();
-    }
-}
 function utenzo_load_product_gallery()
 {
     if (!isset($_POST['variation_id'])) {
@@ -2687,7 +2733,34 @@ function utenzo_load_product_gallery()
 }
 add_action('wp_ajax_utenzo_load_product_gallery', 'utenzo_load_product_gallery');
 add_action('wp_ajax_nopriv_utenzo_load_product_gallery', 'utenzo_load_product_gallery');
-
+// ajax load product single variation
+function utenzo_load_product_variation()
+{
+    if (!isset($_POST['variation_id'])) {
+        return;
+    }
+    // Get product gallery images
+    $variation_id = intval($_POST['variation_id']);
+    $variation = wc_get_product($variation_id);
+    $variation_image_id = $variation->get_image_id();
+    ob_start();
+    // Add main product image variation
+    if ($variation_image_id) {
+        $full_size_image = wp_get_attachment_image_src($variation_image_id, 'full');
+        $attributes = array(
+            'title' => get_post_field('post_title', $variation_image_id),
+            'data-caption' => get_post_field('post_excerpt', $variation_image_id),
+            'data-src' => $full_size_image[0],
+        )
+    ?>
+        <?php echo wp_get_attachment_image($variation_image_id, 'shop_single', false, $attributes); ?>
+    <?php
+    }
+    $output['image-variation'] = ob_get_clean();
+    wp_send_json_success($output);
+}
+add_action('wp_ajax_utenzo_load_product_variation', 'utenzo_load_product_variation');
+add_action('wp_ajax_nopriv_utenzo_load_product_variation', 'utenzo_load_product_variation');
 // ajax get price variation
 function utenzo_get_variation_price()
 {
@@ -2757,7 +2830,7 @@ function utenzo_load_product_toast()
         }
     }
     ob_start();
-?>
+    ?>
     <div class="bt-product-toast">
         <div class="bt-product-toast--close">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">

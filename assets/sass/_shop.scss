@@ -1151,6 +1151,15 @@
     &--row {
       width: 25%;
       min-width: 270px;
+      &.bt-product-add-compare{
+        display: none;
+        &.active{
+          display: block;
+        }
+        &.bt-load-before{
+          display: block;
+        }
+      }
       &:first-child {
         min-width: 280px;
         .bt-table--col {
@@ -4197,6 +4206,10 @@
               -moz-user-select: none;
               -ms-user-select: none;
               cursor: pointer;
+            }
+            &.disable {
+              pointer-events: none;
+              opacity: 0.5;
             }
           }
         }
