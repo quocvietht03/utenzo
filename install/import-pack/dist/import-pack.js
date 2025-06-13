@@ -140,23 +140,29 @@
                     form_data: form_data,
                 } },
                 success ( response ) {
-
+                    
                     if( true == response.success ) {
 
                         if( 'success' == response.type ) {
                             if( false == response.result.status ) {
-                                alert( 'Error: Internal error please open ticket!' );
+                                alert( response.message );
                                 return;
                             }
-                            if( response.result.form_action ) { action_form_handle( response.result.form_action, response ); }
+                            if( response.result.form_action ) { 
+                                action_form_handle( response.result.form_action, response ); 
+                            }
                         } else {
-                            $('.ip-import-steps-container .step-func-backup_site .actions .btn-action-skip').click();
+                            alert( response.message );
+                            return;
                         }
+                    } else  {
+                        alert( response.message );
+                        return;
                     }
                 },
-                error ( error ) {
-                    console.log( error );
-                    alert( 'Error 3: Internal error, Please try again or open ticket!' );
+                error () {
+                    alert( 'Demo import failed. Please open a ticket for support!' );
+
                 },
             } )
         } )
