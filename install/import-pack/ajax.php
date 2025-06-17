@@ -12,6 +12,23 @@ if( ! function_exists( 'utenzo_import_pack_modal_import_body_template' ) ) {
      */
     function utenzo_import_pack_modal_import_body_template() {
 
+        # nonce verify
+        if( ! isset( $_POST['template_nonce'] ) || ! wp_verify_nonce( $_POST['template_nonce'], 'utenzo_template_nonce' ) ) {
+            wp_send_json_error( 'Invalid nonce.' );
+            exit();
+        }
+        # end nonce verify
+
+        /**
+         * Fix issue security
+         * verify only admin can access
+         */
+        if( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( 'You are not authorized to access this page.' );
+            exit(); 
+        }
+        /** End fix issue security */
+        
         set_query_var( 'package_id', $_POST['package_id'] );
         set_query_var( 'package_data', utenzo_import_pack_get_package_data_by_id( $_POST['package_id'] ) );
         set_query_var( 'import_steps', utenzo_import_pack_import_steps() );
@@ -27,7 +44,6 @@ if( ! function_exists( 'utenzo_import_pack_modal_import_body_template' ) ) {
     }
 
     add_action( 'wp_ajax_utenzo_import_pack_modal_import_body_template', 'utenzo_import_pack_modal_import_body_template' );
-    add_action( 'wp_ajax_nopriv_utenzo_import_pack_modal_import_body_template', 'utenzo_import_pack_modal_import_body_template' );
 }
 
 if( ! function_exists( 'utenzo_import_pack_import_action_ajax_callback' ) ) {
@@ -36,8 +52,25 @@ if( ! function_exists( 'utenzo_import_pack_import_action_ajax_callback' ) ) {
      *
      */
     function utenzo_import_pack_import_action_ajax_callback() {
-
         extract( $_POST );
+
+        # nonce verify
+        if( ! isset( $data['callback_nonce'] ) || ! wp_verify_nonce( $data['callback_nonce'], 'utenzo_callback_nonce' ) ) {
+            wp_send_json_error( 'Invalid nonce.' );
+            exit();
+        }
+        # end nonce verify
+
+        /**
+         * Fix issue security
+         * verify only admin can access
+         */
+        if( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( 'You are not authorized to access this page.' );
+            exit(); 
+        }
+        /** End fix issue security */
+
 
         if( ! isset( $data['form_data'] ) || ! isset( $data['form_data'][$data['action_type']] ) || ! function_exists( $data['form_data'][$data['action_type']] ) || $data['form_data'][$data['action_type']] !== 'utenzo_import_pack_backup_site_skip_func' ) {
             wp_send_json( [
@@ -58,64 +91,6 @@ if( ! function_exists( 'utenzo_import_pack_import_action_ajax_callback' ) ) {
     }
 
     add_action( 'wp_ajax_utenzo_import_pack_import_action_ajax_callback', 'utenzo_import_pack_import_action_ajax_callback' );
-    add_action( 'wp_ajax_nopriv_utenzo_import_pack_import_action_ajax_callback', 'utenzo_import_pack_import_action_ajax_callback' );
-}
-
-if( ! function_exists( 'utenzo_import_pack_install_plugin' ) ) {
-    /**
-     * Install plugin
-     *
-     */
-    function utenzo_import_pack_install_plugin() {
-        extract( $_POST );
-
-        $installer = false;
-        $plugin = ['slug' => $data['plugin_slug']];
-        if( ! empty( $data['plugin_source'] ) ) { $plugin['source'] = $data['plugin_source']; }
-
-        if(! Import_Pack_Plugin_Installer_Helper::is_installed( $plugin )) {
-
-            $install_response = Import_Pack_Plugin_Installer_Helper::install( $plugin );
-            if( $install_response['success'] == true ) {
-                // Install...
-                $installer = true;
-            }
-        } else {
-            $installer = true;
-        }
-
-        if( false == $installer ) {
-            wp_send_json( [
-                'success' => true,
-                'status' => false,
-                'substep' => 'installer',
-            ] );
-        }
-
-        $active_response = Import_Pack_Plugin_Installer_Helper::activate( $plugin );
-        $activate = false;
-
-        if( $active_response['success'] == true ) {
-            $activate = true;
-        }
-
-        if( false == $activate ) {
-            wp_send_json( [
-                'success' => true,
-                'status' => false,
-                'substep' => 'activate',
-            ] );
-        }
-
-        wp_send_json( [
-            'success' => true,
-            'status' => true,
-            'substep' => 'activate',
-        ] );
-    }
-
-    add_action( 'wp_ajax_utenzo_import_pack_install_plugin', 'utenzo_import_pack_install_plugin' );
-    add_action( 'wp_ajax_nopriv_utenzo_import_pack_install_plugin', 'utenzo_import_pack_install_plugin' );
 }
 
 if( ! function_exists( 'utenzo_import_pack_download_package' ) ) {
@@ -124,8 +99,25 @@ if( ! function_exists( 'utenzo_import_pack_download_package' ) ) {
      *
      */
     function utenzo_import_pack_download_package() {
-
         extract( $_POST );
+
+        # nonce verify
+        if( ! isset( $data['download_package_nonce'] ) || ! wp_verify_nonce( $data['download_package_nonce'], 'utenzo_download_package_nonce' ) ) {
+            wp_send_json_error( 'Invalid nonce.' );
+            exit();
+        }
+        # end nonce verify
+
+        /**
+         * Fix issue security
+         * verify only admin can access
+         */
+        if( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( 'You are not authorized to access this page.' );
+            exit(); 
+        }
+        /** End fix issue security */
+
         $package_name = $data['package_name'];
         $position = isset( $data['position'] ) ? $data['position'] : 0;
         $package = isset( $data['package'] ) ? $data['package'] : '';
@@ -141,7 +133,6 @@ if( ! function_exists( 'utenzo_import_pack_download_package' ) ) {
     }
 
     add_action( 'wp_ajax_utenzo_import_pack_download_package', 'utenzo_import_pack_download_package' );
-    add_action( 'wp_ajax_nopriv_utenzo_import_pack_download_package', 'utenzo_import_pack_download_package' );
 }
 
 if( ! function_exists( 'utenzo_import_pack_extract_package_demo' ) ) {
@@ -152,6 +143,23 @@ if( ! function_exists( 'utenzo_import_pack_extract_package_demo' ) ) {
     function utenzo_import_pack_extract_package_demo() {
         global $Bears_Backup;
         extract( $_POST );
+
+        # nonce verify
+        if( ! isset( $data['extract_package_nonce'] ) || ! wp_verify_nonce( $data['extract_package_nonce'], 'utenzo_extract_package_nonce' ) ) {
+            wp_send_json_error( 'Invalid nonce.' );
+            exit();
+        }
+        # end nonce verify
+
+        /**
+         * Fix issue security
+         * verify only admin can access
+         */
+        if( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( 'You are not authorized to access this page.' );
+            exit(); 
+        }
+        /** End fix issue security */
 
         $package_name = $data['package_name'];
         $package = $data['package'];
@@ -199,7 +207,6 @@ if( ! function_exists( 'utenzo_import_pack_extract_package_demo' ) ) {
     }
 
     add_action( 'wp_ajax_utenzo_import_pack_extract_package_demo', 'utenzo_import_pack_extract_package_demo' );
-    add_action( 'wp_ajax_nopriv_utenzo_import_pack_extract_package_demo', 'utenzo_import_pack_extract_package_demo' );
 }
 
 if( ! function_exists( 'utenzo_import_pack_restore_data' ) ) {
@@ -209,21 +216,57 @@ if( ! function_exists( 'utenzo_import_pack_restore_data' ) ) {
      */
     function utenzo_import_pack_restore_data() {
         global $wp_filesystem;
-        $package_path = $_POST['data']['package_path'];
 
+        extract( $_POST );
+
+        # nonce verify
+        if( ! isset( $data['restore_data_nonce'] ) || ! wp_verify_nonce( $data['restore_data_nonce'], 'utenzo_restore_data_nonce' ) ) {
+            wp_send_json_error( 'Invalid nonce.' );
+            exit();
+        }
+        # end nonce verify
+
+        /**
+         * Fix issue security
+         * verify only admin can access
+         */
+        if( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( 'You are not authorized to access this page.' );
+            exit(); 
+        }
+        /** End fix issue security */
+
+        $package_path = $data['package_path'];
+        
+        // Get the uploads directory and bears-backup subfolder
+        $upload_dir = wp_upload_dir();
+        $bears_backup_dir = trailingslashit($upload_dir['basedir']) . 'bears-backup' . DIRECTORY_SEPARATOR;
+
+
+        // Verify package_path is inside /uploads/bears-backup
+        if (
+            ! $package_path ||
+            ! $bears_backup_dir ||
+            strpos($package_path, $bears_backup_dir) !== 0
+        ) {
+            wp_send_json_error('Invalid package path.');
+            exit();
+        }
+        // Sanitize file name
+        $file_name = basename( $package_path );
         if (empty($wp_filesystem)) {
             require_once (ABSPATH . '/wp-admin/includes/file.php');
             WP_Filesystem();
         }
 
-        do_action( 'utenzo/import_pack/before_restore_package', $package_path );
+        do_action( 'beplus/import_pack/before_restore_package', $package_path );
 
         $result = BBACKUP_Restore_Data( array(
-            'name' => basename( $package_path ),
+            'name' => $file_name,
             'backup_path_file' => $package_path,
         ), '' );
 
-        do_action( 'utenzo/import_pack/after_restore_package', $package_path, $result );
+        do_action( 'beplus/import_pack/after_restore_package', $package_path, $result );
 
         // delete package folder
         $wp_filesystem->delete( $package_path , true );
@@ -247,7 +290,6 @@ if( ! function_exists( 'utenzo_import_pack_restore_data' ) ) {
     }
 
     add_action( 'wp_ajax_utenzo_import_pack_restore_data', 'utenzo_import_pack_restore_data' );
-    add_action( 'wp_ajax_nopriv_utenzo_import_pack_restore_data', 'utenzo_import_pack_restore_data' );
 }
 
 if( ! function_exists( 'utenzo_import_pack_backup_site_substep_install_bears_backup_plg' ) ) {
@@ -256,6 +298,24 @@ if( ! function_exists( 'utenzo_import_pack_backup_site_substep_install_bears_bac
      *
      */
     function utenzo_import_pack_backup_site_substep_install_bears_backup_plg() {
+        extract( $_POST );
+
+        # nonce verify
+        if( ! isset( $data['backup_site_nonce'] ) || ! wp_verify_nonce( $data['backup_site_nonce'], 'utenzo_backup_site_nonce' ) ) {
+            wp_send_json_error( 'Invalid nonce.' );
+            exit();
+        }
+        # end nonce verify
+
+        /**
+         * Fix issue security
+         * verify only admin can access
+         */
+        if( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( 'You are not authorized to access this page.' );
+            exit(); 
+        }
+        /** End fix issue security */
 
         // Install plugin Bears Backup
         $installer = false;
@@ -315,7 +375,6 @@ if( ! function_exists( 'utenzo_import_pack_backup_site_substep_install_bears_bac
     }
 
     add_action( 'wp_ajax_utenzo_import_pack_backup_site_substep_install_bears_backup_plg', 'utenzo_import_pack_backup_site_substep_install_bears_backup_plg' );
-    add_action( 'wp_ajax_nopriv_utenzo_import_pack_backup_site_substep_install_bears_backup_plg', 'utenzo_import_pack_backup_site_substep_install_bears_backup_plg' );
 }
 
 if( ! function_exists( 'utenzo_import_pack_backup_site_substep_backup_database' ) ) {
@@ -324,6 +383,24 @@ if( ! function_exists( 'utenzo_import_pack_backup_site_substep_backup_database' 
      *
      */
     function utenzo_import_pack_backup_site_substep_backup_database() {
+        extract( $_POST );
+
+        # nonce verify
+        if( ! isset( $data['backup_site_nonce'] ) || ! wp_verify_nonce( $data['backup_site_nonce'], 'utenzo_backup_site_nonce' ) ) {
+            wp_send_json_error( 'Invalid nonce.' );
+            exit();
+        }
+        # end nonce verify
+
+        /**
+         * Fix issue security
+         * verify only admin can access
+         */
+        if( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( 'You are not authorized to access this page.' );
+            exit(); 
+        }
+        /** End fix issue security */
 
         // bbackup_backup_database
         $result = BBACKUP_Backup_Database( [], '' );
@@ -350,7 +427,6 @@ if( ! function_exists( 'utenzo_import_pack_backup_site_substep_backup_database' 
     }
 
     add_action( 'wp_ajax_utenzo_import_pack_backup_site_substep_backup_database', 'utenzo_import_pack_backup_site_substep_backup_database' );
-    add_action( 'wp_ajax_nopriv_utenzo_import_pack_backup_site_substep_backup_database', 'utenzo_import_pack_backup_site_substep_backup_database' );
 }
 
 if( ! function_exists( 'utenzo_import_pack_backup_site_substep_create_file_config' ) ) {
@@ -359,6 +435,24 @@ if( ! function_exists( 'utenzo_import_pack_backup_site_substep_create_file_confi
      *
      */
     function utenzo_import_pack_backup_site_substep_create_file_config() {
+        extract( $_POST );
+
+        # nonce verify
+        if( ! isset( $data['backup_site_nonce'] ) || ! wp_verify_nonce( $data['backup_site_nonce'], 'utenzo_backup_site_nonce' ) ) {
+            wp_send_json_error( 'Invalid nonce.' );
+            exit();
+        }
+        # end nonce verify
+
+        /**
+         * Fix issue security
+         * verify only admin can access
+         */
+        if( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( 'You are not authorized to access this page.' );
+            exit(); 
+        }
+        /** End fix issue security */
 
         $result = BBACKUP_Create_File_Config( $_POST['data']['next_step_data'], '' );
 
@@ -384,7 +478,6 @@ if( ! function_exists( 'utenzo_import_pack_backup_site_substep_create_file_confi
     }
 
     add_action( 'wp_ajax_utenzo_import_pack_backup_site_substep_create_file_config', 'utenzo_import_pack_backup_site_substep_create_file_config' );
-    add_action( 'wp_ajax_nopriv_utenzo_import_pack_backup_site_substep_create_file_config', 'utenzo_import_pack_backup_site_substep_create_file_config' );
 }
 
 if( ! function_exists( 'utenzo_import_pack_backup_site_substep_backup_folder_upload' ) ) {
@@ -393,6 +486,24 @@ if( ! function_exists( 'utenzo_import_pack_backup_site_substep_backup_folder_upl
      *
      */
     function utenzo_import_pack_backup_site_substep_backup_folder_upload() {
+        extract( $_POST );
+
+        # nonce verify
+        if( ! isset( $data['backup_site_nonce'] ) || ! wp_verify_nonce( $data['backup_site_nonce'], 'utenzo_backup_site_nonce' ) ) {
+            wp_send_json_error( 'Invalid nonce.' );
+            exit();
+        }
+        # end nonce verify
+
+        /**
+         * Fix issue security
+         * verify only admin can access
+         */
+        if( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( 'You are not authorized to access this page.' );
+            exit(); 
+        }
+        /** End fix issue security */
 
         $result = BBACKUP_Backup_Folder_Upload( $_POST['data']['next_step_data'], '' );
 
@@ -418,5 +529,4 @@ if( ! function_exists( 'utenzo_import_pack_backup_site_substep_backup_folder_upl
     }
 
     add_action( 'wp_ajax_utenzo_import_pack_backup_site_substep_backup_folder_upload', 'utenzo_import_pack_backup_site_substep_backup_folder_upload' );
-    add_action( 'wp_ajax_nopriv_utenzo_import_pack_backup_site_substep_backup_folder_upload', 'utenzo_import_pack_backup_site_substep_backup_folder_upload' );
 }

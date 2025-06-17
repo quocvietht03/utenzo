@@ -3,16 +3,11 @@
  * Import main functions
  *
  * @package Import Pack WP theme
- * @author BePlus
+ * @author Bearsthemes
  * @version 1.0.10
  */
 
 {
-    /**
-     * Defineds
-     *
-     */
-
     function utenzo_import_pack_defineds() {
         /**
          * Defines
@@ -43,7 +38,7 @@ if( ! function_exists( 'utenzo_register_import_menu' ) ) {
      */
     function utenzo_register_import_menu() {
 
-        $page_title = apply_filters( 'utenzo/import_pack/submenu_page_title', __( 'Import Demos', 'utenzo' ) );
+        $page_title = __( 'Import Demos', 'utenzo' );
 
         add_submenu_page(
             'themes.php',
@@ -63,19 +58,19 @@ if( ! function_exists( 'utenzo_register_import_page_callback' ) ) {
      */
     function utenzo_register_import_page_callback() {
 
-        set_query_var( 'tabs', amentex_import_page_tabs() );
+        set_query_var( 'tabs', utenzo_import_page_tabs() );
         load_template( get_template_directory() . '/install/import-pack/templates/import-page.php' );
     }
 }
 
-if( ! function_exists( 'amentex_import_page_tabs' ) ) {
+if( ! function_exists( 'utenzo_import_page_tabs' ) ) {
     /**
      * Import page tabs data
      *
      */
-    function amentex_import_page_tabs() {
+    function utenzo_import_page_tabs() {
 
-        return apply_filters( 'utenzo/import_page/tabs', [
+        return apply_filters( 'beplus/import_page/tabs', [
             [
                 'id' => 'demo_install_package',
                 'title' => __( 'Demo & Install Package', 'utenzo' ),
@@ -149,7 +144,7 @@ if( ! function_exists( 'utenzo_import_pack_import_steps' ) ) {
      */
     function utenzo_import_pack_import_steps() {
 
-        return apply_filters( 'utenzo/import_pack/import_steps', [
+        return apply_filters( 'beplus/import_pack/import_steps', [
             [
                 'name' => 'backup_site',
                 'title' => __( 'Backup site', 'utenzo' ),
@@ -163,13 +158,6 @@ if( ! function_exists( 'utenzo_import_pack_import_steps' ) ) {
                     ],
                 ]
             ],
-            // [
-            //     'name' => 'install_plugin',
-            //     'title' => __( 'Install Plugins', 'utenzo' ),
-            //     'description' => __( 'This package include __count_plugin__ plugin(s) please install and activate they before import content. click \'Explained\' to view all plugins.', 'utenzo' ),
-            //     'template_callback' => 'utenzo_import_pack_step_install_plugins',
-            //     'actions' => ['__yes__'],
-            // ],
             [
                 'name' => 'download_import_package',
                 'title' => __( 'Download & Import Package', 'utenzo' ),
@@ -202,7 +190,7 @@ if( ! function_exists( 'utenzo_import_pack_step_import_package_successful' ) ) {
                 <div class="desc"><?php echo "{$step['description']}" ?></div>
                 <div class="buttons-action">
                     <a href="javascript:" class="button button-close"><?php _e( 'Close', 'utenzo' ); ?></a>
-                    <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="button button-primary"><?php _e( 'Go Home', 'utenzo' ); ?></a>
+                    <a href="<?php echo esc_url(home_url()); ?>" class="button button-primary"><?php _e( 'Go Home', 'utenzo' ); ?></a>
                 </div>
             </div>
         </div>
@@ -217,14 +205,14 @@ if( ! function_exists( 'utenzo_import_pack_render_actions_button' ) ) {
      */
     function utenzo_import_pack_render_actions_button( $actions = [] ) {
 
-        $button_map = apply_filters( 'utenzo/import_pack/action_buttons', [
+        $button_map = [
             '__skip__' => function() {
                 return '<button class="ip-btn btn-action-skip" data-type="__skip__">'. __( 'Skip', 'utenzo' ) .'</button>';
             },
             '__yes__' => function() {
                 return '<button class="ip-btn btn-action-yes" data-type="__yes__">'. __( 'Yes', 'utenzo' ) .'</button>';
             }
-        ] );
+        ];
 
         $output = '';
         foreach( $actions as $index => $action ) {
@@ -291,47 +279,6 @@ if( ! function_exists( 'utenzo_import_pack_step_backup_site' ) ) {
                         </ul>
                     </div>
                 </div>
-            </div>
-            <div class="actions">
-                <?php echo isset( $step['actions'] ) ? utenzo_import_pack_render_actions_button( $step['actions'] ) : ''; ?>
-                <?php echo isset( $step['actions_callback'] ) ? utenzo_import_pack_render_actions_callback_form( $step['actions_callback'] ) : ''; ?>
-            </div>
-        </div>
-        <?php
-    }
-}
-
-if( ! function_exists( 'utenzo_import_pack_step_install_plugins' ) ) {
-    /**
-     * Step install plugins
-     *
-     */
-    function utenzo_import_pack_step_install_plugins( $package, $step, $index ) {
-        $int_step = $index + 1;
-        ?>
-        <div class="item inner-step">
-            <div class="heading-image">
-                <img src="<?php echo esc_url( get_template_directory_uri() . '/install/import-pack/images/install-plugins.jpg' ) ?>" alt="<?php echo esc_attr( $package['title'] ); ?>">
-            </div>
-            <div class="entry">
-                <h4 class="title"><?php echo "{$int_step}. ", "{$step['title']}"; ?></h4>
-                <div class="desc"><?php echo "{$step['description']}" ?></div>
-
-                <?php if( isset( $package['plugins'] ) && count( $package['plugins'] ) > 0 ) : ?>
-                <div class="ip-explained-container">
-                    <a href="javascript:" class="__toggle-explained"><?php _e( 'Explained', 'utenzo' ); ?></a>
-                    <div class="ip-explained-content">
-                        <ul class="ip-plugin-include-checklist">
-                            <?php foreach( $package['plugins'] as $index => $plugin ) : ?>
-                            <li data-plugin-slug="<?php echo esc_attr( $plugin['slug'] ); ?>" data-plugin-source="<?php echo isset( $plugin['source'] ) ? esc_attr( $plugin['source'] ) : ''; ?>">
-                                <?php echo '<span class="plg-name">' . $plugin['name'] . '</span>'; ?>
-                                <span class="status-ui"></span>
-                            </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </div>
-                </div>
-                <?php endif; ?>
             </div>
             <div class="actions">
                 <?php echo isset( $step['actions'] ) ? utenzo_import_pack_render_actions_button( $step['actions'] ) : ''; ?>
@@ -472,9 +419,6 @@ if( ! function_exists( 'utenzo_import_pack_backup_site_yes_func' ) ) {
 }
 
 if( ! function_exists( 'utenzo_import_pack_download_package_step' ) ) {
-    /**
-     *
-     */
     function utenzo_import_pack_download_package_step( $package_name, $position = 0, $package = null ) {
 
         $remote_url = utenzo_import_pack_make_remote_url( $package_name, $position );
@@ -492,9 +436,6 @@ if( ! function_exists( 'utenzo_import_pack_download_package_step' ) ) {
 }
 
 if( ! function_exists( 'utenzo_import_pack_make_remote_url' ) ) {
-    /**
-     *
-     */
     function utenzo_import_pack_make_remote_url( $package_name = null, $position = 0, $size = 0 ) {
 
         $size = ( $size ) ? '&size=' . $size : '';
@@ -503,9 +444,6 @@ if( ! function_exists( 'utenzo_import_pack_make_remote_url' ) ) {
 }
 
 if( ! function_exists( 'utenzo_import_pack_read_remote_head' ) ) {
-    /**
-     *
-     */
     function utenzo_import_pack_read_remote_head( $remote_url ) {
 
         $head = array_change_key_case(get_headers($remote_url, TRUE));
