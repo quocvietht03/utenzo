@@ -81,13 +81,13 @@
 		}
 		if ($('.quantity input').length > 0) {
 			/* Plus Qty */
-			$(document).on('click', '.qty-plus', function () {
+			$(document).off('click', '.qty-plus').on('click', '.qty-plus', function () {
 				var parent = $(this).parent();
 				$('input.qty', parent).val(parseInt($('input.qty', parent).val()) + 1);
 				$('input.qty', parent).trigger('change');
 			});
 			/* Minus Qty */
-			$(document).on('click', '.qty-minus', function () {
+			$(document).off('click', '.qty-minus').on('click', '.qty-minus', function () {
 				var parent = $(this).parent();
 				if (parseInt($('input.qty', parent).val()) > 1) {
 					$('input.qty', parent).val(parseInt($('input.qty', parent).val()) - 1);
@@ -266,15 +266,15 @@
 			const $addToCartBtn = $('.bt-quickview-product .grouped_form .single_add_to_cart_button');
 			$addToCartBtn.addClass('disabled');
 		}
-		if ($('.quantity input').length > 0) {
+		if ($('.quantity input').length > 0 && !$('body').hasClass('single-product')) {
 			/* Plus Qty */
-			$(document).on('click', '.qty-plus', function () {
+			$(document).off('click', '.bt-quickview-product .qty-plus').on('click', '.bt-quickview-product .qty-plus', function () {
 				var parent = $(this).parent();
 				$('input.qty', parent).val(parseInt($('input.qty', parent).val()) + 1);
 				$('input.qty', parent).trigger('change');
 			});
 			/* Minus Qty */
-			$(document).on('click', '.qty-minus', function () {
+			$(document).off('click', '.bt-quickview-product .qty-minus').on('click', '.bt-quickview-product .qty-minus', function () {
 				var parent = $(this).parent();
 				if (parseInt($('input.qty', parent).val()) > 1) {
 					$('input.qty', parent).val(parseInt($('input.qty', parent).val()) - 1);
