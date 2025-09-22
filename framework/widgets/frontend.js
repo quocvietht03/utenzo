@@ -851,7 +851,7 @@
 	// mini cart
 	const MiniCartHandler = function ($scope) {
 		const $miniCart = $scope.find('.bt-elwg-mini-cart--default');
-		const $sidebar = $miniCart.find('.bt-mini-cart-sidebar');
+		const $sidebar = $('.bt-mini-cart-sidebar');
 
 		// Toggle mini cart
 		$miniCart.find('.js-cart-sidebar').on('click', function (e) {
@@ -865,7 +865,7 @@
 		});
 
 		// Close mini cart when clicking overlay or close button
-		$miniCart.find('.bt-mini-cart-sidebar-overlay, .bt-mini-cart-close').on('click', function () {
+		$sidebar.find('.bt-mini-cart-sidebar-overlay, .bt-mini-cart-close').on('click', function () {
 			closeMiniCart();
 		});
 

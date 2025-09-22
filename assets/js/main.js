@@ -2184,6 +2184,9 @@
 				if (AJ_Options.cart_toast) {
 					UtenzoshowToast(productId, 'cart', 'add');
 				}
+				if ($(window).width() <= 1023) {
+					$('.bt-mini-cart-sidebar').addClass('active');
+				}
 			}
 		}
 	});
