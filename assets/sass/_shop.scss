@@ -2262,6 +2262,7 @@
           &:not(.ajax_add_to_cart) {
             transition: all 0.3s cubic-bezier(0.11, 0.52, 0.53, 0.79) 0s;
             font-size: 0;
+            letter-spacing: 0;
             display: flex;
             align-items: center;
             width: 48px;
@@ -2278,8 +2279,8 @@
             &::before {
               width: 24px;
               height: 24px;
-              background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAiIGhlaWdodD0iMjEiIHZpZXdCb3g9IjAgMCAzMCAyMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTI5LjkxMzcgMTAuMTA1N0MyOS44NyAxMC4wMDcgMjguODExMiA3LjY1ODI0IDI2LjQ1NzUgNS4zMDQ0OUMyMy4zMjEyIDIuMTY4MjQgMTkuMzYgMC41MTA3NDIgMTUgMC41MTA3NDJDMTAuNjQgMC41MTA3NDIgNi42Nzg3NCAyLjE2ODI0IDMuNTQyNDkgNS4zMDQ0OUMxLjE4ODc0IDcuNjU4MjQgMC4xMjQ5ODggMTAuMDEwNyAwLjA4NjIzOCAxMC4xMDU3QzAuMDI5Mzc5NSAxMC4yMzM2IDAgMTAuMzcyIDAgMTAuNTEyQzAgMTAuNjUyIDAuMDI5Mzc5NSAxMC43OTA0IDAuMDg2MjM4IDEwLjkxODJDMC4xMjk5ODggMTEuMDE3IDEuMTg4NzQgMTMuMzY0NSAzLjU0MjQ5IDE1LjcxODJDNi42Nzg3NCAxOC44NTMyIDEwLjY0IDIwLjUxMDcgMTUgMjAuNTEwN0MxOS4zNiAyMC41MTA3IDIzLjMyMTIgMTguODUzMiAyNi40NTc1IDE1LjcxODJDMjguODExMiAxMy4zNjQ1IDI5Ljg3IDExLjAxNyAyOS45MTM3IDEwLjkxODJDMjkuOTcwNiAxMC43OTA0IDMwIDEwLjY1MiAzMCAxMC41MTJDMzAgMTAuMzcyIDI5Ljk3MDYgMTAuMjMzNiAyOS45MTM3IDEwLjEwNTdaTTE1IDE4LjUxMDdDMTEuMTUyNSAxOC41MTA3IDcuNzkxMjQgMTcuMTEyIDUuMDA4NzQgMTQuMzU0NUMzLjg2NzA0IDEzLjIxOTEgMi44OTU3MiAxMS45MjQ0IDIuMTI0OTkgMTAuNTEwN0MyLjg5NTUxIDkuMDk2OTIgMy44NjY4NiA3LjgwMjIxIDUuMDA4NzQgNi42NjY5OUM3Ljc5MTI0IDMuOTA5NDkgMTEuMTUyNSAyLjUxMDc0IDE1IDIuNTEwNzRDMTguODQ3NSAyLjUxMDc0IDIyLjIwODcgMy45MDk0OSAyNC45OTEyIDYuNjY2OTlDMjYuMTM1MiA3LjgwMTk0IDI3LjEwODYgOS4wOTY2NCAyNy44ODEyIDEwLjUxMDdDMjYuOTggMTIuMTkzMiAyMy4wNTM3IDE4LjUxMDcgMTUgMTguNTEwN1pNMTUgNC41MTA3NEMxMy44MTMzIDQuNTEwNzQgMTIuNjUzMyA0Ljg2MjY0IDExLjY2NjYgNS41MjE5MkMxMC42Nzk5IDYuMTgxMjEgOS45MTA4NCA3LjExODI5IDkuNDU2NzEgOC4yMTQ2NEM5LjAwMjU5IDkuMzExIDguODgzNzcgMTAuNTE3NCA5LjExNTI4IDExLjY4MTNDOS4zNDY3OSAxMi44NDUyIDkuOTE4MjMgMTMuOTE0MyAxMC43NTczIDE0Ljc1MzRDMTEuNTk2NSAxNS41OTI1IDEyLjY2NTYgMTYuMTYzOSAxMy44Mjk0IDE2LjM5NTVDMTQuOTkzMyAxNi42MjcgMTYuMTk5NyAxNi41MDgxIDE3LjI5NjEgMTYuMDU0QzE4LjM5MjQgMTUuNTk5OSAxOS4zMjk1IDE0LjgzMDkgMTkuOTg4OCAxMy44NDQyQzIwLjY0ODEgMTIuODU3NSAyMSAxMS42OTc0IDIxIDEwLjUxMDdDMjAuOTk4MyA4LjkxOTk1IDIwLjM2NTcgNy4zOTQ3OSAxOS4yNDA4IDYuMjY5OTNDMTguMTE1OSA1LjE0NTA3IDE2LjU5MDggNC41MTI0IDE1IDQuNTEwNzRaTTE1IDE0LjUxMDdDMTQuMjA4OSAxNC41MTA3IDEzLjQzNTUgMTQuMjc2MSAxMi43Nzc3IDEzLjgzNjZDMTIuMTE5OSAxMy4zOTcxIDExLjYwNzIgMTIuNzcyNCAxMS4zMDQ1IDEyLjA0MTVDMTEuMDAxNyAxMS4zMTA2IDEwLjkyMjUgMTAuNTA2MyAxMS4wNzY4IDkuNzMwMzhDMTEuMjMxMiA4Ljk1NDQ2IDExLjYxMjIgOC4yNDE3MiAxMi4xNzE2IDcuNjgyMzFDMTIuNzMxIDcuMTIyOSAxMy40NDM3IDYuNzQxOTQgMTQuMjE5NiA2LjU4NzZDMTQuOTk1NiA2LjQzMzI2IDE1Ljc5OTggNi41MTI0NyAxNi41MzA3IDYuODE1MjJDMTcuMjYxNiA3LjExNzk3IDE3Ljg4NjMgNy42MzA2NiAxOC4zMjU5IDguMjg4NDZDMTguNzY1NCA4Ljk0NjI2IDE5IDkuNzE5NjIgMTkgMTAuNTEwN0MxOSAxMS41NzE2IDE4LjU3ODYgMTIuNTg5IDE3LjgyODQgMTMuMzM5MkMxNy4wNzgzIDE0LjA4OTMgMTYuMDYwOSAxNC41MTA3IDE1IDE0LjUxMDdaIiBmaWxsPSIjMEMyQzQ4Ii8+Cjwvc3ZnPgo=");
-              background-size: contain;
+              background-image: url("data:image/svg+xml;base64,PHN2ZyBhcmlhLWhpZGRlbj0idHJ1ZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCI+CiAgPHBhdGggc3Ryb2tlPSIjMEMyQzQ4IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMS41IiBkPSJNNC4yNDggMTlDMy4yMiAxNS43NyA1LjI3NSA4LjIzMiAxMi40NjYgOC4yMzJWNi4wNzlhMS4wMjUgMS4wMjUgMCAwIDEgMS42NDQtLjg2Mmw1LjQ3OSA0LjMwN2ExLjEwOCAxLjEwOCAwIDAgMSAwIDEuNzIzbC01LjQ4IDQuMzA3YTEuMDI2IDEuMDI2IDAgMCAxLTEuNjQzLS44NjF2LTIuMTU0QzUuMjc1IDEzLjYxNiA0LjI0OCAxOSA0LjI0OCAxOVoiLz4KPC9zdmc+Cg==");
+              background-size: contain; 
               content: "";
               display: block;
               z-index: 1;
@@ -3699,7 +3700,7 @@
         .woocommerce-product-label {
           padding: 0 8px;
           line-height: 24px;
-          background: #f03e3e;
+          background: #58c35c;
           border-radius: 4px;
           display: inline-block;
           font-size: 14px;
@@ -3708,11 +3709,13 @@
           color: #ffff;
           text-transform: capitalize;
           &.featured {
-            background: #3dab25;
-          }
-          &.new-arrival,
-          &.trending {
             background: #f0a750;
+          }
+          &.new-arrival {
+            background: #f26134;
+          }
+          &.trending {
+            background: #9391e1;
           }
         }
         .woocommerce-product-rating {
@@ -3939,7 +3942,7 @@
 
           .bt-progress-bar-sold {
             border-radius: 30px;
-            background: #f03e3e;
+            background: #58c35c;
             height: 100%;
             width: 0%;
             transition: width 1s ease;
@@ -4308,7 +4311,7 @@
             line-height: 24px;
             padding: 12px 40px;
             border-radius: 4px;
-            background: #f03e3e;
+            background: #58c35c;
             box-sizing: border-box;
             color: #fff;
             text-transform: uppercase;
@@ -4316,10 +4319,10 @@
             border: none;
             width: 100%;
             &.disabled {
-              background: #f03e3e !important;
+              background: #58c35c !important;
             }
             &:hover {
-              background: $color-accent;
+              background: #43bc47;
               color: #fff;
             }
           }
@@ -7413,7 +7416,7 @@
     margin: 0 auto;
     > p {
       margin-bottom: 30px;
-      &.woocommerce-notice--success {
+      &.woocommerce-notice--success { 
         background: #e9f9e9;
         color: #3dab25;
         border: 1px solid #3dab25;
