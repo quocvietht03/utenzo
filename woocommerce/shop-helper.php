@@ -1868,17 +1868,17 @@ if (!function_exists('utenzo_product_share_render')) {
             <div class="bt-product-share">
                 <div id="bt_product_share" class="bt-product-share__popup mfp-content__popup mfp-hide">
                     <div class="bt-product-share__content mfp-content__inner">
-                        <h3 class="bt-product-share__title"><?php echo esc_html__('Share', 'woozio'); ?></h3>
+                        <h3 class="bt-product-share__title"><?php echo esc_html__('Share', 'utenzo'); ?></h3>
                         <?php
                         if (!empty($social_item)) {
                             echo '<ul class="bt-product-share__socials">' . implode(' ', $social_item) . '</ul>';
                         }
                         ?>
                         <div class="bt-product-share__link bt-copy-link-wrap">
-                            <h5 class="bt-copy-link-title"><?php echo esc_html__('Copy URL', 'woozio'); ?></h5>
+                            <h5 class="bt-copy-link-title"><?php echo esc_html__('Copy URL', 'utenzo'); ?></h5>
                             <form class="bt-product-share-form">
                                 <input id="bt-product-share-url" type="text" value="<?php the_permalink(); ?>" readonly="">
-                                <button class="button bt-copy-btn" data-copy="<?php echo esc_attr__('Copy', 'woozio'); ?>" data-copied="<?php echo esc_attr__('Copied', 'woozio'); ?>"><?php echo esc_html__('Copy', 'woozio'); ?></button>
+                                <button class="button bt-copy-btn" data-copy="<?php echo esc_attr__('Copy', 'utenzo'); ?>" data-copied="<?php echo esc_attr__('Copied', 'utenzo'); ?>"><?php echo esc_html__('Copy', 'utenzo'); ?></button>
                             </form>
                         </div>
                     </div>
@@ -1888,7 +1888,7 @@ if (!function_exists('utenzo_product_share_render')) {
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M7.926 10.898 15 7.727m-7.074 5.39L15 16.29M8 12a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm12 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm0-11a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z" />
                     </svg>
-                    <?php echo esc_html__('Share', 'woozio'); ?>
+                    <?php echo esc_html__('Share', 'utenzo'); ?>
                 </a>
             </div>
         <?php
