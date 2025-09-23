@@ -2262,6 +2262,7 @@
           &:not(.ajax_add_to_cart) {
             transition: all 0.3s cubic-bezier(0.11, 0.52, 0.53, 0.79) 0s;
             font-size: 0;
+            letter-spacing: 0;
             display: flex;
             align-items: center;
             width: 48px;
