@@ -2403,7 +2403,7 @@ function utenzo_woocommerce_single_product_more_information()
                         $link_url = $title_and_link['url'];
                     ?>
                         <div class="bt-link">
-                            <a href="<?php echo esc_url($link_url); ?>">
+                            <a href="<?php echo esc_url($link_url); ?>" target="_blank">
                                 <?php echo esc_html($link_title); ?>
                             </a>
                         </div>
@@ -2421,7 +2421,7 @@ function utenzo_woocommerce_single_product_more_information()
                         $link_url = $title_and_link['url'];
                     ?>
                         <div class="bt-link">
-                            <a href="<?php echo esc_url($link_url); ?>">
+                            <a href="<?php echo esc_url($link_url); ?>" target="_blank">
                                 <?php echo esc_html($link_title); ?>
                             </a>
                         </div>
