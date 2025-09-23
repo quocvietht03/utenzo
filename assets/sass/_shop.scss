@@ -1151,12 +1151,12 @@
     &--row {
       width: 25%;
       min-width: 270px;
-      &.bt-product-add-compare{
+      &.bt-product-add-compare {
         display: none;
-        &.active{
+        &.active {
           display: block;
         }
-        &.bt-load-before{
+        &.bt-load-before {
           display: block;
         }
       }
@@ -2411,6 +2411,87 @@
         padding: 40px 0 60px 0;
       }
     }
+    .mfp-content {
+      &__popup {
+        max-width: 850px;
+        margin: 24px auto 32px;
+        padding: 24px;
+        background: #fff;
+      }
+      &__inner {
+        font-size: 16px;
+        > * {
+          &:first-child {
+            margin-top: 0;
+          }
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+        a {
+          text-decoration: underline;
+          color: $color-primary;
+          &:hover {
+            color: $color-primary;
+          }
+        }
+        .gform_title {
+          font-size: 32px;
+          margin-top: 0;
+        }
+      }
+      .bt-product-share {
+        &__socials {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          gap: 12px;
+          a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #f6f6f6;
+            font-size: 16px;
+            color: $color-text;
+            transition: all 0.3s ease-in-out;
+            svg {
+              width: 16px;
+              height: 16px;
+              fill: currentColor;
+            }
+            &:hover {
+              background-color: $color-accent;
+              color: #fff;
+            }
+          }
+        }
+        &__link {
+          .bt-product-share-form {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+          }
+          input {
+            width: 100%;
+          }
+          .bt-copy-btn {
+            display: inline-block;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 24px;
+            text-transform: uppercase;
+            color: #fff;
+            border: 1px solid $color-accent;
+            background: $color-accent;
+            padding: 10px 30px;
+          }
+        }
+      }
+    }
   }
   .woocommerce-notices-wrapper {
     .woocommerce-message {
@@ -2963,8 +3044,8 @@
                 border-radius: 4px;
                 border: 1px solid #e9e9e9;
                 transition:
-                opacity 0.5s ease,
-                transform 0.5s ease;
+                  opacity 0.5s ease,
+                  transform 0.5s ease;
                 position: relative;
                 color: $color-primary;
                 &:hover {
@@ -4391,6 +4472,7 @@
                 align-items: flex-start;
                 .quantity {
                   width: 100%;
+                  max-width: 190px;
                 }
                 .product-wrapper {
                   width: 100%;
@@ -4466,155 +4548,45 @@
       .bt-more-information {
         margin-bottom: 20px;
         margin-top: 10px;
+        font-size: 14px;
+        line-height: 1.5;
+        .bt-estimated-delivery,
+        .bt-product-return,
+        .bt-store-location__link {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          margin-bottom: 8px;
+          svg {
+            color: $color-primary;
+          }
+        }
+        .bt-store-location__link {
+          text-decoration: underline;
+          color: $color-primary;
+          margin-bottom: 0;
+          svg {
+            color: inherit;
+          }
+          &:hover {
+            color: $color-accent;
+          }
+        }
         .bt-policy-share {
           display: flex;
           flex-wrap: wrap;
-          gap: 10px 0;
+          gap: 8px 24px;
           margin-top: 12px;
-          @media (max-width: $break-xs) {
-            padding-right: 20px;
-          }
-          @media (max-width: 370px) {
-            padding-right: 0;
-          }
-          > ul {
-            margin: 0;
-            list-style: none;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            li {
-              display: flex;
-              align-items: center;
-              font-size: 14px;
-              font-style: normal;
-              font-weight: 400;
-              line-height: 20px;
-              color: $color-primary;
-              gap: 4px;
-              padding-right: 17px;
-              border-right: 1px solid #e9e9e9;
-              margin-right: 17px;
-              @media (max-width: $break-xs) {
-                padding-right: 12px;
-                margin-right: 12px;
-              }
-              @media (max-width: 370px) {
-                padding-right: 6px;
-                margin-right: 6px;
-                border-right: none;
-              }
-              .bt-icon {
-                display: flex;
-              }
-            }
-          }
+          .bt-delivery-return,
+          .bt-ask-a-question,
           .bt-product-share {
-            position: relative;
-            cursor: pointer;
-            .button-share {
-              display: flex;
+            &__link {
+              display: inline-flex;
               align-items: center;
-              gap: 4px;
-              font-size: 14px;
-              font-style: normal;
-              font-weight: 400;
-              line-height: 22px;
+              gap: 8px;
               color: $color-primary;
-            }
-            ul {
-              position: absolute;
-              padding: 10px 20px;
-              list-style: none;
-              display: flex;
-              align-items: center;
-              gap: 10px;
-              border-radius: 10px;
-              background: #e9e9e9;
-              margin: 0;
-              bottom: calc(100% + 11px);
-              transform: translate(-50%, 10px);
-              left: 50%;
-              box-shadow: 0 4px 25px 0 rgba(0, 0, 0, 0.1);
-              opacity: 0;
-              visibility: hidden;
-              transition:
-                opacity 0.3s ease,
-                visibility 0.3s ease,
-                transform 0.3s ease;
-              @media (max-width: $break-xs) {
-                left: 70%;
-              }
-              &::after {
-                content: "";
-                position: absolute;
-                bottom: -17px;
-                left: 43%;
-                border-width: 9px;
-                border-style: solid;
-                border-color: #e9e9e9 transparent transparent transparent;
-              }
-              a {
-                display: flex;
-                svg {
-                  width: 15px;
-                  height: 15px;
-                  path {
-                    fill: $color-primary;
-                  }
-                }
-                &:hover {
-                  svg {
-                    path {
-                      fill: $color-accent;
-                    }
-                  }
-                }
-              }
-            }
-            &:hover {
-              ul {
-                opacity: 1;
-                visibility: visible;
-                transform: translate(-50%, 0);
-              }
-            }
-          }
-        }
-        .bt-list-info {
-          display: flex;
-          flex-direction: column;
-          padding: 0;
-          margin: 0;
-          list-style: none;
-          gap: 12px;
-          li {
-            font-size: 14px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 22px;
-            display: flex;
-            align-items: center;
-            color: $color-text;
-            align-items: flex-start;
-            > a {
-              display: flex;
-              align-items: center;
-            }
-            p {
-              margin: 0;
-              span {
-                color: $color-primary;
-              }
-            }
-            .bt-icon {
-              display: flex;
-              svg {
-                margin-right: 4px;
-                width: 20px;
-                position: relative;
-                top: 1px;
-                min-width: 20px;
+              &:hover {
+                color: $color-accent;
               }
             }
           }
@@ -5052,7 +5024,7 @@
                   text-transform: uppercase;
                   display: inline-block;
                   box-sizing: border-box;
-                  @media(max-width: $break-xs) {
+                  @media (max-width: $break-xs) {
                     font-size: 14px;
                     line-height: 1.3;
                   }
@@ -5600,7 +5572,7 @@
           @media (max-width: $break-lg) {
             padding: 20px !important;
           }
-          @media(max-width: $break-xs) {
+          @media (max-width: $break-xs) {
             padding: 16px !important;
           }
           &#tab-description {
@@ -5701,7 +5673,6 @@
                         line-height: 22px;
                         padding: 9px 16px;
                         text-transform: capitalize;
-                        
                       }
                     }
                   }
@@ -6718,10 +6689,12 @@
         min-width: auto;
         color: #fff;
         &:hover {
-          background: $color-primary;
-          background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%);
-          background-size: 200% 100%;
-          animation: shimmer 1.5s infinite linear;
+          @media (min-width: $break-sm) {
+            background: $color-primary;
+            background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite linear;
+          }
         }
       }
       @media (max-width: 420px) {
@@ -6763,10 +6736,12 @@
       .button {
         padding: 11px 32px;
         &:hover {
-          background: $color-primary;
-          background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%);
-          background-size: 200% 100%;
-          animation: shimmer 1.5s infinite linear;
+          @media (min-width: $break-sm) {
+            background: $color-primary;
+            background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite linear;
+          }
         }
       }
       .woocommerce-form-login__rememberme {
@@ -7369,10 +7344,12 @@
           width: 100%;
           margin-bottom: 0;
           &:hover {
-            background: $color-primary;
-            background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite linear;
+            @media (min-width: $break-sm) {
+              background: $color-primary;
+              background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%);
+              background-size: 200% 100%;
+              animation: shimmer 1.5s infinite linear;
+            }
           }
         }
       }
@@ -7690,10 +7667,12 @@
       text-transform: uppercase;
       margin: 0;
       &:hover {
-        background-color: $color-primary !important;
-        background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%);
-        background-size: 200% 100%;
-        animation: shimmer 1.5s infinite linear;
+        @media (min-width: $break-sm) {
+          background-color: $color-primary !important;
+          background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%);
+          background-size: 200% 100%;
+          animation: shimmer 1.5s infinite linear;
+        }
       }
     }
     .woocommerce-password-strength {
@@ -7941,11 +7920,13 @@
   font-size: 16px;
   line-height: 24px;
   &:hover {
-    background: $color-primary;
-    color: #fff;
-    background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite linear;
+    @media (min-width: $break-sm) {
+      background: $color-primary;
+      color: #fff;
+      background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite linear;
+    }
   }
 }
 .product-type-grouped,

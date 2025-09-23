@@ -89,7 +89,11 @@
 			/* Minus Qty */
 			$(document).off('click', '.qty-minus').on('click', '.qty-minus', function () {
 				var parent = $(this).parent();
-				if (parseInt($('input.qty', parent).val()) > 1) {
+				var minValue = 1;
+				if (parent.closest('.woocommerce-grouped-product-list').length > 0) {
+					minValue = 0;
+				}
+				if (parseInt($('input.qty', parent).val()) > minValue) {
 					$('input.qty', parent).val(parseInt($('input.qty', parent).val()) - 1);
 					$('input.qty', parent).trigger('change');
 				}
@@ -239,6 +243,37 @@
 				});
 			});
 		}
+		if ($('.bt-js-open-popup-link').length > 0) {
+			$('.bt-js-open-popup-link').magnificPopup({
+				type: 'inline',
+				midClick: true,
+				mainClass: 'mfp-fade'
+			});
+		}
+
+		$('.bt-copy-btn').on('click', function (e) {
+			e.preventDefault();
+			var $button = $(this),
+				$buttonurl = $(this).closest('form').find('#bt-product-share-url');
+			if (navigator.clipboard) {
+				navigator.clipboard.writeText($buttonurl.val()).then(() => {
+					$buttonurl.select();
+					$button.text($button.data('copied'));
+					setTimeout(function () {
+						$button.text($button.data('copy'))
+					}, 1000);
+				}, () => {
+					return prompt("Copy to clipboard: Ctrl+C, Enter", $buttonurl.value);
+				});
+			} else {
+				$buttonurl.select();
+				document.execCommand('copy');
+				$button.text($button.data('copied'));
+				setTimeout(function () {
+					$button.text($button.data('copy'))
+				}, 1000);
+			}
+		});
 	}
 	/* load Shop Quick View */
 	function UtenzoLoadShopQuickView() {
@@ -2186,6 +2221,11 @@
 				}
 				if ($(window).width() <= 1023) {
 					$('.bt-mini-cart-sidebar').addClass('active');
+					const scrollbarWidth = window.innerWidth - $(window).width();
+					$('body').css({
+						'overflow': 'hidden',
+						'padding-right': scrollbarWidth + 'px' // Prevent layout shift
+					});
 				}
 			}
 		}
