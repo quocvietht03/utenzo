@@ -1151,12 +1151,12 @@
     &--row {
       width: 25%;
       min-width: 270px;
-      &.bt-product-add-compare{
+      &.bt-product-add-compare {
         display: none;
-        &.active{
+        &.active {
           display: block;
         }
-        &.bt-load-before{
+        &.bt-load-before {
           display: block;
         }
       }
@@ -2963,8 +2963,8 @@
                 border-radius: 4px;
                 border: 1px solid #e9e9e9;
                 transition:
-                opacity 0.5s ease,
-                transform 0.5s ease;
+                  opacity 0.5s ease,
+                  transform 0.5s ease;
                 position: relative;
                 color: $color-primary;
                 &:hover {
@@ -5050,7 +5050,7 @@
                   text-transform: uppercase;
                   display: inline-block;
                   box-sizing: border-box;
-                  @media(max-width: $break-xs) {
+                  @media (max-width: $break-xs) {
                     font-size: 14px;
                     line-height: 1.3;
                   }
@@ -5598,7 +5598,7 @@
           @media (max-width: $break-lg) {
             padding: 20px !important;
           }
-          @media(max-width: $break-xs) {
+          @media (max-width: $break-xs) {
             padding: 16px !important;
           }
           &#tab-description {
@@ -5699,7 +5699,6 @@
                         line-height: 22px;
                         padding: 9px 16px;
                         text-transform: capitalize;
-                        
                       }
                     }
                   }
@@ -6716,10 +6715,12 @@
         min-width: auto;
         color: #fff;
         &:hover {
-          background: $color-primary;
-          background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%);
-          background-size: 200% 100%;
-          animation: shimmer 1.5s infinite linear;
+          @media (min-width: $break-sm) {
+            background: $color-primary;
+            background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite linear;
+          }
         }
       }
       @media (max-width: 420px) {
@@ -6761,10 +6762,12 @@
       .button {
         padding: 11px 32px;
         &:hover {
+          @media(min-width: $break-sm) {
           background: $color-primary;
-          background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%);
-          background-size: 200% 100%;
-          animation: shimmer 1.5s infinite linear;
+            background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite linear;
+          }
         }
       }
       .woocommerce-form-login__rememberme {
@@ -7367,10 +7370,12 @@
           width: 100%;
           margin-bottom: 0;
           &:hover {
+            @media(min-width: $break-sm) {
             background: $color-primary;
-            background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite linear;
+              background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%);
+              background-size: 200% 100%;
+              animation: shimmer 1.5s infinite linear;
+            }
           }
         }
       }
@@ -7688,10 +7693,12 @@
       text-transform: uppercase;
       margin: 0;
       &:hover {
+        @media(min-width: $break-sm) {
         background-color: $color-primary !important;
         background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%);
-        background-size: 200% 100%;
-        animation: shimmer 1.5s infinite linear;
+          background-size: 200% 100%;
+          animation: shimmer 1.5s infinite linear;
+        }
       }
     }
     .woocommerce-password-strength {
@@ -7939,11 +7946,13 @@
   font-size: 16px;
   line-height: 24px;
   &:hover {
+    @media(min-width: $break-sm) {
     background: $color-primary;
     color: #fff;
-    background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite linear;
+      background-image: linear-gradient(90deg, transparent 25%, rgba(233, 233, 233, 0.39) 50%, transparent 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite linear;
+    }
   }
 }
 .product-type-grouped,
