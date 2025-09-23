@@ -9518,7 +9518,7 @@ body.admin-bar .dialog-type-lightbox.bt-menu-mobile-popup .elementor-location-po
 }
 .woocommerce div.product div.summary .bt-product-percentage-sold .bt-product-stock .bt-progress-bar-sold {
   border-radius: 30px;
-  background: #f03e3e;
+  background: #58c35c;
   height: 100%;
   width: 0%;
   transition: width 1s ease;
