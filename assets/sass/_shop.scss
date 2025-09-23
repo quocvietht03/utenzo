@@ -7258,6 +7258,7 @@
           align-items: center;
           flex-wrap: wrap;
           gap: 0 8px;
+          position: relative;
           &::before {
             display: none;
           }
@@ -7292,7 +7293,6 @@
             padding: 0 !important;
             width: 100%;
             display: block;
-            position: relative;
             &:before {
               content: '';
               background: #f9fafb;
