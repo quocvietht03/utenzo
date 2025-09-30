@@ -1,10 +1,10 @@
 /*
  * Fonts
  */
-$text-font: var(--e-global-typography-text-font-family, "Urbanist");
-$primary-font: var(--e-global-typography-primary-font-family, "Urbanist");
-$secondary-font: var(--e-global-typography-secondary-font-family, "Urbanist");
-$accent-font: var(--e-global-typography-accent-font-family, "Urbanist");
+$text-font: var(--e-global-typography-text-font-family, "Urbanist"), sans-serif;
+$primary-font: var(--e-global-typography-primary-font-family, "Urbanist"), sans-serif;
+$secondary-font: var(--e-global-typography-secondary-font-family, "Urbanist"), sans-serif;
+$accent-font: var(--e-global-typography-accent-font-family, "Urbanist"), sans-serif;
 /*
  * colors
  */
