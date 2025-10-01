@@ -110,14 +110,14 @@ class Widget_MobileMenu extends Widget_Base
 		$this->start_controls_tab(
 			'tab_main_menu_item_normal',
 			[
-				'label' => esc_html__( 'Normal', 'elementor-pro' ),
+				'label' => esc_html__( 'Normal', 'utenzo' ),
 			]
 		);
 
 		$this->add_control(
 			'color_main_menu_item',
 			[
-				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'utenzo' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
@@ -131,14 +131,14 @@ class Widget_MobileMenu extends Widget_Base
 		$this->start_controls_tab(
 			'tab_main_menu_item_hover',
 			[
-				'label' => esc_html__( 'Hover', 'elementor-pro' ),
+				'label' => esc_html__( 'Hover', 'utenzo' ),
 			]
 		);
 
 		$this->add_control(
 			'color_main_menu_item_hover',
 			[
-				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'utenzo' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .bt-mobile-menu > li > a:hover,
@@ -152,14 +152,14 @@ class Widget_MobileMenu extends Widget_Base
 		$this->start_controls_tab(
 			'tab_main_menu_item_active',
 			[
-				'label' => esc_html__( 'Active', 'elementor-pro' ),
+				'label' => esc_html__( 'Active', 'utenzo' ),
 			]
 		);
 
 		$this->add_control(
 			'color_main_menu_item_active',
 			[
-				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'utenzo' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
@@ -190,7 +190,7 @@ class Widget_MobileMenu extends Widget_Base
 		$this->add_control(
 			'padding_vertical_main_menu_item',
 			[
-				'label' => esc_html__( 'Vertical Padding', 'elementor-pro' ),
+				'label' => esc_html__( 'Vertical Padding', 'utenzo' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
@@ -213,7 +213,7 @@ class Widget_MobileMenu extends Widget_Base
 		$this->add_control(
 			'toggle_main_menu_offset',
 			[
-				'label' => esc_html__( 'Toggle Offset', 'elementor-pro' ),
+				'label' => esc_html__( 'Toggle Offset', 'utenzo' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
@@ -248,14 +248,14 @@ class Widget_MobileMenu extends Widget_Base
 		$this->start_controls_tab(
 			'tab_sub_menu_item_normal',
 			[
-				'label' => esc_html__( 'Normal', 'elementor-pro' ),
+				'label' => esc_html__( 'Normal', 'utenzo' ),
 			]
 		);
 
 		$this->add_control(
 			'color_sub_menu_item',
 			[
-				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'utenzo' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
@@ -269,14 +269,14 @@ class Widget_MobileMenu extends Widget_Base
 		$this->start_controls_tab(
 			'tab_sub_menu_item_hover',
 			[
-				'label' => esc_html__( 'Hover', 'elementor-pro' ),
+				'label' => esc_html__( 'Hover', 'utenzo' ),
 			]
 		);
 
 		$this->add_control(
 			'color_sub_menu_item_hover',
 			[
-				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'utenzo' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .sub-menu > li > a:hover,
@@ -290,14 +290,14 @@ class Widget_MobileMenu extends Widget_Base
 		$this->start_controls_tab(
 			'tab_sub_menu_item_active',
 			[
-				'label' => esc_html__( 'Active', 'elementor-pro' ),
+				'label' => esc_html__( 'Active', 'utenzo' ),
 			]
 		);
 
 		$this->add_control(
 			'color_sub_menu_item_active',
 			[
-				'label' => esc_html__( 'Text Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Text Color', 'utenzo' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
@@ -328,7 +328,7 @@ class Widget_MobileMenu extends Widget_Base
 		$this->add_control(
 			'padding_vertical_sub_menu_item',
 			[
-				'label' => esc_html__( 'Vertical Padding', 'elementor-pro' ),
+				'label' => esc_html__( 'Vertical Padding', 'utenzo' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
@@ -351,7 +351,7 @@ class Widget_MobileMenu extends Widget_Base
 		$this->add_control(
 			'toggle_sub_menu_offset',
 			[
-				'label' => esc_html__( 'Toggle Offset', 'elementor-pro' ),
+				'label' => esc_html__( 'Toggle Offset', 'utenzo' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
@@ -384,7 +384,7 @@ class Widget_MobileMenu extends Widget_Base
 		$this->add_control(
 			'heading_toggle_menu',
 			[
-				'label' => esc_html__( 'Toggle Menu', 'elementor-pro' ),
+				'label' => esc_html__( 'Toggle Menu', 'utenzo' ),
 				'type' => Controls_Manager::HEADING,
 			]
 		);
@@ -392,7 +392,7 @@ class Widget_MobileMenu extends Widget_Base
 		$this->add_control(
 			'color_toggle_menu',
 			[
-				'label' => esc_html__( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'utenzo' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
@@ -405,7 +405,7 @@ class Widget_MobileMenu extends Widget_Base
 		$this->add_control(
 			'heading_divider_menu',
 			[
-				'label' => esc_html__( 'Divider Menu', 'elementor-pro' ),
+				'label' => esc_html__( 'Divider Menu', 'utenzo' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -414,14 +414,14 @@ class Widget_MobileMenu extends Widget_Base
 		$this->add_control(
 			'divider_menu_style',
 			[
-				'label' => esc_html__( 'Style', 'elementor-pro' ),
+				'label' => esc_html__( 'Style', 'utenzo' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'none' => esc_html__( 'None', 'elementor-pro' ),
-					'solid' => esc_html__( 'Solid', 'elementor-pro' ),
-					'double' => esc_html__( 'Double', 'elementor-pro' ),
-					'dotted' => esc_html__( 'Dotted', 'elementor-pro' ),
-					'dashed' => esc_html__( 'Dashed', 'elementor-pro' ),
+					'none' => esc_html__( 'None', 'utenzo' ),
+					'solid' => esc_html__( 'Solid', 'utenzo' ),
+					'double' => esc_html__( 'Double', 'utenzo' ),
+					'dotted' => esc_html__( 'Dotted', 'utenzo' ),
+					'dashed' => esc_html__( 'Dashed', 'utenzo' ),
 				],
 				'default' => 'solid',
 				'selectors' => [
@@ -433,7 +433,7 @@ class Widget_MobileMenu extends Widget_Base
 		$this->add_control(
 			'divider_menu_weight',
 			[
-				'label' => esc_html__( 'Width', 'elementor-pro' ),
+				'label' => esc_html__( 'Width', 'utenzo' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'range' => [
@@ -460,7 +460,7 @@ class Widget_MobileMenu extends Widget_Base
 		$this->add_control(
 			'divider_menu_color',
 			[
-				'label' => esc_html__( 'Color', 'elementor-pro' ),
+				'label' => esc_html__( 'Color', 'utenzo' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} ul.bt-mobile-menu > li:not(:last-child)' => 'border-color: {{VALUE}}',
