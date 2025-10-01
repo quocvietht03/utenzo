@@ -45,6 +45,11 @@ class Widget_MobileMenu extends Widget_Base
 		return ['utenzo'];
 	}
 
+	public function get_script_depends()
+    {
+        return ['elementor-widgets'];
+    }
+
 	protected function register_content_section_controls()
 	{
 		$this->start_controls_section(
