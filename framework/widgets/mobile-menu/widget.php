@@ -4,12 +4,7 @@ namespace UtenzoElementorWidgets\Widgets\MobileMenu;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
-use Elementor\Group_Control_Image_Size;
-use Elementor\Repeater;
-use Elementor\Utils;
 use Elementor\Group_Control_Typography;
-use Elementor\Group_Control_Border;
-use Elementor\Group_Control_Box_Shadow;
 
 class Widget_MobileMenu extends Widget_Base
 {
