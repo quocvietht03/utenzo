@@ -2042,7 +2042,10 @@
 			var productGrouped = [];
 			let totalPrice = 0;
 			let regularTotalPrice = 0;
-			let currencySymbol = '$';
+			let currencySymbol = parent.data('currency') || '$';
+			let thousandSeparator = parent.data('thousand-separator') || ',';
+			let decimalSeparator = parent.data('decimal-separator') || '.';
+
 			$('.bt-product-grouped-js input[type="checkbox"]:checked').each(function () {
 				const $checkbox = $(this);
 				const $item = $checkbox.closest('.woocommerce-grouped-product-list-item');
@@ -2052,16 +2055,28 @@
 				productGrouped.push($checkbox.val() + ':' + $quantity.val());
 
 				// Calculate total price of checked products
-				currencySymbol = $item.find('.woocommerce-Price-currencySymbol').first().text() || '$';
+				currencySymbol = $item.data('currency') || '$';
 				const $priceElement = $item.find('.woocommerce-Price-amount');
 				let price;
 
 				// Get regular price
-				const regularPrice = parseFloat($priceElement.first().text().replace(/[^0-9.-]+/g, ''));
+				const regularPriceText = $priceElement.first().text();
+				const regularPrice = parseFloat(
+					regularPriceText
+						.replace(new RegExp('[^0-9' + thousandSeparator + decimalSeparator + ']+', 'g'), '') // Remove all non-numeric except separators
+						.replace(new RegExp('\\' + thousandSeparator, 'g'), '') // Remove thousand separator
+						.replace(new RegExp('\\' + decimalSeparator, 'g'), '.') // Replace decimal separator with dot for parseFloat
+				);
 
 				// Get sale price if exists
 				if ($item.find('ins').length) {
-					price = parseFloat($item.find('ins .woocommerce-Price-amount').text().replace(/[^0-9.-]+/g, ''));
+					const salePriceText = $item.find('ins .woocommerce-Price-amount').text();
+					price = parseFloat(
+						salePriceText
+							.replace(new RegExp('[^0-9' + thousandSeparator + decimalSeparator + ']+', 'g'), '') // Remove all non-numeric except separators
+							.replace(new RegExp('\\' + thousandSeparator, 'g'), '') // Remove thousand separator
+							.replace(new RegExp('\\' + decimalSeparator, 'g'), '.') // Replace decimal separator with dot for parseFloat
+					);
 				} else {
 					price = regularPrice;
 				}
@@ -2071,14 +2086,23 @@
 				regularTotalPrice += regularPrice * quantity;
 			});
 
+			// Helper function to format price with proper separators
+			function formatPrice(price) {
+				const parts = price.toFixed(2).split('.');
+				// Format integer part with thousand separator
+				parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousandSeparator);
+				// Join with decimal separator
+				return parts.join(decimalSeparator);
+			}
+
 			// Update price display
 			if (totalPrice < regularTotalPrice) {
-				$('.bt-price').html(`<del>${currencySymbol}${regularTotalPrice.toFixed(2)}</del> ${currencySymbol}${totalPrice.toFixed(2)}`);
+				$('.bt-price').html(`<del>${currencySymbol}${formatPrice(regularTotalPrice)}</del> ${currencySymbol}${formatPrice(totalPrice)}`);
 			} else {
-				$('.bt-price').text(currencySymbol + totalPrice.toFixed(2));
+				$('.bt-price').text(currencySymbol + formatPrice(totalPrice));
 			}
-			// Update buy now button state
 
+			// Update buy now button state
 			const $buyNowBtn = $('.bt-button-buy-now a');
 
 			if (productGrouped.length) {
@@ -2093,7 +2117,6 @@
 				$addToCartBtn.addClass('disabled');
 				$('.bt-quickview-product .grouped_form .single_add_to_cart_button').addClass('disabled');
 				$('.bt-total-price ').removeClass('active');
-
 			}
 		});
 	}

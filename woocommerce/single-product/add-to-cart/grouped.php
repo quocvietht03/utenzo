@@ -20,6 +20,11 @@ defined('ABSPATH') || exit;
 
 global $product, $post;
 
+// Get WooCommerce currency and formatting settings
+$currency_symbol = get_woocommerce_currency_symbol();
+$thousand_separator = get_option('woocommerce_price_thousand_sep', ',');
+$decimal_separator = get_option('woocommerce_price_decimal_sep', '.');
+
 do_action('woocommerce_before_add_to_cart_form');
 ?>
 
@@ -52,7 +57,7 @@ do_action('woocommerce_before_add_to_cart_form');
 				$show_add_to_cart_button = true;
 			}
 
-			echo '<li id="product-' . esc_attr($grouped_product_child->get_id()) . '" class="woocommerce-grouped-product-list-item ' . esc_attr(implode(' ', wc_get_product_class('', $grouped_product_child))) . '">';
+			echo '<li id="product-' . esc_attr($grouped_product_child->get_id()) . '" class="woocommerce-grouped-product-list-item ' . esc_attr(implode(' ', wc_get_product_class('', $grouped_product_child))) . '" data-currency="' . esc_attr($currency_symbol) . '" data-thousand-separator="' . esc_attr($thousand_separator) . '" data-decimal-separator="' . esc_attr($decimal_separator) . '">';
 
 			// Output columns for each product.
 			foreach ($grouped_product_columns as $column_id) {

@@ -6631,7 +6631,7 @@ body.admin-bar .dialog-type-lightbox.bt-menu-mobile-popup .elementor-location-po
   top: 32px;
 }
 .bt-popup-compare.active {
-  z-index: 999;
+  z-index: 9999;
   visibility: visible;
   opacity: 1;
 }
@@ -7131,7 +7131,7 @@ body.admin-bar .dialog-type-lightbox.bt-menu-mobile-popup .elementor-location-po
   top: 32px;
 }
 .bt-popup-quick-view.active {
-  z-index: 999;
+  z-index: 9999;
   visibility: visible;
   opacity: 1;
 }
