@@ -9,7 +9,19 @@ $columns = intval(get_option('woocommerce_catalog_columns', 4));
 $rows = $rows > 0 ? $rows : 1;
 $columns = $columns > 0 ? $columns : 1;
 $limit = $rows * $columns;
-$query_args = utenzo_products_query_args($_GET, $limit);
+// Prepare query params - include category slug if on category page
+$query_params = $_GET;
+$is_category_page = utenzo_is_category_archive_page();
+if ($is_category_page) {
+	// Remove product_cat from params when on category page (it's already in URL)
+	unset($query_params['product_cat']);
+	$current_category = get_queried_object();
+	if ($current_category && !empty($current_category->slug)) {
+		// Pass category slug to query function for filtering
+		$query_params['product_cat'] = $current_category->slug;
+	}
+}
+$query_args = utenzo_products_query_args($query_params, $limit);
 $wp_query = new \WP_Query($query_args);
 $current_page = isset($_GET['current_page']) && $_GET['current_page'] != '' ? absint($_GET['current_page']) : 1;
 $total_page = $wp_query->max_num_pages;

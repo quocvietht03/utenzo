@@ -7,9 +7,40 @@
  */
 
 defined('ABSPATH') || exit;
-
+$current_category = null;
+$category_slug = '';
+$category_name = '';
+if (utenzo_is_category_archive_page()) {
+	$current_category = get_queried_object();
+	if ($current_category && isset($current_category->taxonomy) && $current_category->taxonomy === 'product_cat') {
+		$category_slug = !empty($current_category->slug) ? $current_category->slug : '';
+		$category_name = !empty($current_category->name) ? $current_category->name : '';
+	}
+}
+// Get taxonomy info for taxonomy pages (not shop or category)
+$is_category_page = utenzo_is_category_archive_page();
+$is_taxonomy_page = !$is_category_page && (is_product_taxonomy() || is_tax());
+$current_taxonomy = null;
+$taxonomy_slug = '';
+$taxonomy_name = '';
+$taxonomy_type = '';
+if ($is_taxonomy_page) {
+	$current_taxonomy = get_queried_object();
+	if ($current_taxonomy && isset($current_taxonomy->taxonomy) && $current_taxonomy->taxonomy !== 'product_cat') {
+		$taxonomy_slug = !empty($current_taxonomy->slug) ? $current_taxonomy->slug : '';
+		$taxonomy_name = !empty($current_taxonomy->name) ? $current_taxonomy->name : '';
+		$taxonomy_type = $current_taxonomy->taxonomy;
+	}
+}
 ?>
-<div class="bt-product-sidebar">
+<div class="bt-product-sidebar" 
+	<?php if (utenzo_is_category_archive_page()) { ?>data-is-category-page="1"<?php } ?>
+	<?php if ($category_slug) { ?>data-category-slug="<?php echo esc_attr($category_slug); ?>"<?php } ?>
+	<?php if ($category_name) { ?>data-category-name="<?php echo esc_attr($category_name); ?>"<?php } ?>
+	<?php if ($is_taxonomy_page) { ?>data-is-taxonomy-page="1"<?php } ?>
+	<?php if ($taxonomy_slug) { ?>data-taxonomy-slug="<?php echo esc_attr($taxonomy_slug); ?>"<?php } ?>
+	<?php if ($taxonomy_name) { ?>data-taxonomy-name="<?php echo esc_attr($taxonomy_name); ?>"<?php } ?>
+	<?php if ($taxonomy_type) { ?>data-taxonomy-type="<?php echo esc_attr($taxonomy_type); ?>"<?php } ?>>
   <form class="bt-product-filter-form" action="" method="get">
     <div class="bt-form-action">
       <h2 class="bt-form-title">
@@ -43,34 +74,134 @@ defined('ABSPATH') || exit;
       <!--View type-->
       <input type="hidden" class="bt-product-view-type" name="view_type" value="<?php if (isset($_GET['view_type'])) echo esc_attr($_GET['view_type']); ?>">
 
-      <div class="bt-form-field bt-field-type-search">
-        <input type="text" name="search_keyword" value="<?php if (isset($_GET['search_keyword'])) echo esc_attr($_GET['search_keyword']); ?>" placeholder="<?php esc_attr_e('Search …', 'utenzo'); ?>">
-        <a href="#">
-          <svg class="search-icon" viewBox="0 0 24 24" width="24" height="24">
-            <path d="M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z"></path>
-          </svg>
-        </a>
-      </div>
       <?php
-      $field_name = __('Product Categories', 'utenzo');
-      $field_value = (isset($_GET['product_cat'])) ? $_GET['product_cat'] : '';
-      utenzo_product_field_radio_html('product_cat', $field_name, $field_value);
-      $field_name = __('Material', 'utenzo');
-      $field_value = (isset($_GET['product_material'])) ? $_GET['product_material'] : '';
-      utenzo_product_field_multiple_html('product_material', $field_name, $field_value);
-      $field_name = __('Brand', 'utenzo');
-      $field_value = (isset($_GET['product_brand'])) ? $_GET['product_brand'] : '';
-      utenzo_product_field_multiple_html('product_brand', $field_name, $field_value);
-      $field_title = __('Price', 'utenzo');
-      $field_min_value = (isset($_GET['min_price'])) ? $_GET['min_price'] : '';
-      $field_max_value = (isset($_GET['max_price'])) ? $_GET['max_price'] : '';
-      utenzo_product_field_price_slider($field_title, $field_min_value, $field_max_value);
-      $field_name = __('Colors', 'utenzo');
-      $field_value = (isset($_GET['pa_color'])) ? $_GET['pa_color'] : '';
-      utenzo_product_field_multiple_color_html('pa_color', $field_name, $field_value);
-      $field_name = __('Customer Rating', 'utenzo');
-      $field_value = (isset($_GET['product_rating'])) ? $_GET['product_rating'] : '';
-      utenzo_product_field_rating('product_rating', $field_name, $field_value);
+      // Get custom filters settings from ACF
+      $custom_filters = get_field('custom_filters', 'option');
+      $enable_arrange = !empty($custom_filters['enable_arrange_filters']) ? $custom_filters['enable_arrange_filters'] : false;
+      $arrange_filters = !empty($custom_filters['arrange_filters']) ? $custom_filters['arrange_filters'] : array();
+
+      // Check if arrange filters is enabled and has items
+      if ($enable_arrange && !empty($arrange_filters)) {
+        
+        $rendered_filters = array(); // Track rendered filters to avoid duplicates
+        
+        foreach ($arrange_filters as $filter) {
+          $filter_type = $filter['item_filters'];
+          
+          // Skip if this filter type has already been rendered
+          if (in_array($filter_type, $rendered_filters)) {
+            continue;
+          }
+          
+          // Mark this filter type as rendered
+          $rendered_filters[] = $filter_type;
+          
+          switch ($filter_type) {
+            case 'search_form':
+              ?>
+              <div class="bt-form-field bt-field-type-search">
+                <input type="text" name="search_keyword" value="<?php if (isset($_GET['search_keyword'])) echo esc_attr($_GET['search_keyword']); ?>" placeholder="<?php esc_attr_e('Search …', 'utenzo'); ?>">
+                <a href="#">
+                  <svg class="search-icon" viewBox="0 0 24 24" width="24" height="24">
+                    <path d="M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z"></path>
+                  </svg>
+                </a>
+              </div>
+              <?php
+              break;
+
+            case 'categories':
+              $field_name = __('Product Categories', 'utenzo');
+              // Check if we're on a product category page
+              if (utenzo_is_category_archive_page()) {
+                $current_category = get_queried_object();
+                $field_value = !empty($current_category->slug) ? $current_category->slug : '';
+              } else {
+                $field_value = (isset($_GET['product_cat'])) ? $_GET['product_cat'] : '';
+              }
+              utenzo_product_field_radio_html('product_cat', $field_name, $field_value );
+              break;
+
+            case 'brand':
+              $field_name = __('Brand', 'utenzo');
+              $field_value = (isset($_GET['product_brand'])) ? $_GET['product_brand'] : '';
+              utenzo_product_field_multiple_html('product_brand', $field_name, $field_value);
+              break;
+
+            case 'price':
+              $field_title = __('Price', 'utenzo');
+              $field_min_value = (isset($_GET['min_price'])) ? $_GET['min_price'] : '';
+              $field_max_value = (isset($_GET['max_price'])) ? $_GET['max_price'] : '';
+              utenzo_product_field_price_slider($field_title, $field_min_value, $field_max_value);
+              break;
+
+            case 'colors':
+              $field_name = __('Colors', 'utenzo');
+              $field_value = (isset($_GET['pa_color'])) ? $_GET['pa_color'] : '';
+              utenzo_product_field_multiple_color_html('pa_color', $field_name, $field_value);
+              break;
+
+            case 'customer_rating':
+              $field_name = __('Customer Rating', 'utenzo');
+              $field_value = (isset($_GET['product_rating'])) ? $_GET['product_rating'] : '';
+              utenzo_product_field_rating('product_rating', $field_name, $field_value);
+              break;
+
+            case 'text_editor':
+              $custom_editor_content = !empty($filter['custom_editor']) ? $filter['custom_editor'] : '';
+              if (!empty($custom_editor_content)) {
+                ?>
+                <div class="bt-form-field bt-field-type-text-editor">
+                  <?php echo apply_filters('the_content', $custom_editor_content); ?>
+                </div>
+                <?php
+              }
+              break;
+          }
+        }
+      } else {
+        // Render filters in default order when arrange is disabled
+        ?>
+        <div class="bt-form-field bt-field-type-search">
+          <input type="text" name="search_keyword" value="<?php if (isset($_GET['search_keyword'])) echo esc_attr($_GET['search_keyword']); ?>" placeholder="<?php esc_attr_e('Search …', 'utenzo'); ?>">
+          <a href="#">
+            <svg class="search-icon" viewBox="0 0 24 24" width="24" height="24">
+              <path d="M13 5c-3.3 0-6 2.7-6 6 0 1.4.5 2.7 1.3 3.7l-3.8 3.8 1.1 1.1 3.8-3.8c1 .8 2.3 1.3 3.7 1.3 3.3 0 6-2.7 6-6S16.3 5 13 5zm0 10.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5z"></path>
+            </svg>
+          </a>
+        </div>
+        <?php
+        $field_name = __('Product Categories', 'utenzo');
+        // Check if we're on a product category page
+        if (utenzo_is_category_archive_page()) {
+          $current_category = get_queried_object();
+          $field_value = !empty($current_category->slug) ? $current_category->slug : '';
+        } else {
+          $field_value = (isset($_GET['product_cat'])) ? $_GET['product_cat'] : '';
+        }
+        utenzo_product_field_radio_html('product_cat', $field_name, $field_value);
+    
+        $field_name = __('Material', 'utenzo');
+        $field_value = (isset($_GET['product_material'])) ? $_GET['product_material'] : '';
+        utenzo_product_field_multiple_html('product_material', $field_name, $field_value);
+    
+        $field_name = __('Brand', 'utenzo');
+        $field_value = (isset($_GET['product_brand'])) ? $_GET['product_brand'] : '';
+        utenzo_product_field_multiple_html('product_brand', $field_name, $field_value);
+
+        $field_title = __('Price', 'utenzo');
+        $field_min_value = (isset($_GET['min_price'])) ? $_GET['min_price'] : '';
+        $field_max_value = (isset($_GET['max_price'])) ? $_GET['max_price'] : '';
+        utenzo_product_field_price_slider($field_title, $field_min_value, $field_max_value);
+
+        $field_name = __('Colors', 'utenzo');
+        $field_value = (isset($_GET['pa_color'])) ? $_GET['pa_color'] : '';
+        utenzo_product_field_multiple_color_html('pa_color', $field_name, $field_value);
+
+        $field_name = __('Customer Rating', 'utenzo');
+        $field_value = (isset($_GET['product_rating'])) ? $_GET['product_rating'] : '';
+        utenzo_product_field_rating('product_rating', $field_name, $field_value);
+      }
       ?>
       <div class="bt-form-button-results">
         <a href="#" class="bt-reset-filter-product-btn disable"><?php echo esc_html__('Clear All Filters', 'utenzo'); ?></a>

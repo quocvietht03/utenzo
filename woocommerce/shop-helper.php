@@ -30,6 +30,36 @@ remove_action('woocommerce_cart_collaterals', 'woocommerce_cross_sell_display');
 remove_action('woocommerce_after_single_product_summary', 'woocommerce_upsell_display', 15);
 
 add_action('utenzo_woocommerce_template_upsell_products', 'woocommerce_upsell_display', 20);
+
+// Remove categories from product loop
+remove_filter('woocommerce_product_loop_start', 'woocommerce_maybe_show_product_subcategories');
+
+/**
+ * Prevent product_brand query param from being treated as taxonomy archive
+ * Remove from query vars when it's just a filter parameter
+ */
+function utenzo_remove_brand_from_query_vars($query_vars) {
+	if (!is_admin() && isset($_GET['product_brand']) && isset($query_vars['product_brand'])) {
+		unset($query_vars['product_brand']);
+	}
+	return $query_vars;
+}
+add_filter('request', 'utenzo_remove_brand_from_query_vars', 1, 1);
+
+/**
+ * Check if we're on a product category archive page (not shop page with query params)
+ * Uses queried object to check taxonomy
+ * 
+ * @return bool True if on category archive page (not shop page)
+ */
+function utenzo_is_category_archive_page() {
+	$current_category = get_queried_object();
+	$is_category_page = $current_category && isset($current_category->taxonomy) && $current_category->taxonomy === 'product_cat' && !isset($_GET['product_cat']);
+	
+	// Also verify we're not on shop page (shop page with product_cat query param)
+	return $is_category_page;
+}
+
 function register_product_taxonomy()
 {
     $labels = array(
@@ -463,41 +493,215 @@ function utenzo_get_products_by_rating($rating)
 }
 
 /* Field Product */
+/* Helper function to recursively get all nested children */
+function utenzo_get_nested_category_children($parent_id, $taxonomy, $all_terms = null) {
+    if ($all_terms === null) {
+        $all_terms = get_terms(array(
+            'taxonomy' => $taxonomy,
+            'hide_empty' => true,
+        ));
+        
+        if (is_wp_error($all_terms) || empty($all_terms)) {
+            return array();
+        }
+    }
+    
+    $children = array();
+    foreach ($all_terms as $term) {
+        if (isset($term->parent) && intval($term->parent) === intval($parent_id)) {
+            $children[] = $term;
+            // Recursively get children of this child
+            $grandchildren = utenzo_get_nested_category_children($term->term_id, $taxonomy, $all_terms);
+            if (!empty($grandchildren)) {
+                $term->children = $grandchildren;
+            }
+        }
+    }
+    
+    return $children;
+}
+
+/* Helper function to recursively render nested categories */
+function utenzo_render_nested_category($term, $slug, $field_value, $parent_url = '', $level = 0) {
+    $is_checked = ($term->slug == $field_value);
+    $has_children = !empty($term->children);
+    $url_category = '';
+    
+    if ($slug === 'product_cat') {
+        // If on category page, always create URL for all categories to redirect
+        if (utenzo_is_category_archive_page()) {
+            // Use category permalink for redirect
+            $url_category = get_term_link($term->term_id, 'product_cat');
+            if (is_wp_error($url_category)) {
+                $url_category = '';
+            }
+        } else {
+            // On shop page, use category permalink
+            $is_category_page = isset($_GET['product_cat']);
+            if ($is_category_page) {
+                $category_display = get_option('woocommerce_category_archive_display', '');
+                if ($category_display == 'both') {
+                    $term_link = get_term_link($term->term_id, 'product_cat');
+                    if (!is_wp_error($term_link)) {
+                        $url_category = $term_link;
+                    }
+                }
+            } else {
+                $shop_page_display = get_option('woocommerce_shop_page_display', '');
+                if ($shop_page_display == 'both') {
+                    $term_link = get_term_link($term->term_id, 'product_cat');
+                    if (!is_wp_error($term_link)) {
+                        $url_category = $term_link;
+                    }
+                }
+            }
+        }
+    }
+    
+    $item_class = 'item-radio';
+    if ($level > 0) {
+        $item_class .= ' item-radio-child';
+    }
+    if ($has_children) {
+        $item_class .= ' has-children';
+    }
+    ?>
+    <div class="<?php echo esc_attr($item_class); ?>" <?php if (!empty($url_category)) { ?>data-url="<?php echo esc_attr($url_category); ?>" <?php } ?>>
+        <?php if ($is_checked) { ?>
+            <input type="radio" name="<?php echo esc_attr($slug); ?>" id="<?php echo esc_attr($term->slug); ?>" value="<?php echo esc_attr($term->slug); ?>" checked>
+        <?php } else { ?>
+            <input type="radio" name="<?php echo esc_attr($slug); ?>" id="<?php echo esc_attr($term->slug); ?>" value="<?php echo esc_attr($term->slug); ?>">
+        <?php } ?>
+        <label for="<?php echo esc_attr($term->slug); ?>" data-slug="<?php echo esc_attr($term->slug); ?>">
+            <?php echo esc_html($term->name); ?>
+        </label>
+        <span class="bt-count"><?php echo '(' . $term->count . ')'; ?></span>
+
+        <?php if ($has_children) { ?>
+            <span class="bt-toggle-children">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 4L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </span>
+            <div class="bt-children-categories">
+                <?php foreach ($term->children as $child) { 
+                    utenzo_render_nested_category($child, $slug, $field_value, $url_category, $level + 1);
+                } ?>
+            </div>
+        <?php } ?>
+    </div>
+    <?php
+}
+
+/* Field Product */
 function utenzo_product_field_radio_html($slug = '', $field_title = '', $field_value = '')
 {
     if (empty($slug)) {
         return;
     }
 
-    $terms = get_terms(array(
-        'taxonomy' => $slug,
-        'hide_empty' => true
-    ));
+    // Get settings for product_cat from ACF
+    $category_mode = 'none'; // default
+    $custom_categories = array();
 
+
+    if ($slug === 'product_cat') {
+        $custom_filters = get_field('custom_filters', 'option');
+        $category_mode = !empty($custom_filters['setting_product_category']) ? $custom_filters['setting_product_category'] : 'none';
+        $custom_categories = !empty($custom_filters['select_category_product_custom']) ? $custom_filters['select_category_product_custom'] : array();
+    }
+
+    // Get terms based on mode
+    $terms_args = array(
+        'taxonomy' => $slug,
+        'hide_empty' => true,
+        'parent'   => 0
+    );
+
+    // If custom mode and has custom categories, override
+    if ($slug === 'product_cat' && $category_mode === 'custom' && !empty($custom_categories)) {
+        $terms_args = array(
+            'taxonomy' => $slug,
+            'hide_empty' => true,
+            'include' => $custom_categories
+        );
+    }
+
+    $terms = get_terms($terms_args);
     $field_title_default = !empty($field_title) ? $field_title : 'Choose';
 
     if (!empty($terms) && !is_wp_error($terms)) {
+        // If mode is 'parent', get nested children for all terms
+        if ($slug === 'product_cat' && $category_mode === 'parent') {
+            // Get all terms to build nested structure
+            $all_terms = get_terms(array(
+                'taxonomy' => $slug,
+                'hide_empty' => true,
+            ));
+            
+            // Only proceed if we got valid terms
+            if (!is_wp_error($all_terms) && !empty($all_terms)) {
+                // Build nested structure for each parent term
+                foreach ($terms as $term) {
+                    $term->children = utenzo_get_nested_category_children($term->term_id, $slug, $all_terms);
+                }
+            }
+        }
     ?>
-        <div class="bt-form-field bt-field-type-radio <?php echo 'bt-field-' . $slug; ?>" data-name="<?php echo esc_attr($slug); ?>">
+        <div class="bt-form-field bt-field-type-radio <?php echo 'bt-field-' . $slug; ?> bt-field-mode-<?php echo $category_mode; ?>" data-name="<?php echo esc_attr($slug); ?>">
             <div class="bt-field-title"><?php echo esc_html($field_title_default) ?></div>
-            <?php foreach ($terms as $term) { ?>
-                <?php if ($term->slug == $field_value) { ?>
-                    <div class="item-radio">
-                        <input type="radio" name="<?php echo esc_attr($slug); ?>" id="<?php echo esc_attr($term->slug); ?>" value="<?php echo esc_attr($term->slug); ?>" checked>
-                        <label for="<?php echo esc_attr($term->slug); ?>" data-slug="<?php echo esc_attr($term->slug); ?>"> <?php echo esc_html($term->name); ?> </label>
-                        <span class="bt-count"><?php echo '(' . $term->count . ')'; ?></span>
-                    </div>
-                <?php } else { ?>
-                    <div class="item-radio">
-                        <input type="radio" name="<?php echo esc_attr($slug); ?>" id="<?php echo esc_attr($term->slug); ?>" value="<?php echo esc_attr($term->slug); ?>">
-                        <label for="<?php echo esc_attr($term->slug); ?>" data-slug="<?php echo esc_attr($term->slug); ?>"> <?php echo esc_html($term->name); ?> </label>
-                        <span class="bt-count"><?php echo '(' . $term->count . ')'; ?></span>
-                    </div>
-                <?php } ?>
-            <?php } ?>
+            <div class="bt-field-list">
+                <?php foreach ($terms as $term) { 
+                    utenzo_render_nested_category($term, $slug, $field_value, '', 0);
+                } ?>
+            </div>
         </div>
     <?php
     }
+}
+
+/**
+ * Get product count for a term within current category (if on category page)
+ * 
+ * @param object $term Term object
+ * @param string $taxonomy Taxonomy name
+ * @return int Product count
+ */
+function utenzo_get_term_count_in_category($term, $taxonomy) {
+    // If not on category page, return default count
+    if (!utenzo_is_category_archive_page()) {
+        return $term->count;
+    }
+    
+    // Get current category
+    $current_category = get_queried_object();
+    if (!$current_category || empty($current_category->slug)) {
+        return $term->count;
+    }
+    
+    // Query products in category with this term
+    $args = array(
+        'post_type' => 'product',
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'fields' => 'ids',
+        'tax_query' => array(
+            'relation' => 'AND',
+            array(
+                'taxonomy' => 'product_cat',
+                'field' => 'slug',
+                'terms' => $current_category->slug,
+            ),
+            array(
+                'taxonomy' => $taxonomy,
+                'field' => 'term_id',
+                'terms' => $term->term_id,
+            ),
+        ),
+    );
+    
+    $query = new WP_Query($args);
+    return $query->found_posts;
 }
 
 function utenzo_product_field_multiple_html($slug = '', $field_title = '', $field_value = '')
@@ -521,7 +725,11 @@ function utenzo_product_field_multiple_html($slug = '', $field_title = '', $fiel
             ?>
 
             <div class="bt-field-list">
-                <?php foreach ($terms as $term) { ?>
+                <?php foreach ($terms as $term) { 
+                    // Calculate count - if on category page, count products in that category
+                    $term_count = utenzo_get_term_count_in_category($term, $slug);
+
+                ?>
                     <div class="<?php echo (str_contains($field_value, $term->slug)) ? 'bt-field-item checked' : 'bt-field-item' ?>">
                         <a href="#" data-slug="<?php echo esc_attr($term->slug); ?>">
                             <span>
@@ -530,7 +738,7 @@ function utenzo_product_field_multiple_html($slug = '', $field_title = '', $fiel
                                 </svg>
                             </span>
                             <?php echo esc_html($term->name); ?>
-                            <div class="bt-count"><?php echo '(' . $term->count . ')'; ?></div>
+                            <div class="bt-count"><?php echo '(' . $term_count . ')'; ?></div>
                         </a>
                     </div>
                 <?php } ?>
@@ -565,6 +773,11 @@ function utenzo_product_field_multiple_color_html($slug = '', $field_title = '',
             <div class="bt-field-list">
                 <?php
                 foreach ($terms as $term) {
+                    // Calculate count - if on category page, count products in that category
+                    $term_count = utenzo_get_term_count_in_category($term, $slug);
+                    
+
+                    
                     $term_id = $term->term_id;
                     $color = get_field('color', 'pa_color_' . $term_id);
                     if (!$color) {
@@ -576,6 +789,7 @@ function utenzo_product_field_multiple_color_html($slug = '', $field_title = '',
                             <span style="background:<?php echo esc_attr($color); ?>">
                             </span>
                             <?php echo esc_html($term->name); ?>
+                            <div class="bt-count"><?php echo '(' . $term_count . ')'; ?></div>
                         </a>
                     </div>
                 <?php } ?>
@@ -845,11 +1059,22 @@ function utenzo_products_query_args($params = array(), $limit = 9)
 
     $query_tax = array();
 
+    $product_cat = '';
     if (isset($params['product_cat']) && $params['product_cat'] != '') {
+        $product_cat = $params['product_cat'];
+    } elseif (utenzo_is_category_archive_page()) {
+        // If on category page and no product_cat in params, get from queried object
+        $current_category = get_queried_object();
+        if ($current_category && !empty($current_category->slug)) {
+            $product_cat = $current_category->slug;
+        }
+    }
+
+    if ($product_cat != '') {
         $query_tax[] = array(
             'taxonomy' => 'product_cat',
             'field' => 'slug',
-            'terms' => explode(',', $params['product_cat'])
+            'terms' => explode(',', $product_cat)
         );
     }
     if (isset($params['product_brand']) && $params['product_brand'] != '') {
@@ -857,6 +1082,13 @@ function utenzo_products_query_args($params = array(), $limit = 9)
             'taxonomy' => 'product_brand',
             'field' => 'slug',
             'terms' => explode(',', $params['product_brand'])
+        );
+    }
+    if (isset($params['product_tag']) && $params['product_tag'] != '') {
+        $query_tax[] = array(
+            'taxonomy' => 'product_tag',
+            'field' => 'slug',
+            'terms' => explode(',', $params['product_tag'])
         );
     }
     if (isset($params['product_material']) && $params['product_material'] != '') {

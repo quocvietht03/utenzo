@@ -9,7 +9,38 @@ $columns = intval(get_option('woocommerce_catalog_columns', 4));
 $rows = $rows > 0 ? $rows : 1;
 $columns = $columns > 0 ? $columns : 1;
 $limit = $rows * $columns;
-$query_args = utenzo_products_query_args($_GET, $limit);
+// Prepare query params - include category slug if on category page
+$query_params = $_GET;
+$is_category_page = utenzo_is_category_archive_page();
+$is_shop_page = is_shop();
+$is_taxonomy_page = !$is_category_page && (is_product_taxonomy() || is_tax());
+
+if ($is_category_page) {
+	// Remove product_cat from params when on category page (it's already in URL)
+	unset($query_params['product_cat']);
+	$current_category = get_queried_object();
+	if ($current_category && !empty($current_category->slug)) {
+		// Pass category slug to query function for filtering
+		$query_params['product_cat'] = $current_category->slug;
+	}
+}
+
+if ($is_taxonomy_page) {
+	$current_taxonomy = get_queried_object();
+	if ($current_taxonomy && isset($current_taxonomy->taxonomy)) {
+		// Handle different taxonomy types
+		$query_params[$current_taxonomy->taxonomy] = $current_taxonomy->slug;
+	}
+}
+if ($is_category_page) {
+	$display_type = get_option('woocommerce_category_archive_display', '');
+} else {
+	$display_type = get_option('woocommerce_shop_page_display', '');
+	if (isset($_GET['layout-shop']) && $_GET['layout-shop'] == 'show-categories') {
+		$display_type = 'subcategories';
+	}
+}
+$query_args = utenzo_products_query_args($query_params, $limit);
 $wp_query = new \WP_Query($query_args);
 $current_page = isset($_GET['current_page']) && $_GET['current_page'] != '' ? absint($_GET['current_page']) : 1;
 $total_page = $wp_query->max_num_pages;
@@ -22,7 +53,7 @@ get_template_part('framework/templates/site', 'titlebar');
 <div class="bt-filter-scroll-pos"></div>
 <main id="bt_main" class="bt-site-main">
 	<div class="bt-main-content">
-		<div class="bt-main-products-ss bt-template-nosidebar-popup">
+		<div class="bt-main-products-ss bt-template-nosidebar-popup<?php if ($is_taxonomy_page) { ?> bt-template-taxonomy<?php } ?>">
 			<div class="bt-container">
 				<div class="bt-products-sidebar">
 					<?php get_template_part('woocommerce/sidebar', 'product', array('total_products' => $total_products)); ?>

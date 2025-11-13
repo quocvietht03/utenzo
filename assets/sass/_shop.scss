@@ -58,9 +58,22 @@
     margin-top: 32px;
     border-top: 1px solid #e9e9e9;
     padding-top: 20px;
+    &:first-of-type {
+      margin-top: 0;
+      border-top: none;
+      padding-top: 0;
+    }
     &.bt-field-type-radio {
       display: flex;
       flex-wrap: wrap;
+      .bt-field-list {
+        @extend .__scrollbar_style;
+        display: flex;
+        flex-wrap: wrap;
+        max-height: 335px;
+        margin-right: -8px;
+        padding-right: 8px;
+      }
       .item-radio {
         width: 100%;
         position: relative;
@@ -70,13 +83,14 @@
         &:not(:last-child) {
           margin-bottom: 12px;
         }
-        &:has(input:checked) {
-          label {
-            font-weight: 600;
+        // Only active if direct child input is checked and no nested children are checked
+        &:has(> input:checked):not(:has(.bt-children-categories > .item-radio > input:checked)) {
+          > label {
+            font-weight: 500;
             color: $color-accent;
           }
-          span {
-            font-weight: 600;
+          > span {
+            font-weight: 500;
             color: $color-accent;
           }
         }
@@ -117,11 +131,144 @@
           color: $color-text;
         }
       }
+      &.bt-field-mode-parent {
+        .item-radio {
+          justify-content: flex-start;
+          gap: 4px;
+          flex-wrap: wrap;
+          // Toggle icon for subcategories
+          &.has-children {
+            .bt-toggle-children {
+              position: absolute;
+              right: 0;
+              top: 0px;
+              width: 26px;
+              height: 26px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              cursor: pointer;
+              z-index: 10;
+              transition: transform 0.3s ease;
+
+              svg {
+                width: 14px;
+                height: 14px;
+                transition: transform 0.3s ease;
+              }
+            }
+
+            &.open {
+              > .bt-toggle-children svg {
+                transform: rotate(180deg);
+              }
+            }
+          }
+
+          // Subcategories container
+          .bt-children-categories {
+            display: none;
+            width: 100%;
+            padding-left: 15px;
+            margin-top: 6px;
+
+            .item-radio-child {
+              width: 100%;
+              position: relative;
+              display: flex;
+              align-items: center;
+
+              &:not(:last-child) {
+                margin-bottom: 12px;
+              }
+
+              // Only active if direct child input is checked and no nested children are checked
+              &:has(> input:checked):not(:has(.bt-children-categories > .item-radio > input:checked)) {
+                > label {
+                  font-weight: 500;
+                  color: $color-accent;
+                }
+                > span {
+                  font-weight: 500;
+                  color: $color-accent;
+                }
+              }
+
+              // Toggle icon for nested subcategories
+              &.has-children {
+                justify-content: flex-start;
+                gap: 4px;
+                flex-wrap: wrap;
+
+                .bt-toggle-children {
+                  position: absolute;
+                  right: 0;
+                  top: 0px;
+                  width: 26px;
+                  height: 26px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  cursor: pointer;
+                  z-index: 10;
+                  transition: transform 0.3s ease;
+
+                  svg {
+                    width: 14px;
+                    height: 14px;
+                    transition: transform 0.3s ease;
+                  }
+                }
+
+                &.open {
+                  > .bt-toggle-children svg {
+                    transform: rotate(180deg);
+                  }
+                }
+              }
+
+              input[type="radio"] {
+                position: absolute;
+                background: transparent;
+                padding: 0;
+                width: 22px;
+                height: 22px;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                margin: 0;
+                z-index: 9;
+                opacity: 0;
+                width: 100%;
+                height: 100%;
+                cursor: pointer;
+              }
+
+              label {
+                margin: 0;
+                font-size: 15px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 26px;
+                text-transform: capitalize;
+                color: $color-text;
+                cursor: pointer;
+              }
+
+              .bt-count {
+                font-size: 15px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 26px;
+                text-transform: capitalize;
+                color: $color-text;
+              }
+            }
+          }
+        }
+      }
     }
-    &.bt-field-product_cat {
-      border-top: none;
-      padding-top: 0;
-    }
+
     .bt-field-title {
       font-size: 20px;
       font-style: normal;
@@ -165,6 +312,10 @@
           width: 30px;
           height: 30px;
         }
+      }
+      + .bt-form-field {
+        padding-top: 0;
+        border-top: none;
       }
     }
     &.bt-field-type-multi {
@@ -569,6 +720,11 @@
   }
   /* filter popup no sidebar */
   &.bt-template-nosidebar-popup {
+    &.bt-template-taxonomy {
+      .bt-product-filter-toggle {
+        display: none !important ;
+      }
+    }
     .bt-products-sidebar {
       .bt-product-sidebar {
         @extend .__bt-product-filter-form;
