@@ -775,7 +775,10 @@ function utenzo_product_field_multiple_color_html($slug = '', $field_title = '',
                 foreach ($terms as $term) {
                     // Calculate count - if on category page, count products in that category
                     $term_count = utenzo_get_term_count_in_category($term, $slug);
-                    
+                     // Only show if count > 0
+                     if ($term_count <= 0) {
+                        continue;
+                    }
 
                     
                     $term_id = $term->term_id;
