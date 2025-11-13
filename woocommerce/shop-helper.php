@@ -716,6 +716,23 @@ function utenzo_product_field_multiple_html($slug = '', $field_title = '', $fiel
     ));
 
     if (!empty($terms) && !is_wp_error($terms)) {
+        // First, check if there's at least one term with count > 0
+        $has_valid_terms = false;
+        
+        foreach ($terms as $term) {
+            // Calculate count - if on category page, count products in that category
+            $term_count = utenzo_get_term_count_in_category($term, $slug);
+            // Check if count > 0
+            if ($term_count > 0) {
+                $has_valid_terms = true;
+                break;
+            }
+        }
+        
+        // If no terms have count > 0, don't show the field
+        if (!$has_valid_terms) {
+            return;
+        }
     ?>
         <div class="bt-form-field bt-field-type-multi" data-name="<?php echo esc_attr($slug); ?>">
             <?php
@@ -725,10 +742,13 @@ function utenzo_product_field_multiple_html($slug = '', $field_title = '', $fiel
             ?>
 
             <div class="bt-field-list">
-                <?php foreach ($terms as $term) { 
+                <?php foreach ($terms as $term) {
                     // Calculate count - if on category page, count products in that category
                     $term_count = utenzo_get_term_count_in_category($term, $slug);
-
+                    // Only show if count > 0
+                    if ($term_count <= 0) {
+                        continue;
+                    }
                 ?>
                     <div class="<?php echo (str_contains($field_value, $term->slug)) ? 'bt-field-item checked' : 'bt-field-item' ?>">
                         <a href="#" data-slug="<?php echo esc_attr($term->slug); ?>">
@@ -762,6 +782,23 @@ function utenzo_product_field_multiple_color_html($slug = '', $field_title = '',
     ));
 
     if (!empty($terms) && !is_wp_error($terms)) {
+        // First, check if there's at least one term with count > 0
+        $has_valid_terms = false;
+        
+        foreach ($terms as $term) {
+            // Calculate count - if on category page, count products in that category
+            $term_count = utenzo_get_term_count_in_category($term, $slug);
+            // Check if count > 0
+            if ($term_count > 0) {
+                $has_valid_terms = true;
+                break;
+            }
+        }
+        
+        // If no terms have count > 0, don't show the field
+        if (!$has_valid_terms) {
+            return;
+        }
     ?>
         <div class="bt-form-field bt-field-type-multi bt-field-color" data-name="<?php echo esc_attr($slug); ?>">
             <?php
@@ -775,11 +812,10 @@ function utenzo_product_field_multiple_color_html($slug = '', $field_title = '',
                 foreach ($terms as $term) {
                     // Calculate count - if on category page, count products in that category
                     $term_count = utenzo_get_term_count_in_category($term, $slug);
-                     // Only show if count > 0
-                     if ($term_count <= 0) {
+                    // Only show if count > 0
+                    if ($term_count <= 0) {
                         continue;
                     }
-
                     
                     $term_id = $term->term_id;
                     $color = get_field('color', 'pa_color_' . $term_id);
