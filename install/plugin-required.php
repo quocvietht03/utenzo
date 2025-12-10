@@ -125,3 +125,15 @@ function utenzo_register_required_plugins() {
 
 	tgmpa( $plugin_includes, $config );
 }
+
+/**
+ * Verify purchase code
+ */
+require get_template_directory() . '/install/license-manager/VerifyTheme.php';
+
+// Initialize the admin UI and AJAX handlers
+add_action( 'after_setup_theme', function() {
+    if ( class_exists( 'VerifyTheme_Admin' ) ) {
+        VerifyTheme_Admin::init();
+    }
+} );
