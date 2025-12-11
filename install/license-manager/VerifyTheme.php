@@ -441,18 +441,18 @@ if ( ! class_exists( 'VerifyTheme_Admin' ) ) {
                   'setting_page' => admin_url( 'themes.php?page=verifytheme_settings' ),
                   'nonce'    => wp_create_nonce( 'verifytheme_action' ),
                   'strings'  => [
-                      'confirm_import'            => __( 'Proceed?', 'alone' ),
-                      'deactivate_confirm'        => __( 'Are you sure you want to deregister this license on this site?', 'alone' ),
-                      'please_enter_purchase_code'=> __( 'Please enter a purchase code.', 'alone' ),
-                      'ajax_error'                => __( 'AJAX error. Please try again.', 'alone' ),
-                      'verifying'                 => __( 'Verifying...', 'alone' ),
-                      'processing'                => __( 'Processing...', 'alone' ),
-                      'license_activated'         => __( 'License activated.', 'alone' ),
-                      'license_deactivated'       => __( 'License deactivated.', 'alone' ),
-                      'activation_failed'         => __( 'Activation failed.', 'alone' ),
-                      'deactivation_failed'       => __( 'Deactivation failed.', 'alone' ),
-                      'too_many_attempts'         => __( 'Too many attempts. Try again later.', 'alone' ),
-                      'unauthorized'              => __( 'Unauthorized', 'alone' ),
+                      'confirm_import'            => __( 'Please activate the Theme License to unlock Demo Import, Plugin updates, and Official Support.', 'utenzo' ),
+                      'deactivate_confirm'        => __( 'Are you sure you want to deregister this license on this site?', 'utenzo' ),
+                      'please_enter_purchase_code'=> __( 'Please enter a purchase code.', 'utenzo' ),
+                      'ajax_error'                => __( 'AJAX error. Please try again.', 'utenzo' ),
+                      'verifying'                 => __( 'Verifying...', 'utenzo' ),
+                      'processing'                => __( 'Processing...', 'utenzo' ),
+                      'license_activated'         => __( 'License activated.', 'utenzo' ),
+                      'license_deactivated'       => __( 'License deactivated.', 'utenzo' ),
+                      'activation_failed'         => __( 'Activation failed.', 'utenzo' ),
+                      'deactivation_failed'       => __( 'Deactivation failed.', 'utenzo' ),
+                      'too_many_attempts'         => __( 'Too many attempts. Try again later.', 'utenzo' ),
+                      'unauthorized'              => __( 'Unauthorized', 'utenzo' ),
                   ],
               ]
           );
@@ -479,31 +479,35 @@ if ( ! class_exists( 'VerifyTheme_Admin' ) ) {
           $is_activated = $mgr->is_activated();
           ?>
           <div class="wrap">
-              <h1><?php esc_html_e( 'Envato Settings', 'alone' ); ?></h1>
-              <p><?php esc_html_e( 'Enter your Envato purchase code to activate the theme on this domain.', 'alone' ); ?></p>
+              <h1><?php esc_html_e( 'Envato Settings', 'utenzo' ); ?></h1>
+              <p>
+                <?php esc_html_e( 'Enter your Envato purchase code to activate the theme on this domain.', 'utenzo' ); ?>
+                <?php esc_html_e('Find instructions on obtaining Envato discount codes by ', 'utenzo'); ?>
+                <a href="<?php echo esc_url('https://docs.beplusthemes.com/ProductRegistration/'); ?>" target="_blank"><?php esc_html_e('clicking here.', 'utenzo'); ?></a>
+              </p>
 
               <?php if ( $is_activated ) : ?>
                   <div class="notice notice-success"><p>
-                      <?php printf( esc_html__( 'License activated on: %s', 'alone' ), esc_html( $domain ) ); ?>
+                      <?php printf( esc_html__( 'License activated on: %s', 'utenzo' ), esc_html( $domain ) ); ?>
                   </p></div>
               <?php endif; ?>
 
               <table class="form-table">
                   <tr>
-                      <th scope="row"><label for="verify_purchase_code"><?php esc_html_e( 'Purchase code', 'alone' ); ?></label></th>
+                      <th scope="row"><label for="verify_purchase_code"><?php esc_html_e( 'Purchase code', 'utenzo' ); ?></label></th>
                       <td>
                           <input id="verify_purchase_code" class="regular-text" type="text" value="<?php echo esc_attr( $purchase_code ); ?>" <?php echo $is_activated ? 'disabled' : ''; ?> />
-                          <p class="description"><?php esc_html_e( 'Enter purchase code and click Activate.', 'alone' ); ?></p>
+                          <p class="description"><?php esc_html_e( 'Enter purchase code and click Activate.', 'utenzo' ); ?></p>
                       </td>
                   </tr>
               </table>
 
               <p>
                   <button id="verify_activate" class="button button-primary" <?php echo $is_activated ? 'disabled' : ''; ?>>
-                      <?php esc_html_e( 'Activate', 'alone' ); ?>
+                      <?php esc_html_e( 'Activate', 'utenzo' ); ?>
                   </button>
                   <button id="verify_deactivate" class="button" <?php echo ! $is_activated ? 'disabled' : ''; ?>>
-                      <?php esc_html_e( 'Deactivate', 'alone' ); ?>
+                      <?php esc_html_e( 'Deactivate', 'utenzo' ); ?>
                   </button>
               </p>
 
