@@ -6,7 +6,7 @@
   padding-bottom: 1.5em;
   margin-bottom: 5px;
 }
-#verify_purchase_code[disabled] {
-    -webkit-text-security: disc;
-    text-security: disc;
+#verify_purchase_code:disabled {
+  -webkit-text-security: disc;
+  text-security: disc;
 }
