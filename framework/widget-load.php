@@ -111,7 +111,7 @@ class ElementorWidgets
 	public function widget_scripts()
 	{
 		wp_register_script('swiper-slider', get_template_directory_uri() . '/assets/libs/swiper/swiper.min.js', array('jquery'), '', true);
-		wp_register_script('elementor-widgets',  get_stylesheet_directory_uri() . '/framework/widgets/frontend.js', ['jquery'], '', true);
+		wp_register_script('elementor-widgets',  get_template_directory_uri() . '/framework/widgets/frontend.js', ['jquery'], '', true);
 		wp_register_script('magnific-popup', get_template_directory_uri() . '/assets/libs/magnific-popup/jquery.magnific-popup.js', array('jquery'), '', true);
 	}
 
@@ -127,9 +127,9 @@ class ElementorWidgets
 	{
 
 		foreach ($this->widgets_list() as $widget) {
-			require_once(get_stylesheet_directory() . '/framework/widgets/' . $widget . '/widget.php');
+			require_once(get_template_directory() . '/framework/widgets/' . $widget . '/widget.php');
 
-			foreach (glob(get_stylesheet_directory() . '/framework/widgets/' . $widget . '/skins/*.php') as $filepath) {
+			foreach (glob(get_template_directory() . '/framework/widgets/' . $widget . '/skins/*.php') as $filepath) {
 				include $filepath;
 			}
 		}
